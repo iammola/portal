@@ -1,0 +1,39 @@
+import { Schema } from "mongoose";
+
+import type { SubjectDivisionSchema as SchemaType } from "types/schema";
+
+export const subjectName = (required: string) => ({
+    trim: true,
+    unique: true,
+    type: String,
+    required: [true, required] as [true, string],
+});
+
+export const subjectAlias = (
+    required: string,
+    minlength: string,
+    maxlength: string
+) => ({
+    trim: true,
+    unique: true,
+    type: String,
+    minlength: [3, minlength] as const,
+    maxlength: [5, maxlength] as const,
+    required: [true, required] as [true, string],
+});
+
+export const subjectTeachers = () => ({
+    default: undefined,
+    // TODO: Sort out ref Model
+    type: [Schema.Types.ObjectId],
+});
+
+export const SubjectDivisionSchema = new Schema<SchemaType>({
+    teachers: subjectTeachers(),
+    name: subjectName("Subject Division name required"),
+    alias: subjectAlias(
+        "Subject Division alias required",
+        "Subject Division alias min-length = 3",
+        "Subject Division alias max-length = 5"
+    ),
+});
