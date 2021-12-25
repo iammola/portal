@@ -1,0 +1,39 @@
+#!/bin/sh
+
+RED="\033[1;31m";
+GREEN="\033[1;32m";
+
+FILES=$(git diff --cached --diff-filter=d --name-only | grep  -E '\.(?:t|j)sx?$');
+
+# save staged file names to file
+echo "$FILES" > ".github/hooks/S.log";
+
+# save unstaged file names to file
+echo "$(git diff --diff-filter=d --name-only | grep  -E '\.(?:t|j)sx?$')" > ".github/hooks/U.log";
+
+# get fully-staged file names
+FULLY_STAGED=$(comm -23 ".github/hooks/S.log" ".github/hooks/U.log");
+
+# remove temp files
+rm -f ".github/hooks/S.log" ".github/hooks/U.log";
+
+# skip if there are no files
+[ -z "$FILES" ] && exit 0;
+
+# run linter and prettier on staged files
+./node_modules/.bin/eslint $FILES --quiet --format stylish && ./node_modules/.bin/prettier $FILES --ignore-unknown --write;
+
+# save exit code
+linter_exit_code=$?;
+
+# check the linter exit code
+if [ $linter_exit_code -ne 0 ]; then
+    echo "${RED} ❌ You have linter errors in your code. 🤦‍♂️";
+    exit 1;
+fi
+
+# add files fully staged and auto-fixed by the linter
+git add $FULLY_STAGED;
+
+echo "${GREEN} 👍 Good coder. No errors found 😁";
+exit 0;
