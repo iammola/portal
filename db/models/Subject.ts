@@ -18,7 +18,7 @@ export const SubjectSchema = new Schema<SchemaType>({
         "Subject alias max-length = 5"
     ),
     class: {
-        // TODO: Sort out ref Model
+        ref: "Class",
         type: Schema.Types.ObjectId,
         required: [true, "Subject class required"],
     },

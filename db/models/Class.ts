@@ -32,7 +32,7 @@ export const ClassSchema = new Schema<SchemaType>({
         type: [Schema.Types.ObjectId],
     },
     subjects: {
-        // TODO: Sort out ref Model
+        ref: "Subject",
         type: [Schema.Types.ObjectId],
     },
 });
