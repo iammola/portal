@@ -6,3 +6,6 @@ export type ObjectId = BSONId & Schema.Types.ObjectId;
 export interface DocumentId {
     _id: ObjectId;
 }
+
+export * from "./Class";
+export * from "./Subject";
