@@ -37,9 +37,9 @@ const Me: NextPage = () => {
                         </div>
                         <div className="flex flex-col gap-1 items-start justify-center ml-44 pl-5">
                             <h3 className="text-4xl text-gray-700">Christina Andrews</h3>
-                            <h6 className="text-xs text-gray-500 font-medium tracking-wide">
+                            <span className="text-xs text-gray-500 tracking-wider">
                                 c.andrews@grschool.com
-                            </h6>
+                            </span>
                         </div>
                     </div>
                     <div className="flex items-center justify-start gap-8 w-full mt-20 border-b border-b-gray-200">
