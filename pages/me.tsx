@@ -14,6 +14,10 @@ const Me: NextPage = () => {
         () => ["My details", "Profile", "Password", "Team", "Plan", "Billing", "Notifications"],
         []
     );
+    const tabBadges = useMemo<{ [key in Tab]?: number }>(
+        () => ({ Notifications: Math.floor(1 + Math.random() * 50) }),
+        []
+    );
 
     useEffect(() => {
         if (router.isReady === true) {
@@ -68,7 +72,7 @@ const Me: NextPage = () => {
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
                                 className={classNames(
-                                    "relative inline-block w-max pb-5 text-sm font-medium tracking-wide cursor-pointer",
+                                    "group relative inline-block w-max pb-5 text-sm font-medium tracking-wide cursor-pointer",
                                     [
                                         activeTab === tab,
                                         "text-gray-900",
@@ -77,6 +81,20 @@ const Me: NextPage = () => {
                                 )}
                             >
                                 {tab}
+                                {tabBadges[tab] !== undefined && (
+                                    <span
+                                        className={classNames(
+                                            "text-xs font-semibold ml-3 py-1 px-2.5 rounded-full",
+                                            [
+                                                activeTab === tab,
+                                                "bg-gray-300 text-gray-900",
+                                                "bg-gray-200 text-gray-700 group-hover:bg-gray-300 group-hover:text-gray-900",
+                                            ]
+                                        )}
+                                    >
+                                        {tabBadges[tab]}
+                                    </span>
+                                )}
                                 {activeTab === tab && (
                                     <span className="absolute -bottom-px inset-x-0 w-full h-[2px] bg-gray-900 rounded-full" />
                                 )}
