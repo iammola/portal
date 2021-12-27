@@ -3,6 +3,7 @@
     "plugins": ["react", "@typescript-eslint"],
     "extends": [
         "eslint:recommended",
+        "next/core-web-vitals",
         "plugin:react/recommended",
         "plugin:react/jsx-runtime",
         "plugin:import/typescript",
