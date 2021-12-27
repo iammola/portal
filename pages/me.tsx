@@ -1,17 +1,37 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 
 import type { NextPage } from "next";
 
 const Me: NextPage = () => {
-    const tabs = useMemo(
-        () => ["My details", "Profile", "Password", "Team", "Plan", "Billing"] as const,
+    const router = useRouter();
+    const [activeTab, setActiveTab] = useState<Tab>();
+    const tabs = useMemo<Tab[]>(
+        () => ["My details", "Profile", "Password", "Team", "Plan", "Billing"],
         []
     );
-    const [activeTab, setActiveTab] = useState<typeof tabs[number]>("My details");
+
+    useEffect(() => {
+        if (router.isReady === true) {
+            const initialTab = (router.query.tab as Tab) ?? "My details";
+            const [pathname, query, ...args] = [
+                "/me",
+                { tab: activeTab },
+                undefined,
+                { shallow: true },
+            ] as const;
+
+            if (activeTab === undefined && tabs.includes(initialTab)) setActiveTab(initialTab);
+            else if (activeTab === "My details" && router.query.tab !== undefined)
+                void router.push({ pathname }, ...args);
+            else if (!["My details", router.query.tab].includes(activeTab))
+                void router.push({ query, pathname }, ...args);
+        }
+    }, [activeTab, router, tabs]);
 
     return (
         <main className="flex items-stretch justify-center w-screen h-full min-h-screen">
@@ -68,5 +88,7 @@ const Me: NextPage = () => {
         </main>
     );
 };
+
+type Tab = "My details" | "Profile" | "Password" | "Team" | "Plan" | "Billing";
 
 export default Me;
