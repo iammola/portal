@@ -35,6 +35,27 @@ const Me: NextPage = () => {
                             </h6>
                         </div>
                     </div>
+                    <div className="flex items-center justify-start gap-8 w-full mt-20 border-b border-b-gray-200">
+                        <span className="relative inline-block w-max pb-5 text-sm font-medium text-gray-500 hover:text-gray-900 tracking-wide cursor-pointer">
+                            My details
+                        </span>
+                        <span className="relative inline-block w-max pb-5 text-sm font-medium text-gray-500 hover:text-gray-900 tracking-wide cursor-pointer">
+                            Profile
+                        </span>
+                        <span className="relative inline-block w-max pb-5 text-sm font-medium text-gray-900 tracking-wide cursor-pointer">
+                            Password
+                            <span className="absolute -bottom-px inset-x-0 w-full h-[2px] bg-gray-900 rounded-full" />
+                        </span>
+                        <span className="relative inline-block w-max pb-5 text-sm font-medium text-gray-500 hover:text-gray-900 tracking-wide cursor-pointer">
+                            Team
+                        </span>
+                        <span className="relative inline-block w-max pb-5 text-sm font-medium text-gray-500 hover:text-gray-900 tracking-wide cursor-pointer">
+                            Plan
+                        </span>
+                        <span className="relative inline-block w-max pb-5 text-sm font-medium text-gray-500 hover:text-gray-900 tracking-wide cursor-pointer">
+                            Billing
+                        </span>
+                    </div>
                 </div>
             </section>
         </main>
