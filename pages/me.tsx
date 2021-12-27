@@ -11,7 +11,7 @@ const Me: NextPage = () => {
     const router = useRouter();
     const [activeTab, setActiveTab] = useState<Tab>();
     const tabs = useMemo<Tab[]>(
-        () => ["My details", "Profile", "Password", "Team", "Plan", "Billing"],
+        () => ["My details", "Profile", "Password", "Team", "Plan", "Billing", "Notifications"],
         []
     );
 
@@ -89,6 +89,6 @@ const Me: NextPage = () => {
     );
 };
 
-type Tab = "My details" | "Profile" | "Password" | "Team" | "Plan" | "Billing";
+type Tab = "My details" | "Profile" | "Password" | "Team" | "Plan" | "Billing" | "Notifications";
 
 export default Me;
