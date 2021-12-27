@@ -16,7 +16,7 @@ const Me: NextPage = () => {
     return (
         <main className="flex items-stretch justify-center w-screen h-full min-h-screen">
             <Head>
-                <title>Profile | Portal | GRS™</title>
+                <title>My Profile | GRIS Portal</title>
                 <meta name="description" content="My Profile" />
             </Head>
             <section className="flex flex-col items-center justify-start flex-grow">
