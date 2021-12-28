@@ -9,3 +9,6 @@ export interface DocumentId {
 
 export * from "./Class";
 export * from "./Subject";
+export * from "./Parent";
+export * from "./Student";
+export * from "./Teacher";
