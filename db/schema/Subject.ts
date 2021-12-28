@@ -9,16 +9,12 @@ export const subjectName = (required: string) => ({
     required: [true, required] as [true, string],
 });
 
-export const subjectAlias = (
-    required: string,
-    minlength: string,
-    maxlength: string
-) => ({
+export const subjectAlias = (required: string, minLength: string, maxLength: string) => ({
     trim: true,
     unique: true,
     type: String,
-    minlength: [3, minlength] as const,
-    maxlength: [5, maxlength] as const,
+    minLength: [3, minLength] as const,
+    maxLength: [5, maxLength] as const,
     required: [true, required] as [true, string],
 });
 

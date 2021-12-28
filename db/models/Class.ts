@@ -14,8 +14,8 @@ export const ClassSchema = new Schema<SchemaType>({
         type: String,
         unique: true,
         required: [true, "Class alias required"],
-        minlength: [3, "Class alias min-length = 3"],
-        maxlength: [5, "Class alias max-length = 5"],
+        minLength: [3, "Class alias min-length = 3"],
+        maxLength: [5, "Class alias max-length = 5"],
     },
     special: {
         trim: true,
