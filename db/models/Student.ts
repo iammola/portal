@@ -1,3 +1,4 @@
+import PhoneNumber from "awesome-phonenumber";
 import { Schema, Model, model, models } from "mongoose";
 
 import { userDOB, userGender, UserImage, userName, UserPassword } from "db/schema/User";
@@ -63,14 +64,53 @@ export const StudentSchema = new Schema<SchemaType>({
                 type: [String],
                 lowercase: true,
                 required: [true, "Student email required"],
+                validate: [
+                    {
+                        validator: (v: string[]) => v.length > 0,
+                        msg: "At least 1 (one) email address is required",
+                    },
+                    {
+                        validator: (v: string[]) => v.length < 3,
+                        msg: "At most 2 (two) email addresses are required",
+                    },
+                    {
+                        validator: (v: string[]) =>
+                            v.every((i) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(i)),
+                        msg: "Invalid email address",
+                    },
+                ],
             },
             phone: {
                 type: [String],
                 required: [true, "Student Phone required"],
+                validate: [
+                    {
+                        validator: (v: string[]) => v.length > 0,
+                        msg: "At least 1 (one) phone number is required",
+                    },
+                    {
+                        validator: (v: string[]) => v.length < 3,
+                        msg: "At most 2 (two) phone numbers are required",
+                    },
+                    {
+                        validator: (v: string[]) => v.every((i) => PhoneNumber(i).isValid()),
+                        msg: "Invalid phone number",
+                    },
+                ],
             },
             address: {
                 type: [String],
                 required: [true, "Student Address required"],
+                validate: [
+                    {
+                        validator: (v: string[]) => v.length > 0,
+                        msg: "At least 1 (one) address is required",
+                    },
+                    {
+                        validator: (v: string[]) => v.length < 3,
+                        msg: "At most 2 (two) addresses are required",
+                    },
+                ],
             },
         },
     },
