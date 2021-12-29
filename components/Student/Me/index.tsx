@@ -5,6 +5,7 @@ import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { classNames } from "utils";
 
 const MyDetails = dynamic(() => import("./MyDetails"));
+const Password = dynamic(() => import("components/Global/Me/Password"));
 
 const StudentMe: FunctionComponent = () => {
     const router = useRouter();
@@ -71,6 +72,7 @@ const StudentMe: FunctionComponent = () => {
                 ))}
             </div>
             <div className="w-full py-5 px-0 sm:px-10">
+                {activeTab === "Password" && <Password />}
                 {activeTab === "My details" && <MyDetails />}
             </div>
         </>
