@@ -43,7 +43,7 @@ const Me: NextPage = () => {
                 <title>My Profile | GRIS Portal</title>
                 <meta name="description" content="My Profile" />
             </Head>
-            <section className="flex flex-col items-center justify-start flex-grow">
+            <section className="flex flex-col items-center justify-start flex-grow w-full">
                 <div className="w-full h-56 relative bg-gradient-to-r from-purple-300 to-slate-100" />
                 <div className="w-full flex-grow px-10">
                     <div className="relative flex items-center justify-start w-full h-24">
