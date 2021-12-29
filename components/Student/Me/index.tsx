@@ -9,10 +9,7 @@ const MyDetails = dynamic(() => import("./MyDetails"));
 const StudentMe: FunctionComponent = () => {
     const router = useRouter();
     const [activeTab, setActiveTab] = useState<Tab>();
-    const tabs = useMemo<Tab[]>(
-        () => ["My details", "Profile", "Password", "Team", "Plan", "Billing", "Notifications"],
-        []
-    );
+    const tabs = useMemo<Tab[]>(() => ["My details", "Profile", "Password", "Notifications"], []);
     const tabBadges = useMemo<{ [key in Tab]?: number }>(
         () => ({ Notifications: Math.floor(1 + Math.random() * 50) }),
         []
@@ -80,6 +77,6 @@ const StudentMe: FunctionComponent = () => {
     );
 };
 
-type Tab = "My details" | "Profile" | "Password" | "Team" | "Plan" | "Billing" | "Notifications";
+type Tab = "My details" | "Profile" | "Password" | "Notifications";
 
 export default StudentMe;
