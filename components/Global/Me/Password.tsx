@@ -49,10 +49,16 @@ const Password: FunctionComponent = () => {
                 </div>
             </div>
             <div className="flex gap-5 items-center justify-end w-full py-7">
-                <button className="text-sm text-slate-800 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-lg py-2.5 px-4">
+                <button
+                    type="button"
+                    className="text-sm text-slate-800 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-lg py-2.5 px-4"
+                >
                     Cancel
                 </button>
-                <button className="text-sm text-white bg-slate-700 hover:bg-slate-800 rounded-lg shadow-lg py-2.5 px-4">
+                <button
+                    type="submit"
+                    className="text-sm text-white bg-slate-700 hover:bg-slate-800 rounded-lg shadow-lg py-2.5 px-4"
+                >
                     Update password
                 </button>
             </div>
