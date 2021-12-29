@@ -4,7 +4,7 @@ export interface ClassSchema extends DocumentId {
     name: string;
     alias: string;
     special: string;
-    createdOn: Date;
+    createdAt: Date;
     teachers: ObjectId[];
     subjects: ObjectId[];
 }

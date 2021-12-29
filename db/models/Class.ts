@@ -23,7 +23,7 @@ export const ClassSchema = new Schema<SchemaType>({
         unique: true,
         required: [true, "Class special required"],
     },
-    createdOn: {
+    createdAt: {
         type: Date,
         default: new Date(),
     },
