@@ -17,7 +17,7 @@ const Me: NextPage = () => {
                 <div className="w-full h-52 relative bg-gradient-to-r from-purple-300 to-slate-100" />
                 <div className="w-full flex-grow px-5 md:px-10 bg-gray-50">
                     <div className="relative flex items-center justify-start w-full h-24">
-                        <div className="absolute z-10 top-10 -translate-y-1/2 w-44 aspect-square ring-4 ring-white overflow-x-hidden rounded-full shadow-2xl shadow-slate-300 bg-rose-200">
+                        <div className="absolute z-10 top-10 -translate-y-1/2 w-44 aspect-square ring-4 ring-white overflow-x-hidden rounded-full shadow-2xl shadow-slate-300">
                             <div className="relative w-full h-full rounded-full">
                                 <Image
                                     priority
