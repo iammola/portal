@@ -72,7 +72,7 @@ const Me: NextPage = () => {
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
                                 className={classNames(
-                                    "group relative inline-block w-max pb-5 text-sm font-medium tracking-wide cursor-pointer",
+                                    "group relative inline-block w-max min-w-max pb-5 text-sm font-medium tracking-wide cursor-pointer",
                                     [
                                         activeTab === tab,
                                         "text-gray-900",
