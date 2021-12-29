@@ -107,6 +107,13 @@ const Me: NextPage = () => {
     );
 };
 
-type Tab = "My details" | "Profile" | "Password" | "Team" | "Plan" | "Billing" | "Notifications";
+export type Tab =
+    | "My details"
+    | "Profile"
+    | "Password"
+    | "Team"
+    | "Plan"
+    | "Billing"
+    | "Notifications";
 
 export default Me;
