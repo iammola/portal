@@ -1,8 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 
 import type { NextPage } from "next";
 
+const StudentMe = dynamic(() => import("components/Student/Me"), { ssr: false });
 
 const Me: NextPage = () => {
     return (
@@ -34,6 +36,7 @@ const Me: NextPage = () => {
                             </span>
                         </div>
                     </div>
+                    <StudentMe />
                 </div>
             </section>
         </main>
