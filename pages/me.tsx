@@ -66,7 +66,7 @@ const Me: NextPage = () => {
                             </span>
                         </div>
                     </div>
-                    <div className="sticky top-0 flex items-center justify-start gap-8 w-full pt-4 mt-16 mb-6 border-b border-b-gray-200 bg-gray-50">
+                    <div className="sticky top-0 flex items-center justify-start gap-8 w-full pt-4 mt-16 mb-6 border-b border-b-gray-200 bg-gray-50 overflow-x-auto overflow-y-hidden">
                         {tabs.map((tab) => (
                             <span
                                 key={tab}
