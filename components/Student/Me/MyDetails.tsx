@@ -106,6 +106,13 @@ const MyDetails: FunctionComponent = () => {
                     </div>
                 </div>
             </div>
+            <div className="flex flex-col md:flex-row gap-4 items-start justify-between w-full">
+                <div>
+                    <h5 className="text-gray-700 font-medium">Section Title</h5>
+                    <p className="text-sm text-gray-500">Section description</p>
+                </div>
+                <div className="flex flex-col items-start justify-start gap-y-6 w-full lg:w-[55%] md:w-[65%] px-6 py-8 bg-white rounded-lg shadow-lg" />
+            </div>
         </div>
     );
 };
