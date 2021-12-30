@@ -123,7 +123,8 @@ const MyDetails: FunctionComponent = () => {
                         Lorem ipsum dolor sit amet, consectetur adipisicing.
                     </p>
                 </div>
-                <div className="flex flex-col items-start justify-start gap-y-6 w-full lg:w-[55%] md:w-[65%] px-6 py-8 bg-white rounded-lg shadow-lg" />
+                <div className="flex flex-col gap-y-5 w-full lg:w-[55%] md:w-[65%]">
+                </div>
             </div>
         </div>
     );
