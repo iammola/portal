@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 import type { NextPage } from "next";
 
-const StudentMe = dynamic(() => import("components/Student/Me"), { ssr: false });
+const StudentMe = dynamic(() => import("components/Student/Me"));
 
 const Me: NextPage = () => {
     return (
