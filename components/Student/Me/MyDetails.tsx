@@ -110,8 +110,11 @@ const MyDetails: FunctionComponent = () => {
                         <button className="text-sm text-slate-800 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-lg py-2.5 px-4">
                             Cancel
                         </button>
-                        <button className="text-sm text-white bg-gray-700 hover:bg-gray-800 rounded-lg shadow-lg py-2.5 px-4">
-                            Update password
+                        <button
+                            type="submit"
+                            className="text-sm text-white bg-gray-700 hover:bg-gray-800 rounded-lg shadow-lg py-2.5 px-4"
+                        >
+                            Update
                         </button>
                     </div>
                 </form>
