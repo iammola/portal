@@ -9,7 +9,7 @@ const Password: FunctionComponent = () => {
                     Please enter your current password to change your password.
                 </p>
             </div>
-            <div className="grid grid-cols-4 gap-20 w-full py-7">
+            <div className="grid grid-cols-4 gap-x-20 w-full py-7">
                 <h4 className="w-max min-w-max text-sm text-gray-700 font-medium col-start-1 col-end-2">
                     Current password
                 </h4>
@@ -21,11 +21,11 @@ const Password: FunctionComponent = () => {
                     />
                 </div>
             </div>
-            <div className="grid grid-cols-4 gap-20 w-full py-7">
+            <div className="grid grid-cols-4 gap-x-20 w-full py-7">
                 <h4 className="w-max min-w-max text-sm text-gray-700 font-medium col-start-1 col-end-2">
                     New password
                 </h4>
-                <div className="flex flex-col gap-2 items-start justify-start w-[30rem] col-start-2 col-end-4">
+                <div className="flex flex-col gap-y-2 items-start justify-start w-[30rem] col-start-2 col-end-4">
                     <input
                         required
                         type="password"
@@ -36,7 +36,7 @@ const Password: FunctionComponent = () => {
                     </span>
                 </div>
             </div>
-            <div className="grid grid-cols-4 gap-20 w-full py-7">
+            <div className="grid grid-cols-4 gap-x-20 w-full py-7">
                 <h4 className="w-max min-w-max text-sm text-gray-700 font-medium col-start-1 col-end-2">
                     Confirm new password
                 </h4>
@@ -48,7 +48,7 @@ const Password: FunctionComponent = () => {
                     />
                 </div>
             </div>
-            <div className="flex gap-5 items-center justify-end w-full py-7">
+            <div className="flex gap-x-5 items-center justify-end w-full py-7">
                 <button
                     type="button"
                     className="text-sm text-slate-800 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-lg py-2.5 px-4"

@@ -29,7 +29,7 @@ const Me: NextPage = () => {
                                 />
                             </div>
                         </div>
-                        <div className="flex flex-col gap-1 items-start justify-center ml-44 pl-5">
+                        <div className="flex flex-col gap-y-1 items-start justify-center ml-44 pl-5">
                             <h3 className="text-4xl text-gray-700">Christina Andrews</h3>
                             <span className="text-xs text-gray-500 tracking-wider">
                                 c.andrews@grschool.com

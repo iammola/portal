@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 const MyDetails: FunctionComponent = () => {
     return (
         <div className="flex flex-col gap-y-4 w-full divide-y-2 border-gray-200">
-            <div className="flex flex-col md:flex-row gap-4 items-start justify-between w-full first:pt-0 first:pb-5 pt-8">
+            <div className="flex flex-col md:flex-row gap-y-4 items-start justify-between w-full first:pt-0 first:pb-5 pt-8">
                 <div>
                     <h5 className="text-gray-700 font-medium">Personal info</h5>
                     <p className="text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur.</p>
@@ -106,7 +106,7 @@ const MyDetails: FunctionComponent = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex gap-5 items-center justify-end px-6 py-5 w-full">
+                    <div className="flex gap-x-5 items-center justify-end px-6 py-5 w-full">
                         <button className="text-sm text-slate-800 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-lg py-2.5 px-4">
                             Cancel
                         </button>
@@ -116,7 +116,7 @@ const MyDetails: FunctionComponent = () => {
                     </div>
                 </form>
             </div>
-            <div className="flex flex-col md:flex-row gap-4 items-start justify-between w-full first:pt-0 first:pb-5 pt-8">
+            <div className="flex flex-col md:flex-row gap-y-4 items-start justify-between w-full first:pt-0 first:pb-5 pt-8">
                 <div>
                     <h5 className="text-gray-700 font-medium">Contacts</h5>
                     <p className="text-sm text-gray-500">
