@@ -13,7 +13,7 @@ const Password: FunctionComponent = () => {
                 <h4 className="w-max min-w-max text-sm text-gray-700 font-medium col-start-1 col-end-2">
                     Current password
                 </h4>
-                <div className="flex flex-col gap-2 items-start justify-start w-[30rem] col-start-2 col-end-4">
+                <div className="w-[30rem] col-start-2 col-end-4">
                     <input
                         required
                         type="password"
@@ -40,7 +40,7 @@ const Password: FunctionComponent = () => {
                 <h4 className="w-max min-w-max text-sm text-gray-700 font-medium col-start-1 col-end-2">
                     Confirm new password
                 </h4>
-                <div className="flex flex-col gap-2 items-start justify-start w-[30rem] col-start-2 col-end-4">
+                <div className="w-[30rem] col-start-2 col-end-4">
                     <input
                         required
                         type="password"
