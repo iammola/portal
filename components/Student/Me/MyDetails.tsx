@@ -124,6 +124,35 @@ const MyDetails: FunctionComponent = () => {
                     </p>
                 </div>
                 <div className="flex flex-col gap-y-5 w-full lg:w-[55%] md:w-[65%]">
+                    <form className="flex flex-col items-start justify-start gap-y-6 w-full px-6 pt-8 pb-5 bg-white rounded-lg shadow-lg divide-y divide-gray-200">
+                        <h4 className="py-1.5 font-bold text-gray-700">Email Addresses</h4>
+                        <div className="flex flex-col gap-y-4 items-start justify-center w-full py-5">
+                            <div className="grid grid-cols-4 gap-x-4 w-full py-4">
+                                <h4 className="flex items-center w-max min-w-max text-sm text-gray-700 font-medium col-start-1 col-end-2">
+                                    Primary
+                                </h4>
+                                <div className="w-full col-start-2 col-end-5">
+                                    <input
+                                        required
+                                        type="email"
+                                        className="text-slate-800 text-xl font-extrabold rounded-md shadow shadow-gray-300 transition-shadow focus:ring-2 focus:ring-gray-400 focus:outline-none w-full py-3 px-4"
+                                    />
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-4 gap-x-4 w-full py-4">
+                                <h4 className="flex items-center w-max min-w-max text-sm text-gray-700 font-medium col-start-1 col-end-2">
+                                    Secondary
+                                </h4>
+                                <div className="w-full col-start-2 col-end-5">
+                                    <input
+                                        required
+                                        type="email"
+                                        className="text-slate-800 text-xl font-extrabold rounded-md shadow shadow-gray-300 transition-shadow focus:ring-2 focus:ring-gray-400 focus:outline-none w-full py-3 px-4"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
