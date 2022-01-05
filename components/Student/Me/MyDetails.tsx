@@ -107,7 +107,10 @@ const MyDetails: FunctionComponent = () => {
                         </div>
                     </div>
                     <div className="flex gap-x-5 items-center justify-end px-6 py-5 w-full">
-                        <button className="text-sm text-slate-800 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-lg py-2.5 px-4">
+                        <button
+                            type="button"
+                            className="text-sm text-slate-800 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-lg py-2.5 px-4"
+                        >
                             Cancel
                         </button>
                         <button
