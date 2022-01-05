@@ -158,6 +158,20 @@ const MyDetails: FunctionComponent = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className="flex gap-x-5 items-center justify-end px-6 pt-5 w-full">
+                            <button
+                                type="button"
+                                className="text-sm text-slate-800 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-lg py-2.5 px-4"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                className="text-sm text-white bg-gray-700 hover:bg-gray-800 rounded-lg shadow-lg py-2.5 px-4"
+                            >
+                                Update
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
