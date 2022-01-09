@@ -132,7 +132,7 @@ const MyDetails: FunctionComponent = () => {
                 <div className="flex flex-col gap-y-5 w-full lg:w-[55%] md:w-[65%]">
                     <form className="flex flex-col items-start justify-start gap-y-4 w-full pt-8 pb-5 bg-white rounded-lg shadow-lg divide-y divide-gray-200">
                         <h4 className="py-1.5 px-6 font-bold text-gray-700">Email Addresses</h4>
-                        <div className="flex flex-col gap-y-4 items-start justify-center w-full py-5 px-6">
+                        <div className="flex flex-col gap-y-4 items-start justify-center w-full pt-5 pb-2 px-6">
                             <div className="grid grid-cols-4 gap-x-4 w-full py-4">
                                 <h4 className="flex items-center w-max min-w-max text-sm text-gray-700 font-medium col-start-1 col-end-2">
                                     Primary
