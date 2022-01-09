@@ -16,6 +16,9 @@ const CreateClass: NextPage = () => {
                         Class
                     </span>
                 </h1>
+                <div className="flex flex-row items-center justify-center self-center h-full py-4">
+                    <form className="w-[60rem] h-[35rem] bg-white rounded-2xl overflow-hidden shadow-lg" />
+                </div>
             </section>
         </main>
     );
