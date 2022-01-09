@@ -173,6 +173,41 @@ const MyDetails: FunctionComponent = () => {
                             </button>
                         </div>
                     </form>
+                    <form className="flex flex-col items-start justify-start gap-y-4 w-full pt-8 pb-5 bg-white rounded-lg shadow-lg divide-y divide-gray-200">
+                        <h4 className="py-1.5 px-6 font-bold text-gray-700">Phone Numbers</h4>
+                        <div className="flex flex-col gap-y-4 items-start justify-center w-full pt-5 pb-2 px-6">
+                            <div className="grid grid-cols-4 gap-x-4 w-full py-4">
+                                <h4 className="flex items-center w-max min-w-max text-sm text-gray-700 font-medium col-start-1 col-end-2">
+                                    Primary
+                                </h4>
+                                <div className="w-full col-start-2 col-end-5">
+                                    {/* // TODO: Add Custom Phone Number Picker */}
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-4 gap-x-4 w-full py-4">
+                                <h4 className="flex items-center w-max min-w-max text-sm text-gray-700 font-medium col-start-1 col-end-2">
+                                    Secondary
+                                </h4>
+                                <div className="w-full col-start-2 col-end-5">
+                                    {/* // TODO: Add Custom Phone Number Picker */}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex gap-x-5 items-center justify-end px-6 pt-5 w-full">
+                            <button
+                                type="button"
+                                className="text-sm text-slate-800 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-lg py-2.5 px-4"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                className="text-sm text-white bg-gray-700 hover:bg-gray-800 rounded-lg shadow-lg py-2.5 px-4"
+                            >
+                                Update
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
