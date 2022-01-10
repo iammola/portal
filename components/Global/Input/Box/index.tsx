@@ -4,8 +4,8 @@ import Main from "./Main";
 import Badge from "./Badge";
 import Label from "./Label";
 
-const Input: Input = ({ className }) => {
-    return <div className={className} />;
+const Input: Input = ({ children, className }) => {
+    return <div className={className}>{children}</div>;
 };
 
 Input.Main = Main;
