@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 type Main = FunctionComponent;
 
 const Main: Main = () => {
-    return <></>;
+    return <div contentEditable suppressContentEditableWarning />;
 };
 
 export default Main;
