@@ -31,11 +31,13 @@ export const ClassSchema = new Schema<SchemaType>({
         // TODO: Sort out ref Model
         type: [Schema.Types.ObjectId],
     },
-    subjects: {
-        ref: "Subject",
-        type: [Schema.Types.ObjectId],
-    },
 });
 
-export const ClassModel =
-    (models.Class as Model<SchemaType>) ?? model("Class", ClassSchema);
+ClassSchema.virtual("subjectsCount", {
+    count: true,
+    ref: "Subject",
+    localField: "_id",
+    foreignField: "class",
+});
+
+export const ClassModel = (models.Class as Model<SchemaType>) ?? model("Class", ClassSchema);

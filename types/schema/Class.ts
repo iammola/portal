@@ -6,5 +6,5 @@ export interface ClassSchema extends DocumentId {
     special: string;
     createdAt: Date;
     teachers: ObjectId[];
-    subjects: ObjectId[];
+    subjectsCount: number;
 }
