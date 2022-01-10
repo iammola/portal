@@ -6,5 +6,5 @@ export interface ClassSchema extends DocumentId {
     special: string;
     createdAt: Date;
     teachers: ObjectId[];
-    subjectsCount: number;
+    subjectsCount: number; // virtual property
 }
