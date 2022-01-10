@@ -30,9 +30,17 @@ const Main: Main = ({ addValue, values }) => {
             className="w-full h-full border-4"
         >
             {values.map((item) => (
-                <li key={item._id}>{item.value}</li>
+                <Badge key={item._id}>{item.value}</Badge>
             ))}
         </div>
+    );
+};
+
+const Badge: FunctionComponent = ({ children }) => {
+    return (
+        <span contentEditable={false} suppressContentEditableWarning>
+            {children}
+        </span>
     );
 };
 
