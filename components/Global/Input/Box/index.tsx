@@ -4,15 +4,15 @@ import Main from "./Main";
 import Badge from "./Badge";
 import Label from "./Label";
 
-const Input: Input = () => {
-    return <></>;
+const Input: Input = ({ className }) => {
+    return <div className={className} />;
 };
 
 Input.Main = Main;
 Input.Badge = Badge;
 Input.Label = Label;
 
-interface Input extends FunctionComponent {
+interface Input extends FunctionComponent<{ className?: string }> {
     Main: Main;
     Badge: Badge;
     Label: Label;
