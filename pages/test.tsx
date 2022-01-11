@@ -14,7 +14,7 @@ const InputTest: NextPage = () => {
                     type="email"
                     name="input"
                     placeholder="Email address"
-                    className="w-full h-14 p-2 pl-6 border border-gray-300 rounded-lg overflow-hidden focus:outline-none"
+                    className="peer w-full h-14 p-2 pl-4 border border-gray-400 rounded-lg overflow-hidden focus:outline-none"
                 />
                 <label
                     htmlFor="input"
