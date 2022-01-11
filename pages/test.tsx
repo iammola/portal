@@ -16,7 +16,10 @@ const InputTest: NextPage = () => {
                     placeholder="Email address"
                     className="w-full h-14 p-2 pl-6 border border-gray-300 rounded-lg overflow-hidden focus:outline-none"
                 />
-                <label htmlFor="input" className="text-gray-800 font-medium tracking-wide">
+                <label
+                    htmlFor="input"
+                    className="absolute left-0 -top-6 text-sm text-gray-600 font-semibold"
+                >
                     Email address
                 </label>
             </div>
