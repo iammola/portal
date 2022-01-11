@@ -8,6 +8,10 @@ const InputTest: NextPage = () => {
             <Head>
                 <title>Input Component Test</title>
             </Head>
+            <div className="relative">
+                <label htmlFor="input"></label>
+                <input id="input" type="text" name="input" />
+            </div>
         </main>
     );
 };
