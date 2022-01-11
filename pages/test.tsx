@@ -8,7 +8,7 @@ const InputTest: NextPage = () => {
             <Head>
                 <title>Input Component Test</title>
             </Head>
-            <div className="relative w-[20rem] flex flex-col gap-y-2 items-start justify-start">
+            <div className="relative w-[20rem]">
                 <input
                     id="input"
                     type="email"
