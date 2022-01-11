@@ -8,7 +8,7 @@ const InputTest: NextPage = () => {
             <Head>
                 <title>Input Component Test</title>
             </Head>
-            <div className="relative w-[20rem]">
+            <div className="relative grid grid-rows-[repeat(2,max-content)] gap-x-2 items-center">
                 <input
                     id="input"
                     type="email"
