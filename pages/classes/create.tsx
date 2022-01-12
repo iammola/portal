@@ -26,6 +26,7 @@ const CreateClass: NextPage = () => {
                     <form className="w-[60rem] h-[35rem] bg-white p-10 rounded-2xl overflow-hidden shadow-lg">
                         <Input
                             required
+                            showIcons
                             id="name"
                             type="text"
                             value={name}
