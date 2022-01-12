@@ -7,7 +7,7 @@ import { classNames } from "utils";
 const XIcon = dynamic(() => import("@heroicons/react/solid/XIcon"));
 const CheckIcon = dynamic(() => import("@heroicons/react/solid/CheckIcon"));
 
-const Input: Input = ({ className, label, showIcons, ...props }) => {
+const Input: Input = ({ className, label, showIcons, onChange, ...props }) => {
     const [value, setValue] = useState(props.value ?? "");
     const [valid, setValid] = useState<boolean>();
     const ref = useRef<HTMLInputElement>(null);
@@ -18,6 +18,10 @@ const Input: Input = ({ className, label, showIcons, ...props }) => {
         const input = ref.current;
         if (typing === false) setValid(input?.value === "" ? undefined : input?.validity.valid);
     }, [typing]);
+
+    useEffect(() => {
+        onChange(value);
+    }, [onChange, value]);
 
     return (
         <div className="relative grid gap-x-2 items-center">
@@ -65,6 +69,7 @@ const Input: Input = ({ className, label, showIcons, ...props }) => {
 };
 
 type Input = FunctionComponent<{
+    onChange(v: NonNullable<ComponentProps<"input">["value"]>): void;
     className: string | ((valid?: boolean) => string);
     type: ComponentProps<"input">["type"];
     showIcons?: boolean;
