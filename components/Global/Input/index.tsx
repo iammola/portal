@@ -61,7 +61,6 @@ const Input: Input = ({ label, ...props }) => {
 };
 
 type Input = FunctionComponent<{
-    placeholder: string;
     required?: boolean;
     value?: string;
     label: string;
