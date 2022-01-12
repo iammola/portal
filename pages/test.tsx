@@ -1,8 +1,25 @@
 import Head from "next/head";
+import { useEffect, useRef, useState } from "react";
 
 import type { NextPage } from "next";
 
 const InputTest: NextPage = () => {
+    const [value, setValue] = useState("");
+    const [, setValid] = useState<boolean>();
+    const ref = useRef<HTMLInputElement>(null);
+    const [typing, setTyping] = useState(false);
+
+    useEffect(() => {
+        setTyping(true);
+        const timeout = setTimeout(setTyping, 750, false);
+        return () => clearTimeout(timeout);
+    }, [value]);
+
+    useEffect(() => {
+        const input = ref.current;
+        if (typing === false) setValid(input?.value === "" ? undefined : input?.validity.valid);
+    }, [typing]);
+
     return (
         <main className="flex flex-row items-center justify-center w-screen h-screen">
             <Head>
@@ -10,10 +27,13 @@ const InputTest: NextPage = () => {
             </Head>
             <div className="relative grid gap-x-2 items-center">
                 <input
+                    ref={ref}
                     id="input"
                     type="email"
                     name="input"
+                    value={value}
                     placeholder="Email address"
+                    onChange={(e) => setValue(e.target.value)}
                     className="peer w-[20rem] h-[3.75rem] p-2 pl-4 border placeholder-shown:border-gray-400 rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-400 valid:ring-2 valid:ring-emerald-400 focus:valid:ring-2 focus:valid:ring-emerald-400 placeholder-shown:!ring-transparent placeholder-transparent row-start-1"
                 />
                 <label
