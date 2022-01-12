@@ -55,7 +55,7 @@ const InputTest: NextPage = () => {
                 </label>
                 <CheckIcon
                     className={classNames(
-                        "h-5 w-5 fill-emerald-500 peer-placeholder-shown:opacity-0 row-start-1",
+                        "h-5 w-5 fill-emerald-500 peer-placeholder-shown:opacity-0 row-start-1 col-start-2",
                         {
                             "opacity-0": valid !== true,
                         }
@@ -63,7 +63,7 @@ const InputTest: NextPage = () => {
                 />
                 <XIcon
                     className={classNames(
-                        "h-5 w-5 fill-red-500 peer-placeholder-shown:opacity-0 row-start-1",
+                        "h-5 w-5 fill-red-500 peer-placeholder-shown:opacity-0 row-start-1 col-start-2",
                         {
                             "opacity-0": valid !== false,
                         }
