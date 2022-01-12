@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { ComponentProps, FunctionComponent, useEffect, useRef, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
 import { useIsChanging } from "hooks";
@@ -61,10 +61,10 @@ const Input: Input = ({ label, ...props }) => {
 };
 
 type Input = FunctionComponent<{
+    type: ComponentProps<"input">["type"];
     required?: boolean;
     value?: string;
     label: string;
-    type: string;
     id: string;
 }>;
 
