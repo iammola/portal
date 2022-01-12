@@ -47,7 +47,7 @@ const InputTest: NextPage = () => {
                 />
                 <label
                     htmlFor="input"
-                    className="absolute left-[-.4rem] p-1 text-gray-800 transition-all text-sm -top-3.5 font-medium bg-white tracking-wide peer-focus:text-sm peer-focus:left-[-.4rem] peer-focus:top-[-.95rem] peer-focus:bg-white peer-focus:font-medium peer-focus:tracking-wide peer-placeholder-shown:left-3 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:bg-transparent peer-placeholder-shown:tracking-normal"
+                    className="absolute left-[-.4rem] p-1 text-gray-800 transition-all text-sm -top-3.5 font-medium bg-white tracking-wide peer-focus:text-sm peer-focus:left-[-.4rem] peer-focus:top-[-.95rem] peer-focus:bg-white peer-focus:font-medium peer-focus:tracking-wide peer-placeholder-shown:select-none peer-placeholder-shown:left-3 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:bg-transparent peer-placeholder-shown:tracking-normal"
                 >
                     Email address
                     <span className="text-sm text-red-500 pl-0.5 align-middle">*</span>
