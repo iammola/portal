@@ -12,6 +12,7 @@
         "postinstall": "git config core.hooksPath ./.github/hooks"
     },
     "dependencies": {
+        "@heroicons/react": "^1.0.5",
         "awesome-phonenumber": "^2.65.0",
         "mongoose": "^6.1.5",
         "mongoose-lean-virtuals": "^0.9.0",
