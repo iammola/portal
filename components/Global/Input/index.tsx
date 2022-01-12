@@ -29,6 +29,7 @@ const Input: Input = ({ className, label, showIcons, onChange, ...props }) => {
                 ref={ref}
                 {...props}
                 value={value}
+                placeholder={label}
                 onChange={(e) => setValue(e.target.value)}
                 className={classNames(
                     "peer p-2 pl-4 row-start-1",
