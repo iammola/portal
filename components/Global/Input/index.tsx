@@ -71,10 +71,10 @@ const Input: Input = ({ className, label, showIcons, onChange, ...props }) => {
 type Input = FunctionComponent<{
     onChange(v: NonNullable<ComponentProps<"input">["value"]>): void;
     className: string | ((valid?: boolean) => string);
+    value?: ComponentProps<"input">["value"];
     type: ComponentProps<"input">["type"];
     showIcons?: boolean;
     required?: boolean;
-    value?: string;
     label: string;
     id: string;
 }>;
