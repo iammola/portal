@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
+import { useIsChanging } from "hooks";
 
 import type { NextPage } from "next";
 
@@ -10,13 +11,8 @@ const InputTest: NextPage = () => {
     const [value, setValue] = useState("");
     const [valid, setValid] = useState<boolean>();
     const ref = useRef<HTMLInputElement>(null);
-    const [typing, setTyping] = useState(false);
 
-    useEffect(() => {
-        setTyping(true);
-        const timeout = setTimeout(setTyping, 750, false);
-        return () => clearTimeout(timeout);
-    }, [value]);
+    const typing = useIsChanging(value);
 
     useEffect(() => {
         const input = ref.current;
