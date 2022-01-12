@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
-import { BadgeCheckIcon } from "@heroicons/react/solid";
+import { CheckIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
@@ -53,7 +53,7 @@ const InputTest: NextPage = () => {
                     Email address
                     <span className="text-sm text-rose-500 pl-0.5 align-middle">*</span>
                 </label>
-                <BadgeCheckIcon
+                <CheckIcon
                     className={classNames(
                         "h-5 w-5 fill-emerald-500 peer-placeholder-shown:opacity-0 row-start-1",
                         {
