@@ -1,10 +1,13 @@
 import { ComponentProps, FunctionComponent, useEffect, useRef, useState } from "react";
-import { CheckIcon, XIcon } from "@heroicons/react/solid";
+import dynamic from "next/dynamic";
 
 import { useIsChanging } from "hooks";
 import { classNames } from "utils";
 
-const Input: Input = ({ className, label, ...props }) => {
+const XIcon = dynamic(() => import("@heroicons/react/solid/XIcon"));
+const CheckIcon = dynamic(() => import("@heroicons/react/solid/CheckIcon"));
+
+const Input: Input = ({ className, label, showIcons, ...props }) => {
     const [value, setValue] = useState(props.value ?? "");
     const [valid, setValid] = useState<boolean>();
     const ref = useRef<HTMLInputElement>(null);
@@ -37,22 +40,26 @@ const Input: Input = ({ className, label, ...props }) => {
                     <span className="text-sm text-red-500 pl-0.5 align-middle">*</span>
                 )}
             </label>
-            <CheckIcon
-                className={classNames(
-                    "h-5 w-5 fill-emerald-500 peer-placeholder-shown:opacity-0 row-start-1 col-start-2",
-                    {
-                        "opacity-0": valid !== true,
-                    }
-                )}
-            />
-            <XIcon
-                className={classNames(
-                    "h-5 w-5 fill-red-500 peer-placeholder-shown:opacity-0 row-start-1 col-start-2",
-                    {
-                        "opacity-0": valid !== false,
-                    }
-                )}
-            />
+            {showIcons === true && (
+                <>
+                    <CheckIcon
+                        className={classNames(
+                            "h-5 w-5 fill-emerald-500 peer-placeholder-shown:opacity-0 row-start-1 col-start-2",
+                            {
+                                "opacity-0": valid !== true,
+                            }
+                        )}
+                    />
+                    <XIcon
+                        className={classNames(
+                            "h-5 w-5 fill-red-500 peer-placeholder-shown:opacity-0 row-start-1 col-start-2",
+                            {
+                                "opacity-0": valid !== false,
+                            }
+                        )}
+                    />
+                </>
+            )}
         </div>
     );
 };
@@ -60,6 +67,7 @@ const Input: Input = ({ className, label, ...props }) => {
 type Input = FunctionComponent<{
     className: string | ((valid?: boolean) => string);
     type: ComponentProps<"input">["type"];
+    showIcons?: boolean;
     required?: boolean;
     value?: string;
     label: string;
