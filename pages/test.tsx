@@ -57,7 +57,7 @@ const InputTest: NextPage = () => {
                     className={classNames(
                         "h-5 w-5 fill-emerald-500 peer-placeholder-shown:opacity-0 row-start-1",
                         {
-                            "peer-invalid:opacity-0": !valid,
+                            "opacity-0": valid !== true,
                         }
                     )}
                 />
