@@ -39,10 +39,9 @@ const InputTest: NextPage = () => {
                     placeholder="Email address"
                     onChange={(e) => setValue(e.target.value)}
                     className={classNames(
-                        "peer w-[20rem] h-[3.75rem] p-2 pl-4 border placeholder-shown:border-gray-400 rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-shown:!ring-transparent placeholder-transparent row-start-1",
+                        "peer w-[20rem] h-[3.75rem] p-2 pl-4 border placeholder-shown:border-gray-400 rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:!ring-transparent placeholder-transparent row-start-1",
                         {
-                            "valid:ring-2 valid:ring-emerald-400 focus:valid:ring-2 focus:valid:ring-emerald-400":
-                                !!valid,
+                            "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
                         }
                     )}
                 />
