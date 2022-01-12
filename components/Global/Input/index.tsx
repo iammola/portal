@@ -4,7 +4,7 @@ import { CheckIcon, XIcon } from "@heroicons/react/solid";
 import { useIsChanging } from "hooks";
 import { classNames } from "utils";
 
-const Input: Input = ({ label, ...props }) => {
+const Input: Input = ({ className, label, ...props }) => {
     const [value, setValue] = useState(props.value ?? "");
     const [valid, setValid] = useState<boolean>();
     const ref = useRef<HTMLInputElement>(null);
@@ -24,11 +24,8 @@ const Input: Input = ({ label, ...props }) => {
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 className={classNames(
-                    "peer w-[20rem] h-[3.75rem] p-2 pl-4 border placeholder-shown:border-gray-400 rounded-md overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:!ring-transparent placeholder-transparent row-start-1",
-                    {
-                        "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
-                        "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
-                    }
+                    "peer p-2 pl-4 row-start-1",
+                    typeof className === "string" ? className : className(valid)
                 )}
             />
             <label
@@ -61,6 +58,7 @@ const Input: Input = ({ label, ...props }) => {
 };
 
 type Input = FunctionComponent<{
+    className: string | ((valid?: boolean) => string);
     type: ComponentProps<"input">["type"];
     required?: boolean;
     value?: string;
