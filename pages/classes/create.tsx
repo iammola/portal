@@ -8,6 +8,9 @@ import type { NextPage } from "next";
 
 const CreateClass: NextPage = () => {
     const [name, setName] = useState("");
+    const [alias, setAlias] = useState("");
+    const [special, setSpecial] = useState("");
+
     const inputClassName = useCallback(
         (valid?: boolean) =>
             classNames(
@@ -44,6 +47,26 @@ const CreateClass: NextPage = () => {
                             label="Name"
                             className={inputClassName}
                             onChange={(v) => setName(v as string)}
+                        />
+                        <Input
+                            required
+                            showIcons
+                            id="alias"
+                            type="text"
+                            value={alias}
+                            label="Alias"
+                            className={inputClassName}
+                            onChange={(v) => setAlias(v as string)}
+                        />
+                        <Input
+                            required
+                            showIcons
+                            id="special"
+                            type="text"
+                            value={special}
+                            label="Special name"
+                            className={inputClassName}
+                            onChange={(v) => setSpecial(v as string)}
                         />
                     </form>
                 </div>
