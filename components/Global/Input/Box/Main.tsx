@@ -17,7 +17,7 @@ const Main: Main = ({ addValue, values }) => {
 
             if (value != undefined && values.find((item) => item.value === value) === undefined) {
                 lastChild?.remove();
-                addValue({ _id: "", value });
+                addValue({ _id: Date.now().toString(), value });
             }
         }
     }
