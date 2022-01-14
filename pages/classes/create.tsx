@@ -37,7 +37,7 @@ const CreateClass: NextPage = () => {
                     </span>
                 </h1>
                 <div className="flex flex-row items-center justify-center self-center h-full py-4">
-                    <form className="w-[60rem] h-[35rem] bg-white p-10 rounded-2xl overflow-hidden shadow-lg">
+                    <form className="flex flex-col gap-y-4 items-center justify-center bg-white p-10 rounded-2xl overflow-hidden shadow-lg">
                         <Input
                             required
                             id="name"
