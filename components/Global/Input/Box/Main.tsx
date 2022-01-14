@@ -28,7 +28,7 @@ const Main: Main = ({ addValue, removeValue, values }) => {
             contentEditable
             onKeyDown={keyEvents}
             suppressContentEditableWarning
-            className="flex flex-row flex-wrap gap-x-4 gap-y-8 content-start items-start justify-start w-full h-full focus:outline-none"
+            className="flex flex-row flex-wrap gap-2 content-start items-start justify-start w-full h-full focus:outline-none"
         >
             {values.map((item) => (
                 <Badge key={item._id} remove={() => removeValue(item._id)}>
