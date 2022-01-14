@@ -25,14 +25,15 @@ const Main: Main = ({ addValue, removeValue, values }) => {
         }
     }
 
-    function addSpace(e: MouseEvent<HTMLDivElement>) {
-        const field = (e.target as HTMLDivElement).closest("[contenteditable=true]");
+    function addSpace(e?: MouseEvent<HTMLDivElement>) {
+        const target =
+            (e?.target as HTMLDivElement)?.closest("[contenteditable=true]") ?? ref.current;
 
-        if (field === e.target) {
-            if (field.lastChild !== null && field.lastChild.nodeType !== 3)
-                field.insertAdjacentHTML("beforeend", "&nbsp;");
+        if (target !== null && target === ref.current) {
+            if (target.lastChild !== null && target.lastChild.nodeType !== 3)
+                target.insertAdjacentHTML("beforeend", "&nbsp;");
 
-            focusCursor(field.lastChild);
+            focusCursor(target.lastChild);
         }
     }
 
