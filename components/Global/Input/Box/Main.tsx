@@ -22,7 +22,11 @@ const Main: Main = ({ addValue, removeValue, values }) => {
             const value = lastChild?.textContent?.trim();
             e.preventDefault();
 
-            if (value != undefined && values.find((item) => item.value === value) === undefined) {
+            if (
+                value != undefined &&
+                value !== "" &&
+                values.find((item) => item.value === value) === undefined
+            ) {
                 lastChild?.remove();
                 addValue({ _id: Date.now().toString(), value });
                 setTimeout(addSpace);
