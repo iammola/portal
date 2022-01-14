@@ -1,4 +1,4 @@
-import { FunctionComponent, KeyboardEvent, MouseEvent } from "react";
+import { FunctionComponent, KeyboardEvent, MouseEvent, useRef } from "react";
 import { XIcon } from "@heroicons/react/outline";
 
 type Value = { [K in "_id" | "value"]: string };
@@ -10,6 +10,8 @@ type Main = FunctionComponent<{
 }>;
 
 const Main: Main = ({ addValue, removeValue, values }) => {
+    const ref = useRef<HTMLDivElement>(null);
+
     function keyEvents(e: KeyboardEvent<HTMLElement>) {
         if (e.key === "Enter") {
             const lastChild = (e.target as HTMLElement).lastChild;
@@ -49,6 +51,7 @@ const Main: Main = ({ addValue, removeValue, values }) => {
 
     return (
         <div
+            ref={ref}
             contentEditable
             onClick={addSpace}
             onKeyDown={keyEvents}
