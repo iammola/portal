@@ -25,6 +25,7 @@ const Main: Main = ({ addValue, removeValue, values }) => {
             if (value != undefined && values.find((item) => item.value === value) === undefined) {
                 lastChild?.remove();
                 addValue({ _id: Date.now().toString(), value });
+                addSpace();
             }
         }
     }
