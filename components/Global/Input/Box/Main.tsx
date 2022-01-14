@@ -33,12 +33,14 @@ const Main: Main = ({ addValue, removeValue, values }) => {
             if (target.lastChild !== null && target.lastChild.nodeType !== 3)
                 target.insertAdjacentHTML("beforeend", "&nbsp;");
 
-            focusCursor(target.lastChild);
+            focusCursor();
         }
     }
 
-    function focusCursor(lastChild: Node | null) {
-        if (lastChild !== null) {
+    function focusCursor() {
+        const lastChild = ref.current?.lastChild;
+
+        if (lastChild?.nodeType === 3) {
             const range = document.createRange();
             const selection = getSelection();
 
