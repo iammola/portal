@@ -1,4 +1,4 @@
-import { FunctionComponent, KeyboardEvent } from "react";
+import { FunctionComponent, KeyboardEvent, MouseEvent } from "react";
 import { XIcon } from "@heroicons/react/outline";
 
 type Value = { [K in "_id" | "value"]: string };
@@ -23,9 +23,33 @@ const Main: Main = ({ addValue, removeValue, values }) => {
         }
     }
 
+    function addSpace(e: MouseEvent<HTMLDivElement>) {
+        const field = (e.target as HTMLDivElement).closest("[contenteditable=true]");
+
+        if (field === e.target) {
+            if (field.lastChild?.nodeType !== 3) field.insertAdjacentHTML("beforeend", "&nbsp;");
+            const lastChild = field.lastChild;
+
+            if (lastChild !== null) {
+                const range = document.createRange();
+                const selection = getSelection();
+
+                range.setStart(
+                    lastChild,
+                    +(lastChild.textContent !== " ") * (lastChild.textContent?.length ?? 0)
+                );
+                range.collapse(false);
+
+                selection?.removeAllRanges();
+                selection?.addRange(range);
+            }
+        }
+    }
+
     return (
         <div
             contentEditable
+            onClick={addSpace}
             onKeyDown={keyEvents}
             suppressContentEditableWarning
             className="flex flex-row flex-wrap gap-2 content-start items-start justify-start w-full h-full focus:outline-none"
