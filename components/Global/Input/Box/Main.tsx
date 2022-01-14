@@ -9,6 +9,10 @@ type Main = FunctionComponent<{
     removeValue(v: Value["_id"]): void;
 }>;
 
+type Badge = FunctionComponent<{
+    remove(): void;
+}>;
+
 const Main: Main = ({ addValue, removeValue, values }) => {
     const ref = useRef<HTMLDivElement>(null);
 
@@ -73,7 +77,7 @@ const Main: Main = ({ addValue, removeValue, values }) => {
     );
 };
 
-const Badge: FunctionComponent<{ remove(): void }> = ({ children, remove }) => {
+const Badge: Badge = ({ children, remove }) => {
     return (
         <span
             contentEditable={false}
