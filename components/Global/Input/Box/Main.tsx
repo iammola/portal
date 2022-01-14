@@ -31,21 +31,24 @@ const Main: Main = ({ addValue, removeValue, values }) => {
         if (field === e.target) {
             if (field.lastChild !== null && field.lastChild.nodeType !== 3)
                 field.insertAdjacentHTML("beforeend", "&nbsp;");
-            const lastChild = field.lastChild;
 
-            if (lastChild !== null) {
-                const range = document.createRange();
-                const selection = getSelection();
+            focusCursor(field.lastChild);
+        }
+    }
 
-                range.setStart(
-                    lastChild,
-                    +(lastChild.textContent !== " ") * (lastChild.textContent?.length ?? 0)
-                );
-                range.collapse(false);
+    function focusCursor(lastChild: Node | null) {
+        if (lastChild !== null) {
+            const range = document.createRange();
+            const selection = getSelection();
 
-                selection?.removeAllRanges();
-                selection?.addRange(range);
-            }
+            range.setStart(
+                lastChild,
+                +(lastChild.textContent !== " ") * (lastChild.textContent?.length ?? 0)
+            );
+            range.collapse(false);
+
+            selection?.removeAllRanges();
+            selection?.addRange(range);
         }
     }
 
