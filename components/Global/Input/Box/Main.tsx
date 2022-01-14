@@ -27,7 +27,8 @@ const Main: Main = ({ addValue, removeValue, values }) => {
         const field = (e.target as HTMLDivElement).closest("[contenteditable=true]");
 
         if (field === e.target) {
-            if (field.lastChild?.nodeType !== 3) field.insertAdjacentHTML("beforeend", "&nbsp;");
+            if (field.lastChild !== null && field.lastChild.nodeType !== 3)
+                field.insertAdjacentHTML("beforeend", "&nbsp;");
             const lastChild = field.lastChild;
 
             if (lastChild !== null) {
