@@ -65,6 +65,12 @@ const CreateClass: NextPage = () => {
                             className={inputClassName}
                             onChange={(v) => setSpecial(v as string)}
                         />
+                        <button
+                            type="submit"
+                            className="w-full mt-5 py-3 px-5 tracking-wide bg-emerald-500 hover:bg-emerald-600 text-white font-medium uppercase rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 focus:hover:ring-emerald-600 focus:ring-offset-white"
+                        >
+                            Save
+                        </button>
                     </form>
                 </div>
             </section>
