@@ -17,7 +17,7 @@ const Main: Main = ({ addValue, removeValue, values }) => {
     const ref = useRef<HTMLDivElement>(null);
 
     function keyEvents(e: KeyboardEvent<HTMLElement>) {
-        if (e.key === "Enter") {
+        if (e.code === "Enter") {
             const lastChild = (e.target as HTMLElement).lastChild;
             const value = lastChild?.textContent?.trim();
             e.preventDefault();
