@@ -9,7 +9,7 @@ type Main = FunctionComponent<{
     removeValue(v: Value["_id"]): void;
 }>;
 
-const Main: Main = ({ addValue, values }) => {
+const Main: Main = ({ addValue, removeValue, values }) => {
     function keyEvents(e: KeyboardEvent<HTMLElement>) {
         if (e.key === "Enter") {
             const lastChild = (e.target as HTMLElement).lastChild;
@@ -31,13 +31,15 @@ const Main: Main = ({ addValue, values }) => {
             className="flex flex-row flex-wrap gap-x-4 gap-y-8 items-start justify-start w-full h-full focus:outline-none"
         >
             {values.map((item) => (
-                <Badge key={item._id}>{item.value}</Badge>
+                <Badge key={item._id} remove={() => removeValue(item._id)}>
+                    {item.value}
+                </Badge>
             ))}
         </div>
     );
 };
 
-const Badge: FunctionComponent = ({ children }) => {
+const Badge: FunctionComponent<{ remove(): void }> = ({ children, remove }) => {
     return (
         <span
             contentEditable={false}
@@ -45,7 +47,10 @@ const Badge: FunctionComponent = ({ children }) => {
             className="flex flex-row gap-x-2 items-center justify-between min-w-max max-w-full py-1 pl-3 pr-1 rounded-full bg-gray-200"
         >
             <span className="text-sm font-medium text-gray-700">{children}</span>
-            <XIcon className="w-6 h-6 p-1 shrink-0 rounded-full stroke-gray-700 cursor-pointer hover:bg-gray-300" />
+            <XIcon
+                onClick={remove}
+                className="w-6 h-6 p-1 shrink-0 rounded-full stroke-gray-700 cursor-pointer hover:bg-gray-300"
+            />
         </span>
     );
 };
