@@ -38,8 +38,12 @@ const Main: Main = ({ addValue, values }) => {
 
 const Badge: FunctionComponent = ({ children }) => {
     return (
-        <span contentEditable={false} suppressContentEditableWarning>
-            {children}
+        <span
+            contentEditable={false}
+            suppressContentEditableWarning
+            className="flex flex-row gap-x-2 items-center justify-between min-w-max max-w-full py-1 pl-3 pr-1 rounded-full bg-gray-200"
+        >
+            <span className="text-sm font-medium text-gray-700">{children}</span>
         </span>
     );
 };
