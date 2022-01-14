@@ -1,9 +1,12 @@
-/** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
+const {
+    fontFamily: { sans },
+} = require("tailwindcss/defaultTheme");
 
-// eslint-disable-next-line no-undef
+/** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
 module.exports = {
     content: ["pages/**/*.{ts,tsx}", "components/**/*.{ts,tsx}"],
-    theme: {},
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    theme: { extend: { fontFamily: { poppins: ["Poppins", ...sans] } } },
     variants: {},
     plugins: [],
 };
