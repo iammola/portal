@@ -80,7 +80,7 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
                     <span
                         contentEditable
                         suppressContentEditableWarning
-                        className="w-[3.1875px] text-center text-transparent whitespace-pre last:hidden"
+                        className="w-[3.1875px] text-center text-transparent caret-black whitespace-pre last:hidden"
                     >
                         <br />
                     </span>
