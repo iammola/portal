@@ -1,9 +1,9 @@
 import { FunctionComponent } from "react";
 
-type Label = FunctionComponent;
+type Label = FunctionComponent<{ className: string }>;
 
-const Label: Label = () => {
-    return <></>;
+const Label: Label = ({ children, className }) => {
+    return <span className={className}>{children}</span>;
 };
 
 export default Label;
