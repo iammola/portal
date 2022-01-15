@@ -16,7 +16,7 @@ type Badge = FunctionComponent<{
 const Main: Main = ({ addValue, removeValue, values }) => {
     const ref = useRef<HTMLDivElement>(null);
 
-    function keyEvents(e: KeyboardEvent<HTMLElement>) {
+    function updateValues(e: KeyboardEvent<HTMLElement>) {
         if (["Enter", "Space"].includes(e.code) === true) {
             const lastChild = (e.target as HTMLElement).lastChild;
             const value = lastChild?.textContent?.trim();
@@ -69,7 +69,7 @@ const Main: Main = ({ addValue, removeValue, values }) => {
             ref={ref}
             contentEditable
             onClick={addSpace}
-            onKeyDown={keyEvents}
+            onKeyDown={updateValues}
             suppressContentEditableWarning
             className="flex flex-row flex-wrap gap-x-1 gap-y-2 content-start items-start justify-start w-full h-full focus:outline-none"
         >
