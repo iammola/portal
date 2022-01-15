@@ -36,8 +36,7 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
     }
 
     function addSpace(e?: MouseEvent<HTMLDivElement>) {
-        const target =
-            (e?.target as HTMLDivElement)?.closest("[contenteditable=true]") ?? ref.current;
+        const target = (e?.target as HTMLDivElement) ?? ref.current;
 
         if (target !== null && target === ref.current) {
             if (target.lastChild !== null && target.lastChild.nodeType !== 3)
