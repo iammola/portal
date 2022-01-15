@@ -82,7 +82,7 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
                         suppressContentEditableWarning
                         className="whitespace-pre last:hidden"
                     >
-                        {" "}
+                        <br />
                     </span>
                 </Fragment>
             ))}
