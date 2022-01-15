@@ -5,6 +5,7 @@ type Value = { [K in "_id" | "value"]: string };
 
 type Main = FunctionComponent<{
     values: Value[];
+    className: string;
     addValue(v: Value): void;
     removeValue(v: Value["_id"]): void;
 }>;
@@ -13,7 +14,7 @@ type Badge = FunctionComponent<{
     remove(): void;
 }>;
 
-const Main: Main = ({ addValue, removeValue, values }) => {
+const Main: Main = ({ addValue, className, removeValue, values }) => {
     const ref = useRef<HTMLDivElement>(null);
 
     function updateValues(e: KeyboardEvent<HTMLElement>) {
@@ -69,9 +70,9 @@ const Main: Main = ({ addValue, removeValue, values }) => {
             ref={ref}
             contentEditable
             onClick={addSpace}
+            className={className}
             onKeyDown={updateValues}
             suppressContentEditableWarning
-            className="flex flex-row flex-wrap gap-x-1 gap-y-2 content-start items-start justify-start w-full h-full focus:outline-none"
         >
             {values.map((item) => (
                 <Fragment key={item._id}>
