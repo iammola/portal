@@ -71,7 +71,7 @@ const Main: Main = ({ addValue, removeValue, values }) => {
             onClick={addSpace}
             onKeyDown={keyEvents}
             suppressContentEditableWarning
-            className="flex flex-row flex-wrap gap-2 content-start items-start justify-start w-full h-full focus:outline-none"
+            className="flex flex-row flex-wrap gap-x-1 gap-y-2 content-start items-start justify-start w-full h-full focus:outline-none"
         >
             {values.map((item) => (
                 <Fragment key={item._id}>
