@@ -1,4 +1,4 @@
-import { FunctionComponent, KeyboardEvent, MouseEvent, useRef } from "react";
+import { Fragment, FunctionComponent, KeyboardEvent, MouseEvent, useRef } from "react";
 import { XIcon } from "@heroicons/react/outline";
 
 type Value = { [K in "_id" | "value"]: string };
@@ -74,9 +74,16 @@ const Main: Main = ({ addValue, removeValue, values }) => {
             className="flex flex-row flex-wrap gap-2 content-start items-start justify-start w-full h-full focus:outline-none"
         >
             {values.map((item) => (
-                <Badge key={item._id} remove={() => removeValue(item._id)}>
-                    {item.value}
-                </Badge>
+                <Fragment key={item._id}>
+                    <Badge remove={() => removeValue(item._id)}>{item.value}</Badge>
+                    <span
+                        contentEditable
+                        suppressContentEditableWarning
+                        className="whitespace-pre last:hidden"
+                    >
+                        {" "}
+                    </span>
+                </Fragment>
             ))}
         </div>
     );
