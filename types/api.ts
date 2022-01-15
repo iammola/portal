@@ -1,6 +1,12 @@
+// Todo: Force the `number` types to be valid `http-status-codes` types
+export type APIInternal<D, E> =
+    | ["", 0, null]
+    | [Omit<APIError<E>, "success">, number, false]
+    | [Omit<APIResponse<D>, "success">, number, true];
+
 export interface APIData<S> {
     success: S;
-    message: string;
+    message: string; // Todo: Force to be valid `http-status-codes` types
 }
 
 export interface APIResponse<D, S extends boolean = never> extends APIData<S> {
