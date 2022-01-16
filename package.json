@@ -14,6 +14,7 @@
     "dependencies": {
         "@heroicons/react": "^1.0.5",
         "awesome-phonenumber": "^2.67.0",
+        "http-status-codes": "^2.2.0",
         "mongoose": "^6.1.6",
         "mongoose-lean-virtuals": "^0.9.0",
         "next": "latest",
