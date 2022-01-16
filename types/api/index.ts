@@ -10,12 +10,12 @@ export interface APIData<S> {
     message: `${ReasonPhrases}`;
 }
 
-export interface APIResponse<D, S extends boolean = never> extends APIData<S> {
+export interface APIResponse<D> extends APIData<true> {
     data: D;
 }
 
-export interface APIError<E, S extends boolean = never> extends APIData<S> {
+export interface APIError<E> extends APIData<false> {
     error: E;
 }
 
-export type APIResult<D, E> = APIResponse<D, true> | APIError<E, false>;
+export type APIResult<D, E> = APIResponse<D> | APIError<E>;
