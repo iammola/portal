@@ -1,25 +1,25 @@
 import type { StatusCodes, ReasonPhrases } from "http-status-codes";
 
-export type APIInternal<D, E> = ["", 0] | APIInternalResponse<D, E>;
+export type ApiInternal<D, E> = ["", 0] | ApiInternalResponse<D, E>;
 
-export type APIInternalResponse<D, E> =
-    | [APIError<E>, FilterNumber<`${StatusCodes}`>]
-    | [APIResponse<D>, FilterNumber<`${StatusCodes}`>];
+export type ApiInternalResponse<D, E> =
+    | [ApiError<E>, FilterNumber<`${StatusCodes}`>]
+    | [ApiResponse<D>, FilterNumber<`${StatusCodes}`>];
 
-export interface APIData<S> {
+export interface ApiData<S> {
     success: S;
     message: `${ReasonPhrases}`;
 }
 
-export interface APIResponse<D> extends APIData<true> {
+export interface ApiResponse<D> extends ApiData<true> {
     data: D;
 }
 
-export interface APIError<E> extends APIData<false> {
+export interface ApiError<E> extends ApiData<false> {
     error: E;
 }
 
-export type APIResult<D, E> = APIResponse<D> | APIError<E>;
+export type ApiResult<D, E> = ApiResponse<D> | ApiError<E>;
 
 /**
  * THese types create a number union from a string union

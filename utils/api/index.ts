@@ -1,4 +1,4 @@
-import { APIResult } from "types/api";
+import { ApiResult } from "types/api";
 
 /**
  *
@@ -19,5 +19,5 @@ export async function fetchAPIEndpoint<ResponseData, ResponseError, Body>(
             Accept: "application/json",
         },
     });
-    return (await response.json()) as APIResult<ResponseData, ResponseError>;
+    return (await response.json()) as ApiResult<ResponseData, ResponseError>;
 }
