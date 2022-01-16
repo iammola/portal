@@ -1,9 +1,9 @@
 import type { StatusCodes, ReasonPhrases } from "http-status-codes";
 
 export type APIInternal<D, E> =
-    | ["", 0, null]
-    | [Omit<APIError<E>, "success">, `${StatusCodes}`, false]
-    | [Omit<APIResponse<D>, "success">, `${StatusCodes}`, true];
+    | ["", 0]
+    | [APIError<E>, `${StatusCodes}`]
+    | [APIResponse<D>, `${StatusCodes}`];
 
 export interface APIData<S> {
     success: S;
