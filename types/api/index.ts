@@ -1,7 +1,8 @@
 import type { StatusCodes, ReasonPhrases } from "http-status-codes";
 
-export type APIInternal<D, E> =
-    | ["", 0]
+export type APIInternal<D, E> = ["", 0] | APIInternalResponse<D, E>;
+
+export type APIInternalResponse<D, E> =
     | [APIError<E>, FilterNumber<`${StatusCodes}`>]
     | [APIResponse<D>, FilterNumber<`${StatusCodes}`>];
 
