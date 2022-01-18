@@ -10,3 +10,15 @@ export type FilterNumber<
     S extends string,
     R extends number = RangeUnion<999>[number]
 > = R extends any ? (`${R}` extends S ? R : never) : never;
+
+/**
+ * These types merge an Intersection to a single object
+ * @see https://stackoverflow.com/a/63542565/15350139
+ */
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void
+    ? I
+    : never;
+
+export type FlattenIntersection<U> = UnionToIntersection<U> extends infer O
+    ? { [K in keyof O]: O[K] }
+    : never;
