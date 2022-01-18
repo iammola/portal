@@ -1,8 +1,8 @@
-import { Schema, Model, model, models } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
-import type { ClassSchema as SchemaType } from "types/schema";
+import type { ClassModel as ClassModelType, ClassRecord } from "types/schema";
 
-export const ClassSchema = new Schema<SchemaType>({
+export const ClassSchema = new Schema<ClassRecord, ClassModelType>({
     name: {
         trim: true,
         type: String,
@@ -40,4 +40,5 @@ ClassSchema.virtual("subjectsCount", {
     foreignField: "class",
 });
 
-export const ClassModel = (models.Class as Model<SchemaType>) ?? model("Class", ClassSchema);
+export const ClassModel =
+    (models.Class as ClassModelType) ?? model<ClassRecord, ClassModelType>("Class", ClassSchema);
