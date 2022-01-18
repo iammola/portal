@@ -1,8 +1,8 @@
-import type { Schema } from "mongoose";
-import type { ObjectId as BSONId } from "bson";
 import type { FlattenIntersection } from "types/utils";
+import type { Schema as MSchema } from "mongoose";
+import type { ObjectId as BsonId } from "bson";
 
-export type ObjectId = BSONId & Schema.Types.ObjectId;
+export type ObjectId = BsonId & MSchema.Types.ObjectId;
 
 export interface DocumentId {
     _id: ObjectId;
