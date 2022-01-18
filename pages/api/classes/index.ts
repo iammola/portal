@@ -2,38 +2,28 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { ClassModel } from "db/models";
+import { formatApiError } from "utils/api";
 
-import type { CreateClassData, CreateClassError, CreateClassRequestBody } from "types/api/classes";
+import type { CreateClassData, CreateClassRequestBody } from "types/api/classes";
 import type { ApiInternal, ApiInternalResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type Return = ApiInternalResponse<CreateClassData, CreateClassError>;
+type Return = ApiInternalResponse<CreateClassData>;
 
 async function createClass(data: CreateClassRequestBody) {
-    let [result, statusCode]: ApiInternal<CreateClassData, CreateClassError> = ["", 0];
+    let [result, statusCode]: ApiInternal<CreateClassData> = ["", 0];
 
-    try {
-        await connect();
-        const { _id, createdAt } = await ClassModel.create(data);
+    await connect();
+    const { _id, createdAt } = await ClassModel.create(data);
 
-        [result, statusCode] = [
-            {
-                success: true,
-                data: { _id, createdAt },
-                message: ReasonPhrases.OK,
-            },
-            StatusCodes.OK,
-        ];
-    } catch (error: any) {
-        [result, statusCode] = [
-            {
-                success: false,
-                message: ReasonPhrases.BAD_REQUEST,
-                error: (error as { message: string }).message,
-            },
-            StatusCodes.BAD_REQUEST,
-        ];
-    }
+    [result, statusCode] = [
+        {
+            success: true,
+            data: { _id, createdAt },
+            message: ReasonPhrases.OK,
+        },
+        StatusCodes.OK,
+    ];
 
     return [result, statusCode] as const;
 }
@@ -52,8 +42,19 @@ export default async function handler(
         StatusCodes.METHOD_NOT_ALLOWED,
     ];
 
-    if (method === "POST" && typeof body === "string")
-        [result, statusCode] = await createClass(JSON.parse(body) as CreateClassRequestBody);
+    try {
+        if (method === "POST" && typeof body === "string")
+            [result, statusCode] = await createClass(JSON.parse(body) as CreateClassRequestBody);
+    } catch (error: any) {
+        [result, statusCode] = [
+            {
+                success: false,
+                error: formatApiError(error),
+                message: ReasonPhrases.BAD_REQUEST,
+            },
+            StatusCodes.BAD_REQUEST,
+        ];
+    }
 
     res.setHeader("Allow", allow).status(statusCode).json(result);
 }
