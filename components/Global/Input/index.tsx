@@ -24,7 +24,7 @@ const Input: Input = ({ className, label, showIcons, onChange, ...props }) => {
     }, [onChange, value]);
 
     return (
-        <div className="relative grid gap-x-2 items-center">
+        <div className="relative grid gap-x-2 items-center w-full">
             <input
                 ref={ref}
                 {...props}
