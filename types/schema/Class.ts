@@ -1,4 +1,5 @@
-import type { ObjectId, DocumentId } from "types/schema";
+import type { Model } from "mongoose";
+import type { DocumentId, ModelRecord, ObjectId } from "types/schema";
 
 export interface ClassSchema extends DocumentId {
     name: string;
@@ -6,5 +7,16 @@ export interface ClassSchema extends DocumentId {
     special: string;
     createdAt: Date;
     teachers: ObjectId[];
-    subjectsCount: number; // virtual property
 }
+
+export interface ClassVirtuals {
+    subjectsCount: number;
+}
+
+export type ClassRecord<V extends boolean | keyof ClassVirtuals = false> = ModelRecord<
+    ClassSchema,
+    ClassVirtuals,
+    V
+>;
+
+export type ClassModel = Model<ClassSchema, unknown, unknown, ClassVirtuals>;
