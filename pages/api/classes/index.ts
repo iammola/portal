@@ -1,6 +1,7 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
+import { ClassModel } from "db/models";
 
 import type { CreateClassData, CreateClassError, CreateClassRequestBody } from "types/api/classes";
 import type { ApiInternal, ApiInternalResponse } from "types/api";
@@ -13,6 +14,16 @@ async function createClass(data: CreateClassRequestBody) {
 
     try {
         await connect();
+        const { _id, createdAt } = await ClassModel.create(data);
+
+        [result, statusCode] = [
+            {
+                success: true,
+                data: { _id, createdAt },
+                message: ReasonPhrases.OK,
+            },
+            StatusCodes.OK,
+        ];
     } catch (error: any) {
         [result, statusCode] = [
             {
