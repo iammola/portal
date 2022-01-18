@@ -8,7 +8,7 @@ export interface DocumentId {
     _id: ObjectId;
 }
 
-export type ModelRecord<S, V, K extends boolean | keyof V = false> = S &
+export type ModelRecord<S, V = unknown, K extends boolean | keyof V = false> = S &
     (K extends true ? V : FlattenIntersection<K extends keyof V ? Pick<V, K> : unknown>);
 
 export * from "./Class";
