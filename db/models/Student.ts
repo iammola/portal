@@ -1,14 +1,15 @@
 import PhoneNumber from "awesome-phonenumber";
-import { Schema, Model, model, models } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 import { userDOB, userGender, UserImage, userName, UserPassword } from "db/schema/User";
 
 import type {
-    StudentSchema as SchemaType,
+    StudentRecord,
+    StudentModel as StudentModelType,
     StudentGuardianSchema as GuardianSchema,
 } from "types/schema";
 
-const StudentNameSchema = new Schema<SchemaType["name"]>(
+const StudentNameSchema = new Schema<StudentRecord["name"]>(
     {
         last: userName("Last name required"),
         full: userName("Full name required"),
@@ -97,7 +98,7 @@ const StudentContactSchema = new Schema(
     { _id: false }
 );
 
-export const StudentSchema = new Schema<SchemaType>({
+export const StudentSchema = new Schema<StudentRecord, StudentModelType>({
     gender: userGender(),
     dob: userDOB({ required: [true, "Student DOB required"] }),
     password: {
@@ -123,4 +124,5 @@ export const StudentSchema = new Schema<SchemaType>({
 });
 
 export const StudentModel =
-    (models.Student as Model<SchemaType>) ?? model("Student", StudentSchema);
+    (models.Student as StudentModelType) ??
+    model<StudentRecord, StudentModelType>("Student", StudentSchema);

@@ -1,4 +1,5 @@
-import type { DocumentId, ObjectId } from "types/schema";
+import type { Model } from "mongoose";
+import type { DocumentId, ModelRecord, ObjectId } from "types/schema";
 import type { UserBase, UserImage, UserPassword } from "types/schema/User";
 
 // Note: The `_id` ObjectId property should be provided when creating the document as the guardian's id
@@ -15,3 +16,7 @@ export interface StudentSchema extends DocumentId, UserBase {
     contact: { [K in "email" | "phone" | "address"]: string[] };
     name: { [K in "username" | "initials" | "full" | "first" | "other" | "last"]: string };
 }
+
+export type StudentRecord = ModelRecord<StudentSchema>;
+
+export type StudentModel = Model<StudentSchema>;

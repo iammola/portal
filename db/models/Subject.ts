@@ -1,4 +1,4 @@
-import { Schema, model, Model, models } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 import {
     subjectName,
@@ -7,9 +7,9 @@ import {
     SubjectDivisionSchema,
 } from "db/schema/Subject";
 
-import type { SubjectSchema as SchemaType } from "types/schema";
+import type { SubjectModel as SubjectModelType, SubjectRecord } from "types/schema";
 
-export const SubjectSchema = new Schema<SchemaType>({
+export const SubjectSchema = new Schema<SubjectRecord, SubjectModelType>({
     teachers: subjectTeachers(),
     name: subjectName("Subject name required"),
     alias: subjectAlias(
@@ -34,4 +34,5 @@ export const SubjectSchema = new Schema<SchemaType>({
 });
 
 export const SubjectModel =
-    (models.Subject as Model<SchemaType>) ?? model("Subject", SubjectSchema);
+    (models.Subject as SubjectModelType) ??
+    model<SubjectRecord, SubjectModelType>("Subject", SubjectSchema);
