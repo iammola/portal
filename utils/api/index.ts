@@ -8,11 +8,11 @@ import { ApiResult } from "types/api";
  * @param init Fetch Options
  * @param body The Request Body for non-GET method requests
  */
-export async function fetchAPIEndpoint<ResponseData, ResponseError, Body>(
-    endpoint: string,
-    init?: Omit<RequestInit, "body">,
-    body?: Body
-) {
+export async function fetchAPIEndpoint<
+    ResponseData,
+    Body = undefined,
+    ResponseError = Record<string, undefined>
+>(endpoint: string, init?: Omit<RequestInit, "body">, body?: Body) {
     const response = await fetch(endpoint, {
         ...init,
         body: JSON.stringify(body),
