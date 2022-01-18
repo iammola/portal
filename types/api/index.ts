@@ -18,8 +18,8 @@ export interface ApiResponse<D> extends ApiData<true> {
     data: D;
 }
 
-    error: E;
 export interface ApiError<E = Record<string, string | undefined>> extends ApiData<false> {
+    error: `${ReasonPhrases}` | E;
 }
 
 export type ApiResult<D, E = Record<string, string | undefined>> = ApiResponse<D> | ApiError<E>;
