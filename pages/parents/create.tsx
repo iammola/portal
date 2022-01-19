@@ -12,8 +12,8 @@ const CreateParent: NextPage = () => {
                 <title>Create Parent | GRIS Portal</title>
                 <meta name="description" content="Create parent" />
             </Head>
-            <section className="flex flex-col items-start justify-start grow w-full">
-                <h1 className="text-5xl font-semibold text-slate-600 dark:text-slate-300 p-10">
+            <section className="flex flex-col items-start justify-start grow w-full py-10">
+                <h1 className="text-5xl font-semibold text-slate-600 dark:text-slate-300 p-10 pt-0">
                     <span>Create</span>{" "}
                     <span className="bg-clip-text bg-gradient-to-br from-indigo-300 to-indigo-600 text-transparent">
                         Parent
