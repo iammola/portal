@@ -39,7 +39,7 @@ const CreateParent: NextPage = () => {
                                 label="Full name"
                                 className={(valid?: boolean) =>
                                     classNames(
-                                        "w-full h-[3.75rem] border placeholder-shown:border-gray-400 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                        "w-full h-[3.75rem] border placeholder-shown:border-gray-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
                                         {
                                             "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                                                 valid === true,
@@ -60,7 +60,7 @@ const CreateParent: NextPage = () => {
                                         label="First name"
                                         className={(valid?: boolean) =>
                                             classNames(
-                                                "w-full h-[3.75rem] border placeholder-shown:border-gray-400 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                "w-full h-[3.75rem] border placeholder-shown:border-gray-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
                                                 {
                                                     "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                                                         valid === true,
@@ -81,7 +81,7 @@ const CreateParent: NextPage = () => {
                                         label="Last name"
                                         className={(valid?: boolean) =>
                                             classNames(
-                                                "w-full h-[3.75rem] border placeholder-shown:border-gray-400 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                "w-full h-[3.75rem] border placeholder-shown:border-gray-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
                                                 {
                                                     "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                                                         valid === true,
@@ -104,7 +104,7 @@ const CreateParent: NextPage = () => {
                                         label="Initials"
                                         className={(valid?: boolean) =>
                                             classNames(
-                                                "w-full h-[3.75rem] border placeholder-shown:border-gray-400 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                "w-full h-[3.75rem] border placeholder-shown:border-gray-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
                                                 {
                                                     "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                                                         valid === true,
@@ -125,7 +125,7 @@ const CreateParent: NextPage = () => {
                                         label="Other name"
                                         className={(valid?: boolean) =>
                                             classNames(
-                                                "w-full h-[3.75rem] border placeholder-shown:border-gray-400 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                "w-full h-[3.75rem] border placeholder-shown:border-gray-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
                                                 {
                                                     "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                                                         valid === true,
