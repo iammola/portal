@@ -40,11 +40,15 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
         }
     }
 
-    function removeLineBreak(e: KeyboardEvent<HTMLElement>) {
+    function keyUpRemove(e: KeyboardEvent<HTMLElement>) {
         if (e.code === "Backspace") {
-            const element = (e.target as HTMLElement).lastElementChild;
-            if (element?.tagName === "BR") element.remove();
+            removeBadge();
+            removeLineBreak((e.target as HTMLElement).lastElementChild);
         }
+    }
+
+    function removeLineBreak(element: Element | null) {
+        if (element?.tagName === "BR") element.remove();
     }
 
     function removeBadge() {
@@ -103,7 +107,7 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
             onClick={addSpace}
             className={className}
             onKeyDown={updateValues}
-            onKeyUp={removeLineBreak}
+            onKeyUp={keyUpRemove}
             suppressContentEditableWarning
         >
             {values.map((item) => (
