@@ -42,8 +42,8 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
 
     function removeLineBreak(e: KeyboardEvent<HTMLElement>) {
         if (e.code === "Backspace") {
-            const br = (e.target as HTMLElement).lastElementChild;
-            if (br?.tagName === "BR") br.remove();
+            const element = (e.target as HTMLElement).lastElementChild;
+            if (element?.tagName === "BR") element.remove();
         }
     }
 
