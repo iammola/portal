@@ -1,4 +1,4 @@
-import { Fragment, FunctionComponent, KeyboardEvent, MouseEvent, useRef } from "react";
+import { Fragment, FunctionComponent, KeyboardEvent, MouseEvent, useEffect, useRef } from "react";
 import { XIcon } from "@heroicons/react/outline";
 
 type Value = { [K in "_id" | "value"]: string };
@@ -16,6 +16,11 @@ type Badge = FunctionComponent<{
 
 const Main: Main = ({ addValue, className, removeValue, values }) => {
     const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const target = ref.current;
+        if (values.length === 0 && target !== null) target.innerHTML = "";
+    }, [values]);
 
     function updateValues(e: KeyboardEvent<HTMLElement>) {
         if (["Enter", "Space"].includes(e.code) === true) {
