@@ -13,7 +13,12 @@ export interface StudentSchema extends DocumentId, UserBase {
     image: UserImage;
     password: UserPassword;
     guardians: StudentGuardianSchema[];
-    contact: { [K in "email" | "phone" | "address"]: string[] };
+    contact: {
+        [K in "email" | "phone" | "address"]: {
+            primary: string;
+            other?: string;
+        };
+    };
     name: { [K in "username" | "initials" | "full" | "first" | "other" | "last"]: string };
 }
 

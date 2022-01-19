@@ -6,7 +6,12 @@ export interface TeacherSchema extends DocumentId, UserBase {
     image: UserImage;
     password: UserPassword;
     privileges: ObjectId;
-    contact: { [K in "email" | "phone" | "address"]: string[] };
+    contact: {
+        [K in "email" | "phone" | "address"]: {
+            primary: string;
+            other?: string;
+        };
+    };
     name: {
         [K in "title" | "username" | "initials" | "full" | "first" | "other" | "last"]: string;
     };

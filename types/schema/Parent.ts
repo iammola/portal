@@ -6,7 +6,12 @@ export interface ParentSchema extends DocumentId, UserBase {
     image: UserImage;
     password: UserPassword;
     occupation: string;
-    contact: { [K in "email" | "phone" | "address"]: { [K in "personal" | "work"]: string[] } };
+    contact: {
+        [K in "email" | "phone" | "address"]: {
+            primary: string;
+            other?: string;
+        };
+    };
     name: {
         [K in "title" | "username" | "initials" | "full" | "first" | "other" | "last"]: string;
     };
