@@ -13,7 +13,7 @@ const Test: NextPage = () => {
             <Head>
                 <title>Test</title>
             </Head>
-            <InputBox className="flex flex-col gap-y-4 items-start justify-start w-[25rem] h-[15rem] font-poppins">
+            <InputBox className="flex flex-col gap-y-4 items-start justify-start w-[50rem] font-inter">
                 <InputBox.Label className="font-medium text-slate-800">Teachers</InputBox.Label>
                 <InputBox.Main
                     values={value}
