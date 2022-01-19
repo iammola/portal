@@ -1,6 +1,13 @@
 import { Schema, model, models } from "mongoose";
 
-import { userDOB, userGender, UserImage, userName, UserPassword } from "db/schema/User";
+import {
+    userDOB,
+    userName,
+    UserImage,
+    userGender,
+    UserContact,
+    UserPassword,
+} from "db/schema/User";
 
 import type {
     StudentRecord,
@@ -59,6 +66,7 @@ export const StudentSchema = new Schema<StudentRecord, StudentModelType>({
         type: [StudentGuardianSchema],
     },
     contact: {
+        type: UserContact,
         required: [true, "Student Contact required"],
     },
 });
