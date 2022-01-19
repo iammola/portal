@@ -2,9 +2,10 @@ import PhoneNumber from "awesome-phonenumber";
 import { Schema, SchemaTypeOptions } from "mongoose";
 
 import type {
+    UserName as NameSchemaType,
     UserImage as ImageSchemaType,
-    UserPassword as PasswordSchemaType,
     UserContact as ContactSchemaType,
+    UserPassword as PasswordSchemaType,
     UserSubContact as SubContactSchemaType,
 } from "types/schema/User";
 
@@ -18,7 +19,7 @@ export const userDOB = (obj: { required: [true, string] } | { default: undefined
     ...obj,
 });
 
-export const userName = (
+const userSubName = (
     required: string,
     unique?: true,
     maxLength?: [number, string],
@@ -47,6 +48,20 @@ const userSubContact = (
         { _id: false }
     );
 };
+
+export const userName = (withTitle?: true | undefined) =>
+    new Schema<NameSchemaType<true>>(
+        {
+            last: userSubName("Last name required"),
+            full: userSubName("Full name required"),
+            other: userSubName("Other name required"),
+            first: userSubName("First name required"),
+            initials: userSubName("Initials required"),
+            username: userSubName("User name required", true),
+            title: withTitle && userSubName("Title required"),
+        },
+        { _id: false }
+    );
 
 export const UserPassword = new Schema<PasswordSchemaType>(
     {
