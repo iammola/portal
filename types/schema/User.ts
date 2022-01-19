@@ -8,7 +8,17 @@ export interface UserImage {
     portrait?: string;
 }
 
+export interface UserSubContact {
+    primary: string;
+    other?: string;
+}
+
+export type UserContact = {
+    [K in "email" | "phone" | "address"]: UserSubContact;
+};
+
 export interface UserBase {
     dob?: Date;
     gender: "M" | "F";
+    contact: UserContact;
 }
