@@ -133,7 +133,7 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
 
 const Badge: Badge = ({ children, remove }) => {
     return (
-        <span
+        <div
             contentEditable={false}
             suppressContentEditableWarning
             className="flex flex-row gap-x-2 items-center justify-between min-w-max max-w-full py-1 pl-3 pr-1 rounded-full bg-slate-200"
@@ -143,7 +143,7 @@ const Badge: Badge = ({ children, remove }) => {
                 onClick={remove}
                 className="w-6 h-6 p-1 shrink-0 rounded-full stroke-slate-700 cursor-pointer hover:bg-slate-300"
             />
-        </span>
+        </div>
     );
 };
 
