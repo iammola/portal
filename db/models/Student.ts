@@ -7,6 +7,7 @@ import {
     userGender,
     UserContact,
     UserPassword,
+    userSchoolMail,
 } from "db/schema/User";
 
 import type {
@@ -36,6 +37,7 @@ const StudentGuardianSchema = new Schema<GuardianSchema>(
 
 export const StudentSchema = new Schema<StudentRecord, StudentModelType>({
     gender: userGender(),
+    schoolMail: userSchoolMail(),
     dob: userDOB({ required: [true, "Student DOB required"] }),
     password: {
         type: UserPassword,

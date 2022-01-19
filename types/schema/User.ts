@@ -26,6 +26,7 @@ export type UserContact = {
 export interface UserBase<T extends boolean = true> {
     dob?: Date;
     gender: "M" | "F";
+    schoolMail: string;
     image: UserImage;
     name: UserName<T>;
     contact: UserContact;

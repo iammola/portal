@@ -19,6 +19,18 @@ export const userDOB = (obj: { required: [true, string] } | { default: undefined
     ...obj,
 });
 
+export const userSchoolMail = () => ({
+    trim: true,
+    type: String,
+    unique: true,
+    lowercase: true,
+    required: [true, "User school mail required"] as [true, string],
+    validate: {
+        validator: (v?: string) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? ""),
+        msg: "Invalid email address",
+    },
+});
+
 const userSubName = (
     required: string,
     unique?: true,
