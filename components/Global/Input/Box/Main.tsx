@@ -89,11 +89,7 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
             {values.map((item) => (
                 <Fragment key={item._id}>
                     <Badge remove={() => removeValue(item._id)}>{item.value}</Badge>
-                    <span
-                        contentEditable
-                        suppressContentEditableWarning
-                        className="w-[3.1875px] text-center text-transparent caret-black whitespace-pre last:hidden"
-                    >
+                    <span className="w-[3.1875px] text-center text-transparent caret-black whitespace-pre last:hidden">
                         <br />
                     </span>
                 </Fragment>
