@@ -47,6 +47,26 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
         }
     }
 
+    function removeBadge() {
+        const selection = getSelection();
+
+        if (selection?.type === "Caret" && selection.focusNode?.textContent?.trim() === "") {
+            const lastBadge = (
+                selection.focusNode.nodeType === 1
+                    ? selection.focusNode.previousSibling
+                    : selection.focusNode.previousSibling?.previousSibling
+            ) as HTMLElement | null;
+
+            if (lastBadge?.isContentEditable === false) {
+                const badgeId = values.find(
+                    ({ value }) => value === lastBadge.firstElementChild?.textContent
+                )?._id;
+
+                if (badgeId !== undefined) removeValue(badgeId);
+            }
+        }
+    }
+
     function addSpace(e?: MouseEvent<HTMLDivElement>) {
         const target = (e?.target as HTMLDivElement) ?? ref.current;
 
