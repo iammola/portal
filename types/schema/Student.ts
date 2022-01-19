@@ -9,9 +9,8 @@ export interface StudentGuardianSchema {
     relationship: "father" | "mother" | string;
 }
 
-export interface StudentSchema extends DocumentId, UserBase {
+export interface StudentSchema extends DocumentId, UserBase<false> {
     guardians: StudentGuardianSchema[];
-    name: { [K in "username" | "initials" | "full" | "first" | "other" | "last"]: string };
 }
 
 export type StudentRecord = ModelRecord<StudentSchema>;

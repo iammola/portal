@@ -1,3 +1,9 @@
+export type UserName<T> = {
+    [K in "username" | "initials" | "full" | "first" | "last"]: string;
+} & (T extends true ? { title: string } : unknown) & {
+        other?: string;
+    };
+
 export interface UserPassword {
     hash: string;
     salt: string;
@@ -17,10 +23,11 @@ export type UserContact = {
     [K in "email" | "phone" | "address"]: UserSubContact;
 };
 
-export interface UserBase {
+export interface UserBase<T extends boolean = true> {
     dob?: Date;
     gender: "M" | "F";
     image: UserImage;
+    name: UserName<T>;
     contact: UserContact;
     password: UserPassword;
 }
