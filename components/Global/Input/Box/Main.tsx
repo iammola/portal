@@ -35,6 +35,13 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
         }
     }
 
+    function removeLineBreak(e: KeyboardEvent<HTMLElement>) {
+        if (e.code === "Backspace") {
+            const br = (e.target as HTMLElement).lastElementChild;
+            if (br?.tagName === "BR") br.remove();
+        }
+    }
+
     function addSpace(e?: MouseEvent<HTMLDivElement>) {
         const target = (e?.target as HTMLDivElement) ?? ref.current;
 
@@ -71,6 +78,7 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
             onClick={addSpace}
             className={className}
             onKeyDown={updateValues}
+            onKeyUp={removeLineBreak}
             suppressContentEditableWarning
         >
             {values.map((item) => (
