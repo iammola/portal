@@ -33,6 +33,11 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
                 setTimeout(addSpace);
             }
         }
+
+        if (e.code === "Backspace") {
+            const lastChild = (e.target as HTMLElement).lastChild;
+            if (lastChild?.textContent?.trim() === "") e.preventDefault();
+        }
     }
 
     function removeLineBreak(e: KeyboardEvent<HTMLElement>) {
