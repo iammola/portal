@@ -140,6 +140,188 @@ const CreateParent: NextPage = () => {
                             </div>
                         </div>
                     </div>
+                    <div className="flex items-stretch justify-start md:gap-x-6 lg:gap-x-12 w-full p-7 bg-white shadow-md rounded-lg">
+                        <div className="md:w-[27rem]">
+                            <h3 className="text-lg text-slate-800 font-medium">Contact</h3>
+                            <p className="text-sm text-slate-500">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam.
+                            </p>
+                        </div>
+                        <div className="flex flex-col gap-y-8 w-full xl:w-[40rem]">
+                            <div className="flex flex-col md:gap-y-4 lg:gap-y-8 w-full">
+                                <span className="w-full pb-0.5 text-sm text-semibold text-slate-800 border-b border-slate-400">
+                                    Email addresses
+                                </span>
+                                <div className="grid grid-cols-4 gap-x-3 items-center w-full">
+                                    <span className="text-sm text-slate-600 col-start-1 col-end-2">
+                                        Primary
+                                    </span>
+                                    <div className="col-start-2 col-end-5">
+                                        <Input
+                                            required
+                                            value=""
+                                            label=""
+                                            type="email"
+                                            id="primaryEmailAddress"
+                                            className={(valid?: boolean) =>
+                                                classNames(
+                                                    "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                    {
+                                                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                                                            valid === true,
+                                                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                                                            valid === false,
+                                                    }
+                                                )
+                                            }
+                                            onChange={(v) => console.warn(v)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-4 gap-x-3 items-center w-full mt-4">
+                                    <span className="text-sm text-slate-600 col-start-1 col-end-2">
+                                        Work <span className="text-[0.675rem]">(other)</span>
+                                    </span>
+                                    <div className="col-start-2 col-end-5">
+                                        <Input
+                                            value=""
+                                            label=""
+                                            type="email"
+                                            id="workEmailAddress"
+                                            className={(valid?: boolean) =>
+                                                classNames(
+                                                    "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                    {
+                                                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                                                            valid === true,
+                                                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                                                            valid === false,
+                                                    }
+                                                )
+                                            }
+                                            onChange={(v) => console.warn(v)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-col md:gap-y-4 lg:gap-y-8 w-full">
+                                <span className="w-full pb-0.5 text-sm text-semibold text-slate-800 border-b border-slate-400">
+                                    Phone numbers
+                                </span>
+                                <div className="grid grid-cols-4 gap-x-3 items-center w-full">
+                                    <span className="text-sm text-slate-600 col-start-1 col-end-2">
+                                        Primary
+                                    </span>
+                                    <div className="col-start-2 col-end-5">
+                                        {/* // Todo: Replace with phone number switcher */}
+                                        <Input
+                                            required
+                                            value=""
+                                            label=""
+                                            type="text"
+                                            id="homePhone"
+                                            className={(valid?: boolean) =>
+                                                classNames(
+                                                    "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                    {
+                                                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                                                            valid === true,
+                                                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                                                            valid === false,
+                                                    }
+                                                )
+                                            }
+                                            onChange={(v) => console.warn(v)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-4 gap-x-3 items-center w-full mt-4">
+                                    <span className="text-sm text-slate-600 col-start-1 col-end-2">
+                                        Work <span className="text-[0.675rem]">(other)</span>
+                                    </span>
+                                    <div className="col-start-2 col-end-5">
+                                        {/* // Todo: Replace with phone number switcher */}
+                                        <Input
+                                            value=""
+                                            label=""
+                                            type="text"
+                                            id="workPhone"
+                                            className={(valid?: boolean) =>
+                                                classNames(
+                                                    "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                    {
+                                                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                                                            valid === true,
+                                                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                                                            valid === false,
+                                                    }
+                                                )
+                                            }
+                                            onChange={(v) => console.warn(v)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-col md:gap-y-4 lg:gap-y-8 w-full">
+                                <span className="w-full pb-0.5 text-sm text-semibold text-slate-800 border-b border-slate-400">
+                                    Address
+                                </span>
+                                <div className="grid grid-cols-4 gap-x-3 items-center w-full">
+                                    <span className="text-sm text-slate-600 col-start-1 col-end-2">
+                                        Home
+                                    </span>
+                                    <div className="col-start-2 col-end-5">
+                                        {/* // Todo: Replace with actual textarea */}
+                                        <Input
+                                            required
+                                            value=""
+                                            label=""
+                                            type="text"
+                                            id="homeAddress"
+                                            className={(valid?: boolean) =>
+                                                classNames(
+                                                    "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                    {
+                                                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                                                            valid === true,
+                                                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                                                            valid === false,
+                                                    }
+                                                )
+                                            }
+                                            onChange={(v) => console.warn(v)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-4 gap-x-3 items-center w-full mt-4">
+                                    <span className="text-sm text-slate-600 col-start-1 col-end-2">
+                                        Work <span className="text-[0.675rem]">(other)</span>
+                                    </span>
+                                    <div className="col-start-2 col-end-5">
+                                        {/* // Todo: Replace with actual textarea */}
+                                        <Input
+                                            value=""
+                                            label=""
+                                            type="text"
+                                            id="workAddress"
+                                            className={(valid?: boolean) =>
+                                                classNames(
+                                                    "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                    {
+                                                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                                                            valid === true,
+                                                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                                                            valid === false,
+                                                    }
+                                                )
+                                            }
+                                            onChange={(v) => console.warn(v)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
