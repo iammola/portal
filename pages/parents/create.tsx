@@ -1,11 +1,18 @@
 import Head from "next/head";
+import { useState } from "react";
 
 import Input from "components/Global/Input";
 import { classNames } from "utils";
 
 import type { NextPage } from "next";
+import type { ParentSchema } from "types/schema";
 
 const CreateParent: NextPage = () => {
+    const [name, setName] = useState<Partial<ParentSchema["name"]>>({});
+    const [email, setEmail] = useState<Partial<ParentSchema["contact"]["email"]>>({});
+    const [phone, setPhone] = useState<Partial<ParentSchema["contact"]["phone"]>>({});
+    const [address, setAddress] = useState<Partial<ParentSchema["contact"]["address"]>>({});
+
     return (
         <main className="flex flex-row items-stretch justify-center w-screen h-full min-h-screen bg-slate-50 dark:bg-slate-900 font-poppins">
             <Head>
@@ -33,7 +40,7 @@ const CreateParent: NextPage = () => {
                             {/* // Todo: Add the select for the title */}
                             <Input
                                 required
-                                value=""
+                                value={name.full}
                                 type="text"
                                 id="fullName"
                                 label="Full name"
@@ -48,13 +55,13 @@ const CreateParent: NextPage = () => {
                                         }
                                     )
                                 }
-                                onChange={(v) => console.warn(v)}
+                                onChange={(full: string) => setName({ ...name, full })}
                             />
                             <div className="flex flex-row md:gap-x-5 lg:gap-x-7 w-full">
                                 <div className="w-1/2">
                                     <Input
                                         required
-                                        value=""
+                                        value={name.first}
                                         type="text"
                                         id="firstName"
                                         label="First name"
@@ -69,13 +76,13 @@ const CreateParent: NextPage = () => {
                                                 }
                                             )
                                         }
-                                        onChange={(v) => console.warn(v)}
+                                        onChange={(first: string) => setName({ ...name, first })}
                                     />
                                 </div>
                                 <div className="w-1/2">
                                     <Input
                                         required
-                                        value=""
+                                        value={name.last}
                                         type="text"
                                         id="lastName"
                                         label="Last name"
@@ -90,7 +97,7 @@ const CreateParent: NextPage = () => {
                                                 }
                                             )
                                         }
-                                        onChange={(v) => console.warn(v)}
+                                        onChange={(last: string) => setName({ ...name, last })}
                                     />
                                 </div>
                             </div>
@@ -98,7 +105,7 @@ const CreateParent: NextPage = () => {
                                 <div className="w-1/3">
                                     <Input
                                         required
-                                        value=""
+                                        value={name.initials}
                                         type="text"
                                         id="initials"
                                         label="Initials"
@@ -113,13 +120,15 @@ const CreateParent: NextPage = () => {
                                                 }
                                             )
                                         }
-                                        onChange={(v) => console.warn(v)}
+                                        onChange={(initials: string) =>
+                                            setName({ ...name, initials })
+                                        }
                                     />
                                 </div>
                                 <div className="w-2/3">
                                     <Input
                                         required
-                                        value=""
+                                        value={name.other}
                                         type="text"
                                         id="otherName"
                                         label="Other name"
@@ -134,7 +143,7 @@ const CreateParent: NextPage = () => {
                                                 }
                                             )
                                         }
-                                        onChange={(v) => console.warn(v)}
+                                        onChange={(other: string) => setName({ ...name, other })}
                                     />
                                 </div>
                             </div>
@@ -159,9 +168,9 @@ const CreateParent: NextPage = () => {
                                     <div className="col-start-2 col-end-5">
                                         <Input
                                             required
-                                            value=""
                                             label=""
                                             type="email"
+                                            value={email.primary}
                                             id="primaryEmailAddress"
                                             className={(valid?: boolean) =>
                                                 classNames(
@@ -174,7 +183,9 @@ const CreateParent: NextPage = () => {
                                                     }
                                                 )
                                             }
-                                            onChange={(v) => console.warn(v)}
+                                            onChange={(primary: string) =>
+                                                setEmail({ ...email, primary })
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -184,9 +195,9 @@ const CreateParent: NextPage = () => {
                                     </span>
                                     <div className="col-start-2 col-end-5">
                                         <Input
-                                            value=""
                                             label=""
                                             type="email"
+                                            value={email.other}
                                             id="workEmailAddress"
                                             className={(valid?: boolean) =>
                                                 classNames(
@@ -199,7 +210,9 @@ const CreateParent: NextPage = () => {
                                                     }
                                                 )
                                             }
-                                            onChange={(v) => console.warn(v)}
+                                            onChange={(other: string) =>
+                                                setEmail({ ...email, other })
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -216,10 +229,10 @@ const CreateParent: NextPage = () => {
                                         {/* // Todo: Replace with phone number switcher */}
                                         <Input
                                             required
-                                            value=""
                                             label=""
                                             type="text"
                                             id="homePhone"
+                                            value={phone.primary}
                                             className={(valid?: boolean) =>
                                                 classNames(
                                                     "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
@@ -231,7 +244,9 @@ const CreateParent: NextPage = () => {
                                                     }
                                                 )
                                             }
-                                            onChange={(v) => console.warn(v)}
+                                            onChange={(primary: string) =>
+                                                setPhone({ ...phone, primary })
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -242,10 +257,10 @@ const CreateParent: NextPage = () => {
                                     <div className="col-start-2 col-end-5">
                                         {/* // Todo: Replace with phone number switcher */}
                                         <Input
-                                            value=""
                                             label=""
                                             type="text"
                                             id="workPhone"
+                                            value={phone.other}
                                             className={(valid?: boolean) =>
                                                 classNames(
                                                     "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
@@ -257,7 +272,9 @@ const CreateParent: NextPage = () => {
                                                     }
                                                 )
                                             }
-                                            onChange={(v) => console.warn(v)}
+                                            onChange={(other: string) =>
+                                                setPhone({ ...phone, other })
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -274,10 +291,10 @@ const CreateParent: NextPage = () => {
                                         {/* // Todo: Replace with actual textarea */}
                                         <Input
                                             required
-                                            value=""
                                             label=""
                                             type="text"
                                             id="homeAddress"
+                                            value={address.primary}
                                             className={(valid?: boolean) =>
                                                 classNames(
                                                     "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
@@ -289,7 +306,9 @@ const CreateParent: NextPage = () => {
                                                     }
                                                 )
                                             }
-                                            onChange={(v) => console.warn(v)}
+                                            onChange={(primary: string) =>
+                                                setAddress({ ...address, primary })
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -300,10 +319,10 @@ const CreateParent: NextPage = () => {
                                     <div className="col-start-2 col-end-5">
                                         {/* // Todo: Replace with actual textarea */}
                                         <Input
-                                            value=""
                                             label=""
                                             type="text"
                                             id="workAddress"
+                                            value={address.other}
                                             className={(valid?: boolean) =>
                                                 classNames(
                                                     "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
@@ -315,7 +334,9 @@ const CreateParent: NextPage = () => {
                                                     }
                                                 )
                                             }
-                                            onChange={(v) => console.warn(v)}
+                                            onChange={(other: string) =>
+                                                setAddress({ ...address, other })
+                                            }
                                         />
                                     </div>
                                 </div>
