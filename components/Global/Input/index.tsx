@@ -39,7 +39,7 @@ const Input: Input = ({ className, label, showIcons, onChange, ...props }) => {
             {label && (
                 <label
                     htmlFor={props.id}
-                    className="absolute left-[-.4rem] p-1 text-slate-600 transition-all text-xs -top-3.5 font-medium bg-white tracking-wide peer-focus:text-xs peer-focus:left-[-.4rem] peer-focus:top-[-.95rem] peer-focus:bg-white peer-focus:font-medium peer-focus:tracking-wide peer-placeholder-shown:select-none peer-placeholder-shown:left-3 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:font-normal peer-placeholder-shown:bg-transparent peer-placeholder-shown:tracking-normal"
+                    className="absolute left-[-0.4rem] -top-4 p-1 text-slate-600 transition-all text-xs font-medium bg-white tracking-wide peer-focus:text-xs peer-focus:left-[-0.4rem] peer-focus:top-[-0.95rem] peer-focus:bg-white peer-focus:font-medium peer-focus:tracking-wide peer-placeholder-shown:select-none peer-placeholder-shown:left-3 peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:font-normal peer-placeholder-shown:bg-transparent peer-placeholder-shown:tracking-normal"
                 >
                     {label}
                 </label>
