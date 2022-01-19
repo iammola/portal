@@ -19,7 +19,7 @@ const Test: NextPage = () => {
                     values={value}
                     addValue={(v) => setValue([...value, v])}
                     removeValue={(i) => setValue(value.filter((v) => v._id !== i))}
-                    className="flex flex-row flex-wrap flex-grow gap-y-2 content-start items-center justify-start w-full p-3 border border-gray-300 focus:border-transparent bg-white rounded-lg overflow-hidden focus:outline-none ring-2 ring-transparent focus:ring-blue-500"
+                    className="flex flex-row flex-wrap grow gap-y-2 content-start items-center justify-start w-full p-3 border border-gray-300 focus:border-transparent bg-white rounded-lg overflow-hidden focus:outline-none ring-2 ring-transparent focus:ring-blue-500"
                 />
             </InputBox>
         </main>

@@ -12,14 +12,14 @@ const CreateParent: NextPage = () => {
                 <title>Create Parent | GRIS Portal</title>
                 <meta name="description" content="Create parent" />
             </Head>
-            <section className="flex flex-col items-start justify-start flex-grow w-full">
+            <section className="flex flex-col items-start justify-start grow w-full">
                 <h1 className="text-5xl font-semibold text-gray-600 dark:text-gray-300 p-10">
                     <span>Create</span>{" "}
                     <span className="bg-clip-text bg-gradient-to-br from-indigo-300 to-indigo-600 text-transparent">
                         Parent
                     </span>
                 </h1>
-                <div className="w-full h-full flex-grow self-center px-10 space-y-10">
+                <div className="w-full h-full grow self-center px-10 space-y-10">
                     <div className="flex items-stretch justify-start md:gap-x-6 lg:gap-x-12 w-full p-7 bg-white shadow-md rounded-lg">
                         <div className="md:w-[27rem]">
                             <h3 className="text-lg text-gray-800 font-medium">

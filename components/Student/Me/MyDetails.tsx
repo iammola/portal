@@ -11,7 +11,7 @@ const MyDetails: FunctionComponent = () => {
                 <form className="divide-y divide-gray-200 w-full lg:w-[55%] md:w-[65%] bg-white rounded-lg shadow-lg">
                     <div className="flex flex-col items-start justify-start gap-y-6 px-6 pt-8 pb-5">
                         <div className="flex items-center justify-between gap-4 w-full">
-                            <div className="flex flex-col gap-2.5 w-full flex-grow">
+                            <div className="flex flex-col gap-2.5 w-full grow">
                                 <label className="text-[0.8rem] text-gray-500 min-w-max font-medium">
                                     First name
                                 </label>
@@ -21,7 +21,7 @@ const MyDetails: FunctionComponent = () => {
                                     className="border rounded-md shadow shadow-gray-300 transition-shadow focus:ring-2 focus:ring-gray-400 focus:outline-none min-w-80 py-3 px-4"
                                 />
                             </div>
-                            <div className="flex flex-col gap-2.5 w-full flex-grow">
+                            <div className="flex flex-col gap-2.5 w-full grow">
                                 <label className="text-[0.8rem] text-gray-500 min-w-max font-medium">
                                     Last name
                                 </label>
@@ -33,7 +33,7 @@ const MyDetails: FunctionComponent = () => {
                             </div>
                         </div>
                         <div className="flex items-center justify-between gap-4 w-full">
-                            <div className="flex flex-col gap-2.5 w-full flex-grow">
+                            <div className="flex flex-col gap-2.5 w-full grow">
                                 <label className="text-[0.8rem] text-gray-500 min-w-max font-medium">
                                     Other name(s)
                                 </label>
@@ -43,7 +43,7 @@ const MyDetails: FunctionComponent = () => {
                                     className="border rounded-md shadow shadow-gray-300 transition-shadow focus:ring-2 focus:ring-gray-400 focus:outline-none min-w-80 py-3 px-4"
                                 />
                             </div>
-                            <div className="flex flex-col gap-2.5 flex-grow">
+                            <div className="flex flex-col gap-2.5 grow">
                                 <label className="text-[0.8rem] text-gray-500 min-w-max font-medium">
                                     Initials
                                 </label>
@@ -54,7 +54,7 @@ const MyDetails: FunctionComponent = () => {
                                 />
                             </div>
                         </div>
-                        <div className="flex flex-col gap-2.5 w-full flex-grow">
+                        <div className="flex flex-col gap-2.5 w-full grow">
                             <label className="text-[0.8rem] text-gray-500 min-w-max font-medium">
                                 Full name
                             </label>
@@ -66,7 +66,7 @@ const MyDetails: FunctionComponent = () => {
                         </div>
                         <div className="flex items-center justify-between gap-4 w-full">
                             {/* // TODO: Use Select input for Gender field */}
-                            <div className="flex flex-col gap-2.5 w-full flex-grow">
+                            <div className="flex flex-col gap-2.5 w-full grow">
                                 <label className="text-[0.8rem] text-gray-500 min-w-max font-medium">
                                     Gender
                                 </label>
@@ -77,7 +77,7 @@ const MyDetails: FunctionComponent = () => {
                                 />
                             </div>
                             {/* // TODO: Use custom Date input for DOB field */}
-                            <div className="flex flex-col gap-2.5 flex-grow">
+                            <div className="flex flex-col gap-2.5 grow">
                                 <label className="text-[0.8rem] text-gray-500 xl:min-w-[20rem] font-medium">
                                     DOB
                                 </label>
@@ -100,7 +100,7 @@ const MyDetails: FunctionComponent = () => {
                                     <input
                                         required
                                         type="date"
-                                        className="flex-grow text-gray-700 p-3 focus:outline-none"
+                                        className="grow text-gray-700 p-3 focus:outline-none"
                                     />
                                 </label>
                             </div>
