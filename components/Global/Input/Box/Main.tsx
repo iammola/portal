@@ -43,6 +43,10 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
             const lastChild = (e.target as HTMLElement).lastChild;
             if (lastChild?.textContent?.trim() === "") e.preventDefault();
         }
+
+        const lastChild = ref.current?.lastChild;
+        if (lastChild?.nodeType === 3 && lastChild.previousSibling?.nodeType === 3)
+            lastChild.remove();
     }
 
     function keyUpRemove(e: KeyboardEvent<HTMLElement>) {
