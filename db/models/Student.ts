@@ -15,18 +15,6 @@ import type {
     StudentGuardianSchema as GuardianSchema,
 } from "types/schema";
 
-const StudentNameSchema = new Schema<StudentRecord["name"]>(
-    {
-        last: userName("Last name required"),
-        full: userName("Full name required"),
-        other: userName("Other name required"),
-        first: userName("First name required"),
-        initials: userName("Initials required"),
-        username: userName("User name required", true),
-    },
-    { _id: false }
-);
-
 const StudentGuardianSchema = new Schema<GuardianSchema>(
     {
         guardian: {
@@ -58,7 +46,7 @@ export const StudentSchema = new Schema<StudentRecord, StudentModelType>({
         default: undefined,
     },
     name: {
-        type: StudentNameSchema,
+        type: userName(),
         required: [true, "Student name required"],
     },
     guardians: {
