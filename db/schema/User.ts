@@ -1,8 +1,11 @@
-import { Schema } from "mongoose";
+import PhoneNumber from "awesome-phonenumber";
+import { Schema, SchemaTypeOptions } from "mongoose";
 
 import type {
     UserImage as ImageSchemaType,
     UserPassword as PasswordSchemaType,
+    UserContact as ContactSchemaType,
+    UserSubContact as SubContactSchemaType,
 } from "types/schema/User";
 
 export const userGender = () => ({
@@ -29,6 +32,22 @@ export const userName = (
     required: [true, required] as [true, string],
 });
 
+const userSubContact = (
+    required: string,
+    validate?: SchemaTypeOptions<string | undefined>["validate"],
+    lowercase?: boolean
+) => {
+    const [trim, type] = [true, String];
+
+    return new Schema<Required<SubContactSchemaType>>(
+        {
+            other: { trim, type, lowercase, default: undefined, validate },
+            primary: { trim, type, lowercase, required: [true, required], validate },
+        },
+        { _id: false }
+    );
+};
+
 export const UserPassword = new Schema<PasswordSchemaType>(
     {
         hash: {
@@ -52,6 +71,35 @@ export const UserImage = new Schema<ImageSchemaType>(
         portrait: {
             type: String,
             default: undefined,
+        },
+    },
+    { _id: false }
+);
+
+export const UserContact = new Schema<ContactSchemaType>(
+    {
+        email: {
+            required: [true, "User email required"],
+            type: userSubContact(
+                "User email required",
+                {
+                    validator: (v?: string) =>
+                        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? ""),
+                    msg: "Invalid email address",
+                },
+                true
+            ),
+        },
+        phone: {
+            required: [true, "User phone required"],
+            type: userSubContact("User phone required", {
+                validator: (v?: string) => PhoneNumber(v ?? "").isValid(),
+                msg: "Invalid phone number",
+            }),
+        },
+        address: {
+            required: [true, "User address required"],
+            type: userSubContact("User address required"),
         },
     },
     { _id: false }
