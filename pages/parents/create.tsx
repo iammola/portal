@@ -13,7 +13,7 @@ const CreateParent: NextPage = () => {
                 <meta name="description" content="Create parent" />
             </Head>
             <section className="flex flex-col items-start justify-start grow w-full">
-                <h1 className="text-5xl font-semibold text-gray-600 dark:text-gray-300 p-10">
+                <h1 className="text-5xl font-semibold text-slate-600 dark:text-slate-300 p-10">
                     <span>Create</span>{" "}
                     <span className="bg-clip-text bg-gradient-to-br from-indigo-300 to-indigo-600 text-transparent">
                         Parent
@@ -22,10 +22,10 @@ const CreateParent: NextPage = () => {
                 <div className="w-full h-full grow self-center px-10 space-y-10">
                     <div className="flex items-stretch justify-start md:gap-x-6 lg:gap-x-12 w-full p-7 bg-white shadow-md rounded-lg">
                         <div className="md:w-[27rem]">
-                            <h3 className="text-lg text-gray-800 font-medium">
+                            <h3 className="text-lg text-slate-800 font-medium">
                                 Personal Information
                             </h3>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-slate-500">
                                 Use a permanent address where you can receive mail.
                             </p>
                         </div>
@@ -39,7 +39,7 @@ const CreateParent: NextPage = () => {
                                 label="Full name"
                                 className={(valid?: boolean) =>
                                     classNames(
-                                        "w-full h-[3.75rem] border placeholder-shown:border-gray-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                        "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
                                         {
                                             "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                                                 valid === true,
@@ -60,7 +60,7 @@ const CreateParent: NextPage = () => {
                                         label="First name"
                                         className={(valid?: boolean) =>
                                             classNames(
-                                                "w-full h-[3.75rem] border placeholder-shown:border-gray-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
                                                 {
                                                     "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                                                         valid === true,
@@ -81,7 +81,7 @@ const CreateParent: NextPage = () => {
                                         label="Last name"
                                         className={(valid?: boolean) =>
                                             classNames(
-                                                "w-full h-[3.75rem] border placeholder-shown:border-gray-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
                                                 {
                                                     "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                                                         valid === true,
@@ -104,7 +104,7 @@ const CreateParent: NextPage = () => {
                                         label="Initials"
                                         className={(valid?: boolean) =>
                                             classNames(
-                                                "w-full h-[3.75rem] border placeholder-shown:border-gray-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
                                                 {
                                                     "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                                                         valid === true,
@@ -125,7 +125,7 @@ const CreateParent: NextPage = () => {
                                         label="Other name"
                                         className={(valid?: boolean) =>
                                             classNames(
-                                                "w-full h-[3.75rem] border placeholder-shown:border-gray-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                                                "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
                                                 {
                                                     "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                                                         valid === true,

@@ -38,12 +38,12 @@ const Input: Input = ({ className, label, showIcons, onChange, ...props }) => {
             />
             <label
                 htmlFor={props.id}
-                className="absolute left-[-.4rem] p-1 text-gray-600 transition-all text-sm -top-3.5 font-medium bg-white tracking-wide peer-focus:text-sm peer-focus:left-[-.4rem] peer-focus:top-[-.95rem] peer-focus:bg-white peer-focus:font-medium peer-focus:tracking-wide peer-placeholder-shown:select-none peer-placeholder-shown:left-3 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:bg-transparent peer-placeholder-shown:tracking-normal"
+                className="absolute left-[-.4rem] p-1 text-slate-600 transition-all text-sm -top-3.5 font-medium bg-white tracking-wide peer-focus:text-sm peer-focus:left-[-.4rem] peer-focus:top-[-.95rem] peer-focus:bg-white peer-focus:font-medium peer-focus:tracking-wide peer-placeholder-shown:select-none peer-placeholder-shown:left-3 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:bg-transparent peer-placeholder-shown:tracking-normal"
             >
                 {label}
             </label>
             {props.required !== true && (
-                <span className="absolute right-0.5 -top-5 text-xs text-gray-500">Optional</span>
+                <span className="absolute right-0.5 -top-5 text-xs text-slate-500">Optional</span>
             )}
             {showIcons === true && (
                 <>

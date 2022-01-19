@@ -14,7 +14,7 @@ const CreateClass: NextPage = () => {
     const inputClassName = useCallback(
         (valid?: boolean) =>
             classNames(
-                "w-[20rem] h-[3.75rem] border placeholder-shown:border-gray-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
+                "w-[20rem] h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
                 {
                     "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
                     "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
@@ -30,7 +30,7 @@ const CreateClass: NextPage = () => {
                 <meta name="description" content="Create class" />
             </Head>
             <section className="flex flex-col items-start justify-start grow w-full">
-                <h1 className="text-5xl font-semibold text-gray-600 dark:text-gray-300 p-10">
+                <h1 className="text-5xl font-semibold text-slate-600 dark:text-slate-300 p-10">
                     <span>Create a</span>{" "}
                     <span className="bg-clip-text bg-gradient-to-br from-emerald-300 to-emerald-600 text-transparent">
                         Class

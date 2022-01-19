@@ -36,7 +36,7 @@ const StudentMe: FunctionComponent = () => {
 
     return (
         <>
-            <div className="sticky top-0 flex items-center justify-start gap-x-8 w-full pt-4 mt-16 mb-6 border-b border-b-gray-200 bg-gray-50 z-10 overflow-x-auto overflow-y-hidden">
+            <div className="sticky top-0 flex items-center justify-start gap-x-8 w-full pt-4 mt-16 mb-6 border-b border-b-slate-200 bg-slate-50 z-10 overflow-x-auto overflow-y-hidden">
                 {tabs.map((tab) => (
                     <span
                         key={tab}
@@ -45,8 +45,8 @@ const StudentMe: FunctionComponent = () => {
                             "group relative inline-block w-max min-w-max pb-5 text-sm font-medium tracking-wide cursor-pointer",
                             [
                                 activeTab === tab,
-                                "text-gray-900",
-                                "text-gray-500 hover:text-gray-900",
+                                "text-slate-900",
+                                "text-slate-500 hover:text-slate-900",
                             ]
                         )}
                     >
@@ -57,8 +57,8 @@ const StudentMe: FunctionComponent = () => {
                                     "text-xs font-semibold ml-3 py-1 px-2.5 rounded-full",
                                     [
                                         activeTab === tab,
-                                        "bg-gray-300 text-gray-900",
-                                        "bg-gray-200 text-gray-700 group-hover:bg-gray-300 group-hover:text-gray-900",
+                                        "bg-slate-300 text-slate-900",
+                                        "bg-slate-200 text-slate-700 group-hover:bg-slate-300 group-hover:text-slate-900",
                                     ]
                                 )}
                             >
@@ -66,7 +66,7 @@ const StudentMe: FunctionComponent = () => {
                             </span>
                         )}
                         {activeTab === tab && (
-                            <span className="absolute -bottom-px inset-x-0 w-full h-[2px] bg-gray-900 rounded-full" />
+                            <span className="absolute -bottom-px inset-x-0 w-full h-[2px] bg-slate-900 rounded-full" />
                         )}
                     </span>
                 ))}
