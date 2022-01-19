@@ -7,8 +7,7 @@ import { classNames } from "utils";
 const XIcon = dynamic(() => import("@heroicons/react/solid/XIcon"));
 const CheckIcon = dynamic(() => import("@heroicons/react/solid/CheckIcon"));
 
-const Input: Input = ({ className, label, showIcons, onChange, ...props }) => {
-    const [value, setValue] = useState(props.value ?? "");
+const Input: Input = ({ className, label, showIcons, onChange, value, ...props }) => {
     const [valid, setValid] = useState<boolean>();
     const ref = useRef<HTMLInputElement>(null);
 
@@ -19,18 +18,14 @@ const Input: Input = ({ className, label, showIcons, onChange, ...props }) => {
         if (typing === false) setValid(input?.value === "" ? undefined : input?.validity.valid);
     }, [typing]);
 
-    useEffect(() => {
-        onChange(value);
-    }, [onChange, value]);
-
     return (
         <div className="relative grid gap-x-2 items-center w-full">
             <input
                 ref={ref}
                 {...props}
-                value={value}
+                value={value ?? ""}
                 placeholder={label || " "}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => onChange(e.target.value)}
                 className={classNames(
                     "peer p-2 pl-4 row-start-1",
                     typeof className === "string" ? className : className(valid)
