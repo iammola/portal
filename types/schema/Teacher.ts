@@ -1,10 +1,8 @@
 import type { Model } from "mongoose";
+import type { UserBase } from "types/schema/User";
 import type { DocumentId, ModelRecord, ObjectId } from "types/schema";
-import type { UserBase, UserImage, UserPassword } from "types/schema/User";
 
 export interface TeacherSchema extends DocumentId, UserBase {
-    image: UserImage;
-    password: UserPassword;
     privileges: ObjectId;
     name: {
         [K in "title" | "username" | "initials" | "full" | "first" | "other" | "last"]: string;

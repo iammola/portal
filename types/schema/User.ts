@@ -20,5 +20,7 @@ export type UserContact = {
 export interface UserBase {
     dob?: Date;
     gender: "M" | "F";
+    image: UserImage;
     contact: UserContact;
+    password: UserPassword;
 }
