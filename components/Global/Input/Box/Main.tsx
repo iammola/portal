@@ -11,23 +11,23 @@ const Main: Main = ({ className, onChange, values }) => {
     }, [values]);
 
     function updateValues(e: KeyboardEvent<HTMLElement>) {
-        const lastChild = ref.current?.lastChild;
-
         if (["Enter", "Space"].includes(e.code) === true) {
-            const schoolMail = (lastChild?.textContent?.trim() ?? "").toLowerCase();
+            const textNode = getSelection()?.anchorNode as ChildNode | null;
+            const schoolMail = (textNode?.textContent?.trim() ?? "").toLowerCase();
             e.preventDefault();
 
             if (
                 /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(schoolMail) === true &&
                 values.find((item) => item.schoolMail === schoolMail) === undefined
             ) {
-                lastChild?.remove();
+                textNode?.remove();
                 onChange([...values, { schoolMail }]);
                 setTimeout(addSpace);
                 // Todo: trigger a function to get the teacher's username and initial by the school mail
             }
         }
 
+        const lastChild = ref.current?.lastChild;
         if (e.code === "Backspace" && lastChild?.textContent?.trim() === "") e.preventDefault();
 
         if (lastChild?.nodeType === 3 && lastChild.previousSibling?.nodeType === 3)
