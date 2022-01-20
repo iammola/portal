@@ -17,8 +17,8 @@ const Test: NextPage = () => {
                 <InputBox.Label className="font-medium text-slate-800">Teachers</InputBox.Label>
                 <InputBox.Main
                     values={value}
-                    className="flex flex-row flex-wrap grow gap-y-2 content-start items-center justify-start w-full p-3 border border-slate-300 focus:border-transparent bg-white rounded-lg overflow-hidden focus:outline-none ring-2 ring-transparent focus:ring-blue-500"
                     onChange={setValue}
+                    className="flex flex-row flex-wrap grow gap-x-3 gap-y-2 items-center justify-start w-full p-3 border border-slate-200 focus:border-transparent bg-white rounded-lg overflow-hidden focus:outline-none ring-2 ring-transparent focus:ring-blue-400"
                 />
             </InputBox>
         </main>
