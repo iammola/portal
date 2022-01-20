@@ -2,6 +2,8 @@ import { FunctionComponent, useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 
+import Drawer from "./BadgeDrawer";
+
 import type { UserBase } from "types/schema/User";
 
 const Badge: Badge = ({ item, setItem }) => {
@@ -42,7 +44,7 @@ const Badge: Badge = ({ item, setItem }) => {
             contentEditable={false}
             suppressContentEditableWarning
             className={classNames(
-                "flex flex-row gap-x-2.5 items-center justify-between min-w-max max-w-full border p-[2px] pr-3 rounded-full",
+                "flex flex-row gap-x-2.5 items-center justify-between min-w-max max-w-full border p-[2px] pr-3 rounded-full relative",
                 {
                     "border-red-300 bg-red-100/20": valid === false,
                     "border-slate-300 bg-white": valid === undefined,
@@ -61,6 +63,10 @@ const Badge: Badge = ({ item, setItem }) => {
             <span className="text-sm text-gray-600 tracking-wide">
                 {item.name?.username ?? item.schoolMail}
             </span>
+            <Drawer
+                {...{ selectedColor, item, valid }}
+                className="absolute top-0 left-0 z-50 font-poppins divide-y divide-slate-400 bg-white w-[18.5rem] rounded-md overflow-hidden shadow-md"
+            />
         </div>
     );
 };
