@@ -10,10 +10,6 @@ type Main = FunctionComponent<{
 }>;
 import type { UserBase } from "types/schema/User";
 
-type Badge = FunctionComponent<{
-    remove(): void;
-}>;
-
 const Main: Main = ({ addValue, className, removeValue, values }) => {
     const ref = useRef<HTMLDivElement>(null);
 
@@ -152,3 +148,9 @@ export default Main;
 export type Value = Pick<UserBase, "schoolMail"> & {
     name?: Pick<UserBase["name"], "username" | "initials">;
 };
+
+type Badge = FunctionComponent<{
+    item: Value;
+    remove(): void;
+    colors: string[];
+}>;
