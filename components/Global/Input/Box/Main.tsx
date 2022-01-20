@@ -12,6 +12,10 @@ import type { UserBase } from "types/schema/User";
 
 const Main: Main = ({ addValue, className, removeValue, values }) => {
     const ref = useRef<HTMLDivElement>(null);
+    const colors = useMemo(
+        () => ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"],
+        []
+    );
 
     useEffect(() => {
         const target = ref.current;
