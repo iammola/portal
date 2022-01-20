@@ -25,7 +25,7 @@ const Badge: Badge = ({ edit, item, remove, setItem }) => {
                 // TODO: Fetch user's username and initials. If undefined, setValid to false
                 await new Promise(
                     (resolve, reject) =>
-                        (timeout = setTimeout(Math.random() > 0.65 ? resolve : reject, 5e3))
+                        (timeout = setTimeout(Math.random() > 0.55 ? resolve : reject, 3e3))
                 );
                 setValid(true);
                 setItem({
