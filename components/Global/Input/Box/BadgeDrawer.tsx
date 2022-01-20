@@ -72,6 +72,7 @@ const Drawer: Drawer = ({ className, edit, item, remove, selectedColor, valid })
 const Action: Action = ({ action, Icon, type }) => {
     return (
         <div
+            tabIndex={0}
             onClick={action}
             className="grid grid-cols-4 items-center w-full pl-5 pr-3 py-2 h-14 hover:bg-slate-200 focus:bg-slate-200"
         >
