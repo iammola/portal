@@ -58,7 +58,7 @@ const Badge: Badge = ({ edit, item, remove, setItem }) => {
             onFocus={handleFocus}
             suppressContentEditableWarning
             className={classNames(
-                "flex flex-row gap-x-2.5 items-center justify-between min-w-max max-w-full border p-[2px] pr-3 rounded-full relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white",
+                "flex flex-row gap-x-2.5 items-center justify-between min-w-max max-w-full border p-[2px] pr-3 rounded-full relative cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white",
                 {
                     "border-red-300 bg-red-100/20 focus:ring-red-300": valid === false,
                     "border-slate-300 bg-white": valid === undefined,
