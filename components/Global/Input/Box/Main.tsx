@@ -50,7 +50,6 @@ const Main: Main = ({ className, onChange, values }) => {
                 textNode?.remove();
                 onChange([...values, { schoolMail }]);
                 setTimeout(addSpace);
-                // Todo: trigger a function to get the teacher's username and initial by the school mail
             }
         }
 
