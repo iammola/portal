@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useMemo, useState } from "react";
+import { FocusEvent, FunctionComponent, useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 
@@ -47,14 +47,15 @@ const Badge: Badge = ({ edit, item, remove, setItem }) => {
         };
     }, [item, setItem, valid]);
 
-    const toggleShowDrawer = () => setShowDrawer(!showDrawer);
+    const handleFocus = (e: FocusEvent<HTMLElement>) =>
+        setShowDrawer(e.target.contains(document.activeElement));
 
     return (
         <div
             tabIndex={0}
             contentEditable={false}
-            onBlur={toggleShowDrawer}
-            onFocus={toggleShowDrawer}
+            onBlur={handleFocus}
+            onFocus={handleFocus}
             suppressContentEditableWarning
             className={classNames(
                 "flex flex-row gap-x-2.5 items-center justify-between min-w-max max-w-full border p-[2px] pr-3 rounded-full relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white",
