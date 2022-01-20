@@ -1,5 +1,5 @@
 import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
-import { FunctionComponent } from "react";
+import { ComponentProps, FunctionComponent } from "react";
 
 import { classNames } from "utils";
 
@@ -12,6 +12,12 @@ type Drawer = FunctionComponent<{
     valid?: boolean;
     className: string;
     selectedColor: string;
+}>;
+
+type Action = FunctionComponent<{
+    type: string;
+    action(): void;
+    Icon(props: ComponentProps<"svg">): JSX.Element;
 }>;
 
 const Drawer: Drawer = ({ className, edit, item, remove, selectedColor, valid }) => {
@@ -56,25 +62,23 @@ const Drawer: Drawer = ({ className, edit, item, remove, selectedColor, valid })
                 </span>
             </div>
             <div className="flex flex-col gap-y-3 pt-2 pb-3">
-                <div
-                    onClick={edit}
-                    className="grid grid-cols-4 items-center w-full pl-5 pr-3 py-2 h-14 hover:bg-slate-200"
-                >
-                    <PencilIcon className="flex items-center justify-center stroke-slate-600 w-6 h-6 col-start-1 col-end-1 row-span-full" />
-                    <span className="col-start-2 col-end-5 row-span-full font-medium text-slate-600 tracking-wide truncate">
-                        Edit
-                    </span>
-                </div>
-                <div
-                    onClick={remove}
-                    className="grid grid-cols-4 items-center w-full pl-5 pr-3 py-2 h-14 hover:bg-slate-200"
-                >
-                    <TrashIcon className="flex items-center justify-center stroke-slate-600 w-6 h-6 col-start-1 col-end-1 row-span-full" />
-                    <span className="col-start-2 col-end-5 row-span-full font-medium text-slate-600 tracking-wide truncate">
-                        Remove
-                    </span>
-                </div>
+                <Action action={edit} Icon={PencilIcon} type="Edit" />
+                <Action action={remove} Icon={TrashIcon} type="Remove" />
             </div>
+        </div>
+    );
+};
+
+const Action: Action = ({ action, Icon, type }) => {
+    return (
+        <div
+            onClick={action}
+            className="grid grid-cols-4 items-center w-full pl-5 pr-3 py-2 h-14 hover:bg-slate-200"
+        >
+            <Icon className="flex items-center justify-center stroke-slate-600 w-6 h-6 col-start-1 col-end-1 row-span-full" />
+            <span className="col-start-2 col-end-5 row-span-full font-medium text-slate-600 tracking-wide truncate">
+                {type}
+            </span>
         </div>
     );
 };
