@@ -8,9 +8,9 @@ const Badge: Badge = ({ item, setName }) => {
     const [valid, setValid] = useState<boolean>();
     const selectedColor = useMemo(
         () =>
-            ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"].at(
+            ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"][
                 Math.floor(Math.random() * 5)
-            ),
+            ],
         []
     );
 
