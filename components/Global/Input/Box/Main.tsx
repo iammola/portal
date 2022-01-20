@@ -42,37 +42,12 @@ const Main: Main = ({ className, onChange, values }) => {
             lastChild.remove();
     }
 
-    function keyUpRemove(e: KeyboardEvent<HTMLElement>) {
-        if (e.code === "Backspace") {
-            removeBadge();
-            removeLineBreak((e.target as HTMLElement).lastElementChild);
-        }
-    }
+    function handleKeyUp({ code }: KeyboardEvent<HTMLElement>) {
+        if (code === "Backspace" && ref.current !== null) {
+            const { lastChild, lastElementChild } = ref.current;
 
-    function removeLineBreak(element: Element | null) {
-        if (element?.tagName === "BR") element.remove();
-    }
-
-    function removeBadge() {
-        const selection = getSelection();
-
-        if (selection?.type === "Caret" && selection.focusNode?.textContent?.trim() === "") {
-            const lastBadge = (
-                selection.focusNode.nodeType === 1
-                    ? selection.focusNode.previousSibling
-                    : selection.focusNode.previousSibling?.previousSibling
-            ) as HTMLElement | null;
-
-            if (lastBadge?.isContentEditable === false) {
-                const { schoolMail } =
-                    values.find((value) =>
-                        [value.schoolMail, value.name?.username].includes(
-                            lastBadge.firstElementChild?.textContent ?? ""
-                        )
-                    ) ?? {};
-
-                if (schoolMail !== undefined) removeValue(schoolMail);
-            }
+            if (lastElementChild?.tagName === "BR") lastElementChild.remove();
+            if (lastChild?.textContent?.trim() === "") onChange(values.slice(0, -1));
         }
     }
 
@@ -112,7 +87,7 @@ const Main: Main = ({ className, onChange, values }) => {
             onClick={addSpace}
             className={className}
             onKeyDown={updateValues}
-            onKeyUp={keyUpRemove}
+            onKeyUp={handleKeyUp}
             suppressContentEditableWarning
         >
             {values.map((item) => (
