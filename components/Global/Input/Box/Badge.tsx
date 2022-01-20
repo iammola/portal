@@ -1,10 +1,11 @@
-import { useMemo, FunctionComponent } from "react";
+import { FunctionComponent, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 
 import type { UserBase } from "types/schema/User";
 
-const Badge: Badge = ({ item }) => {
+const Badge: Badge = ({ item, setName }) => {
+    const [valid, setValid] = useState<boolean>();
     const selectedColor = useMemo(
         () =>
             ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"].at(
