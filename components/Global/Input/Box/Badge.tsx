@@ -18,7 +18,14 @@ const Badge: Badge = ({ item, setName }) => {
         <div
             contentEditable={false}
             suppressContentEditableWarning
-            className="flex flex-row gap-x-2.5 items-center justify-between min-w-max max-w-full border p-[2px] pr-3 rounded-full bg-white"
+            className={classNames(
+                "flex flex-row gap-x-2.5 items-center justify-between min-w-max max-w-full border p-[2px] pr-3 rounded-full",
+                {
+                    "border-red-300 bg-red-100/20": valid === false,
+                    "border-slate-300 bg-white": valid === undefined,
+                    "border-emerald-300 bg-emerald-100/20": valid === true,
+                }
+            )}
         >
             <span
                 className={classNames(
