@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Head from "next/head";
 
-import InputBox from "components/Global/Input/Box";
+import InputBox, { Value } from "components/Global/Input/Box";
 
 import type { NextPage } from "next";
 
 const Test: NextPage = () => {
-    const [value, setValue] = useState<{ _id: string; value: string }[]>([]);
+    const [value, setValue] = useState<Value[]>([]);
 
     return (
         <main className="flex flex-row items-center justify-center w-screen h-screen bg-slate-50">
