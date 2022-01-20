@@ -10,8 +10,6 @@ const Main: Main = ({ className, onChange, values }) => {
         () => ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"],
         []
     );
-    const removeValue = (mail: string) =>
-        onChange(values.filter((value) => value.schoolMail !== mail));
 
     useEffect(() => {
         const target = ref.current;
@@ -95,7 +93,9 @@ const Main: Main = ({ className, onChange, values }) => {
                     item={item}
                     colors={colors}
                     key={item.schoolMail}
-                    remove={() => removeValue(item.schoolMail)}
+                    remove={() =>
+                        onChange(values.filter((value) => value.schoolMail !== item.schoolMail))
+                    }
                 />
             ))}
         </div>
