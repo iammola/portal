@@ -4,10 +4,13 @@ import { classNames } from "utils";
 
 import type { UserBase } from "types/schema/User";
 
-const Badge: Badge = ({ colors, item }) => {
+const Badge: Badge = ({ item }) => {
     const selectedColor = useMemo(
-        () => colors[Math.floor(Math.random() * colors.length)],
-        [colors]
+        () =>
+            ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"].at(
+                Math.floor(Math.random() * 5)
+            ),
+        []
     );
 
     return (
@@ -38,7 +41,6 @@ export type Value = Pick<UserBase, "schoolMail"> & {
 type Badge = FunctionComponent<{
     item: Value;
     remove(): void;
-    colors: string[];
 }>;
 
 export default Badge;

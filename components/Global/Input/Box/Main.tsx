@@ -1,13 +1,9 @@
-import { FunctionComponent, KeyboardEvent, MouseEvent, useEffect, useMemo, useRef } from "react";
+import { FunctionComponent, KeyboardEvent, MouseEvent, useEffect, useRef } from "react";
 
 import Badge, { Value } from "./Badge";
 
 const Main: Main = ({ className, onChange, values }) => {
     const ref = useRef<HTMLDivElement>(null);
-    const colors = useMemo(
-        () => ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"],
-        []
-    );
 
     useEffect(() => {
         const target = ref.current;
@@ -89,7 +85,6 @@ const Main: Main = ({ className, onChange, values }) => {
             {values.map((item) => (
                 <Badge
                     item={item}
-                    colors={colors}
                     key={item.schoolMail}
                     remove={() =>
                         onChange(values.filter((value) => value.schoolMail !== item.schoolMail))
