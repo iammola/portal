@@ -6,7 +6,7 @@ import Drawer from "./BadgeDrawer";
 
 import type { UserBase } from "types/schema/User";
 
-const Badge: Badge = ({ item, setItem }) => {
+const Badge: Badge = ({ edit, item, remove, setItem }) => {
     const [valid, setValid] = useState<boolean>();
     const selectedColor = useMemo(
         () =>
@@ -64,7 +64,7 @@ const Badge: Badge = ({ item, setItem }) => {
                 {item.name?.username ?? item.schoolMail}
             </span>
             <Drawer
-                {...{ selectedColor, item, valid }}
+                {...{ selectedColor, item, edit, remove, valid }}
                 className="absolute top-0 left-0 z-50 font-poppins divide-y divide-slate-400 bg-white w-[18.5rem] rounded-md overflow-hidden shadow-md"
             />
         </div>
@@ -77,6 +77,7 @@ export type Value = Pick<UserBase, "schoolMail"> & {
 
 type Badge = FunctionComponent<{
     item: Value;
+    edit(): void;
     remove(): void;
     setItem(value: Required<Value>): void;
 }>;

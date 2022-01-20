@@ -7,12 +7,14 @@ import type { Value } from "./Badge";
 
 type Drawer = FunctionComponent<{
     item: Value;
+    edit(): void;
+    remove(): void;
     valid?: boolean;
     className: string;
     selectedColor: string;
 }>;
 
-const Drawer: Drawer = ({ className, item, selectedColor, valid }) => {
+const Drawer: Drawer = ({ className, edit, item, remove, selectedColor, valid }) => {
     return (
         <div className={className}>
             <span
@@ -53,14 +55,17 @@ const Drawer: Drawer = ({ className, item, selectedColor, valid }) => {
                     {item.schoolMail}
                 </span>
             </div>
-            <div className="flex flex-col gap-y-3 pt-2 pb-3">
+            <div onClick={edit} className="flex flex-col gap-y-3 pt-2 pb-3">
                 <div className="grid grid-cols-4 items-center w-full pl-5 pr-3 py-2 h-14 hover:bg-slate-200">
                     <PencilIcon className="flex items-center justify-center stroke-slate-600 w-6 h-6 col-start-1 col-end-1 row-span-full" />
                     <span className="col-start-2 col-end-5 row-span-full font-medium text-slate-600 tracking-wide truncate">
                         Edit
                     </span>
                 </div>
-                <div className="grid grid-cols-4 items-center w-full pl-5 pr-3 py-2 h-14 hover:bg-slate-200">
+                <div
+                    onClick={remove}
+                    className="grid grid-cols-4 items-center w-full pl-5 pr-3 py-2 h-14 hover:bg-slate-200"
+                >
                     <TrashIcon className="flex items-center justify-center stroke-slate-600 w-6 h-6 col-start-1 col-end-1 row-span-full" />
                     <span className="col-start-2 col-end-5 row-span-full font-medium text-slate-600 tracking-wide truncate">
                         Remove

@@ -22,6 +22,12 @@ const Main: Main = ({ className, onChange, values }) => {
         if (values.length === 0 && target !== null) target.innerHTML = "";
     }, [values]);
 
+    function editValue(schoolMail: string) {
+        onChange(values.filter((value) => value.schoolMail !== schoolMail));
+        ref.current?.insertAdjacentHTML("beforeend", schoolMail);
+        focusCursor();
+    }
+
     function updateValues(e: KeyboardEvent<HTMLElement>) {
         if (["Enter", "Space"].includes(e.code) === true) {
             const textNode = getSelection()?.anchorNode as ChildNode | null;
@@ -99,6 +105,7 @@ const Main: Main = ({ className, onChange, values }) => {
                     item={item}
                     key={item.schoolMail}
                     setItem={setValueName}
+                    edit={() => editValue(item.schoolMail)}
                     remove={() =>
                         onChange(values.filter((value) => value.schoolMail !== item.schoolMail))
                     }
