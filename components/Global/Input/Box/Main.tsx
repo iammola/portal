@@ -30,6 +30,7 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
             e.preventDefault();
 
             if (
+                /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(schoolMail) === true &&
                 values.find((item) => item.schoolMail === schoolMail) === undefined
             ) {
                 lastChild?.remove();
