@@ -24,8 +24,16 @@ const Main: Main = ({ className, onChange, values }) => {
 
     function editValue(schoolMail: string) {
         onChange(values.filter((value) => value.schoolMail !== schoolMail));
+        removeSpace();
         ref.current?.insertAdjacentHTML("beforeend", schoolMail);
         focusCursor();
+    }
+
+    function removeSpace() {
+        const { childNodes = [] } = ref.current ?? {};
+        [...childNodes].forEach(
+            (node) => (node.nodeType === 3 || (node as Element).tagName === "BR") && node.remove()
+        );
     }
 
     function updateValues(e: KeyboardEvent<HTMLElement>) {
@@ -38,6 +46,7 @@ const Main: Main = ({ className, onChange, values }) => {
                 /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(schoolMail) === true &&
                 values.find((item) => item.schoolMail === schoolMail) === undefined
             ) {
+                removeSpace();
                 textNode?.remove();
                 onChange([...values, { schoolMail }]);
                 setTimeout(addSpace);
@@ -54,9 +63,7 @@ const Main: Main = ({ className, onChange, values }) => {
 
     function handleKeyUp({ code }: KeyboardEvent<HTMLElement>) {
         if (code === "Backspace" && ref.current !== null) {
-            const { lastChild, lastElementChild } = ref.current;
-
-            if (lastElementChild?.tagName === "BR") lastElementChild.remove();
+            const { lastChild } = ref.current;
             if (lastChild?.textContent?.trim() === "") onChange(values.slice(0, -1));
         }
     }
