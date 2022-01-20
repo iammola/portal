@@ -19,7 +19,7 @@ const Main: Main = ({ className, onChange, values }) => {
 
     useEffect(() => {
         const target = ref.current;
-        if (values.length === 0 && target !== null) target.innerHTML = "";
+        if (values.length === 0 && target?.textContent?.trim() === "") target.innerHTML = "";
     }, [values]);
 
     function editValue(schoolMail: string) {
