@@ -36,7 +36,7 @@ const Main: Main = ({ className, onChange, values }) => {
         );
     }
 
-    function updateValues(e: KeyboardEvent<HTMLElement>) {
+    function handleKeyUp(e: KeyboardEvent<HTMLElement>) {
         if (["Enter", "Space"].includes(e.code) === true) {
             const textNode = getSelection()?.anchorNode as ChildNode | null;
             const schoolMail = (textNode?.textContent?.trim() ?? "").toLowerCase();
@@ -98,7 +98,7 @@ const Main: Main = ({ className, onChange, values }) => {
             contentEditable
             onClick={addSpace}
             className={className}
-            onKeyDown={updateValues}
+            onKeyDown={handleKeyUp}
             suppressContentEditableWarning
         >
             {values.map((item) => (
