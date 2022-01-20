@@ -14,7 +14,7 @@ const Main: Main = ({ className, onChange, values }) => {
         const lastChild = ref.current?.lastChild;
 
         if (["Enter", "Space"].includes(e.code) === true) {
-            const schoolMail = lastChild?.textContent?.trim() ?? "";
+            const schoolMail = (lastChild?.textContent?.trim() ?? "").toLowerCase();
             e.preventDefault();
 
             if (
