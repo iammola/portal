@@ -17,9 +17,8 @@ const Test: NextPage = () => {
                 <InputBox.Label className="font-medium text-slate-800">Teachers</InputBox.Label>
                 <InputBox.Main
                     values={value}
-                    addValue={(v) => setValue([...value, v])}
-                    removeValue={(i) => setValue(value.filter((v) => v._id !== i))}
                     className="flex flex-row flex-wrap grow gap-y-2 content-start items-center justify-start w-full p-3 border border-slate-300 focus:border-transparent bg-white rounded-lg overflow-hidden focus:outline-none ring-2 ring-transparent focus:ring-blue-500"
+                    onChange={setValue}
                 />
             </InputBox>
         </main>
