@@ -34,8 +34,8 @@ const Badge: Badge = ({ item, setItem }) => {
             }
         }
 
-        void getUserDetails();
-    }, [setItem]);
+        if (valid === item.name) void getUserDetails();
+    }, [item, setItem, valid]);
 
     return (
         <div
