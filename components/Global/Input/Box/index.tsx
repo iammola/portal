@@ -16,4 +16,4 @@ interface Input extends FunctionComponent<{ className?: string }> {
 }
 
 export default Input;
-export type { Value } from "./Main";
+export type { Value } from "./Badge";
