@@ -1,7 +1,6 @@
 import { Fragment, FunctionComponent, KeyboardEvent, MouseEvent, useEffect, useRef } from "react";
 import { XIcon } from "@heroicons/react/outline";
 
-type Value = { [K in "_id" | "value"]: string };
 
 type Main = FunctionComponent<{
     values: Value[];
@@ -9,6 +8,7 @@ type Main = FunctionComponent<{
     addValue(v: Value): void;
     removeValue(v: Value["_id"]): void;
 }>;
+import type { UserBase } from "types/schema/User";
 
 type Badge = FunctionComponent<{
     remove(): void;
@@ -148,3 +148,7 @@ const Badge: Badge = ({ children, remove }) => {
 };
 
 export default Main;
+
+export type Value = Pick<UserBase, "schoolMail"> & {
+    name?: Pick<UserBase["name"], "username" | "initials">;
+};
