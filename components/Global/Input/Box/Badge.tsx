@@ -1,4 +1,4 @@
-import { FunctionComponent, useMemo, useState } from "react";
+import { FunctionComponent, useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 
@@ -13,6 +13,26 @@ const Badge: Badge = ({ item, setName }) => {
             ),
         []
     );
+
+    useEffect(() => {
+        async function getUserDetails() {
+            try {
+                // TODO: Fetch user's username and initials. If undefined, setValid to false
+                await new Promise((resolve, reject) =>
+                    setTimeout(Math.random() > 0.65 ? resolve : reject, 5e3)
+                );
+                setValid(true);
+                setName({
+                    initials: "UX",
+                    username: "u.name",
+                });
+            } catch (error: any) {
+                setValid(false);
+            }
+        }
+
+        void getUserDetails();
+    }, [setName]);
 
     return (
         <div
