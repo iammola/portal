@@ -17,11 +17,14 @@ const Badge: Badge = ({ edit, item, remove, setItem }) => {
     );
 
     useEffect(() => {
+        let timeout;
+
         async function getUserDetails() {
             try {
                 // TODO: Fetch user's username and initials. If undefined, setValid to false
-                await new Promise((resolve, reject) =>
-                    setTimeout(Math.random() > 0.65 ? resolve : reject, 5e3)
+                await new Promise(
+                    (resolve, reject) =>
+                        (timeout = setTimeout(Math.random() > 0.65 ? resolve : reject, 5e3))
                 );
                 setValid(true);
                 setItem({
@@ -37,6 +40,8 @@ const Badge: Badge = ({ edit, item, remove, setItem }) => {
         }
 
         if (valid === item.name) void getUserDetails();
+
+        return clearTimeout(timeout);
     }, [item, setItem, valid]);
 
     return (
