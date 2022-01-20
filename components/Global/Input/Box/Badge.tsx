@@ -17,7 +17,7 @@ const Badge: Badge = ({ edit, item, remove, setItem }) => {
     );
 
     useEffect(() => {
-        let timeout;
+        let timeout: NodeJS.Timeout;
 
         async function getUserDetails() {
             try {
@@ -41,7 +41,9 @@ const Badge: Badge = ({ edit, item, remove, setItem }) => {
 
         if (valid === item.name) void getUserDetails();
 
-        return clearTimeout(timeout);
+        return () => {
+            clearTimeout(timeout);
+        };
     }, [item, setItem, valid]);
 
     return (
