@@ -54,17 +54,13 @@ const Main: Main = ({ className, onChange, values }) => {
         }
 
         const lastChild = ref.current?.lastChild;
-        if (e.code === "Backspace" && lastChild?.textContent?.trim() === "") e.preventDefault();
+        if (e.code === "Backspace" && lastChild?.textContent?.trim() === "") {
+            e.preventDefault();
+            onChange(values.slice(0, -1));
+        }
 
         if (lastChild?.nodeType === 3 && lastChild.previousSibling?.nodeType === 3)
             lastChild.remove();
-    }
-
-    function handleKeyUp({ code }: KeyboardEvent<HTMLElement>) {
-        if (code === "Backspace" && ref.current !== null) {
-            const { lastChild } = ref.current;
-            if (lastChild?.textContent?.trim() === "") onChange(values.slice(0, -1));
-        }
     }
 
     function addSpace(e?: MouseEvent<HTMLDivElement>) {
@@ -103,7 +99,6 @@ const Main: Main = ({ className, onChange, values }) => {
             onClick={addSpace}
             className={className}
             onKeyDown={updateValues}
-            onKeyUp={handleKeyUp}
             suppressContentEditableWarning
         >
             {values.map((item) => (
