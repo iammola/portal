@@ -8,6 +8,7 @@ import type { UserBase } from "types/schema/User";
 
 const Badge: Badge = ({ edit, item, remove, setItem }) => {
     const [valid, setValid] = useState<boolean>();
+    const [showDrawer, setShowDrawer] = useState(false);
     const selectedColor = useMemo(
         () =>
             ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"][
@@ -46,16 +47,21 @@ const Badge: Badge = ({ edit, item, remove, setItem }) => {
         };
     }, [item, setItem, valid]);
 
+    const toggleShowDrawer = () => setShowDrawer(!showDrawer);
+
     return (
         <div
+            tabIndex={0}
             contentEditable={false}
+            onBlur={toggleShowDrawer}
+            onFocus={toggleShowDrawer}
             suppressContentEditableWarning
             className={classNames(
-                "flex flex-row gap-x-2.5 items-center justify-between min-w-max max-w-full border p-[2px] pr-3 rounded-full relative",
+                "flex flex-row gap-x-2.5 items-center justify-between min-w-max max-w-full border p-[2px] pr-3 rounded-full relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white",
                 {
-                    "border-red-300 bg-red-100/20": valid === false,
+                    "border-red-300 bg-red-100/20 focus:ring-red-300": valid === false,
                     "border-slate-300 bg-white": valid === undefined,
-                    "border-emerald-300 bg-emerald-100/20": valid === true,
+                    "border-emerald-300 bg-emerald-100/20 focus:ring-emerald-300": valid === true,
                 }
             )}
         >
@@ -70,10 +76,12 @@ const Badge: Badge = ({ edit, item, remove, setItem }) => {
             <span className="text-sm text-gray-600 tracking-wide">
                 {item.name?.username ?? item.schoolMail}
             </span>
-            <Drawer
-                {...{ selectedColor, item, edit, remove, valid }}
-                className="absolute top-1 left-1 z-50 font-poppins divide-y divide-slate-400 bg-white w-[18.5rem] rounded-md overflow-hidden shadow-md"
-            />
+            {showDrawer === true && (
+                <Drawer
+                    {...{ selectedColor, item, edit, remove, valid }}
+                    className="absolute top-1 left-1 z-50 font-poppins divide-y divide-slate-400 bg-white w-[18.5rem] rounded-md overflow-hidden shadow-md"
+                />
+            )}
         </div>
     );
 };
