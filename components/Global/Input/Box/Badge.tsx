@@ -77,12 +77,15 @@ const Badge: Badge = ({ edit, item, remove, setItem }) => {
             <span className="text-sm text-gray-600 tracking-wide">
                 {item.name?.username ?? item.schoolMail}
             </span>
-            {showDrawer === true && (
-                <Drawer
-                    {...{ selectedColor, item, edit, remove, valid }}
-                    className="absolute top-1 left-1 z-50 font-poppins divide-y divide-slate-400 bg-white w-[18.5rem] rounded-md overflow-hidden shadow-md"
-                />
-            )}
+            <Drawer
+                {...{ selectedColor, item, edit, remove, valid }}
+                className={classNames(
+                    "absolute top-1 left-1 z-50 font-poppins divide-y divide-slate-400 bg-white w-[18.5rem] rounded-md overflow-hidden shadow-md",
+                    {
+                        "opacity-0 invisible pointer-events-none": showDrawer === false,
+                    }
+                )}
+            />
         </div>
     );
 };
