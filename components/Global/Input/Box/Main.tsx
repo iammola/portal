@@ -23,15 +23,14 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
     }, [values]);
 
     function updateValues(e: KeyboardEvent<HTMLElement>) {
+        const lastChild = ref.current?.lastChild;
+
         if (["Enter", "Space"].includes(e.code) === true) {
-            const lastChild = (e.target as HTMLElement).lastChild;
-            const value = lastChild?.textContent?.trim();
+            const schoolMail = lastChild?.textContent?.trim() ?? "";
             e.preventDefault();
 
             if (
-                value != undefined &&
-                value !== "" &&
-                values.find((item) => item.value === value) === undefined
+                values.find((item) => item.schoolMail === schoolMail) === undefined
             ) {
                 lastChild?.remove();
                 addValue({ _id: Date.now().toString(), value });
@@ -39,12 +38,8 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
             }
         }
 
-        if (e.code === "Backspace") {
-            const lastChild = (e.target as HTMLElement).lastChild;
-            if (lastChild?.textContent?.trim() === "") e.preventDefault();
-        }
+        if (e.code === "Backspace" && lastChild?.textContent?.trim() === "") e.preventDefault();
 
-        const lastChild = ref.current?.lastChild;
         if (lastChild?.nodeType === 3 && lastChild.previousSibling?.nodeType === 3)
             lastChild.remove();
     }
