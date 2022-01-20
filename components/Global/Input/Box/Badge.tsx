@@ -49,6 +49,7 @@ export type Value = Pick<UserBase, "schoolMail"> & {
 type Badge = FunctionComponent<{
     item: Value;
     remove(): void;
+    setName(name: NonNullable<Value["name"]>): void;
 }>;
 
 export default Badge;

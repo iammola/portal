@@ -89,6 +89,13 @@ const Main: Main = ({ className, onChange, values }) => {
                     remove={() =>
                         onChange(values.filter((value) => value.schoolMail !== item.schoolMail))
                     }
+                    setName={(name) =>
+                        onChange(
+                            values.map((value) =>
+                                value.schoolMail === item.schoolMail ? { ...value, name } : value
+                            )
+                        )
+                    }
                 />
             ))}
         </div>
