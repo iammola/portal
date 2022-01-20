@@ -1,9 +1,21 @@
-import { FunctionComponent, KeyboardEvent, MouseEvent, useEffect, useRef } from "react";
+import {
+    useRef,
+    useEffect,
+    MouseEvent,
+    useCallback,
+    KeyboardEvent,
+    FunctionComponent,
+} from "react";
 
 import Badge, { Value } from "./Badge";
 
 const Main: Main = ({ className, onChange, values }) => {
     const ref = useRef<HTMLDivElement>(null);
+    const setValueName = useCallback(
+        (item: Required<Value>) =>
+            onChange(values.map((value) => (value.schoolMail === item.schoolMail ? item : value))),
+        [onChange, values]
+    );
 
     useEffect(() => {
         const target = ref.current;
@@ -86,15 +98,9 @@ const Main: Main = ({ className, onChange, values }) => {
                 <Badge
                     item={item}
                     key={item.schoolMail}
+                    setItem={setValueName}
                     remove={() =>
                         onChange(values.filter((value) => value.schoolMail !== item.schoolMail))
-                    }
-                    setName={(name) =>
-                        onChange(
-                            values.map((value) =>
-                                value.schoolMail === item.schoolMail ? { ...value, name } : value
-                            )
-                        )
                     }
                 />
             ))}
