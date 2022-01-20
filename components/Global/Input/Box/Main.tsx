@@ -2,20 +2,16 @@ import { FunctionComponent, KeyboardEvent, MouseEvent, useEffect, useMemo, useRe
 
 import { classNames } from "utils";
 
-type Main = FunctionComponent<{
-    values: Value[];
-    className: string;
-    addValue(v: Value): void;
-    removeValue(v: Value["_id"]): void;
-}>;
 import type { UserBase } from "types/schema/User";
 
-const Main: Main = ({ addValue, className, removeValue, values }) => {
+const Main: Main = ({ className, onChange, values }) => {
     const ref = useRef<HTMLDivElement>(null);
     const colors = useMemo(
         () => ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"],
         []
     );
+    const removeValue = (mail: string) =>
+        onChange(values.filter((value) => value.schoolMail !== mail));
 
     useEffect(() => {
         const target = ref.current;
@@ -34,8 +30,9 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
                 values.find((item) => item.schoolMail === schoolMail) === undefined
             ) {
                 lastChild?.remove();
-                addValue({ _id: Date.now().toString(), value });
+                onChange([...values, { schoolMail }]);
                 setTimeout(addSpace);
+                // Todo: trigger a function to get the teacher's username and initial by the school mail
             }
         }
 
@@ -67,11 +64,14 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
             ) as HTMLElement | null;
 
             if (lastBadge?.isContentEditable === false) {
-                const badgeId = values.find(
-                    ({ value }) => value === lastBadge.firstElementChild?.textContent
-                )?._id;
+                const { schoolMail } =
+                    values.find((value) =>
+                        [value.schoolMail, value.name?.username].includes(
+                            lastBadge.firstElementChild?.textContent ?? ""
+                        )
+                    ) ?? {};
 
-                if (badgeId !== undefined) removeValue(badgeId);
+                if (schoolMail !== undefined) removeValue(schoolMail);
             }
         }
     }
@@ -159,6 +159,12 @@ export default Main;
 export type Value = Pick<UserBase, "schoolMail"> & {
     name?: Pick<UserBase["name"], "username" | "initials">;
 };
+
+type Main = FunctionComponent<{
+    values: Value[];
+    className: string;
+    onChange(values: Value[]): void;
+}>;
 
 type Badge = FunctionComponent<{
     item: Value;
