@@ -4,7 +4,7 @@ import { classNames } from "utils";
 
 import type { UserBase } from "types/schema/User";
 
-const Badge: Badge = ({ item, setName }) => {
+const Badge: Badge = ({ item, setItem }) => {
     const [valid, setValid] = useState<boolean>();
     const selectedColor = useMemo(
         () =>
@@ -22,9 +22,12 @@ const Badge: Badge = ({ item, setName }) => {
                     setTimeout(Math.random() > 0.65 ? resolve : reject, 5e3)
                 );
                 setValid(true);
-                setName({
-                    initials: "UX",
-                    username: "u.name",
+                setItem({
+                    ...item,
+                    name: {
+                        initials: "UX",
+                        username: "u.name",
+                    },
                 });
             } catch (error: any) {
                 setValid(false);
@@ -32,7 +35,7 @@ const Badge: Badge = ({ item, setName }) => {
         }
 
         void getUserDetails();
-    }, [setName]);
+    }, [setItem]);
 
     return (
         <div
@@ -69,7 +72,7 @@ export type Value = Pick<UserBase, "schoolMail"> & {
 type Badge = FunctionComponent<{
     item: Value;
     remove(): void;
-    setName(name: NonNullable<Value["name"]>): void;
+    setItem(value: Required<Value>): void;
 }>;
 
 export default Badge;
