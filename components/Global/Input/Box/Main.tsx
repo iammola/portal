@@ -1,6 +1,6 @@
-import { Fragment, FunctionComponent, KeyboardEvent, MouseEvent, useEffect, useRef } from "react";
-import { XIcon } from "@heroicons/react/outline";
+import { FunctionComponent, KeyboardEvent, MouseEvent, useEffect, useMemo, useRef } from "react";
 
+import { classNames } from "utils";
 
 type Main = FunctionComponent<{
     values: Value[];
@@ -120,29 +120,40 @@ const Main: Main = ({ addValue, className, removeValue, values }) => {
             suppressContentEditableWarning
         >
             {values.map((item) => (
-                <Fragment key={item._id}>
-                    <Badge remove={() => removeValue(item._id)}>{item.value}</Badge>
-                    <span className="w-[3.1875px] text-center text-transparent caret-black whitespace-pre last:hidden">
-                        <br />
-                    </span>
-                </Fragment>
+                <Badge
+                    item={item}
+                    colors={colors}
+                    key={item.schoolMail}
+                    remove={() => removeValue(item.schoolMail)}
+                />
             ))}
         </div>
     );
 };
 
-const Badge: Badge = ({ children, remove }) => {
+const Badge: Badge = ({ colors, item }) => {
+    const selectedColor = useMemo(
+        () => colors[Math.floor(Math.random() * colors.length)],
+        [colors]
+    );
+
     return (
         <div
             contentEditable={false}
             suppressContentEditableWarning
-            className="flex flex-row gap-x-2 items-center justify-between min-w-max max-w-full py-1 pl-3 pr-1 rounded-full bg-slate-200"
+            className="flex flex-row gap-x-2.5 items-center justify-between min-w-max max-w-full border p-[2px] pr-3 rounded-full bg-white"
         >
-            <span className="text-sm font-medium text-slate-700">{children}</span>
-            <XIcon
-                onClick={remove}
-                className="w-6 h-6 p-1 shrink-0 rounded-full stroke-slate-700 cursor-pointer hover:bg-slate-300"
-            />
+            <span
+                className={classNames(
+                    "flex items-center justify-center rounded-full overflow-hidden text-sm text-white uppercase aspect-square w-[1.85rem]",
+                    selectedColor
+                )}
+            >
+                {(item.name?.initials ?? item.schoolMail)[0]}
+            </span>
+            <span className="text-sm text-gray-600 tracking-wide">
+                {item.name?.username ?? item.schoolMail}
+            </span>
         </div>
     );
 };
