@@ -72,7 +72,7 @@ const Badge: Badge = ({ edit, item, remove, setItem }) => {
             </span>
             <Drawer
                 {...{ selectedColor, item, edit, remove, valid }}
-                className="absolute top-0 left-0 z-50 font-poppins divide-y divide-slate-400 bg-white w-[18.5rem] rounded-md overflow-hidden shadow-md"
+                className="absolute top-1 left-1 z-50 font-poppins divide-y divide-slate-400 bg-white w-[18.5rem] rounded-md overflow-hidden shadow-md"
             />
         </div>
     );
