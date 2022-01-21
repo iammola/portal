@@ -32,7 +32,10 @@ const Field: Field = ({ className, onChange, values }) => {
     function removeSpace() {
         const { childNodes = [] } = ref.current ?? {};
         [...childNodes].forEach(
-            (node) => (node.nodeType === 3 || (node as Element).tagName === "BR") && node.remove()
+            (node) =>
+                ((node.nodeType === 3 && node.textContent?.trim() === "") ||
+                    (node as Element).tagName === "BR") &&
+                node.remove()
         );
     }
 
