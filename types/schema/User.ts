@@ -1,3 +1,5 @@
+export type UserType = "parent" | "teacher" | "student";
+
 export type UserName<T> = {
     [K in "username" | "initials" | "full" | "first" | "last"]: string;
 } & (T extends true ? { title: string } : unknown) & {
