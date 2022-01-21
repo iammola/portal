@@ -1,3 +1,5 @@
+import type { DocumentId } from "types/schema";
+
 export type UserType = "parent" | "teacher" | "student";
 
 export type UserName<T> = {
@@ -25,7 +27,7 @@ export type UserContact = {
     [K in "email" | "phone" | "address"]: UserSubContact;
 };
 
-export interface UserBase<T extends boolean = true> {
+export interface UserBase<T extends boolean = true> extends DocumentId {
     dob?: Date;
     gender: "M" | "F";
     schoolMail: string;

@@ -1,6 +1,6 @@
 import type { Model } from "mongoose";
 import type { UserBase } from "types/schema/User";
-import type { DocumentId, ModelRecord, ObjectId } from "types/schema";
+import type { ModelRecord, ObjectId } from "types/schema";
 
 // Note: The `_id` ObjectId property should be provided when creating the document as the guardian's id
 export interface StudentGuardianSchema {
@@ -9,7 +9,7 @@ export interface StudentGuardianSchema {
     relationship: "father" | "mother" | string;
 }
 
-export interface StudentSchema extends DocumentId, UserBase<false> {
+export interface StudentSchema extends UserBase<false> {
     guardians: StudentGuardianSchema[];
 }
 

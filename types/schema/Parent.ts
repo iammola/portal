@@ -1,8 +1,8 @@
 import type { Model } from "mongoose";
 import type { UserBase } from "types/schema/User";
-import type { DocumentId, ModelRecord } from "types/schema";
+import type { ModelRecord } from "types/schema";
 
-export interface ParentSchema extends DocumentId, UserBase {
+export interface ParentSchema extends UserBase {
     occupation: string;
 }
 
