@@ -19,6 +19,7 @@ const Test: NextPage = () => {
                 </DynamicEmail.Label>
                 <DynamicEmail.Field
                     values={value}
+                    userType="student"
                     onChange={setValue}
                     className="flex flex-row flex-wrap grow gap-x-3 gap-y-2 items-center justify-start w-full p-3 border border-slate-200 focus:border-transparent bg-white rounded-lg focus:outline-none ring-2 ring-transparent focus:ring-blue-400"
                 />
