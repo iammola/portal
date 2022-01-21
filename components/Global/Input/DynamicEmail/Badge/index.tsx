@@ -1,10 +1,13 @@
 import { FocusEvent, FunctionComponent, useEffect, useMemo, useState } from "react";
+import useSWR from "swr";
 
 import { classNames } from "utils";
+import { fetchAPIEndpoint } from "utils/api";
 
 import Popover from "./Popover";
 
 import type { UserBase, UserType } from "types/schema/User";
+import type { UsersEmailData, UsersEmailRequestBody } from "types/api/users/email";
 
 const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
     const [valid, setValid] = useState<boolean>();
@@ -12,40 +15,34 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
     const selectedColor = useMemo(
         () =>
             ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"][
-            Math.floor(Math.random() * 5)
+                Math.floor(Math.random() * 5)
             ],
         []
     );
 
-    useEffect(() => {
-        let timeout: NodeJS.Timeout;
+    const { data } = useSWR("/api/users/email", async (url) =>
+        fetchAPIEndpoint<UsersEmailData, UsersEmailRequestBody>(
+            url,
+            { method: "SEARCH" },
+            {
+                userType,
+                schoolMail: item.schoolMail,
+                select: "name.username name.initials",
+            }
+        )
+    );
 
-        async function getUserDetails() {
-            try {
-                // TODO: Fetch user's username and initials. If undefined, setValid to false
-                await new Promise(
-                    (resolve, reject) =>
-                        (timeout = setTimeout(Math.random() > 0.55 ? resolve : reject, 3e3))
-                );
-                setValid(true);
+    useEffect(() => {
+        if (data !== undefined) {
+            setValid(data.success);
+
+            if (data.success === true)
                 setItem({
                     ...item,
-                    name: {
-                        initials: "UX",
-                        username: "u.name",
-                    },
+                    name: data.data.name,
                 });
-            } catch (error: any) {
-                setValid(false);
-            }
         }
-
-        if (valid === item.name) void getUserDetails();
-
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [item, setItem, valid]);
+    }, [data, item, setItem]);
 
     const handleFocus = (e: FocusEvent<HTMLElement>) =>
         setShowDrawer(e.target.contains(document.activeElement));
