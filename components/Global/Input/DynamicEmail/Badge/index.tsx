@@ -1,5 +1,5 @@
 import { FocusEvent, FunctionComponent, useEffect, useMemo, useState } from "react";
-import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 
 import { classNames } from "utils";
 import { fetchAPIEndpoint } from "utils/api";
@@ -20,7 +20,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
         []
     );
 
-    const { data } = useSWR("/api/users/email", async (url) =>
+    const { data } = useSWRImmutable("/api/users/email", async (url) =>
         fetchAPIEndpoint<UsersEmailData, UsersEmailRequestBody>(
             url,
             { method: "SEARCH" },
@@ -33,7 +33,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
     );
 
     useEffect(() => {
-        if (data !== undefined) {
+        if (data !== undefined && item.name === undefined) {
             setValid(data.success);
 
             if (data.success === true)
