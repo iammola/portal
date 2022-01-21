@@ -10,14 +10,13 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 type Return = ApiInternalResponse<UsersEmailData>;
 
-async function searchByEmail({ schoolMail, select }: UsersEmailRequestBody) {
+async function searchByEmail({ schoolMail, select, userType }: UsersEmailRequestBody) {
     let [result, statusCode]: ApiInternal<UsersEmailData> = ["", 0];
 
     await connect();
-    const data = /* userType === "student" ?  */ await StudentModel.findOne(
-        { schoolMail },
-        select
-    ).lean();
+    const data = await (userType === "student"
+        ? StudentModel.findOne({ schoolMail }, select).lean()
+        : null);
 
     [result, statusCode] =
         data !== null
