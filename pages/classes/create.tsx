@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import Head from "next/head";
 
 import Input from "components/Global/Input";
+import DynamicEmail, { Value } from "components/Global/Input/DynamicEmail";
 import { classNames } from "utils";
 
 import type { NextPage } from "next";
@@ -10,6 +11,7 @@ const CreateClass: NextPage = () => {
     const [name, setName] = useState("");
     const [alias, setAlias] = useState("");
     const [special, setSpecial] = useState("");
+    const [teachers, setTeachers] = useState<Value[]>([]);
 
     const inputClassName = useCallback(
         (valid?: boolean) =>
@@ -65,6 +67,17 @@ const CreateClass: NextPage = () => {
                             className={inputClassName}
                             onChange={(v) => setSpecial(v as string)}
                         />
+                        <DynamicEmail className="flex flex-col gap-y-4 items-start justify-start w-[20rem] font-inter">
+                            <DynamicEmail.Label className="font-medium text-slate-800">
+                                Teachers
+                            </DynamicEmail.Label>
+                            <DynamicEmail.Field
+                                values={teachers}
+                                userType="teacher"
+                                onChange={setTeachers}
+                                className="flex flex-row flex-wrap grow gap-x-3 gap-y-2 items-center justify-start w-full p-3 border border-slate-200 focus:border-transparent bg-white rounded-lg focus:outline-none ring-2 ring-transparent focus:ring-blue-400"
+                            />
+                        </DynamicEmail>
                         <button
                             type="submit"
                             className="w-full mt-5 py-3 px-5 tracking-wide bg-emerald-500 hover:bg-emerald-600 text-white font-medium uppercase rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 focus:hover:ring-emerald-600 focus:ring-offset-white"
