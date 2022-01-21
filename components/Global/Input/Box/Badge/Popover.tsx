@@ -3,9 +3,9 @@ import { ComponentProps, FunctionComponent } from "react";
 
 import { classNames } from "utils";
 
-import type { Value } from "./Badge";
+import type { Value } from ".";
 
-type Drawer = FunctionComponent<{
+type Popover = FunctionComponent<{
     item: Value;
     edit(): void;
     remove(): void;
@@ -20,7 +20,7 @@ type Action = FunctionComponent<{
     Icon(props: ComponentProps<"svg">): JSX.Element;
 }>;
 
-const Drawer: Drawer = ({ className, edit, item, remove, selectedColor, valid }) => {
+const Popover: Popover = ({ className, edit, item, remove, selectedColor, valid }) => {
     return (
         <div className={className}>
             <span
@@ -84,4 +84,4 @@ const Action: Action = ({ action, Icon, type }) => {
     );
 };
 
-export default Drawer;
+export default Popover;
