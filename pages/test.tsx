@@ -9,7 +9,7 @@ const Test: NextPage = () => {
     const [value, setValue] = useState<Value[]>([]);
 
     return (
-        <main className="flex flex-row items-center justify-center w-screen h-screen bg-white">
+        <main className="flex flex-row items-center justify-center w-screen h-screen bg-white dark:bg-slate-800">
             <Head>
                 <title>Test</title>
             </Head>
