@@ -4,15 +4,15 @@ import { classNames } from "utils";
 
 import Popover from "./Popover";
 
-import type { UserBase } from "types/schema/User";
+import type { UserBase, UserType } from "types/schema/User";
 
-const Badge: Badge = ({ edit, item, remove, setItem }) => {
+const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
     const [valid, setValid] = useState<boolean>();
     const [showDrawer, setShowDrawer] = useState(false);
     const selectedColor = useMemo(
         () =>
             ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"][
-                Math.floor(Math.random() * 5)
+            Math.floor(Math.random() * 5)
             ],
         []
     );
@@ -98,6 +98,7 @@ type Badge = FunctionComponent<{
     item: Value;
     edit(): void;
     remove(): void;
+    userType: UserType;
     setItem(value: Required<Value>): void;
 }>;
 

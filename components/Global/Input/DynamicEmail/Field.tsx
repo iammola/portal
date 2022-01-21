@@ -9,7 +9,9 @@ import {
 
 import Badge, { Value } from "./Badge";
 
-const Field: Field = ({ className, onChange, values }) => {
+import type { UserType } from "types/schema";
+
+const Field: Field = ({ className, onChange, userType, values }) => {
     const ref = useRef<HTMLDivElement>(null);
     const setValueName = useCallback(
         (item: Required<Value>) =>
@@ -106,7 +108,7 @@ const Field: Field = ({ className, onChange, values }) => {
         >
             {values.map((item) => (
                 <Badge
-                    item={item}
+                    {...{ item, userType }}
                     key={item.schoolMail}
                     setItem={setValueName}
                     edit={() => editValue(item.schoolMail)}
@@ -124,5 +126,6 @@ export default Field;
 type Field = FunctionComponent<{
     values: Value[];
     className: string;
+    userType: UserType;
     onChange(values: Value[]): void;
 }>;
