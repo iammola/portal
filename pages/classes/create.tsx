@@ -1,11 +1,13 @@
-import { useCallback, useState } from "react";
+import { FormEvent, useCallback, useState } from "react";
 import Head from "next/head";
 
 import Input from "components/Global/Input";
 import DynamicEmail, { Value } from "components/Global/Input/DynamicEmail";
 import { classNames } from "utils";
+import { fetchAPIEndpoint } from "utils/api";
 
 import type { NextPage } from "next";
+import type { CreateClassData, CreateClassRequestBody } from "types/api/classes";
 
 const CreateClass: NextPage = () => {
     const [name, setName] = useState("");
@@ -25,6 +27,31 @@ const CreateClass: NextPage = () => {
         []
     );
 
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        try {
+            const result = await fetchAPIEndpoint<CreateClassData, CreateClassRequestBody>(
+                "/api/classes",
+                { method: "POST" },
+                {
+                    name,
+                    alias,
+                    special,
+                    teachers: teachers
+                        .map(({ _id }) => _id as NonNullable<typeof _id>)
+                        .filter(Boolean),
+                }
+            );
+
+            if (result.success === true) {
+                console.warn(result.message, result.data);
+            }
+        } catch (error: any) {
+            console.error(error);
+        }
+    }
+
     return (
         <main className="flex flex-row items-stretch justify-center w-screen h-full min-h-screen bg-slate-50 dark:bg-slate-900 font-poppins">
             <Head>
@@ -39,7 +66,10 @@ const CreateClass: NextPage = () => {
                     </span>
                 </h1>
                 <div className="flex flex-row items-center justify-center self-center h-full py-4">
-                    <form className="flex flex-col gap-y-8 items-center justify-center bg-white p-10 rounded-2xl overflow-hidden shadow-lg">
+                    <form
+                        onSubmit={handleSubmit}
+                        className="flex flex-col gap-y-8 items-center justify-center bg-white p-10 rounded-2xl overflow-hidden shadow-lg"
+                    >
                         <Input
                             required
                             id="name"
