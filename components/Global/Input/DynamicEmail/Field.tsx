@@ -9,7 +9,7 @@ import {
 
 import Badge, { Value } from "./Badge";
 
-const Main: Main = ({ className, onChange, values }) => {
+const Field: Field = ({ className, onChange, values }) => {
     const ref = useRef<HTMLDivElement>(null);
     const setValueName = useCallback(
         (item: Required<Value>) =>
@@ -116,9 +116,9 @@ const Main: Main = ({ className, onChange, values }) => {
     );
 };
 
-export default Main;
+export default Field;
 
-type Main = FunctionComponent<{
+type Field = FunctionComponent<{
     values: Value[];
     className: string;
     onChange(values: Value[]): void;
