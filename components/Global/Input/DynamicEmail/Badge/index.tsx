@@ -35,12 +35,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
     useEffect(() => {
         if (data !== undefined && item.name === undefined) {
             setValid(data.success);
-
-            if (data.success === true)
-                setItem({
-                    ...item,
-                    name: data.data.name,
-                });
+            if (data.success === true) setItem(data.data);
         }
     }, [data, item, setItem]);
 
@@ -88,6 +83,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
 };
 
 export type Value = Pick<UserBase, "schoolMail"> & {
+    _id?: UserBase["_id"];
     name?: Pick<UserBase["name"], "username" | "initials">;
 };
 

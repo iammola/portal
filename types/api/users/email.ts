@@ -5,6 +5,6 @@ export type UsersEmailRequestBody = Pick<UserBase, "schoolMail"> & {
     userType: UserType;
 };
 
-export type UsersEmailData = {
+export type UsersEmailData = Pick<UserBase, "_id" | "schoolMail"> & {
     name: Pick<UserBase["name"], "initials" | "username" | "full">;
 };
