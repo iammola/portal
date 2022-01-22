@@ -12,11 +12,16 @@ const Field: Field = ({ className, onChange, required, value }) => {
     }, [required, typing, value]);
 
     return (
-        <textarea
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className={typeof className === "string" ? className : className(valid)}
-        />
+        <div className="relative w-[inherit] h-[inherit]">
+            <textarea
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className={typeof className === "string" ? className : className(valid)}
+            />
+            {required !== true && (
+                <span className="absolute right-0.5 -top-5 text-xs text-slate-500">Optional</span>
+            )}
+        </div>
     );
 };
 
