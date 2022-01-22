@@ -11,17 +11,19 @@ export const classNames = (
         | { [key: string]: boolean }
     )[]
 ) =>
-    classes
-        .reduce((acc: string[], cur) => {
-            let classes = "";
+    [
+        ...new Set(
+            classes.reduce((acc: string[], cur) => {
+                let classes = "";
 
-            if (typeof cur === "string") classes = cur;
-            else if (Array.isArray(cur)) classes = cur[0] ? cur[1] : cur[2];
-            else
-                classes = Object.keys(
-                    Object.fromEntries(Object.entries(cur ?? {}).filter((i) => i[1]))
-                ).join(" ");
+                if (typeof cur === "string") classes = cur;
+                else if (Array.isArray(cur)) classes = cur[0] ? cur[1] : cur[2];
+                else
+                    classes = Object.keys(
+                        Object.fromEntries(Object.entries(cur ?? {}).filter((i) => i[1]))
+                    ).join(" ");
 
-            return [...acc, classes];
-        }, [])
-        .join(" ");
+                return [...acc, classes];
+            }, [])
+        ),
+    ].join(" ");
