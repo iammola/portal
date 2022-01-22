@@ -1,29 +1,40 @@
 import { useState } from "react";
 import Head from "next/head";
 
-import DynamicEmail, { Value } from "components/Global/Input/DynamicEmail";
+import Textarea from "components/Global/Input/Textarea";
+import { classNames } from "utils";
 
 import type { NextPage } from "next";
 
 const Test: NextPage = () => {
-    const [value, setValue] = useState<Value[]>([]);
+    const [value, setValue] = useState("");
 
     return (
         <main className="flex flex-row items-center justify-center w-screen h-screen bg-white dark:bg-slate-800">
             <Head>
                 <title>Test</title>
             </Head>
-            <DynamicEmail className="flex flex-col gap-y-4 items-start justify-start w-[50rem] font-inter">
-                <DynamicEmail.Label className="font-medium text-slate-800">
-                    Teachers
-                </DynamicEmail.Label>
-                <DynamicEmail.Field
-                    values={value}
-                    userType="student"
-                    onChange={setValue}
-                    className="flex flex-row flex-wrap grow gap-x-3 gap-y-2 items-center justify-start w-full p-3 border border-slate-200 focus:border-transparent bg-white rounded-lg focus:outline-none ring-2 ring-transparent focus:ring-blue-400"
-                />
-            </DynamicEmail>
+            <form className="rounded-lg overflow-hidden bg-white px-3 py-8">
+                <Textarea className="w-96">
+                    <Textarea.Label className="text-sm font-medium text-slate-800">
+                        Home Address
+                    </Textarea.Label>
+                    <Textarea.Field
+                        max={265}
+                        value={value}
+                        onChange={setValue}
+                        className={(valid?: boolean) =>
+                            classNames(
+                                "w-full h-40 p-3 border border-slate-300 focus:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 ring-transparent focus:ring-blue-400 [-webkit-appearance:none]",
+                                {
+                                    "focus:ring-emerald-400": valid === true,
+                                    "focus:ring-red-400": valid === false,
+                                }
+                            )
+                        }
+                    />
+                </Textarea>
+            </form>
         </main>
     );
 };
