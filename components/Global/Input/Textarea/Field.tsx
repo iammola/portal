@@ -3,7 +3,7 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { useIsChanging } from "hooks";
 import { classNames } from "utils";
 
-const Field: Field = ({ className, max, onChange, required, value }) => {
+const Field: Field = ({ className, max, onChange, parentClassName, required, value }) => {
     const typing = useIsChanging(value);
     const [valid, setValid] = useState<boolean>();
     const [limitPassed, setLimitPassed] = useState(false);
@@ -20,7 +20,7 @@ const Field: Field = ({ className, max, onChange, required, value }) => {
     }, [max, value]);
 
     return (
-        <div className="relative w-[inherit] h-[inherit]">
+        <div className={classNames("relative", parentClassName)}>
             <textarea
                 value={value ?? ""}
                 onChange={(e) => onChange(e.target.value)}
@@ -52,6 +52,7 @@ type Field = FunctionComponent<{
     max?: number;
     value?: string;
     required?: boolean;
+    parentClassName?: string;
     onChange(values: string): void;
     className: string | ((valid?: boolean) => string);
 }>;
