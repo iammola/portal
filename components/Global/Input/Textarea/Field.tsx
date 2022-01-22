@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 
-const Field: Field = () => {
-    return <textarea />;
+const Field: Field = ({ value, onChange }) => {
+    return <textarea value={value} onChange={(e) => onChange(e.target.value)} />;
 };
 
 type Field = FunctionComponent<{
