@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useState } from "react";
 
 import { useIsChanging } from "hooks";
 
-const Field: Field = ({ className, onChange, required, value }) => {
+const Field: Field = ({ className, max, onChange, required, value }) => {
     const typing = useIsChanging(value);
     const [valid, setValid] = useState<boolean>();
 
@@ -21,11 +21,17 @@ const Field: Field = ({ className, onChange, required, value }) => {
             {required !== true && (
                 <span className="absolute right-0.5 -top-5 text-xs text-slate-500">Optional</span>
             )}
+            {max !== undefined && (
+                <span className="pl-0.5 text-xs text-slate-500">
+                    {value.length} / {max}
+                </span>
+            )}
         </div>
     );
 };
 
 type Field = FunctionComponent<{
+    max?: number;
     value: string;
     required?: boolean;
     onChange(values: string): void;
