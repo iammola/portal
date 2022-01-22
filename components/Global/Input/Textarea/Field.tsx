@@ -9,18 +9,20 @@ const Field: Field = ({ className, max, onChange, required, value }) => {
     const [limitPassed, setLimitPassed] = useState(false);
 
     useEffect(() => {
-        if (typing === false)
-            setValid(required === true ? value.length > 0 : value.length < 1 ? undefined : true);
+        if (typing === false) {
+            const length = value?.length ?? 0;
+            setValid(required === true ? length > 0 : length < 1 ? undefined : true);
+        }
     }, [required, typing, value]);
 
     useEffect(() => {
-        setLimitPassed(max !== undefined && value.length > max);
+        setLimitPassed(max !== undefined && (value?.length ?? 0) > max);
     }, [max, value]);
 
     return (
         <div className="relative w-[inherit] h-[inherit]">
             <textarea
-                value={value}
+                value={value ?? ""}
                 onChange={(e) => onChange(e.target.value)}
                 className={
                     typeof className === "string"
@@ -39,7 +41,7 @@ const Field: Field = ({ className, max, onChange, required, value }) => {
                         "text-slate-500",
                     ])}
                 >
-                    {value.length} / {max}
+                    {value?.length ?? 0} / {max}
                 </span>
             )}
         </div>
@@ -48,7 +50,7 @@ const Field: Field = ({ className, max, onChange, required, value }) => {
 
 type Field = FunctionComponent<{
     max?: number;
-    value: string;
+    value?: string;
     required?: boolean;
     onChange(values: string): void;
     className: string | ((valid?: boolean) => string);
