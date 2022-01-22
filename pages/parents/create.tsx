@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 
+import Textarea from "components/Global/Input/Textarea";
 import Input from "components/Global/Input";
 import { classNames } from "utils";
 
@@ -283,63 +284,53 @@ const CreateParent: NextPage = () => {
                                 <span className="w-full pb-0.5 text-sm text-semibold text-slate-800 border-b border-slate-400">
                                     Address
                                 </span>
-                                <div className="grid grid-cols-4 gap-x-3 items-center w-full">
-                                    <span className="text-sm text-slate-600 col-start-1 col-end-2">
+                                <Textarea className="grid grid-cols-4 gap-x-3 items-center w-full">
+                                    <Textarea.Label className="text-sm text-slate-600 col-start-1 col-end-2">
                                         Home
-                                    </span>
-                                    <div className="col-start-2 col-end-5">
-                                        {/* // Todo: Replace with actual textarea */}
-                                        <Input
-                                            required
-                                            label=""
-                                            type="text"
-                                            id="homeAddress"
-                                            value={address.primary}
-                                            className={(valid?: boolean) =>
-                                                classNames(
-                                                    "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
-                                                    {
-                                                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                                                            valid === true,
-                                                        "invalid:ring-red-400 focus:invalid:ring-red-400":
-                                                            valid === false,
-                                                    }
-                                                )
-                                            }
-                                            onChange={(primary: string) =>
-                                                setAddress({ ...address, primary })
-                                            }
-                                        />
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-4 gap-x-3 items-center w-full mt-4">
-                                    <span className="text-sm text-slate-600 col-start-1 col-end-2">
+                                    </Textarea.Label>
+                                    <Textarea.Field
+                                        required
+                                        max={500}
+                                        id="homeAddress"
+                                        value={address.primary}
+                                        parentClassName="w-[inherit] h-[inherit] col-start-2 col-end-5"
+                                        onChange={(primary: string) =>
+                                            setAddress({ ...address, primary })
+                                        }
+                                        className={(valid?: boolean) =>
+                                            classNames(
+                                                "w-full h-20 p-3 border border-slate-300 focus:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 ring-transparent focus:ring-blue-400 [-webkit-appearance:none]",
+                                                {
+                                                    "focus:ring-emerald-400": valid === true,
+                                                    "focus:ring-red-400": valid === false,
+                                                }
+                                            )
+                                        }
+                                    />
+                                </Textarea>
+                                <Textarea className="grid grid-cols-4 gap-x-3 items-center w-full mt-4">
+                                    <Textarea.Label className="text-sm text-slate-600 col-start-1 col-end-2">
                                         Work <span className="text-[0.675rem]">(other)</span>
-                                    </span>
-                                    <div className="col-start-2 col-end-5">
-                                        {/* // Todo: Replace with actual textarea */}
-                                        <Input
-                                            label=""
-                                            type="text"
-                                            id="workAddress"
-                                            value={address.other}
-                                            className={(valid?: boolean) =>
-                                                classNames(
-                                                    "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
-                                                    {
-                                                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                                                            valid === true,
-                                                        "invalid:ring-red-400 focus:invalid:ring-red-400":
-                                                            valid === false,
-                                                    }
-                                                )
-                                            }
-                                            onChange={(other: string) =>
-                                                setAddress({ ...address, other })
-                                            }
-                                        />
-                                    </div>
-                                </div>
+                                    </Textarea.Label>
+                                    <Textarea.Field
+                                        max={500}
+                                        id="workAddress"
+                                        value={address.other}
+                                        parentClassName="w-[inherit] h-[inherit] col-start-2 col-end-5"
+                                        onChange={(other: string) =>
+                                            setAddress({ ...address, other })
+                                        }
+                                        className={(valid?: boolean) =>
+                                            classNames(
+                                                "w-full h-20 p-3 border border-slate-300 focus:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 ring-transparent focus:ring-blue-400 [-webkit-appearance:none]",
+                                                {
+                                                    "focus:ring-emerald-400": valid === true,
+                                                    "focus:ring-red-400": valid === false,
+                                                }
+                                            )
+                                        }
+                                    />
+                                </Textarea>
                             </div>
                         </div>
                     </div>
