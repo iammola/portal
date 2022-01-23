@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
 
-import Textarea from "components/Global/Input/Textarea";
 import Input from "components/Global/Input";
 import { classNames } from "utils";
 
@@ -284,11 +283,11 @@ const CreateParent: NextPage = () => {
                                 <span className="w-full pb-0.5 text-sm text-semibold text-slate-800 border-b border-slate-400">
                                     Address
                                 </span>
-                                <Textarea className="grid grid-cols-4 gap-x-3 items-center w-full">
-                                    <Textarea.Label className="text-sm text-slate-600 col-start-1 col-end-2">
+                                <Input.Textarea className="grid grid-cols-4 gap-x-3 items-center w-full">
+                                    <Input.Textarea.Label className="text-sm text-slate-600 col-start-1 col-end-2">
                                         Home
-                                    </Textarea.Label>
-                                    <Textarea.Field
+                                    </Input.Textarea.Label>
+                                    <Input.Textarea.Field
                                         required
                                         max={500}
                                         id="homeAddress"
@@ -307,12 +306,12 @@ const CreateParent: NextPage = () => {
                                             )
                                         }
                                     />
-                                </Textarea>
-                                <Textarea className="grid grid-cols-4 gap-x-3 items-center w-full mt-4">
-                                    <Textarea.Label className="text-sm text-slate-600 col-start-1 col-end-2">
+                                </Input.Textarea>
+                                <Input.Textarea className="grid grid-cols-4 gap-x-3 items-center w-full mt-4">
+                                    <Input.Textarea.Label className="text-sm text-slate-600 col-start-1 col-end-2">
                                         Work <span className="text-[0.675rem]">(other)</span>
-                                    </Textarea.Label>
-                                    <Textarea.Field
+                                    </Input.Textarea.Label>
+                                    <Input.Textarea.Field
                                         max={500}
                                         id="workAddress"
                                         value={address.other}
@@ -330,7 +329,7 @@ const CreateParent: NextPage = () => {
                                             )
                                         }
                                     />
-                                </Textarea>
+                                </Input.Textarea>
                             </div>
                         </div>
                     </div>
