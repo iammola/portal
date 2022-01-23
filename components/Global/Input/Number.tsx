@@ -9,6 +9,11 @@ const NumberInput: NumberInput = (props) => {
     return <Input {...props} pattern="\d+" inputMode="numeric" onBeforeInput={validateCharacter} />;
 };
 
-type NumberInput = FunctionComponent<Omit<InputProps, "pattern" | "inputMode" | "onBeforeInput">>;
+type NumberInput = FunctionComponent<
+    Omit<InputProps, "pattern" | "inputMode" | "onBeforeInput" | "value" | "onChange"> & {
+        value?: number;
+        onChange(value: number): void;
+    }
+>;
 
 export default NumberInput;
