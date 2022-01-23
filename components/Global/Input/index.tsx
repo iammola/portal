@@ -66,15 +66,14 @@ const Input: Input = ({ className, label, showIcons, onChange, value, ...props }
     );
 };
 
-type Input = FunctionComponent<{
-    onChange(v: NonNullable<ComponentProps<"input">["value"]>): void;
-    className: string | ((valid?: boolean) => string);
-    value?: ComponentProps<"input">["value"];
-    type: ComponentProps<"input">["type"];
-    showIcons?: boolean;
-    required?: boolean;
-    label: string;
+type Input = FunctionComponent<InputProps>;
+
+export type InputProps = Omit<ComponentProps<"input">, "id" | "className"> & {
     id: string;
-}>;
+    label: string;
+    showIcons?: boolean;
+    className: string | ((valid?: boolean) => string);
+    onChange(v: NonNullable<InputProps["value"]>): void;
+};
 
 export default Input;
