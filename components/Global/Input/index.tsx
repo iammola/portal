@@ -4,8 +4,16 @@ import dynamic from "next/dynamic";
 import { useIsChanging } from "hooks";
 import { classNames } from "utils";
 
+import type NumberInputType from "./Number";
+import type TextareaInputType from "./Textarea";
+import type DynamicEmailInputType from "./DynamicEmail";
+
 const XIcon = dynamic(() => import("@heroicons/react/solid/XIcon"));
 const CheckIcon = dynamic(() => import("@heroicons/react/solid/CheckIcon"));
+
+const NumberInput = dynamic(() => import("./Number"));
+const TextareaInput = dynamic(() => import("./Textarea"));
+const DynamicEmailInput = dynamic(() => import("./DynamicEmail"));
 
 const Input: Input = ({ className, label, showIcons, onChange, value, ...props }) => {
     const [valid, setValid] = useState<boolean>();
@@ -66,14 +74,22 @@ const Input: Input = ({ className, label, showIcons, onChange, value, ...props }
     );
 };
 
-type Input = FunctionComponent<InputProps>;
+Input.Number = NumberInput as NumberInputType;
+Input.Textarea = TextareaInput as TextareaInputType;
+Input.DynamicEmail = DynamicEmailInput as DynamicEmailInputType;
 
-export type InputProps = Omit<ComponentProps<"input">, "id" | "className"> & {
+export type InputProps = Omit<ComponentProps<"input">, "id" | "className" | "onChange"> & {
     id: string;
     label: string;
     showIcons?: boolean;
     className: string | ((valid?: boolean) => string);
     onChange(v: NonNullable<InputProps["value"]>): void;
 };
+
+interface Input extends FunctionComponent<InputProps> {
+    Number: NumberInputType;
+    Textarea: TextareaInputType;
+    DynamicEmail: DynamicEmailInputType;
+}
 
 export default Input;
