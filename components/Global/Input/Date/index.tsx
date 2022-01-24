@@ -1,18 +1,20 @@
 import { FunctionComponent } from "react";
 
+import Field from "./Field";
 
-    return (
-        <div className={className}>
-        </div>
-    );
+const DateInput: DateInput = ({ children, className }) => {
+    return <div className={className}>{children}</div>;
 };
 
-type DateInput = FunctionComponent<{
-    min?: Date;
-    max?: Date;
-    value?: Date;
-    className: string;
-    onChange(val: Date): void;
-}>;
+DateInput.Field = Field;
+
+DateInput.Label = ({ children, className }) => {
+    return <span className={className}>{children}</span>;
+};
+
+interface DateInput extends FunctionComponent<{ className: string }> {
+    Field: Field;
+    Label: FunctionComponent<{ className: string }>;
+}
 
 export default DateInput;
