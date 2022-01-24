@@ -18,6 +18,8 @@ const NumberInput: NumberInput = ({ onChange, value, ...props }) => {
             pattern="\d+"
             value={padValue()}
             inputMode="numeric"
+            id={props.id as string}
+            label={props.label as string}
             onChange={(val) => onChange(+val)}
             onBeforeInput={validateCharacter}
         />
