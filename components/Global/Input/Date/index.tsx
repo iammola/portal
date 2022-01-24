@@ -5,17 +5,11 @@ import Input from "components/Global/Input";
 import { classNames } from "utils";
 
 const DateInput: DateInput = ({ className, value }) => {
-    const [day, setDay] = useState<number>();
-    const [year, setYear] = useState<number>();
-    const [month, setMonth] = useState<number>();
+    const [day, setDay] = useState(value?.getDate());
+    const [year, setYear] = useState(value?.getFullYear());
+    const [month, setMonth] = useState(value === undefined ? undefined : value.getMonth() + 1);
 
     const [maxDay, setMaxDay] = useState(31);
-
-    useEffect(() => {
-        setDay(value?.getDate());
-        setYear(value?.getFullYear());
-        setMonth(value === undefined ? undefined : value.getMonth() + 1);
-    }, [value]);
 
     useEffect(() => {
         if (month !== undefined)
