@@ -14,13 +14,18 @@ const Test: NextPage = () => {
                 <title>Test</title>
             </Head>
             <form className="rounded-lg overflow-hidden bg-white p-8">
-                <Input.Date
-                    value={value}
-                    onChange={setValue}
-                    min={new Date(2004, 11, 10)}
-                    max={new Date(2014, 11, 10)}
-                    className="flex flex-row gap-x-4 items-center justify-start"
-                />
+                <Input.Date className="space-y-5">
+                    <Input.Date.Label className="font-semibold text-slate-600 tracking-wide">
+                        Date of Birth
+                    </Input.Date.Label>
+                    <Input.Date.Field
+                        value={value}
+                        onChange={setValue}
+                        min={new Date(2004, 11, 10)}
+                        max={new Date(2014, 11, 10)}
+                        className="flex flex-row gap-x-4 items-center justify-start"
+                    />
+                </Input.Date>
             </form>
         </main>
     );
