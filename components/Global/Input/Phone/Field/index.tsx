@@ -1,6 +1,6 @@
 import PhoneNumber from "awesome-phonenumber";
 import { ChevronUpIcon } from "@heroicons/react/solid";
-import { FunctionComponent, KeyboardEvent, useState } from "react";
+import { FunctionComponent, KeyboardEvent, useEffect, useState } from "react";
 
 import Input from "components/Global/Input";
 
@@ -14,6 +14,13 @@ const Field: Field = ({ onChange, value, ...props }) => {
 
     const formatter = PhoneNumber.getAsYouType(regionCode);
     const [formattedValue, setFormattedValue] = useState(formatter.reset(value));
+
+    useEffect(() => {
+        if (props.regionCode !== undefined) {
+            setRegionCode(props.regionCode);
+            setCountryCode(PhoneNumber.getCountryCodeForRegionCode(props.regionCode));
+        }
+    }, [props.regionCode]);
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) =>
         (e.code === "Backspace" || /\d$/.test(e.key) === true) === false && e.preventDefault();
