@@ -1,10 +1,13 @@
 import { ChevronUpIcon } from "@heroicons/react/solid";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, KeyboardEvent, useState } from "react";
 
 import Input from "components/Global/Input";
 
 const Field: Field = () => {
     const [value, setValue] = useState("7400 123456");
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) =>
+        (e.code === "Backspace" || /\d$/.test(e.key) === true) === false && e.preventDefault();
 
     return (
         <div className="flex flex-row gap-x-3 items-stretch justify-start rounded-xl overflow-hidden bg-white border">
@@ -20,6 +23,7 @@ const Field: Field = () => {
                         type="tel"
                         value={value}
                         onChange={(tel) => setValue(tel as string)}
+                        onKeyDown={handleKeyDown}
                         className="text-lg text-slate-600 font-semibold grow w-full h-[3.75rem] !px-0 !py-3.5 tracking-wide"
                     />
                 </div>
