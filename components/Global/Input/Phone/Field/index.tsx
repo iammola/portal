@@ -8,6 +8,9 @@ const Field: Field = ({ onChange, value, ...props }) => {
     const [regionCode, setRegionCode] = useState(
         props.regionCode ?? (value === undefined ? "NG" : PhoneNumber(value).getRegionCode())
     );
+    const [countryCode, setCountryCode] = useState(
+        PhoneNumber.getCountryCodeForRegionCode(regionCode)
+    );
 
     const formatter = PhoneNumber.getAsYouType(regionCode);
     const [formattedValue, setFormattedValue] = useState(formatter.reset(value));
@@ -22,7 +25,9 @@ const Field: Field = ({ onChange, value, ...props }) => {
                 <ChevronUpIcon className="w-6 h-6 fill-slate-600" />
             </div>
             <div className="flex flex-row grow gap-x-2 items-center justify-start">
-                <span className="text-lg text-slate-500 font-medium tracking-wide">+44</span>
+                <span className="text-lg text-slate-500 font-medium tracking-wide">
+                    +{countryCode}
+                </span>
                 <div className="flex items-center grow w-[12.5rem] h-full">
                     <Input
                         required // overflow-hidden hides the optional text
