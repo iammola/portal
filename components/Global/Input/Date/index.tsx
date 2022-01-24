@@ -1,10 +1,12 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { getDaysInMonth } from "date-fns";
 
 import Input from "components/Global/Input";
 import { classNames } from "utils";
 
 const DateInput: DateInput = ({ className, onChange, value }) => {
+    const prevDate = useRef<Date | null>(null);
+
     const [day, setDay] = useState(value?.getDate());
     const [year, setYear] = useState(value?.getFullYear());
     const [month, setMonth] = useState(value === undefined ? undefined : value.getMonth() + 1);
@@ -17,8 +19,12 @@ const DateInput: DateInput = ({ className, onChange, value }) => {
     }, [month, year]);
 
     useEffect(() => {
-        if (day !== undefined && month !== undefined && year !== undefined)
-            onChange(new Date(year, month - 1, day));
+        if (day !== undefined && month !== undefined && year !== undefined) {
+            const newDate = new Date(year, month - 1, day);
+
+            onChange(newDate);
+            prevDate.current = newDate;
+        }
     }, [day, month, onChange, year]);
 
     const handleChange = (val: number, func: (val?: number) => void) =>
