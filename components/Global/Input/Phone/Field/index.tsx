@@ -1,10 +1,16 @@
+import PhoneNumber from "awesome-phonenumber";
 import { ChevronUpIcon } from "@heroicons/react/solid";
 import { FunctionComponent, KeyboardEvent, useState } from "react";
 
 import Input from "components/Global/Input";
 
-const Field: Field = () => {
-    const [value, setValue] = useState("7400 123456");
+const Field: Field = ({ onChange, value, ...props }) => {
+    const [regionCode, setRegionCode] = useState(
+        props.regionCode ?? (value === undefined ? "NG" : PhoneNumber(value).getRegionCode())
+    );
+
+    const formatter = PhoneNumber.getAsYouType(regionCode);
+    const [formattedValue, setFormattedValue] = useState(formatter.reset(value));
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) =>
         (e.code === "Backspace" || /\d$/.test(e.key) === true) === false && e.preventDefault();
@@ -21,8 +27,8 @@ const Field: Field = () => {
                     <Input
                         required // overflow-hidden hides the optional text
                         type="tel"
-                        value={value}
                         onChange={(tel) => setValue(tel as string)}
+                        value={formattedValue}
                         onKeyDown={handleKeyDown}
                         className="text-lg text-slate-600 font-semibold grow w-full h-[3.75rem] !px-0 !py-3.5 tracking-wide"
                     />
