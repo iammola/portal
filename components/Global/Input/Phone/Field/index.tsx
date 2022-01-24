@@ -22,6 +22,13 @@ const Field: Field = ({ onChange, value, ...props }) => {
         }
     }, [props.regionCode]);
 
+    function handleChange(tel: string) {
+        if (["", "0"].includes(tel) === true) setFormattedValue(formatter.reset(""));
+        else setFormattedValue(formatter.reset(`0${tel.replaceAll(" ", "")}`).slice(1));
+
+        onChange(formatter.getPhoneNumber().getNumber("international") ?? "");
+    }
+
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) =>
         (e.code === "Backspace" || /\d$/.test(e.key) === true) === false && e.preventDefault();
 
@@ -39,8 +46,8 @@ const Field: Field = ({ onChange, value, ...props }) => {
                     <Input
                         required // overflow-hidden hides the optional text
                         type="tel"
-                        onChange={(tel) => setValue(tel as string)}
                         value={formattedValue}
+                        onChange={handleChange}
                         onKeyDown={handleKeyDown}
                         className="text-lg text-slate-600 font-semibold grow w-full h-[3.75rem] !px-0 !py-3.5 tracking-wide"
                     />
