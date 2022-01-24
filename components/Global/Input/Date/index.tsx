@@ -19,8 +19,8 @@ const DateInput: DateInput = ({ className, value }) => {
 
     useEffect(() => {
         if (month !== undefined)
-            setMaxDay(getDaysInMonth(new Date(new Date().getFullYear(), month - 1)));
-    }, [month]);
+            setMaxDay(getDaysInMonth(new Date(year ?? new Date().getFullYear(), month - 1)));
+    }, [month, year]);
 
     const handleChange = (val: number, func: (val?: number) => void) =>
         func(val === 0 ? undefined : val);
