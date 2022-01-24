@@ -1,6 +1,6 @@
 import { FormEvent, FunctionComponent } from "react";
 
-import Input, { InputProps } from "components/Global/Input";
+import Input, { InputProps } from ".";
 
 const NumberInput: NumberInput = (props) => {
     const validateCharacter = (e: FormEvent<HTMLInputElement> & { data: string }) =>
