@@ -8,6 +8,7 @@ import type { NextPage } from "next";
 import type { ParentSchema } from "types/schema";
 
 const CreateParent: NextPage = () => {
+    const [dob, setDOB] = useState<ParentSchema["dob"]>();
     const [name, setName] = useState<Partial<ParentSchema["name"]>>({});
     const [email, setEmail] = useState<Partial<ParentSchema["contact"]["email"]>>({});
     const [phone, setPhone] = useState<Partial<ParentSchema["contact"]["phone"]>>({});
@@ -147,6 +148,16 @@ const CreateParent: NextPage = () => {
                                     />
                                 </div>
                             </div>
+                            <Input.Date className="space-y-3.5">
+                                <Input.Date.Label className="text-sm font-medium text-slate-500 tracking-wide">
+                                    Date of Birth
+                                </Input.Date.Label>
+                                <Input.Date.Field
+                                    value={dob}
+                                    onChange={setDOB}
+                                    className="flex flex-row gap-x-4 items-center justify-start"
+                                />
+                            </Input.Date>
                         </div>
                     </div>
                     <div className="flex items-stretch justify-start md:gap-x-6 lg:gap-x-12 w-full p-7 bg-white shadow-md rounded-lg">
