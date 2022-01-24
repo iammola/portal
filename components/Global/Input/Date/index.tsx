@@ -8,6 +8,7 @@ const DateInput: DateInput = ({ className, max, min, onChange, value }) => {
     const prevDate = useRef<Date | null>(null);
 
     const [maxDay, setMaxDay] = useState(31);
+    const [forceValid, setForceValid] = useState<boolean>();
 
     const [day, setDay] = useState<number>();
     const [year, setYear] = useState<number>();
@@ -56,6 +57,7 @@ const DateInput: DateInput = ({ className, max, min, onChange, value }) => {
                                 "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                                     valid === true,
                                 "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
+                                "!ring-red-400": forceValid === false,
                             }
                         )
                     }
@@ -77,6 +79,7 @@ const DateInput: DateInput = ({ className, max, min, onChange, value }) => {
                                 "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                                     valid === true,
                                 "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
+                                "!ring-red-400": forceValid === false,
                             }
                         )
                     }
@@ -98,6 +101,7 @@ const DateInput: DateInput = ({ className, max, min, onChange, value }) => {
                                 "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                                     valid === true,
                                 "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
+                                "!ring-red-400": forceValid === false,
                             }
                         )
                     }
