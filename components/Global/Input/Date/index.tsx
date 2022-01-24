@@ -22,6 +22,9 @@ const DateInput: DateInput = ({ className, value }) => {
             setMaxDay(getDaysInMonth(new Date(new Date().getFullYear(), month - 1)));
     }, [month]);
 
+    const handleChange = (val: number, func: (val?: number) => void) =>
+        func(val === 0 ? undefined : val);
+
     return (
         <div className={className}>
             <div className="w-[4.5rem]">
@@ -32,7 +35,7 @@ const DateInput: DateInput = ({ className, value }) => {
                     max={maxDay}
                     label="Day"
                     value={day}
-                    onChange={setDay}
+                    onChange={(val) => handleChange(val, setDay)}
                     className={(valid?: boolean) =>
                         classNames(
                             "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
@@ -53,7 +56,7 @@ const DateInput: DateInput = ({ className, value }) => {
                     id="month"
                     label="Month"
                     value={month}
-                    onChange={setMonth}
+                    onChange={(val) => handleChange(val, setMonth)}
                     className={(valid?: boolean) =>
                         classNames(
                             "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
@@ -74,7 +77,7 @@ const DateInput: DateInput = ({ className, value }) => {
                     max={9999}
                     label="Year"
                     value={year}
-                    onChange={setYear}
+                    onChange={(val) => handleChange(val, setYear)}
                     className={(valid?: boolean) =>
                         classNames(
                             "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
