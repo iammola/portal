@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useIsChanging } from "hooks";
 import { classNames } from "utils";
 
+import type DateInputType from "./Date";
 import type NumberInputType from "./Number";
 import type TextareaInputType from "./Textarea";
 import type DynamicEmailInputType from "./DynamicEmail";
@@ -11,6 +12,7 @@ import type DynamicEmailInputType from "./DynamicEmail";
 const XIcon = dynamic(() => import("@heroicons/react/solid/XIcon"));
 const CheckIcon = dynamic(() => import("@heroicons/react/solid/CheckIcon"));
 
+const DateInput = dynamic(() => import("./Date"));
 const NumberInput = dynamic(() => import("./Number"));
 const TextareaInput = dynamic(() => import("./Textarea"));
 const DynamicEmailInput = dynamic(() => import("./DynamicEmail"));
@@ -74,6 +76,7 @@ const Input: Input = ({ className, label, showIcons, onChange, value, ...props }
     );
 };
 
+Input.Date = DateInput as DateInputType;
 Input.Number = NumberInput as NumberInputType;
 Input.Textarea = TextareaInput as TextareaInputType;
 Input.DynamicEmail = DynamicEmailInput as DynamicEmailInputType;
@@ -87,6 +90,7 @@ export type InputProps = Omit<ComponentProps<"input">, "id" | "className" | "onC
 };
 
 interface Input extends FunctionComponent<InputProps> {
+    Date: DateInputType;
     Number: NumberInputType;
     Textarea: TextareaInputType;
     DynamicEmail: DynamicEmailInputType;
