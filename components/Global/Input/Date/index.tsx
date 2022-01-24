@@ -4,7 +4,7 @@ import { getDaysInMonth } from "date-fns";
 import Input from "components/Global/Input";
 import { classNames } from "utils";
 
-const DateInput: DateInput = ({ className, onChange, value }) => {
+const DateInput: DateInput = ({ className, max, min, onChange, value }) => {
     const prevDate = useRef<Date | null>(null);
 
     const [maxDay, setMaxDay] = useState(31);
@@ -84,12 +84,12 @@ const DateInput: DateInput = ({ className, onChange, value }) => {
             </div>
             <div className="w-[6.5rem]">
                 <Input.Number
-                    min={0}
                     id="year"
                     required
-                    max={9999}
                     label="Year"
                     value={year}
+                    min={min?.getFullYear() ?? 0}
+                    max={max?.getFullYear() ?? 9999}
                     onChange={(val) => handleChange(val, setYear)}
                     className={(valid?: boolean) =>
                         classNames(
