@@ -7,11 +7,19 @@ import { classNames } from "utils";
 const DateInput: DateInput = ({ className, onChange, value }) => {
     const prevDate = useRef<Date | null>(null);
 
+    const [maxDay, setMaxDay] = useState(31);
+
     const [day, setDay] = useState<number>();
     const [year, setYear] = useState<number>();
     const [month, setMonth] = useState<number>();
 
-    const [maxDay, setMaxDay] = useState(31);
+    useEffect(() => {
+        if (prevDate.current?.getTime() !== value?.getTime()) {
+            setDay(value?.getDate());
+            setYear(value?.getFullYear());
+            setMonth(value === undefined ? undefined : value.getMonth() + 1);
+        }
+    }, [value]);
 
     useEffect(() => {
         if (month !== undefined)
@@ -26,14 +34,6 @@ const DateInput: DateInput = ({ className, onChange, value }) => {
             prevDate.current = newDate;
         }
     }, [day, month, onChange, year]);
-
-    useEffect(() => {
-        if (prevDate.current?.getTime() !== value?.getTime()) {
-            setDay(value?.getDate());
-            setYear(value?.getFullYear());
-            setMonth(value === undefined ? undefined : value.getMonth() + 1);
-        }
-    }, [value]);
 
     const handleChange = (val: number, func: (val?: number) => void) =>
         func(val === 0 ? undefined : val);
