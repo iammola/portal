@@ -4,7 +4,7 @@ import { getDaysInMonth } from "date-fns";
 import Input from "components/Global/Input";
 import { classNames } from "utils";
 
-const DateInput: DateInput = ({ className, value }) => {
+const DateInput: DateInput = ({ className, onChange, value }) => {
     const [day, setDay] = useState(value?.getDate());
     const [year, setYear] = useState(value?.getFullYear());
     const [month, setMonth] = useState(value === undefined ? undefined : value.getMonth() + 1);
@@ -15,6 +15,11 @@ const DateInput: DateInput = ({ className, value }) => {
         if (month !== undefined)
             setMaxDay(getDaysInMonth(new Date(year ?? new Date().getFullYear(), month - 1)));
     }, [month, year]);
+
+    useEffect(() => {
+        if (day !== undefined && month !== undefined && year !== undefined)
+            onChange(new Date(year, month - 1, day));
+    }, [day, month, onChange, year]);
 
     const handleChange = (val: number, func: (val?: number) => void) =>
         func(val === 0 ? undefined : val);
@@ -93,6 +98,7 @@ type DateInput = FunctionComponent<{
     max?: Date;
     value?: Date;
     className: string;
+    onChange(val: Date): void;
 }>;
 
 export default DateInput;
