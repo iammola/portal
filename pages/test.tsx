@@ -13,7 +13,7 @@ const Test: NextPage = () => {
             <Head>
                 <title>Test</title>
             </Head>
-            <form className="rounded-lg overflow-hidden bg-white px-3 py-8">
+            <form className="rounded-lg overflow-hidden bg-white p-8">
                 <Input.Date
                     value={value}
                     onChange={setValue}
