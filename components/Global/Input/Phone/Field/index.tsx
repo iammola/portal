@@ -31,7 +31,7 @@ const Field: Field = () => {
 type Field = FunctionComponent<{
     value: string;
     className: string;
-    countryCode?: string;
+    regionCode?: string;
     onChange(val: string): void;
 }>;
 
