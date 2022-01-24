@@ -2,7 +2,7 @@ import { FormEvent, FunctionComponent } from "react";
 
 import Input, { InputProps } from ".";
 
-const NumberInput: NumberInput = ({ value, ...props }) => {
+const NumberInput: NumberInput = ({ onChange, value, ...props }) => {
     const validateCharacter = (e: FormEvent<HTMLInputElement> & { data: string }) =>
         /\d/.test(e.data) === false && e.preventDefault();
 
@@ -18,6 +18,7 @@ const NumberInput: NumberInput = ({ value, ...props }) => {
             pattern="\d+"
             value={padValue()}
             inputMode="numeric"
+            onChange={(val) => onChange(+val)}
             onBeforeInput={validateCharacter}
         />
     );
