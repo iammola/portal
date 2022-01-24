@@ -179,10 +179,8 @@ const CreateParent: NextPage = () => {
                                     <div className="col-start-2 col-end-5">
                                         <Input
                                             required
-                                            label=""
                                             type="email"
                                             value={email.primary}
-                                            id="primaryEmailAddress"
                                             className={(valid?: boolean) =>
                                                 classNames(
                                                     "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
@@ -206,10 +204,8 @@ const CreateParent: NextPage = () => {
                                     </span>
                                     <div className="col-start-2 col-end-5">
                                         <Input
-                                            label=""
                                             type="email"
                                             value={email.other}
-                                            id="workEmailAddress"
                                             className={(valid?: boolean) =>
                                                 classNames(
                                                     "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
@@ -240,9 +236,7 @@ const CreateParent: NextPage = () => {
                                         {/* // Todo: Replace with phone number switcher */}
                                         <Input
                                             required
-                                            label=""
                                             type="text"
-                                            id="homePhone"
                                             value={phone.primary}
                                             className={(valid?: boolean) =>
                                                 classNames(
@@ -268,9 +262,7 @@ const CreateParent: NextPage = () => {
                                     <div className="col-start-2 col-end-5">
                                         {/* // Todo: Replace with phone number switcher */}
                                         <Input
-                                            label=""
                                             type="text"
-                                            id="workPhone"
                                             value={phone.other}
                                             className={(valid?: boolean) =>
                                                 classNames(

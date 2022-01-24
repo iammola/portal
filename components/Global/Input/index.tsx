@@ -77,12 +77,19 @@ Input.Textarea = TextareaInput;
 Input.DynamicEmail = DynamicEmailInput;
 
 export type InputProps = Omit<ComponentProps<"input">, "id" | "className" | "onChange"> & {
-    id: string;
-    label: string;
     showIcons?: boolean;
     className: string | ((valid?: boolean) => string);
     onChange(v: NonNullable<InputProps["value"]>): void;
-};
+} & (
+        | {
+              id: string;
+              label: string;
+          }
+        | {
+              id?: string;
+              label?: "";
+          }
+    );
 
 interface Input extends FunctionComponent<InputProps> {
     Date: DateInput;
