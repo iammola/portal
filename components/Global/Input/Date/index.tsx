@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useRef, useState } from "react";
-import { getDaysInMonth } from "date-fns";
+import { addMilliseconds, getDaysInMonth, isAfter, isBefore, isEqual } from "date-fns";
 
 import Input from "components/Global/Input";
 import { classNames } from "utils";
@@ -26,6 +26,15 @@ const DateInput: DateInput = ({ className, max, min, onChange, value }) => {
         if (month !== undefined)
             setMaxDay(getDaysInMonth(new Date(year ?? new Date().getFullYear(), month - 1)));
     }, [month, year]);
+
+    useEffect(() => {
+        if (value !== undefined) {
+            const forceValid =
+                isBefore(value, addMilliseconds(max ?? value, +isEqual(value, max ?? value))) &&
+                isAfter(value, addMilliseconds(min ?? value, +isEqual(value, min ?? value) * -1));
+            setForceValid(forceValid === true ? undefined : false);
+        }
+    }, [max, min, value]);
 
     useEffect(() => {
         if (day !== undefined && month !== undefined && year !== undefined) {
