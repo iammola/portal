@@ -1,9 +1,15 @@
 import { FunctionComponent } from "react";
 
-const PhoneInput: PhoneInput = () => {
-    return <></>;
+const PhoneInput: PhoneInput = ({ children, className }) => {
+    return <div className={className}>{children}</div>;
 };
 
-type PhoneInput = FunctionComponent;
+PhoneInput.Label = ({ children, className }) => {
+    return <span className={className}>{children}</span>;
+};
+
+interface PhoneInput extends FunctionComponent<{ className: string }> {
+    Label: FunctionComponent<{ className: string }>;
+}
 
 export default PhoneInput;
