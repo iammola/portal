@@ -12,11 +12,9 @@ Textarea.Label = ({ children, className }) => {
     return <span className={className}>{children}</span>;
 };
 
-type Label = FunctionComponent<{ className: string }>;
-
 interface Textarea extends FunctionComponent<{ className?: string }> {
     Field: Field;
-    Label: Label;
+    Label: FunctionComponent<{ className: string }>;
 }
 
 export default Textarea;

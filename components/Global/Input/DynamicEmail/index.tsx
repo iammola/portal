@@ -12,11 +12,9 @@ DynamicEmail.Label = ({ children, className }) => {
     return <span className={className}>{children}</span>;
 };
 
-type Label = FunctionComponent<{ className: string }>;
-
 interface DynamicEmail extends FunctionComponent<{ className?: string }> {
     Field: Field;
-    Label: Label;
+    Label: FunctionComponent<{ className: string }>;
 }
 
 export default DynamicEmail;
