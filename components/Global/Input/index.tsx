@@ -26,7 +26,7 @@ const Input: Input = ({ className, label, showIcons, onChange, value, ...props }
     useEffect(() => {
         const input = ref.current;
         if (typing === false) setValid(input?.value === "" ? undefined : input?.validity.valid);
-    }, [typing]);
+    }, [typing, props]);
 
     return (
         <div className="relative grid gap-x-2 items-center w-full">
