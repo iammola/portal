@@ -15,8 +15,8 @@ const List: List = ({ className }) => {
     );
 };
 
-List.Item = () => {
-    return <></>;
+List.Item = ({ regionCode, className }) => {
+    return <li className={className}>{regionCode}</li>;
 };
 
 interface List extends FunctionComponent<{ className: string }> {
