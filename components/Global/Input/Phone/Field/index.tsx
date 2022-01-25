@@ -11,6 +11,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
     const [countryCode, setCountryCode] = useState(
         PhoneNumber.getCountryCodeForRegionCode(regionCode)
     );
+    const [countryFlag, setCountryFlag] = useState<JSX.Element>();
 
     const formatter = PhoneNumber.getAsYouType(regionCode);
     const [formattedValue, setFormattedValue] = useState(formatter.reset(value));
@@ -35,7 +36,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
     return (
         <div className="flex flex-row gap-x-3 items-stretch justify-start rounded-xl overflow-hidden bg-white border">
             <div className="flex flex-row gap-x-0.5 items-center justify-center px-3.5 py-3 bg-slate-100 hover:bg-slate-200">
-                <span className="text-xl">🇬🇧</span>
+                {countryFlag}
                 <ChevronUpIcon className="w-6 h-6 fill-slate-600" />
             </div>
             <div className="flex flex-row grow gap-x-2 items-center justify-start">
