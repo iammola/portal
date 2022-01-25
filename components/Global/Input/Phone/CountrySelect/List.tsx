@@ -16,7 +16,7 @@ const List: List = ({ className, selectedRegion }) => {
                     selected={regionCode === selectedRegion}
                     className={(selected) =>
                         classNames(
-                            "flex flex-row gap-x-4 items-center justify-start p-2 rounded-xl",
+                            "flex flex-row gap-x-4 items-center justify-start p-2 rounded-xl cursor-pointer",
                             {
                                 "hover:bg-slate-100": selected === false,
                                 "bg-slate-100 hover:bg-slate-200": selected === true,
