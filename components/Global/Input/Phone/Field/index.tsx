@@ -11,7 +11,8 @@ import Input from "components/Global/Input";
 const Field: Field = ({ onChange, value, ...props }) => {
     const defaultRegionCode = "GB";
     const [regionCode, setRegionCode] = useState(
-        props.regionCode ?? (value === undefined ? defaultRegionCode : PhoneNumber(value).getRegionCode())
+        props.regionCode ??
+            (value === undefined ? defaultRegionCode : PhoneNumber(value).getRegionCode())
     );
     const formatter = PhoneNumber.getAsYouType(regionCode);
 
@@ -23,21 +24,16 @@ const Field: Field = ({ onChange, value, ...props }) => {
     const [formattedValue, setFormattedValue] = useState(formatter.reset(value));
 
     useEffect(() => {
-        if (props.regionCode !== undefined) {
-            setRegionCode(props.regionCode);
-            setCountryCode(PhoneNumber.getCountryCodeForRegionCode(props.regionCode));
+        const regionCode = props.regionCode ?? defaultRegionCode;
+        setRegionCode(regionCode);
+        setCountryCode(PhoneNumber.getCountryCodeForRegionCode(regionCode));
 
-            const emoji = getUnicodeFlagIcon(props.regionCode);
-            const Icon = Flags[props.regionCode as keyof typeof Flags] ?? <></>;
+        const emoji = getUnicodeFlagIcon(regionCode);
+        const Icon = Flags[regionCode as keyof typeof Flags] ?? <></>;
 
-            setCountryFlag(
-                ifEmoji(emoji) ? (
-                    <span className="text-xl">{emoji}</span>
-                ) : (
-                    <Icon className="w-6 h-7" />
-                )
-            );
-        }
+        setCountryFlag(
+            ifEmoji(emoji) ? <span className="text-xl">{emoji}</span> : <Icon className="w-6 h-7" />
+        );
     }, [props.regionCode]);
 
     function handleChange(tel: string) {
