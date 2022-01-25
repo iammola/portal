@@ -49,7 +49,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
                         value={formattedValue}
                         onChange={handleChange}
                         onKeyDown={handleKeyDown}
-                        className="text-lg text-slate-600 font-semibold grow w-full h-[3.75rem] !px-0 !py-3.5 tracking-wide"
+                        className="text-lg text-slate-600 font-semibold grow w-full h-[3.75rem] !px-0 !py-3.5 tracking-wide focus:outline-none"
                     />
                 </div>
             </div>
