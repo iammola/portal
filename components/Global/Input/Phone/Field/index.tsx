@@ -1,18 +1,16 @@
-import ifEmoji from "if-emoji";
 import PhoneNumber from "awesome-phonenumber";
-import Flags from "country-flag-icons/react/3x2";
-import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import { ChevronUpIcon } from "@heroicons/react/solid";
 import { FunctionComponent, KeyboardEvent, useEffect, useState } from "react";
 
 import { classNames } from "utils";
+import { useCountryFlag } from "hooks";
 import Input from "components/Global/Input";
 
 const Field: Field = ({ onChange, value, ...props }) => {
     const defaultRegionCode = "GB";
     const [regionCode, setRegionCode] = useState(
         props.regionCode ??
-            (value === undefined ? defaultRegionCode : PhoneNumber(value).getRegionCode())
+        (value === undefined ? defaultRegionCode : PhoneNumber(value).getRegionCode())
     );
     const formatter = PhoneNumber.getAsYouType(regionCode);
 
@@ -20,20 +18,14 @@ const Field: Field = ({ onChange, value, ...props }) => {
         PhoneNumber.getCountryCodeForRegionCode(regionCode)
     );
     const [valid, setValid] = useState<boolean>();
-    const [countryFlag, setCountryFlag] = useState<JSX.Element>();
     const [formattedValue, setFormattedValue] = useState(formatter.reset(value));
+
+    const countryFlag = useCountryFlag(regionCode);
 
     useEffect(() => {
         const regionCode = props.regionCode ?? defaultRegionCode;
         setRegionCode(regionCode);
         setCountryCode(PhoneNumber.getCountryCodeForRegionCode(regionCode));
-
-        const emoji = getUnicodeFlagIcon(regionCode);
-        const Icon = Flags[regionCode as keyof typeof Flags] ?? <></>;
-
-        setCountryFlag(
-            ifEmoji(emoji) ? <span className="text-xl">{emoji}</span> : <Icon className="w-6 h-7" />
-        );
     }, [props.regionCode]);
 
     function handleChange(tel: string) {
