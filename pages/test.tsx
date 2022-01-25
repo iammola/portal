@@ -13,7 +13,7 @@ const Test: NextPage = () => {
             <Head>
                 <title>Test</title>
             </Head>
-            <form className="rounded-lg overflow-hidden bg-white p-8">
+            <form className="rounded-lg bg-white p-8">
                 <Input.Phone className="space-y-1">
                     <Input.Phone.Label className="font-medium text-slate-500">
                         Phone Number
