@@ -30,7 +30,9 @@ const List: List = ({ className, selectedRegion }) => {
 };
 
 List.Item = function Item({ regionCode, className, selected }) {
-    const ref = useRef<HTMLLIElement>(null);
+    const ref = useRef<
+        HTMLLIElement & { scrollIntoViewIfNeeded?: (centerIfNeeded?: boolean) => void }
+    >(null);
     const country = byIso(regionCode)?.country;
     const countryFlag = useCountryFlag(regionCode);
     const otherRegions = {
@@ -40,7 +42,9 @@ List.Item = function Item({ regionCode, className, selected }) {
     };
 
     useEffect(() => {
-        if (selected === true) ref.current?.scrollIntoView({ block: "center" });
+        if (selected === true)
+            ref.current?.scrollIntoViewIfNeeded?.() ??
+                ref.current?.scrollIntoView({ block: "center" });
     }, [selected]);
 
     if (country === undefined && regionCode in otherRegions === false)
