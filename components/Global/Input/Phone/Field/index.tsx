@@ -51,7 +51,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
     return (
         <div
             className={classNames(
-                "flex flex-row gap-x-3 items-stretch justify-start rounded-xl overflow-hidden bg-white border ring-2 relative",
+                "flex flex-row gap-x-3 items-stretch justify-start rounded-xl bg-white border ring-2 relative",
                 {
                     "ring-red-400": valid === false,
                     "ring-transparent": valid === undefined,
@@ -59,22 +59,21 @@ const Field: Field = ({ onChange, value, ...props }) => {
                 }
             )}
         >
-            <div className="flex flex-row gap-x-0.5 items-center justify-center px-3.5 py-3 bg-slate-100 hover:bg-slate-200">
+            <div className="flex flex-row gap-x-0.5 items-center justify-center px-3.5 py-3 rounded-l-xl bg-slate-100 hover:bg-slate-200">
                 {countryFlag}
                 <ChevronUpIcon className="w-6 h-6 fill-slate-600" />
             </div>
-            <div className="flex flex-row grow gap-x-2 items-center justify-start">
+            <div className="flex flex-row grow gap-x-2 items-center justify-start rounded-r-xl">
                 <span className="text-lg text-slate-500 font-medium tracking-wide">
                     +{countryCode}
                 </span>
-                <div className="flex items-center grow w-[12.5rem] h-full">
+                <div className="flex items-center grow w-[12.5rem] h-full rounded-r-xl">
                     <Input
-                        required // overflow-hidden hides the optional text
                         type="tel"
                         value={formattedValue}
                         onChange={handleChange}
                         onKeyDown={handleKeyDown}
-                        className="text-lg text-slate-600 font-semibold grow w-full h-[3.75rem] !px-0 !py-3.5 tracking-wide focus:outline-none"
+                        className="text-lg text-slate-600 font-semibold grow w-full h-[3.75rem] !px-0 !py-3.5 tracking-wide focus:outline-none rounded-r-xl"
                     />
                 </div>
             </div>
