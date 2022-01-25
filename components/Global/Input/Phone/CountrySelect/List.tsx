@@ -15,7 +15,7 @@ const List: List = ({ className }) => {
     );
 };
 
-List.Item = ({ regionCode, className }) => {
+List.Item = function Item({ regionCode, className }) {
     return <li className={className}>{regionCode}</li>;
 };
 
