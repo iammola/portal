@@ -22,11 +22,12 @@ const Field: Field = ({ onChange, value, ...props }) => {
 
     const countryFlag = useCountryFlag(regionCode);
 
-    useEffect(() => {
-        const regionCode = props.regionCode ?? defaultRegionCode;
+    useEffect(() => handleRegionChange(props.regionCode), [props.regionCode]);
+
+    function handleRegionChange(regionCode: string = defaultRegionCode) {
         setRegionCode(regionCode);
         setCountryCode(PhoneNumber.getCountryCodeForRegionCode(regionCode));
-    }, [props.regionCode]);
+    }
 
     function handleChange(tel: string) {
         if (["", "0"].includes(tel) === true) setFormattedValue(formatter.reset(""));
