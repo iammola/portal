@@ -14,7 +14,7 @@ const Test: NextPage = () => {
                 <title>Test</title>
             </Head>
             <form className="rounded-lg bg-white p-8">
-                <Input.Phone className="space-y-1">
+                <Input.Phone className="space-y-1 w-[22.5rem]">
                     <Input.Phone.Label className="font-medium text-slate-500">
                         Phone Number
                     </Input.Phone.Label>
