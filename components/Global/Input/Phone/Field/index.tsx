@@ -51,7 +51,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
     return (
         <div
             className={classNames(
-                "flex flex-row gap-x-3 items-stretch justify-start rounded-xl bg-white border ring-2 relative",
+                "flex flex-row gap-x-3 items-stretch justify-start rounded-xl bg-white border border-slate-200 ring-2 relative",
                 {
                     "ring-red-400": valid === false,
                     "ring-transparent": valid === undefined,
