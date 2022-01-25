@@ -87,7 +87,6 @@ const Field: Field = ({ onChange, value, ...props }) => {
 
 type Field = FunctionComponent<{
     value: string;
-    className: string;
     regionCode?: string;
     onChange(val: string): void;
 }>;
