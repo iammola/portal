@@ -1,22 +1,24 @@
 import ifEmoji from "if-emoji";
 import PhoneNumber from "awesome-phonenumber";
-import { ChevronUpIcon } from "@heroicons/react/solid";
 import Flags from "country-flag-icons/react/3x2";
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
+import { ChevronUpIcon } from "@heroicons/react/solid";
 import { FunctionComponent, KeyboardEvent, useEffect, useState } from "react";
 
+import { classNames } from "utils";
 import Input from "components/Global/Input";
 
 const Field: Field = ({ onChange, value, ...props }) => {
     const [regionCode, setRegionCode] = useState(
         props.regionCode ?? (value === undefined ? "NG" : PhoneNumber(value).getRegionCode())
     );
+    const formatter = PhoneNumber.getAsYouType(regionCode);
+
     const [countryCode, setCountryCode] = useState(
         PhoneNumber.getCountryCodeForRegionCode(regionCode)
     );
+    const [valid, setValid] = useState<boolean>();
     const [countryFlag, setCountryFlag] = useState<JSX.Element>();
-
-    const formatter = PhoneNumber.getAsYouType(regionCode);
     const [formattedValue, setFormattedValue] = useState(formatter.reset(value));
 
     useEffect(() => {
@@ -41,14 +43,25 @@ const Field: Field = ({ onChange, value, ...props }) => {
         if (["", "0"].includes(tel) === true) setFormattedValue(formatter.reset(""));
         else setFormattedValue(formatter.reset(`0${tel.replaceAll(" ", "")}`).slice(1));
 
-        onChange(formatter.getPhoneNumber().getNumber("international") ?? "");
+        const phone = formatter.getPhoneNumber().getNumber("international") ?? "";
+        onChange(phone);
+        setValid(phone === "" ? undefined : formatter.getPhoneNumber().isValid());
     }
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) =>
         (e.code === "Backspace" || /\d$/.test(e.key) === true) === false && e.preventDefault();
 
     return (
-        <div className="flex flex-row gap-x-3 items-stretch justify-start rounded-xl overflow-hidden bg-white border">
+        <div
+            className={classNames(
+                "flex flex-row gap-x-3 items-stretch justify-start rounded-xl overflow-hidden bg-white border ring-2",
+                {
+                    "ring-red-400": valid === false,
+                    "ring-transparent": valid === undefined,
+                    "focus-within:ring-emerald-400": valid === true,
+                }
+            )}
+        >
             <div className="flex flex-row gap-x-0.5 items-center justify-center px-3.5 py-3 bg-slate-100 hover:bg-slate-200">
                 {countryFlag}
                 <ChevronUpIcon className="w-6 h-6 fill-slate-600" />
