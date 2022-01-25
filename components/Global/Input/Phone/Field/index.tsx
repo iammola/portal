@@ -9,8 +9,9 @@ import { classNames } from "utils";
 import Input from "components/Global/Input";
 
 const Field: Field = ({ onChange, value, ...props }) => {
+    const defaultRegionCode = "GB";
     const [regionCode, setRegionCode] = useState(
-        props.regionCode ?? (value === undefined ? "NG" : PhoneNumber(value).getRegionCode())
+        props.regionCode ?? (value === undefined ? defaultRegionCode : PhoneNumber(value).getRegionCode())
     );
     const formatter = PhoneNumber.getAsYouType(regionCode);
 
