@@ -33,7 +33,7 @@ List.Item = function Item({ regionCode, className }) {
     return (
         <li className={className}>
             {countryFlag}
-            <span className="text-sm font-medium">
+            <span className="text-sm text-slate-700 font-medium">
                 {country ?? otherRegions[regionCode as keyof typeof otherRegions]} (+
                 {PhoneNumber.getCountryCodeForRegionCode(regionCode)})
             </span>
