@@ -10,9 +10,8 @@ List.Item = () => {
 
 interface List extends FunctionComponent<{ className: string }> {
     Item: FunctionComponent<{
-        country: string;
         className: string;
-        countryCode: number;
+        regionCode: string;
     }>;
 }
 
