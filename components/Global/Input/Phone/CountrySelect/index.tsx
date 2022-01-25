@@ -6,6 +6,9 @@ const CountrySelect: CountrySelect = () => {
     );
 };
 
-type CountrySelect = FunctionComponent;
+type CountrySelect = FunctionComponent<{
+    selectedRegion: string;
+    onRegionChange(regionCode: string): void;
+}>;
 
 export default CountrySelect;
