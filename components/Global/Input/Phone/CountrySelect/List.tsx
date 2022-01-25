@@ -20,7 +20,14 @@ const List: List = ({ className }) => {
 List.Item = function Item({ regionCode, className }) {
     const countryFlag = useCountryFlag(regionCode);
 
-    return <li className={className}>{countryFlag}</li>;
+    return (
+        <li className={className}>
+            {countryFlag}
+            <span className="text-sm font-medium">
+                (+{PhoneNumber.getCountryCodeForRegionCode(regionCode)})
+            </span>
+        </li>
+    );
 };
 
 interface List extends FunctionComponent<{ className: string }> {
