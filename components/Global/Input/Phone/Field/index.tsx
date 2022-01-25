@@ -1,5 +1,8 @@
+import ifEmoji from "if-emoji";
 import PhoneNumber from "awesome-phonenumber";
 import { ChevronUpIcon } from "@heroicons/react/solid";
+import Flags from "country-flag-icons/react/3x2";
+import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import { FunctionComponent, KeyboardEvent, useEffect, useState } from "react";
 
 import Input from "components/Global/Input";
@@ -20,6 +23,17 @@ const Field: Field = ({ onChange, value, ...props }) => {
         if (props.regionCode !== undefined) {
             setRegionCode(props.regionCode);
             setCountryCode(PhoneNumber.getCountryCodeForRegionCode(props.regionCode));
+
+            const emoji = getUnicodeFlagIcon(props.regionCode);
+            const Icon = Flags[props.regionCode as keyof typeof Flags] ?? <></>;
+
+            setCountryFlag(
+                ifEmoji(emoji) ? (
+                    <span className="text-xl">{emoji}</span>
+                ) : (
+                    <Icon className="w-6 h-7" />
+                )
+            );
         }
     }, [props.regionCode]);
 
