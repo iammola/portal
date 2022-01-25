@@ -1,6 +1,8 @@
 import PhoneNumber from "awesome-phonenumber";
 import { FunctionComponent } from "react";
 
+import { useCountryFlag } from "hooks";
+
 const List: List = ({ className }) => {
     return (
         <ul className={className}>
@@ -16,7 +18,9 @@ const List: List = ({ className }) => {
 };
 
 List.Item = function Item({ regionCode, className }) {
-    return <li className={className}>{regionCode}</li>;
+    const countryFlag = useCountryFlag(regionCode);
+
+    return <li className={className}>{countryFlag}</li>;
 };
 
 interface List extends FunctionComponent<{ className: string }> {
