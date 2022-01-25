@@ -1,7 +1,7 @@
+import { FunctionComponent, useEffect, useRef } from "react";
+import { CheckIcon } from "@heroicons/react/solid";
 import PhoneNumber from "awesome-phonenumber";
 import { byIso } from "country-code-lookup";
-import { FunctionComponent } from "react";
-import { CheckIcon } from "@heroicons/react/solid";
 
 import { useCountryFlag } from "hooks";
 
@@ -21,6 +21,7 @@ const List: List = ({ className, selectedRegion }) => {
 };
 
 List.Item = function Item({ regionCode, className, selected }) {
+    const ref = useRef<HTMLLIElement>(null);
     const country = byIso(regionCode)?.country;
     const countryFlag = useCountryFlag(regionCode);
     const otherRegions = {
@@ -29,11 +30,15 @@ List.Item = function Item({ regionCode, className, selected }) {
         HL: "Saint Helena",
     };
 
+    useEffect(() => {
+        if (selected === true) ref.current?.scrollIntoView({ block: "center" });
+    }, [selected]);
+
     if (country === undefined && regionCode in otherRegions === false)
         console.warn(`No country data for ${regionCode} region`);
 
     return (
-        <li className={className}>
+        <li ref={ref} className={className}>
             {countryFlag}
             <span className="text-sm text-slate-700 font-medium">
                 {country ?? otherRegions[regionCode as keyof typeof otherRegions]} (+
