@@ -21,14 +21,21 @@ const List: List = ({ className }) => {
 List.Item = function Item({ regionCode, className }) {
     const country = byIso(regionCode)?.country;
     const countryFlag = useCountryFlag(regionCode);
+    const otherRegions = {
+        AC: "Ascension Island",
+        TA: "Tristan da Cunha",
+        HL: "Saint Helena",
+    };
 
-    if (country === undefined) console.warn(`No country data for ${regionCode} region`);
+    if (country === undefined && regionCode in otherRegions === false)
+        console.warn(`No country data for ${regionCode} region`);
 
     return (
         <li className={className}>
             {countryFlag}
             <span className="text-sm font-medium">
-                {country} (+{PhoneNumber.getCountryCodeForRegionCode(regionCode)})
+                {country ?? otherRegions[regionCode as keyof typeof otherRegions]} (+
+                {PhoneNumber.getCountryCodeForRegionCode(regionCode)})
             </span>
         </li>
     );
