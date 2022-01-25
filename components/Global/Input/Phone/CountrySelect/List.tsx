@@ -10,7 +10,7 @@ const List: List = ({ className }) => {
                 <List.Item
                     key={regionCode}
                     regionCode={regionCode}
-                    className="flex flex-row gap-x-4 items-center justify-start p-2"
+                    className="flex flex-row gap-x-4 items-center justify-start p-2 rounded-xl hover:bg-slate-100"
                 />
             ))}
         </ul>
