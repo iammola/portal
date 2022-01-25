@@ -44,7 +44,10 @@ List.Item = function Item({ regionCode, className, selected }) {
     useEffect(() => {
         if (selected === true)
             ref.current?.scrollIntoViewIfNeeded?.() ??
-                ref.current?.scrollIntoView({ block: "center" });
+                ref.current?.parentElement?.scroll(
+                    0,
+                    ref.current?.offsetTop - ref.current?.parentElement?.offsetHeight / 2.6
+                );
     }, [selected]);
 
     if (country === undefined && regionCode in otherRegions === false)
