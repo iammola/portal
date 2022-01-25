@@ -6,7 +6,7 @@ import { byIso } from "country-code-lookup";
 import { useCountryFlag } from "hooks";
 import { classNames } from "utils";
 
-const List: List = ({ className, selectedRegion }) => {
+const List: List = ({ className, handleRegionChange, selectedRegion }) => {
     return (
         <ul className={className}>
             {PhoneNumber.getSupportedRegionCodes().map((regionCode) => (
@@ -14,6 +14,7 @@ const List: List = ({ className, selectedRegion }) => {
                     key={regionCode}
                     regionCode={regionCode}
                     selected={regionCode === selectedRegion}
+                    onClick={() => handleRegionChange(regionCode)}
                     className={(selected) =>
                         classNames(
                             "flex flex-row gap-x-4 items-center justify-start p-2 rounded-xl cursor-pointer",
@@ -29,7 +30,7 @@ const List: List = ({ className, selectedRegion }) => {
     );
 };
 
-List.Item = function Item({ regionCode, className, selected }) {
+List.Item = function Item({ regionCode, className, onClick, selected }) {
     const ref = useRef<
         HTMLLIElement & { scrollIntoViewIfNeeded?: (centerIfNeeded?: boolean) => void }
     >(null);
@@ -54,7 +55,7 @@ List.Item = function Item({ regionCode, className, selected }) {
         console.warn(`No country data for ${regionCode} region`);
 
     return (
-        <li ref={ref} className={className(selected)}>
+        <li ref={ref} onClick={onClick} className={className(selected)}>
             {countryFlag}
             <span className="text-sm text-slate-700 font-medium">
                 {country ?? otherRegions[regionCode as keyof typeof otherRegions]} (+
@@ -65,10 +66,17 @@ List.Item = function Item({ regionCode, className, selected }) {
     );
 };
 
-interface List extends FunctionComponent<{ className: string; selectedRegion: string }> {
+type ListProps = {
+    className: string;
+    selectedRegion: string;
+    handleRegionChange(regionCode: string): void;
+};
+
+interface List extends FunctionComponent<ListProps> {
     Item: FunctionComponent<{
         selected: boolean;
         regionCode: string;
+        onClick(): void;
         className: (selected: boolean) => string;
     }>;
 }
