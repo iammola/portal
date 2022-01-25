@@ -22,6 +22,8 @@ List.Item = function Item({ regionCode, className }) {
     const country = byIso(regionCode)?.country;
     const countryFlag = useCountryFlag(regionCode);
 
+    if (country === undefined) console.warn(`No country data for ${regionCode} region`);
+
     return (
         <li className={className}>
             {countryFlag}
