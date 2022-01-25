@@ -5,6 +5,7 @@ import { useIsChanging } from "hooks";
 import { classNames } from "utils";
 
 import DateInput from "./Date";
+import PhoneInput from "./Phone";
 import NumberInput from "./Number";
 import TextareaInput from "./Textarea";
 import DynamicEmailInput from "./DynamicEmail";
@@ -72,6 +73,7 @@ const Input: Input = ({ className, label, showIcons, onChange, value, ...props }
 };
 
 Input.Date = DateInput;
+Input.Phone = PhoneInput;
 Input.Number = NumberInput;
 Input.Textarea = TextareaInput;
 Input.DynamicEmail = DynamicEmailInput;
@@ -93,6 +95,7 @@ export type InputProps = Omit<ComponentProps<"input">, "id" | "className" | "onC
 
 interface Input extends FunctionComponent<InputProps> {
     Date: DateInput;
+    Phone: PhoneInput;
     Number: NumberInput;
     Textarea: TextareaInput;
     DynamicEmail: DynamicEmailInput;
