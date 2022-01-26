@@ -80,7 +80,11 @@ const Field: Field = ({ onChange, value, ...props }) => {
                 className="flex flex-row gap-x-0.5 items-center justify-center px-3.5 py-3 rounded-l-xl bg-slate-100 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none"
             >
                 {countryFlag}
-                <ChevronUpIcon className="w-6 h-6 fill-slate-600" />
+                <ChevronUpIcon
+                    className={classNames("w-6 h-6 fill-slate-600", {
+                        "rotate-180": showCountrySelect === false,
+                    })}
+                />
             </div>
             <div className="flex flex-row grow gap-x-2 items-center justify-start rounded-r-xl">
                 <span className="text-lg text-slate-500 font-medium tracking-wide">
