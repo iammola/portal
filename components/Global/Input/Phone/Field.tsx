@@ -1,6 +1,6 @@
 import PhoneNumber from "awesome-phonenumber";
 import { ChevronUpIcon } from "@heroicons/react/solid";
-import { FunctionComponent, KeyboardEvent, useEffect, useState } from "react";
+import { FunctionComponent, KeyboardEvent, useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import { useCountryFlag } from "hooks";
@@ -12,7 +12,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
         props.regionCode ??
             (value === undefined ? defaultRegionCode : PhoneNumber(value).getRegionCode())
     );
-    const formatter = PhoneNumber.getAsYouType(regionCode);
+    const formatter = useMemo(() => PhoneNumber.getAsYouType(regionCode), [regionCode]);
 
     const [countryCode, setCountryCode] = useState(
         PhoneNumber.getCountryCodeForRegionCode(regionCode)
