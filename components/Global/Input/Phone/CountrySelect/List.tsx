@@ -17,11 +17,8 @@ const List: List = ({ className, handleRegionChange, selectedRegion }) => {
                     onClick={() => handleRegionChange(regionCode)}
                     className={(selected) =>
                         classNames(
-                            "flex flex-row gap-x-4 items-center justify-start p-2 rounded-xl cursor-pointer",
-                            {
-                                "hover:bg-slate-100": selected === false,
-                                "bg-slate-100 hover:bg-slate-200": selected === true,
-                            }
+                            "flex flex-row gap-x-4 items-center justify-start p-2 rounded-xl cursor-pointer hover:bg-slate-100 focus:outline-none",
+                            [selected, "focus:bg-slate-50", ""]
                         )
                     }
                 />
@@ -43,19 +40,21 @@ List.Item = function Item({ regionCode, className, onClick, selected }) {
     };
 
     useEffect(() => {
-        if (selected === true)
+        if (selected === true) {
             ref.current?.scrollIntoViewIfNeeded?.() ??
                 ref.current?.parentElement?.scroll(
                     0,
                     ref.current?.offsetTop - ref.current?.parentElement?.offsetHeight / 2.6
                 );
+            ref.current?.focus();
+        }
     }, [selected]);
 
     if (country === undefined && regionCode in otherRegions === false)
         console.warn(`No country data for ${regionCode} region`);
 
     return (
-        <li ref={ref} onClick={onClick} className={className(selected)}>
+        <li ref={ref} tabIndex={0} onClick={onClick} className={className(selected)}>
             {countryFlag}
             <span className="text-sm text-slate-700 font-medium">
                 {country ?? otherRegions[regionCode as keyof typeof otherRegions]} (+
