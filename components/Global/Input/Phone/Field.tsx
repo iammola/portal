@@ -47,6 +47,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
     );
     const handleRegionChange = useCallback((regionCode: string = defaultRegionCode) => {
         setRegionCode(regionCode);
+        setShowCountrySelect(false);
         setCountryCode(PhoneNumber.getCountryCodeForRegionCode(regionCode));
     }, []);
 
