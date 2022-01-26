@@ -23,7 +23,11 @@ export function useCountryFlag(regionCode: string) {
         const Icon = Flags[regionCode as keyof typeof Flags] ?? <></>;
 
         setCountryFlag(
-            ifEmoji(emoji) ? <span className="text-xl">{emoji}</span> : <Icon className="w-6 h-7" />
+            ifEmoji(emoji) ? (
+                <span className="text-xl">{emoji}</span>
+            ) : (
+                <Icon className="w-[25px] h-7" />
+            )
         );
     }, [regionCode]);
 
