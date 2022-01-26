@@ -1,6 +1,14 @@
 import PhoneNumber from "awesome-phonenumber";
 import { ChevronUpIcon } from "@heroicons/react/solid";
-import { FunctionComponent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from "react";
+import {
+    FocusEvent,
+    FunctionComponent,
+    KeyboardEvent,
+    useCallback,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
 
 import { classNames } from "utils";
 import { useCountryFlag } from "hooks";
@@ -15,6 +23,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
         props.regionCode ??
             (value === undefined ? defaultRegionCode : PhoneNumber(value).getRegionCode())
     );
+    const [showCountrySelect, setShowCountrySelect] = useState(false);
 
     const countryFlag = useCountryFlag(regionCode);
     const formatter = useMemo(() => PhoneNumber.getAsYouType(regionCode), [regionCode]);
@@ -43,6 +52,11 @@ const Field: Field = ({ onChange, value, ...props }) => {
 
     useEffect(() => handleChange(formatter.number()), [formatter, handleChange]);
     useEffect(() => handleRegionChange(props.regionCode), [handleRegionChange, props.regionCode]);
+
+    const handleFocus = (e: FocusEvent<HTMLElement>) => {
+        const target = (e.type === "focus" ? e.target : e.relatedTarget) as HTMLElement | null;
+        setShowCountrySelect(!!e.target.parentElement?.contains(target));
+    };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) =>
         (e.code === "Backspace" || /\d$/.test(e.key) === true) === false && e.preventDefault();
