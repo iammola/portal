@@ -28,12 +28,14 @@ const Field: Field = ({ onChange, value, ...props }) => {
 
     const handleChange = useCallback(
         (tel: string) => {
-            if (["", "0"].includes(tel) === true) setFormattedValue(formatter.reset(""));
-            else setFormattedValue(formatter.reset(`0${tel.replaceAll(" ", "")}`).slice(1));
+            const formatted = formatter
+                .reset(["", "0"].includes(tel) ? "" : `0${tel.replaceAll(" ", "")}`)
+                .slice(1);
+            const PhoneNumber = formatter.getPhoneNumber();
 
-            const phone = formatter.getPhoneNumber().getNumber("international") ?? "";
-            onChange(phone);
-            setValid(phone === "" ? undefined : formatter.getPhoneNumber().isValid());
+            setFormattedValue(formatted);
+            onChange(PhoneNumber.getNumber("international") ?? "");
+            setValid(formatted === "" ? undefined : PhoneNumber.isValid());
         },
         [formatter, onChange]
     );
