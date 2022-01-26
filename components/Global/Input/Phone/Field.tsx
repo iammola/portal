@@ -6,6 +6,8 @@ import { classNames } from "utils";
 import { useCountryFlag } from "hooks";
 import Input from "components/Global/Input";
 
+import CountrySelect from "./CountrySelect";
+
 const Field: Field = ({ onChange, value, ...props }) => {
     const defaultRegionCode = "GB";
     const [regionCode, setRegionCode] = useState(
@@ -70,6 +72,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
                     />
                 </div>
             </div>
+            <CountrySelect onRegionChange={handleRegionChange} selectedRegion={regionCode} />
         </div>
     );
 };
