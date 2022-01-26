@@ -57,6 +57,14 @@ const Field: Field = ({ onChange, value, ...props }) => {
     const handleFocus = (e: FocusEvent<HTMLElement>) => {
         const target = (e.type === "focus" ? e.target : e.relatedTarget) as HTMLElement | null;
         setShowCountrySelect(!!e.target.parentElement?.contains(target));
+
+        if (e.type === "blur") target?.addEventListener("blur", focusOut);
+        function focusOut(e: { relatedTarget: EventTarget | null }) {
+            if (target?.parentElement?.contains(e.relatedTarget as Node) === false) {
+                setShowCountrySelect(false);
+                target.removeEventListener("blur", focusOut);
+            }
+        }
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) =>
