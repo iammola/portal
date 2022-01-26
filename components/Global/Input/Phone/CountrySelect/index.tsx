@@ -2,9 +2,9 @@ import { FunctionComponent } from "react";
 
 import List from "./List";
 
-const CountrySelect: CountrySelect = ({ onRegionChange, selectedRegion }) => {
+const CountrySelect: CountrySelect = ({ className, onRegionChange, selectedRegion }) => {
     return (
-        <div className="flex flex-col items-start justify-start w-full h-[13.5rem] mt-2 px-2 absolute top-full left-0 rounded-xl shadow-lg overflow-hidden bg-white border border-slate-200 divide-y divide-slate-200">
+        <div className={className}>
             <List
                 selectedRegion={selectedRegion}
                 handleRegionChange={onRegionChange}
@@ -15,6 +15,7 @@ const CountrySelect: CountrySelect = ({ onRegionChange, selectedRegion }) => {
 };
 
 type CountrySelect = FunctionComponent<{
+    className: string;
     selectedRegion: string;
     onRegionChange(regionCode: string): void;
 }>;
