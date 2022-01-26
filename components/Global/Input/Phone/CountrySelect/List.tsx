@@ -28,7 +28,7 @@ const List: List = ({ className, handleRegionChange, selectedRegion, visible }) 
     );
 };
 
-List.Item = function Item({ regionCode, className, onClick, selected }) {
+List.Item = function Item({ regionCode, className, onClick, selected, visible }) {
     const ref = useRef<
         HTMLLIElement & { scrollIntoViewIfNeeded?: (centerIfNeeded?: boolean) => void }
     >(null);
@@ -41,7 +41,7 @@ List.Item = function Item({ regionCode, className, onClick, selected }) {
     };
 
     useEffect(() => {
-        if (selected === true) {
+        if (selected === true && visible === true) {
             ref.current?.scrollIntoViewIfNeeded?.() ??
                 ref.current?.parentElement?.scroll(
                     0,
@@ -49,7 +49,7 @@ List.Item = function Item({ regionCode, className, onClick, selected }) {
                 );
             ref.current?.focus();
         }
-    }, [selected]);
+    }, [selected, visible]);
 
     if (country === undefined && regionCode in otherRegions === false)
         console.warn(`No country data for ${regionCode} region`);
@@ -75,6 +75,7 @@ type ListProps = {
 
 interface List extends FunctionComponent<ListProps> {
     Item: FunctionComponent<{
+        visible: boolean;
         selected: boolean;
         regionCode: string;
         onClick(): void;
