@@ -45,7 +45,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
         setCountryCode(PhoneNumber.getCountryCodeForRegionCode(regionCode));
     }, []);
 
-    useEffect(() => handleChange(formatter.number().replace("0", "")), [formatter, handleChange]);
+    useEffect(() => handleChange(formatter.number().replace(/^0/, "")), [formatter, handleChange]);
     useEffect(() => handleRegionChange(props.regionCode), [handleRegionChange, props.regionCode]);
     useEffect(() => {
         if (showCountrySelect === true)
