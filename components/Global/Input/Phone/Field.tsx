@@ -36,14 +36,13 @@ const Field: Field = ({ onChange, value, ...props }) => {
         },
         [formatter, onChange]
     );
-
-    function handleRegionChange(regionCode: string = defaultRegionCode) {
+    const handleRegionChange = useCallback((regionCode: string = defaultRegionCode) => {
         setRegionCode(regionCode);
         setCountryCode(PhoneNumber.getCountryCodeForRegionCode(regionCode));
-    }
+    }, []);
 
-    useEffect(() => handleRegionChange(props.regionCode), [props.regionCode]);
     useEffect(() => handleChange(formatter.number()), [formatter, handleChange]);
+    useEffect(() => handleRegionChange(props.regionCode), [handleRegionChange, props.regionCode]);
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) =>
         (e.code === "Backspace" || /\d$/.test(e.key) === true) === false && e.preventDefault();
