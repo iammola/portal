@@ -1,6 +1,6 @@
 import PhoneNumber from "awesome-phonenumber";
 import { ChevronUpIcon } from "@heroicons/react/solid";
-import { FunctionComponent, KeyboardEvent, useEffect, useMemo, useState } from "react";
+import { FunctionComponent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import { useCountryFlag } from "hooks";
@@ -28,6 +28,18 @@ const Field: Field = ({ onChange, value, ...props }) => {
 
     useEffect(() => handleRegionChange(props.regionCode), [props.regionCode]);
 
+    const handleChange = useCallback(
+        (tel: string) => {
+            if (["", "0"].includes(tel) === true) setFormattedValue(formatter.reset(""));
+            else setFormattedValue(formatter.reset(`0${tel.replaceAll(" ", "")}`).slice(1));
+
+            const phone = formatter.getPhoneNumber().getNumber("international") ?? "";
+            onChange(phone);
+            setValid(phone === "" ? undefined : formatter.getPhoneNumber().isValid());
+        },
+        [formatter, onChange]
+    );
+
     useEffect(
         () => handleChange(formatter.number()),
         [formatter, handleChange, regionCode, props.regionCode]
@@ -36,15 +48,6 @@ const Field: Field = ({ onChange, value, ...props }) => {
     function handleRegionChange(regionCode: string = defaultRegionCode) {
         setRegionCode(regionCode);
         setCountryCode(PhoneNumber.getCountryCodeForRegionCode(regionCode));
-    }
-
-    function handleChange(tel: string) {
-        if (["", "0"].includes(tel) === true) setFormattedValue(formatter.reset(""));
-        else setFormattedValue(formatter.reset(`0${tel.replaceAll(" ", "")}`).slice(1));
-
-        const phone = formatter.getPhoneNumber().getNumber("international") ?? "";
-        onChange(phone);
-        setValid(phone === "" ? undefined : formatter.getPhoneNumber().isValid());
     }
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) =>
