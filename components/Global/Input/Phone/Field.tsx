@@ -20,7 +20,9 @@ const Field: Field = ({ onChange, value, ...props }) => {
         PhoneNumber.getCountryCodeForRegionCode(regionCode)
     );
     const [valid, setValid] = useState<boolean>();
-    const [formattedValue, setFormattedValue] = useState(formatter.reset(value));
+    const [formattedValue, setFormattedValue] = useState(
+        formatter.reset(PhoneNumber(value).getNumber("significant"))
+    );
 
     const countryFlag = useCountryFlag(regionCode);
 
