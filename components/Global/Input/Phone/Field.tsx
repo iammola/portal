@@ -28,6 +28,11 @@ const Field: Field = ({ onChange, value, ...props }) => {
 
     useEffect(() => handleRegionChange(props.regionCode), [props.regionCode]);
 
+    useEffect(
+        () => handleChange(formatter.number()),
+        [formatter, handleChange, regionCode, props.regionCode]
+    );
+
     function handleRegionChange(regionCode: string = defaultRegionCode) {
         setRegionCode(regionCode);
         setCountryCode(PhoneNumber.getCountryCodeForRegionCode(regionCode));
