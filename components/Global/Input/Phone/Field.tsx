@@ -49,9 +49,11 @@ const Field: Field = ({ onChange, value, ...props }) => {
     useEffect(() => handleRegionChange(props.regionCode), [handleRegionChange, props.regionCode]);
     useEffect(() => {
         if (showCountrySelect === true)
-            document.activeElement?.addEventListener(
+            (document.activeElement as HTMLElement)?.addEventListener(
                 "blur",
-                () => setTimeout(setShowCountrySelect, undefined, false),
+                (e) =>
+                    (e.target as HTMLElement)?.parentElement?.contains(e.relatedTarget as Node) ===
+                        false && setShowCountrySelect(false),
                 { once: true }
             );
     }, [showCountrySelect]);
