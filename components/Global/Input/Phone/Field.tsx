@@ -1,14 +1,6 @@
 import PhoneNumber from "awesome-phonenumber";
 import { ChevronUpIcon } from "@heroicons/react/solid";
-import {
-    FocusEvent,
-    FunctionComponent,
-    KeyboardEvent,
-    useCallback,
-    useEffect,
-    useMemo,
-    useState,
-} from "react";
+import { FunctionComponent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import { useCountryFlag } from "hooks";
@@ -53,19 +45,14 @@ const Field: Field = ({ onChange, value, ...props }) => {
 
     useEffect(() => handleChange(formatter.number()), [formatter, handleChange]);
     useEffect(() => handleRegionChange(props.regionCode), [handleRegionChange, props.regionCode]);
-
-    const handleFocus = (e: FocusEvent<HTMLElement>) => {
-        const target = (e.type === "focus" ? e.target : e.relatedTarget) as HTMLElement | null;
-        setShowCountrySelect(!!e.target.parentElement?.contains(target));
-
-        if (e.type === "blur") target?.addEventListener("blur", focusOut);
-        function focusOut(e: { relatedTarget: EventTarget | null }) {
-            if (target?.parentElement?.contains(e.relatedTarget as Node) === false) {
-                setShowCountrySelect(false);
-                target.removeEventListener("blur", focusOut);
-            }
-        }
-    };
+    useEffect(() => {
+        if (showCountrySelect === true)
+            document.activeElement?.addEventListener(
+                "blur",
+                () => setTimeout(setShowCountrySelect, undefined, false),
+                { once: true }
+            );
+    }, [showCountrySelect]);
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) =>
         (e.code === "Backspace" || /\d$/.test(e.key) === true) === false && e.preventDefault();
@@ -82,9 +69,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
             )}
         >
             <div
-                tabIndex={0}
-                onBlur={handleFocus}
-                onFocus={handleFocus}
+                onClick={() => setShowCountrySelect((i) => !i)}
                 className="flex flex-row gap-x-0.5 items-center justify-center px-3.5 py-3 rounded-l-xl bg-slate-100 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none"
             >
                 {countryFlag}
