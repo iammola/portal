@@ -6,12 +6,13 @@ import { byIso } from "country-code-lookup";
 import { useCountryFlag } from "hooks";
 import { classNames } from "utils";
 
-const List: List = ({ className, handleRegionChange, selectedRegion }) => {
+const List: List = ({ className, handleRegionChange, selectedRegion, visible }) => {
     return (
         <ul className={className}>
             {PhoneNumber.getSupportedRegionCodes().map((regionCode) => (
                 <List.Item
                     key={regionCode}
+                    visible={visible}
                     regionCode={regionCode}
                     selected={regionCode === selectedRegion}
                     onClick={() => handleRegionChange(regionCode)}
@@ -66,6 +67,7 @@ List.Item = function Item({ regionCode, className, onClick, selected }) {
 };
 
 type ListProps = {
+    visible: boolean;
     className: string;
     selectedRegion: string;
     handleRegionChange(regionCode: string): void;
