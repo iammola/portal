@@ -92,14 +92,8 @@ const Field: Field = ({ onChange, value, ...props }) => {
             </div>
             <CountrySelect
                 visible={showCountrySelect}
-                onRegionChange={handleRegionChange}
                 selectedRegion={regionCode}
-                className={classNames(
-                    "flex flex-col items-start justify-start w-full h-[13.5rem] mt-2 px-2 absolute top-full left-0 rounded-xl shadow-lg overflow-hidden bg-white border border-slate-200 divide-y divide-slate-200",
-                    {
-                        "opacity-0 invisible pointer-events-none": showCountrySelect === false,
-                    }
-                )}
+                onRegionChange={handleRegionChange}
             />
         </div>
     );

@@ -1,10 +1,17 @@
 import { FunctionComponent } from "react";
 
+import { classNames } from "utils";
+
 import List from "./List";
 
-const CountrySelect: CountrySelect = ({ className, onRegionChange, selectedRegion, visible }) => {
+const CountrySelect: CountrySelect = ({ onRegionChange, selectedRegion, visible }) => {
     return (
-        <div className={className}>
+        <div
+            className={classNames(
+                "flex flex-col items-start justify-start w-full h-[13.5rem] mt-2 px-2 absolute top-full left-0 rounded-xl shadow-lg overflow-hidden bg-white border border-slate-200 divide-y divide-slate-200",
+                [visible, "", "opacity-0 invisible pointer-events-none"]
+            )}
+        >
             <List
                 {...{ visible, selectedRegion }}
                 handleRegionChange={onRegionChange}
@@ -16,7 +23,6 @@ const CountrySelect: CountrySelect = ({ className, onRegionChange, selectedRegio
 
 type CountrySelect = FunctionComponent<{
     visible: boolean;
-    className: string;
     selectedRegion: string;
     onRegionChange(regionCode: string): void;
 }>;
