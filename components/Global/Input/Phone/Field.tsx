@@ -72,7 +72,12 @@ const Field: Field = ({ onChange, value, ...props }) => {
                 }
             )}
         >
-            <div className="flex flex-row gap-x-0.5 items-center justify-center px-3.5 py-3 rounded-l-xl bg-slate-100 hover:bg-slate-200">
+            <div
+                tabIndex={0}
+                onBlur={handleFocus}
+                onFocus={handleFocus}
+                className="flex flex-row gap-x-0.5 items-center justify-center px-3.5 py-3 rounded-l-xl bg-slate-100 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none"
+            >
                 {countryFlag}
                 <ChevronUpIcon className="w-6 h-6 fill-slate-600" />
             </div>
