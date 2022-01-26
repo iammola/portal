@@ -29,7 +29,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
     const handleChange = useCallback(
         (tel: string) => {
             const formatted = formatter
-                .reset(["", "0"].includes(tel) ? "" : `0${tel.replaceAll(" ", "")}`)
+                .reset(+tel === 0 ? "" : `0${tel.replaceAll(" ", "")}`)
                 .slice(1);
             const PhoneNumber = formatter.getPhoneNumber();
 
