@@ -40,10 +40,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
         [formatter, onChange]
     );
 
-    useEffect(
-        () => handleChange(formatter.number()),
-        [formatter, handleChange, regionCode, props.regionCode]
-    );
+    useEffect(() => handleChange(formatter.number()), [formatter, handleChange]);
 
     function handleRegionChange(regionCode: string = defaultRegionCode) {
         setRegionCode(regionCode);
