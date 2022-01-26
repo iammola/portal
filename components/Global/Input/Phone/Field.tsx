@@ -10,23 +10,20 @@ import CountrySelect from "./CountrySelect";
 
 const Field: Field = ({ onChange, value, ...props }) => {
     const defaultRegionCode = "GB";
+    const [valid, setValid] = useState<boolean>();
     const [regionCode, setRegionCode] = useState(
         props.regionCode ??
             (value === undefined ? defaultRegionCode : PhoneNumber(value).getRegionCode())
     );
-    const formatter = useMemo(() => PhoneNumber.getAsYouType(regionCode), [regionCode]);
 
+    const countryFlag = useCountryFlag(regionCode);
+    const formatter = useMemo(() => PhoneNumber.getAsYouType(regionCode), [regionCode]);
     const [countryCode, setCountryCode] = useState(
         PhoneNumber.getCountryCodeForRegionCode(regionCode)
     );
-    const [valid, setValid] = useState<boolean>();
     const [formattedValue, setFormattedValue] = useState(
         formatter.reset(PhoneNumber(value).getNumber("significant"))
     );
-
-    const countryFlag = useCountryFlag(regionCode);
-
-    useEffect(() => handleRegionChange(props.regionCode), [props.regionCode]);
 
     const handleChange = useCallback(
         (tel: string) => {
@@ -40,12 +37,13 @@ const Field: Field = ({ onChange, value, ...props }) => {
         [formatter, onChange]
     );
 
-    useEffect(() => handleChange(formatter.number()), [formatter, handleChange]);
-
     function handleRegionChange(regionCode: string = defaultRegionCode) {
         setRegionCode(regionCode);
         setCountryCode(PhoneNumber.getCountryCodeForRegionCode(regionCode));
     }
+
+    useEffect(() => handleRegionChange(props.regionCode), [props.regionCode]);
+    useEffect(() => handleChange(formatter.number()), [formatter, handleChange]);
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) =>
         (e.code === "Backspace" || /\d$/.test(e.key) === true) === false && e.preventDefault();
