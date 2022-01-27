@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useRef } from "react";
+import { FunctionComponent, useEffect, useMemo, useRef } from "react";
 import { CheckIcon } from "@heroicons/react/solid";
 import PhoneNumber from "awesome-phonenumber";
 import { byIso } from "country-code-lookup";
@@ -7,8 +7,16 @@ import { useCountryFlag } from "hooks";
 import { classNames } from "utils";
 
 const List: List = ({ className, handleRegionChange, selectedRegion, visible }) => {
+    const otherRegions = useMemo<{ [k: string]: string | undefined }>(
+        () => ({
+            AC: "Ascension Island",
+            TA: "Tristan da Cunha",
+            HL: "Saint Helena",
+        }),
+        []
+    );
     const regions = PhoneNumber.getSupportedRegionCodes().map(
-        (region) => [region, byIso(region)?.country] as const
+        (region) => [region, byIso(region)?.country ?? otherRegions[region]] as const
     );
 
     return (
@@ -36,11 +44,6 @@ List.Item = function Item({ country, regionCode, className, onClick, selected, v
         HTMLLIElement & { scrollIntoViewIfNeeded?: (centerIfNeeded?: boolean) => void }
     >(null);
     const countryFlag = useCountryFlag(regionCode);
-    const otherRegions = {
-        AC: "Ascension Island",
-        TA: "Tristan da Cunha",
-        HL: "Saint Helena",
-    };
 
     useEffect(() => {
         if (selected === true && visible === true) {
@@ -53,15 +56,15 @@ List.Item = function Item({ country, regionCode, className, onClick, selected, v
         }
     }, [selected, visible]);
 
-    if (country === undefined && regionCode in otherRegions === false)
-        console.warn(`No country data for ${regionCode} region`);
+    useEffect(() => {
+        if (country === undefined) console.warn(`No country data for ${regionCode} region`);
+    }, [country, regionCode]);
 
     return (
         <li ref={ref} tabIndex={0} onClick={onClick} className={className(selected)}>
             {countryFlag}
             <span className="text-sm text-slate-700 font-medium">
-                {country ?? otherRegions[regionCode as keyof typeof otherRegions]} (+
-                {PhoneNumber.getCountryCodeForRegionCode(regionCode)})
+                {country} (+{PhoneNumber.getCountryCodeForRegionCode(regionCode)})
             </span>
             {selected === true && <CheckIcon className="w-5 h-5 text-slate-800 ml-auto mr-2" />}
         </li>
