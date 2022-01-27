@@ -38,14 +38,17 @@ const Field: Field = ({ onChange, value = "", ...props }) => {
         },
         [countryCode, formatter, onChange, regionCode]
     );
-    const handleRegionChange = useCallback((regionCode: string = defaultRegionCode) => {
-        setRegionCode(regionCode);
-        setShowCountrySelect(false);
-        setCountryCode(PhoneNumber.getCountryCodeForRegionCode(regionCode));
-    }, []);
+    const handleRegionChange = useCallback(
+        (regionCode: string = defaultRegionCode) => {
+            handleChange(""); // Todo: focus input after
 
-    // Todo: Focus the Input after the reset.
-    useEffect(() => handleChange(""), [handleChange, regionCode]);
+            setRegionCode(regionCode);
+            setShowCountrySelect(false);
+            setCountryCode(PhoneNumber.getCountryCodeForRegionCode(regionCode));
+        },
+        [handleChange]
+    );
+
     useEffect(
         () =>
             handleRegionChange(
