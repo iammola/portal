@@ -59,8 +59,9 @@ const Field: Field = ({ onChange, value, ...props }) => {
             (document.activeElement as HTMLElement)?.addEventListener(
                 "blur",
                 (e) =>
-                    (e.target as HTMLElement)?.parentElement?.contains(e.relatedTarget as Node) ===
-                        false && setShowCountrySelect(false),
+                    (e.target as HTMLElement)?.parentElement?.parentElement?.contains(
+                        e.relatedTarget as Node
+                    ) === false && setShowCountrySelect(false),
                 { once: true }
             );
     }, [showCountrySelect]);
