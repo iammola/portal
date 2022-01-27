@@ -19,6 +19,7 @@ export function useCountryFlag(regionCode: string) {
     const [countryFlag, setCountryFlag] = useState<JSX.Element>();
 
     useEffect(() => {
+        if (!regionCode) return;
         const emoji = getUnicodeFlagIcon(regionCode);
         const Icon = Flags[regionCode as keyof typeof Flags] ?? <></>;
 
