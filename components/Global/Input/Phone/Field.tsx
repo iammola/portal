@@ -8,7 +8,7 @@ import Input from "components/Global/Input";
 
 import RegionSelect from "./RegionSelect";
 
-const Field: Field = ({ onChange, value = "", ...props }) => {
+const Field: Field = ({ onChange, required, value = "", ...props }) => {
     const defaultRegionCode = "GB";
     const [valid, setValid] = useState<boolean>();
     const [regionCode, setRegionCode] = useState("");
@@ -104,6 +104,7 @@ const Field: Field = ({ onChange, value = "", ...props }) => {
                 <div className="flex items-center grow w-[12.5rem] h-full rounded-r-xl">
                     <Input
                         type="tel"
+                        required={required}
                         value={formattedValue}
                         onChange={handleChange}
                         onBeforeInput={validateCharacter}
@@ -122,6 +123,7 @@ const Field: Field = ({ onChange, value = "", ...props }) => {
 
 type Field = FunctionComponent<{
     value?: string;
+    required?: boolean;
     regionCode?: string;
     onChange(val: string): void;
 }>;
