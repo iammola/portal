@@ -1,6 +1,6 @@
 import PhoneNumber from "awesome-phonenumber";
 import { ChevronUpIcon } from "@heroicons/react/solid";
-import { FunctionComponent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { FormEvent, FunctionComponent, useCallback, useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import { useCountryFlag } from "hooks";
@@ -64,8 +64,8 @@ const Field: Field = ({ onChange, value, ...props }) => {
             );
     }, [showCountrySelect]);
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) =>
-        (e.code === "Backspace" || /\d$/.test(e.key) === true) === false && e.preventDefault();
+    const validateCharacter = (e: FormEvent<HTMLInputElement> & { data: string }) =>
+        /\d/.test(e.data) === false && e.preventDefault();
 
     return (
         <div
@@ -98,7 +98,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
                         type="tel"
                         value={formattedValue}
                         onChange={handleChange}
-                        onKeyDown={handleKeyDown}
+                        onBeforeInput={validateCharacter}
                         className="text-lg text-slate-600 font-semibold grow w-full h-[3.75rem] !px-0 !py-3.5 tracking-wide focus:outline-none rounded-r-xl"
                     />
                 </div>
