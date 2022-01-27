@@ -8,12 +8,11 @@ import Input from "components/Global/Input";
 
 import RegionSelect from "./RegionSelect";
 
-const Field: Field = ({ onChange, value, ...props }) => {
+const Field: Field = ({ onChange, value = "", ...props }) => {
     const defaultRegionCode = "GB";
     const [valid, setValid] = useState<boolean>();
     const [regionCode, setRegionCode] = useState(
-        props.regionCode ??
-            (value === undefined ? defaultRegionCode : PhoneNumber(value).getRegionCode())
+        props.regionCode ?? (value === "" ? defaultRegionCode : PhoneNumber(value).getRegionCode())
     );
     const [showCountrySelect, setShowCountrySelect] = useState(false);
 
@@ -115,7 +114,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
 };
 
 type Field = FunctionComponent<{
-    value: string;
+    value?: string;
     regionCode?: string;
     onChange(val: string): void;
 }>;
