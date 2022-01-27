@@ -7,13 +7,16 @@ import { useCountryFlag } from "hooks";
 import { classNames } from "utils";
 
 const List: List = ({ className, handleRegionChange, selectedRegion, visible }) => {
+    const regions = PhoneNumber.getSupportedRegionCodes().map(
+        (region) => [region, byIso(region)?.country] as const
+    );
+
     return (
         <ul className={className}>
-            {PhoneNumber.getSupportedRegionCodes().map((regionCode) => (
+            {regions.map(([regionCode, country]) => (
                 <List.Item
                     key={regionCode}
-                    visible={visible}
-                    regionCode={regionCode}
+                    {...{ country, regionCode, visible }}
                     selected={regionCode === selectedRegion}
                     onClick={() => handleRegionChange(regionCode)}
                     className={(selected) =>
@@ -28,11 +31,10 @@ const List: List = ({ className, handleRegionChange, selectedRegion, visible }) 
     );
 };
 
-List.Item = function Item({ regionCode, className, onClick, selected, visible }) {
+List.Item = function Item({ country, regionCode, className, onClick, selected, visible }) {
     const ref = useRef<
         HTMLLIElement & { scrollIntoViewIfNeeded?: (centerIfNeeded?: boolean) => void }
     >(null);
-    const country = byIso(regionCode)?.country;
     const countryFlag = useCountryFlag(regionCode);
     const otherRegions = {
         AC: "Ascension Island",
@@ -75,6 +77,7 @@ type ListProps = {
 
 interface List extends FunctionComponent<ListProps> {
     Item: FunctionComponent<{
+        country?: string;
         visible: boolean;
         selected: boolean;
         regionCode: string;
