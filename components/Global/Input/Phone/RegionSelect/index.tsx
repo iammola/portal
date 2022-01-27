@@ -16,7 +16,7 @@ const RegionSelect: RegionSelect = ({ onRegionChange, selectedRegion, visible })
             )}
         >
             <Search
-                search={search}
+                {...{ search, visible }}
                 handleSearch={setSearch}
                 className="flex flex-row gap-x-2 items-center justify-start grow w-full py-2 px-3.5"
             />
