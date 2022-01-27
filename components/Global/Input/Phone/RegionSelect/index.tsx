@@ -1,10 +1,13 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 
 import { classNames } from "utils";
 
 import List from "./List";
+import Search from "./Search";
 
 const RegionSelect: RegionSelect = ({ onRegionChange, selectedRegion, visible }) => {
+    const [search, setSearch] = useState("");
+
     return (
         <div
             className={classNames(
@@ -12,6 +15,11 @@ const RegionSelect: RegionSelect = ({ onRegionChange, selectedRegion, visible })
                 [visible, "", "opacity-0 invisible pointer-events-none"]
             )}
         >
+            <Search
+                search={search}
+                handleSearch={setSearch}
+                className="flex flex-row gap-x-2 items-center justify-start grow w-full py-2 px-3.5"
+            />
             <List
                 {...{ visible, selectedRegion }}
                 handleRegionChange={onRegionChange}
