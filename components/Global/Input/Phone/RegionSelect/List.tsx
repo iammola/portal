@@ -6,7 +6,7 @@ import { byIso } from "country-code-lookup";
 import { useCountryFlag } from "hooks";
 import { classNames } from "utils";
 
-const List: List = ({ className, handleRegionChange, selectedRegion, visible }) => {
+const List: List = ({ className, handleRegionChange, search, selectedRegion, visible }) => {
     const otherRegions = useMemo<{ [k: string]: string | undefined }>(
         () => ({
             AC: "Ascension Island",
@@ -26,20 +26,22 @@ const List: List = ({ className, handleRegionChange, selectedRegion, visible }) 
 
     return (
         <ul className={className}>
-            {regions.map(([regionCode, countryCode, country]) => (
-                <List.Item
-                    key={regionCode}
-                    {...{ country, countryCode, regionCode, visible }}
-                    selected={regionCode === selectedRegion}
-                    onClick={() => handleRegionChange(regionCode)}
-                    className={(selected) =>
-                        classNames(
-                            "flex flex-row gap-x-4 items-center justify-start p-2 rounded-xl cursor-pointer hover:bg-slate-100 focus:outline-none",
-                            [selected, "focus:bg-slate-50", ""]
-                        )
-                    }
-                />
-            ))}
+            {regions
+                .filter((i) => i.some((j) => new RegExp(search, "gi").test(String(j ?? ""))))
+                .map(([regionCode, countryCode, country]) => (
+                    <List.Item
+                        key={regionCode}
+                        selected={regionCode === selectedRegion}
+                        onClick={() => handleRegionChange(regionCode)}
+                        {...{ country, countryCode, regionCode, visible }}
+                        className={(selected) =>
+                            classNames(
+                                "flex flex-row gap-x-4 items-center justify-start p-2 rounded-xl cursor-pointer hover:bg-slate-100 focus:outline-none",
+                                [selected, "focus:bg-slate-50", ""]
+                            )
+                        }
+                    />
+                ))}
         </ul>
     );
 };
@@ -85,6 +87,7 @@ List.Item = function Item({
 };
 
 type ListProps = {
+    search: string;
     visible: boolean;
     className: string;
     selectedRegion: string;

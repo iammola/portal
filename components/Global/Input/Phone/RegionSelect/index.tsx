@@ -21,8 +21,8 @@ const RegionSelect: RegionSelect = ({ onRegionChange, selectedRegion, visible })
                 className="flex flex-row gap-x-2 items-center justify-start grow w-full py-2 px-3.5"
             />
             <List
-                {...{ visible, selectedRegion }}
                 handleRegionChange={onRegionChange}
+                {...{ visible, search, selectedRegion }}
                 className="grow w-full py-2 space-y-1 overflow-x-hidden overflow-y-auto"
             />
         </div>
