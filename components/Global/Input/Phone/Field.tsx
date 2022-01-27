@@ -28,16 +28,22 @@ const Field: Field = ({ onChange, value, ...props }) => {
 
     const handleChange = useCallback(
         (tel: string) => {
-            const formatted = formatter
-                .reset(+tel === 0 ? "" : `0${tel.replaceAll(/\D/g, "")}`)
-                .slice(1);
-            const PhoneNumber = formatter.getPhoneNumber();
+            const removeFormatting = (str: string) => str.replaceAll(/[^+\d]/g, "");
+            const removeCountryCode = (str: string) =>
+                str.replace(new RegExp(`^\\+${countryCode} ?`), "");
 
-            setFormattedValue(formatted);
-            onChange(PhoneNumber.getNumber("international") ?? "");
-            setValid(formatted === "" ? undefined : PhoneNumber.isValid());
+            if (tel !== "0") {
+                const phone = PhoneNumber(removeFormatting(tel), regionCode);
+                const formatted = formatter.reset(
+                    removeFormatting(phone.getNumber("international") ?? `+${countryCode}${tel}`)
+                );
+
+                onChange(formatted);
+                setFormattedValue(removeCountryCode(formatted));
+                setValid(removeCountryCode(formatted) === "" ? undefined : phone.isValid());
+            }
         },
-        [formatter, onChange]
+        [countryCode, formatter, onChange, regionCode]
     );
     const handleRegionChange = useCallback((regionCode: string = defaultRegionCode) => {
         setRegionCode(regionCode);
