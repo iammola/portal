@@ -11,7 +11,7 @@ const RegionSelect: RegionSelect = ({ onRegionChange, selectedRegion, visible })
     return (
         <div
             className={classNames(
-                "flex flex-col items-start justify-start w-full max-h-[13.5rem] mt-2 px-2 absolute top-full left-0 rounded-xl shadow-lg overflow-hidden bg-white border border-slate-200 divide-y divide-slate-200",
+                "flex flex-col items-start justify-start w-full max-h-[13.5rem] mt-2 px-2 absolute top-full left-0 z-[1000] rounded-xl shadow-lg overflow-hidden bg-white border border-slate-200 divide-y divide-slate-200",
                 [visible, "", "opacity-0 invisible pointer-events-none"]
             )}
         >
