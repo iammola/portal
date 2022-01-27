@@ -21,9 +21,7 @@ const Field: Field = ({ onChange, value = "", ...props }) => {
     const [countryCode, setCountryCode] = useState(
         PhoneNumber.getCountryCodeForRegionCode(regionCode)
     );
-    const [formattedValue, setFormattedValue] = useState(
-        formatter.reset(PhoneNumber(value).getNumber("significant"))
-    );
+    const [formattedValue, setFormattedValue] = useState("");
 
     const handleChange = useCallback(
         (tel: string) => {
