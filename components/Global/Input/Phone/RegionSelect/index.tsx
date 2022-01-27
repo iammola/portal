@@ -4,7 +4,7 @@ import { classNames } from "utils";
 
 import List from "./List";
 
-const CountrySelect: CountrySelect = ({ onRegionChange, selectedRegion, visible }) => {
+const RegionSelect: RegionSelect = ({ onRegionChange, selectedRegion, visible }) => {
     return (
         <div
             className={classNames(
@@ -21,10 +21,10 @@ const CountrySelect: CountrySelect = ({ onRegionChange, selectedRegion, visible 
     );
 };
 
-type CountrySelect = FunctionComponent<{
+type RegionSelect = FunctionComponent<{
     visible: boolean;
     selectedRegion: string;
     onRegionChange(regionCode: string): void;
 }>;
 
-export default CountrySelect;
+export default RegionSelect;

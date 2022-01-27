@@ -6,7 +6,7 @@ import { classNames } from "utils";
 import { useCountryFlag } from "hooks";
 import Input from "components/Global/Input";
 
-import CountrySelect from "./CountrySelect";
+import RegionSelect from "./RegionSelect";
 
 const Field: Field = ({ onChange, value, ...props }) => {
     const defaultRegionCode = "GB";
@@ -103,7 +103,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
                     />
                 </div>
             </div>
-            <CountrySelect
+            <RegionSelect
                 visible={showCountrySelect}
                 selectedRegion={regionCode}
                 onRegionChange={handleRegionChange}
