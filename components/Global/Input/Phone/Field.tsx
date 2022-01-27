@@ -31,8 +31,8 @@ const Field: Field = ({ onChange, value = "", ...props }) => {
                     removeFormatting(phone.getNumber("international") ?? `+${countryCode}${tel}`)
                 );
 
-                onChange(formatted);
                 setFormattedValue(removeCountryCode(formatted));
+                if (removeCountryCode(formatted) !== "") onChange(formatted);
                 setValid(removeCountryCode(formatted) === "" ? undefined : phone.isValid());
             }
         },
