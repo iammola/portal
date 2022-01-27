@@ -15,13 +15,17 @@ const List: List = ({ className, handleRegionChange, search, selectedRegion, vis
         }),
         []
     );
-    const regions = PhoneNumber.getSupportedRegionCodes().map(
-        (region) =>
-            [
-                region,
-                PhoneNumber.getCountryCodeForRegionCode(region),
-                byIso(region)?.country ?? otherRegions[region],
-            ] as const
+    const regions = useMemo(
+        () =>
+            PhoneNumber.getSupportedRegionCodes().map(
+                (region) =>
+                    [
+                        region,
+                        PhoneNumber.getCountryCodeForRegionCode(region),
+                        byIso(region)?.country ?? otherRegions[region],
+                    ] as const
+            ),
+        [otherRegions]
     );
 
     return (
