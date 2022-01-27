@@ -41,7 +41,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
         );
     }
 
-    function handleKeyUp(e: KeyboardEvent<HTMLElement>) {
+    function handleKeyDown(e: KeyboardEvent<HTMLElement>) {
         if (["Enter", "Space"].includes(e.code) === true) {
             const textNode = getSelection()?.anchorNode as ChildNode | null;
             const schoolMail = (textNode?.textContent?.trim() ?? "").toLowerCase();
@@ -68,7 +68,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
             lastChild.remove();
     }
 
-    function addSpace(e?: MouseEvent<HTMLDivElement>) {
+    function addSpace(e?: MouseEvent<HTMLElement>) {
         const target = (e?.target as HTMLDivElement) ?? ref.current;
 
         if (target !== null && target === ref.current) {
@@ -98,12 +98,12 @@ const Field: Field = ({ className, onChange, userType, values }) => {
     }
 
     return (
-        <div
+        <article
             ref={ref}
             contentEditable
             onClick={addSpace}
             className={className}
-            onKeyDown={handleKeyUp}
+            onKeyDown={handleKeyDown}
             suppressContentEditableWarning
         >
             {values.map((item) => (
@@ -117,7 +117,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
                     }
                 />
             ))}
-        </div>
+        </article>
     );
 };
 
