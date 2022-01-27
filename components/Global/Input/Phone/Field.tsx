@@ -39,14 +39,14 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
         [countryCode, formatter, onChange, regionCode]
     );
     const handleRegionChange = useCallback(
-        (regionCode: string = defaultRegionCode) => {
-            handleChange(""); // Todo: focus input after
+        (region: string = defaultRegionCode) => {
+            if (region !== regionCode) handleChange(""); // Todo: focus input after
 
-            setRegionCode(regionCode);
+            setRegionCode(region);
             setShowCountrySelect(false);
-            setCountryCode(PhoneNumber.getCountryCodeForRegionCode(regionCode));
+            setCountryCode(PhoneNumber.getCountryCodeForRegionCode(region));
         },
-        [handleChange]
+        [handleChange, regionCode]
     );
 
     useEffect(
