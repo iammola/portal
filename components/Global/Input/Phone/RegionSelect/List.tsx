@@ -49,6 +49,11 @@ const List: List = ({ className, handleRegionChange, search, selectedRegion, vis
                     }
                 />
             ))}
+            {filteredRegions.length === 0 && (
+                <div className="flex items-center justify-center text-sm text-slate-700 font-medium p-2">
+                    Change your search phrase 🙏
+                </div>
+            )}
         </ul>
     );
 };
