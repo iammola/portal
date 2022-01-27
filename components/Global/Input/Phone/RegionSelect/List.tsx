@@ -28,24 +28,27 @@ const List: List = ({ className, handleRegionChange, search, selectedRegion, vis
         [otherRegions]
     );
 
+    const filteredRegions = useMemo(
+        () => regions.filter((i) => i.some((j) => new RegExp(search, "gi").test(String(j ?? "")))),
+        [regions, search]
+    );
+
     return (
         <ul className={className}>
-            {regions
-                .filter((i) => i.some((j) => new RegExp(search, "gi").test(String(j ?? ""))))
-                .map(([regionCode, countryCode, country]) => (
-                    <List.Item
-                        key={regionCode}
-                        selected={regionCode === selectedRegion}
-                        onClick={() => handleRegionChange(regionCode)}
-                        {...{ country, countryCode, regionCode, visible }}
-                        className={(selected) =>
-                            classNames(
-                                "flex flex-row gap-x-4 items-center justify-start p-2 rounded-xl cursor-pointer hover:bg-slate-100 focus:outline-none",
-                                [selected, "focus:bg-slate-50", ""]
-                            )
-                        }
-                    />
-                ))}
+            {filteredRegions.map(([regionCode, countryCode, country]) => (
+                <List.Item
+                    key={regionCode}
+                    selected={regionCode === selectedRegion}
+                    onClick={() => handleRegionChange(regionCode)}
+                    {...{ country, countryCode, regionCode, visible }}
+                    className={(selected) =>
+                        classNames(
+                            "flex flex-row gap-x-4 items-center justify-start p-2 rounded-xl cursor-pointer hover:bg-slate-100 focus:outline-none",
+                            [selected, "focus:bg-slate-50", ""]
+                        )
+                    }
+                />
+            ))}
         </ul>
     );
 };
