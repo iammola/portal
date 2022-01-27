@@ -11,17 +11,13 @@ import RegionSelect from "./RegionSelect";
 const Field: Field = ({ onChange, value = "", ...props }) => {
     const defaultRegionCode = "GB";
     const [valid, setValid] = useState<boolean>();
-    const [regionCode, setRegionCode] = useState(
-        props.regionCode ?? (value === "" ? defaultRegionCode : PhoneNumber(value).getRegionCode())
-    );
+    const [regionCode, setRegionCode] = useState("");
+    const [countryCode, setCountryCode] = useState(0);
+    const [formattedValue, setFormattedValue] = useState("");
     const [showCountrySelect, setShowCountrySelect] = useState(false);
+    const formatter = useMemo(() => PhoneNumber.getAsYouType(regionCode), [regionCode]);
 
     const countryFlag = useCountryFlag(regionCode);
-    const formatter = useMemo(() => PhoneNumber.getAsYouType(regionCode), [regionCode]);
-    const [countryCode, setCountryCode] = useState(
-        PhoneNumber.getCountryCodeForRegionCode(regionCode)
-    );
-    const [formattedValue, setFormattedValue] = useState("");
 
     const handleChange = useCallback(
         (tel: string) => {
@@ -50,7 +46,17 @@ const Field: Field = ({ onChange, value = "", ...props }) => {
 
     // Todo: Focus the Input after the reset.
     useEffect(() => handleChange(""), [handleChange, regionCode]);
-    useEffect(() => handleRegionChange(props.regionCode), [handleRegionChange, props.regionCode]);
+    useEffect(
+        () =>
+            handleRegionChange(
+                regionCode === undefined
+                    ? value === ""
+                        ? defaultRegionCode
+                        : PhoneNumber(value).getRegionCode()
+                    : props.regionCode
+            ),
+        [handleRegionChange, props.regionCode, regionCode, value]
+    );
     useEffect(() => {
         if (showCountrySelect === true)
             (document.activeElement as HTMLElement)?.addEventListener(
