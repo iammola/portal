@@ -51,6 +51,7 @@ const Field: Field = ({ onChange, value, ...props }) => {
         setCountryCode(PhoneNumber.getCountryCodeForRegionCode(regionCode));
     }, []);
 
+    // Todo: Focus the Input after the reset.
     useEffect(() => handleChange(""), [handleChange, regionCode]);
     useEffect(() => handleRegionChange(props.regionCode), [handleRegionChange, props.regionCode]);
     useEffect(() => {
