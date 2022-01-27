@@ -16,15 +16,20 @@ const List: List = ({ className, handleRegionChange, selectedRegion, visible }) 
         []
     );
     const regions = PhoneNumber.getSupportedRegionCodes().map(
-        (region) => [region, byIso(region)?.country ?? otherRegions[region]] as const
+        (region) =>
+            [
+                region,
+                PhoneNumber.getCountryCodeForRegionCode(region),
+                byIso(region)?.country ?? otherRegions[region],
+            ] as const
     );
 
     return (
         <ul className={className}>
-            {regions.map(([regionCode, country]) => (
+            {regions.map(([regionCode, countryCode, country]) => (
                 <List.Item
                     key={regionCode}
-                    {...{ country, regionCode, visible }}
+                    {...{ country, countryCode, regionCode, visible }}
                     selected={regionCode === selectedRegion}
                     onClick={() => handleRegionChange(regionCode)}
                     className={(selected) =>
@@ -39,7 +44,15 @@ const List: List = ({ className, handleRegionChange, selectedRegion, visible }) 
     );
 };
 
-List.Item = function Item({ country, regionCode, className, onClick, selected, visible }) {
+List.Item = function Item({
+    country,
+    countryCode,
+    regionCode,
+    className,
+    onClick,
+    selected,
+    visible,
+}) {
     const ref = useRef<
         HTMLLIElement & { scrollIntoViewIfNeeded?: (centerIfNeeded?: boolean) => void }
     >(null);
@@ -64,7 +77,7 @@ List.Item = function Item({ country, regionCode, className, onClick, selected, v
         <li ref={ref} tabIndex={0} onClick={onClick} className={className(selected)}>
             {countryFlag}
             <span className="text-sm text-slate-700 font-medium">
-                {country} (+{PhoneNumber.getCountryCodeForRegionCode(regionCode)})
+                {country} (+{countryCode})
             </span>
             {selected === true && <CheckIcon className="w-5 h-5 text-slate-800 ml-auto mr-2" />}
         </li>
@@ -84,6 +97,7 @@ interface List extends FunctionComponent<ListProps> {
         visible: boolean;
         selected: boolean;
         regionCode: string;
+        countryCode: number;
         onClick(): void;
         className: (selected: boolean) => string;
     }>;
