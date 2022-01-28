@@ -26,6 +26,7 @@ const Input: Input = ({
   showIcons,
   onChange,
   value,
+  setTyping,
   ...props
 }) => {
   const [valid, setValid] = useState<boolean>();
@@ -35,9 +36,10 @@ const Input: Input = ({
 
   useEffect(() => {
     const input = ref.current;
+    setTyping?.(typing);
     if (typing === false)
       setValid(input?.value === "" ? undefined : input?.validity.valid);
-  }, [typing, props]);
+  }, [props, setTyping, typing]);
 
   return (
     <div className="relative grid w-full items-center gap-x-2">
@@ -103,6 +105,7 @@ export type InputProps = Omit<
   value?: string;
   showIcons?: boolean;
   onChange(v: string): void;
+  setTyping?: (typing: boolean) => void;
   className: string | ((valid?: boolean) => string);
 } & (
     | {
