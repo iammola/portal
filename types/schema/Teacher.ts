@@ -3,7 +3,7 @@ import type { UserBase } from "types/schema/User";
 import type { ModelRecord, ObjectId } from "types/schema";
 
 export interface TeacherSchema extends UserBase {
-    privileges: ObjectId;
+  privileges: ObjectId;
 }
 
 export type TeacherRecord = ModelRecord<TeacherSchema>;

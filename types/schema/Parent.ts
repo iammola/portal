@@ -3,7 +3,7 @@ import type { UserBase } from "types/schema/User";
 import type { ModelRecord } from "types/schema";
 
 export interface ParentSchema extends UserBase {
-    occupation: string;
+  occupation: string;
 }
 
 export type ParentRecord = ModelRecord<ParentSchema>;

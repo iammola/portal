@@ -4,7 +4,6 @@ about: Suggest an idea for this project
 title: "[feature]"
 labels: enhancement
 assignees: iammola
-
 ---
 
 **Is your feature request related to a problem? Please describe.**
