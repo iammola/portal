@@ -10,6 +10,7 @@ import type { ParentSchema } from "types/schema";
 const CreateParent: NextPage = () => {
     const [dob, setDOB] = useState<ParentSchema["dob"]>();
     const [name, setName] = useState<Partial<ParentSchema["name"]>>({});
+    const [occupation, setOccupation] = useState<ParentSchema["occupation"]>();
     const [email, setEmail] = useState<Partial<ParentSchema["contact"]["email"]>>({});
     const [phone, setPhone] = useState<Partial<ParentSchema["contact"]["phone"]>>({});
     const [address, setAddress] = useState<Partial<ParentSchema["contact"]["address"]>>({});
@@ -148,16 +149,39 @@ const CreateParent: NextPage = () => {
                                     />
                                 </div>
                             </div>
-                            <Input.Date className="space-y-3.5">
-                                <Input.Date.Label className="text-sm font-medium text-slate-500 tracking-wide">
-                                    Date of Birth
-                                </Input.Date.Label>
-                                <Input.Date.Field
-                                    value={dob}
-                                    onChange={setDOB}
-                                    className="flex flex-row gap-x-4 items-center justify-start"
-                                />
-                            </Input.Date>
+                            <div className="flex flex-row md:gap-x-5 lg:gap-x-7 items-end w-full">
+                                <div className="w-full grow">
+                                    <Input
+                                        required
+                                        type="text"
+                                        id="occupation"
+                                        label="Occupation"
+                                        value={occupation}
+                                        onChange={setOccupation}
+                                        className={(valid?: boolean) =>
+                                            classNames(
+                                                "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+                                                {
+                                                    "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                                                        valid === true,
+                                                    "invalid:ring-red-400 focus:invalid:ring-red-400":
+                                                        valid === false,
+                                                }
+                                            )
+                                        }
+                                    />
+                                </div>
+                                <Input.Date className="w-max space-y-3.5">
+                                    <Input.Date.Label className="text-sm font-medium text-slate-500 tracking-wide">
+                                        Date of Birth
+                                    </Input.Date.Label>
+                                    <Input.Date.Field
+                                        value={dob}
+                                        onChange={setDOB}
+                                        className="flex flex-row gap-x-4 items-center justify-start"
+                                    />
+                                </Input.Date>
+                            </div>
                         </div>
                     </div>
                     <div className="flex items-stretch justify-start md:gap-x-6 lg:gap-x-12 w-full p-7 bg-white shadow-md rounded-lg">
