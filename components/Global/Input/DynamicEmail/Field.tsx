@@ -101,6 +101,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
         <article
             ref={ref}
             contentEditable
+            inputMode="email"
             onClick={addSpace}
             className={className}
             onKeyDown={handleKeyDown}
