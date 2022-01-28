@@ -29,10 +29,12 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
   }, [value]);
 
   useEffect(() => {
-    if (month !== undefined)
-      setMaxDay(
-        getDaysInMonth(new Date(year ?? new Date().getFullYear(), month - 1))
+    if (month !== undefined) {
+      const maxDay = getDaysInMonth(
+        new Date(year ?? new Date().getFullYear(), month - 1)
       );
+      isNaN(maxDay) ? setMonth(undefined) : setMaxDay(maxDay);
+    }
   }, [month, year]);
 
   useEffect(() => {
