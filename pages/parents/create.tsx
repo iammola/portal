@@ -8,6 +8,7 @@ import type { NextPage } from "next";
 import type { ParentSchema } from "types/schema";
 
 const CreateParent: NextPage = () => {
+    const [password, setPassword] = useState("");
     const [dob, setDOB] = useState<ParentSchema["dob"]>();
     const [name, setName] = useState<Partial<ParentSchema["name"]>>({});
     const [occupation, setOccupation] = useState<ParentSchema["occupation"]>();
@@ -327,6 +328,59 @@ const CreateParent: NextPage = () => {
                                         }
                                     />
                                 </Input.Textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex items-stretch justify-start md:gap-x-6 lg:gap-x-12 w-full p-7 bg-white shadow-md rounded-lg">
+                        <div className="md:w-[27rem]">
+                            <h3 className="text-lg text-slate-800 font-medium">Profile</h3>
+                            <p className="text-sm text-slate-500">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo,
+                                eveniet.
+                            </p>
+                        </div>
+                        <div className="flex flex-col gap-y-8 w-full xl:w-[40rem]">
+                            <div className="w-3/4">
+                                <Input
+                                    required
+                                    type="text"
+                                    id="userName"
+                                    label="User name"
+                                    value={name.username}
+                                    className={(valid?: boolean) =>
+                                        classNames(
+                                            "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+                                            {
+                                                "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                                                    valid === true,
+                                                "invalid:ring-red-400 focus:invalid:ring-red-400":
+                                                    valid === false,
+                                            }
+                                        )
+                                    }
+                                    onChange={(username) => setName({ ...name, username })}
+                                />
+                            </div>
+                            <div className="w-3/4">
+                                <Input
+                                    required
+                                    type="text"
+                                    id="password"
+                                    label="Password"
+                                    value={password}
+                                    className={(valid?: boolean) =>
+                                        classNames(
+                                            "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+                                            {
+                                                "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                                                    valid === true,
+                                                "invalid:ring-red-400 focus:invalid:ring-red-400":
+                                                    valid === false,
+                                            }
+                                        )
+                                    }
+                                    onChange={setPassword}
+                                />
                             </div>
                         </div>
                     </div>
