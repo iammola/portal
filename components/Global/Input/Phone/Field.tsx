@@ -93,7 +93,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
   return (
     <div
       className={classNames(
-        "flex flex-row gap-x-3 items-stretch justify-start rounded-xl bg-white border border-slate-200 ring-2 relative w-full",
+        "relative flex w-full flex-row items-stretch justify-start gap-x-3 rounded-xl border border-slate-200 bg-white ring-2",
         {
           "ring-red-400": valid === false,
           "ring-transparent": valid === undefined,
@@ -103,27 +103,27 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
     >
       <div
         onClick={() => setShowCountrySelect((i) => !i)}
-        className="flex flex-row gap-x-0.5 items-center justify-center px-3.5 py-3 rounded-l-xl bg-slate-100 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none cursor-pointer"
+        className="flex cursor-pointer flex-row items-center justify-center gap-x-0.5 rounded-l-xl bg-slate-100 px-3.5 py-3 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none"
       >
         {countryFlag}
         <ChevronUpIcon
-          className={classNames("w-6 h-6 fill-slate-600", {
+          className={classNames("h-6 w-6 fill-slate-600", {
             "rotate-180": showCountrySelect === false,
           })}
         />
       </div>
-      <div className="flex flex-row grow gap-x-2 items-center justify-start rounded-r-xl">
-        <span className="text-lg text-slate-500 font-medium tracking-wide">
+      <div className="flex grow flex-row items-center justify-start gap-x-2 rounded-r-xl">
+        <span className="text-lg font-medium tracking-wide text-slate-500">
           +{countryCode}
         </span>
-        <div className="flex items-center grow w-[12.5rem] h-full rounded-r-xl">
+        <div className="flex h-full w-[12.5rem] grow items-center rounded-r-xl">
           <Input
             type="tel"
             required={required}
             value={formattedValue}
             onChange={handleChange}
             onBeforeInput={validateCharacter}
-            className="text-lg text-slate-600 font-semibold grow w-full h-[3.75rem] !px-0 !py-3.5 tracking-wide focus:outline-none rounded-r-xl"
+            className="h-[3.75rem] w-full grow rounded-r-xl !px-0 !py-3.5 text-lg font-semibold tracking-wide text-slate-600 focus:outline-none"
           />
         </div>
       </div>

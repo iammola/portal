@@ -40,13 +40,13 @@ const StudentMe: FunctionComponent = () => {
 
   return (
     <>
-      <div className="sticky top-0 flex items-center justify-start gap-x-8 w-full pt-4 mt-16 mb-6 border-b border-b-slate-200 bg-slate-50 z-10 overflow-x-auto overflow-y-hidden">
+      <div className="sticky top-0 z-10 mt-16 mb-6 flex w-full items-center justify-start gap-x-8 overflow-x-auto overflow-y-hidden border-b border-b-slate-200 bg-slate-50 pt-4">
         {tabs.map((tab) => (
           <span
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={classNames(
-              "group relative inline-block w-max min-w-max pb-5 text-sm font-medium tracking-wide cursor-pointer",
+              "group relative inline-block w-max min-w-max cursor-pointer pb-5 text-sm font-medium tracking-wide",
               [
                 activeTab === tab,
                 "text-slate-900",
@@ -58,7 +58,7 @@ const StudentMe: FunctionComponent = () => {
             {tabBadges[tab] !== undefined && (
               <span
                 className={classNames(
-                  "text-xs font-semibold ml-3 py-1 px-2.5 rounded-full",
+                  "ml-3 rounded-full py-1 px-2.5 text-xs font-semibold",
                   [
                     activeTab === tab,
                     "bg-slate-300 text-slate-900",
@@ -70,7 +70,7 @@ const StudentMe: FunctionComponent = () => {
               </span>
             )}
             {activeTab === tab && (
-              <span className="absolute -bottom-px inset-x-0 w-full h-[2px] bg-slate-900 rounded-full" />
+              <span className="absolute inset-x-0 -bottom-px h-[2px] w-full rounded-full bg-slate-900" />
             )}
           </span>
         ))}

@@ -39,7 +39,7 @@ const Input: Input = ({
   }, [typing, props]);
 
   return (
-    <div className="relative grid gap-x-2 items-center w-full">
+    <div className="relative grid w-full items-center gap-x-2">
       <input
         ref={ref}
         {...props}
@@ -47,14 +47,14 @@ const Input: Input = ({
         placeholder={label || " "}
         onChange={(e) => onChange(e.target.value)}
         className={classNames(
-          "peer p-2 pl-4 row-start-1",
+          "peer row-start-1 p-2 pl-4",
           typeof className === "string" ? className : className(valid)
         )}
       />
       {label && (
         <label
           htmlFor={props.id}
-          className="absolute left-[-0.4rem] -top-4 p-1 text-slate-600 transition-all text-xs font-medium bg-white tracking-wide peer-focus:text-xs peer-focus:left-[-0.4rem] peer-focus:top-[-0.95rem] peer-focus:bg-white peer-focus:font-medium peer-focus:tracking-wide peer-placeholder-shown:select-none peer-placeholder-shown:left-3 peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:font-normal peer-placeholder-shown:bg-transparent peer-placeholder-shown:tracking-normal"
+          className="absolute left-[-0.4rem] -top-4 bg-white p-1 text-xs font-medium tracking-wide text-slate-600 transition-all peer-placeholder-shown:left-3 peer-placeholder-shown:top-4 peer-placeholder-shown:select-none peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-sm peer-placeholder-shown:font-normal peer-placeholder-shown:tracking-normal peer-focus:left-[-0.4rem] peer-focus:top-[-0.95rem] peer-focus:bg-white peer-focus:text-xs peer-focus:font-medium peer-focus:tracking-wide"
         >
           {label}
         </label>
@@ -68,7 +68,7 @@ const Input: Input = ({
         <>
           <CheckIcon
             className={classNames(
-              "h-5 w-5 fill-emerald-500 peer-placeholder-shown:opacity-0 row-start-1 col-start-2",
+              "col-start-2 row-start-1 h-5 w-5 fill-emerald-500 peer-placeholder-shown:opacity-0",
               {
                 "opacity-0": valid !== true,
               }
@@ -76,7 +76,7 @@ const Input: Input = ({
           />
           <XIcon
             className={classNames(
-              "h-5 w-5 fill-red-500 peer-placeholder-shown:opacity-0 row-start-1 col-start-2",
+              "col-start-2 row-start-1 h-5 w-5 fill-red-500 peer-placeholder-shown:opacity-0",
               {
                 "opacity-0": valid !== false,
               }

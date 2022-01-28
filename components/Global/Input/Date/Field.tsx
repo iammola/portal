@@ -75,7 +75,7 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
           onChange={(val) => handleChange(val, setDay)}
           className={(valid?: boolean) =>
             classNames(
-              "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+              "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
               {
                 "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                   valid === true,
@@ -98,7 +98,7 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
           onChange={(val) => handleChange(val, setMonth)}
           className={(valid?: boolean) =>
             classNames(
-              "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+              "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
               {
                 "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                   valid === true,
@@ -121,7 +121,7 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
           onChange={(val) => handleChange(val, setYear)}
           className={(valid?: boolean) =>
             classNames(
-              "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+              "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
               {
                 "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                   valid === true,

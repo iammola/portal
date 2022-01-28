@@ -23,29 +23,29 @@ const CreateParent: NextPage = () => {
   >({});
 
   return (
-    <main className="flex flex-row items-stretch justify-center w-screen h-full min-h-screen bg-slate-50 dark:bg-slate-900 font-poppins">
+    <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-50 font-poppins dark:bg-slate-900">
       <Head>
         <title>Create Parent | GRIS Portal</title>
         <meta name="description" content="Create parent" />
       </Head>
-      <section className="flex flex-col items-start justify-start grow w-full py-10">
-        <h1 className="text-5xl font-semibold text-slate-600 dark:text-slate-300 p-10 pt-0">
+      <section className="flex w-full grow flex-col items-start justify-start py-10">
+        <h1 className="p-10 pt-0 text-5xl font-semibold text-slate-600 dark:text-slate-300">
           <span>Create</span>{" "}
-          <span className="bg-clip-text bg-gradient-to-br from-indigo-300 to-indigo-600 text-transparent">
+          <span className="bg-gradient-to-br from-indigo-300 to-indigo-600 bg-clip-text text-transparent">
             Parent
           </span>
         </h1>
-        <div className="w-full h-full grow self-center px-10 space-y-10">
-          <div className="flex items-stretch justify-start md:gap-x-6 lg:gap-x-12 w-full p-7 bg-white shadow-md rounded-lg">
+        <div className="h-full w-full grow space-y-10 self-center px-10">
+          <div className="flex w-full items-stretch justify-start rounded-lg bg-white p-7 shadow-md md:gap-x-6 lg:gap-x-12">
             <div className="md:w-[27rem]">
-              <h3 className="text-lg text-slate-800 font-medium">
+              <h3 className="text-lg font-medium text-slate-800">
                 Personal Information
               </h3>
               <p className="text-sm text-slate-500">
                 Use a permanent address where you can receive mail.
               </p>
             </div>
-            <div className="flex flex-col md:gap-y-4 lg:gap-y-8 w-full xl:w-[40rem]">
+            <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8 xl:w-[40rem]">
               {/* // Todo: Add the select for the title */}
               <Input
                 required
@@ -55,7 +55,7 @@ const CreateParent: NextPage = () => {
                 label="Full name"
                 className={(valid?: boolean) =>
                   classNames(
-                    "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                     {
                       "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                         valid === true,
@@ -66,7 +66,7 @@ const CreateParent: NextPage = () => {
                 }
                 onChange={(full: string) => setName({ ...name, full })}
               />
-              <div className="flex flex-row md:gap-x-5 lg:gap-x-7 w-full">
+              <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
                 <div className="w-1/2">
                   <Input
                     required
@@ -76,7 +76,7 @@ const CreateParent: NextPage = () => {
                     label="First name"
                     className={(valid?: boolean) =>
                       classNames(
-                        "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                         {
                           "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                             valid === true,
@@ -97,7 +97,7 @@ const CreateParent: NextPage = () => {
                     label="Last name"
                     className={(valid?: boolean) =>
                       classNames(
-                        "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                         {
                           "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                             valid === true,
@@ -110,7 +110,7 @@ const CreateParent: NextPage = () => {
                   />
                 </div>
               </div>
-              <div className="flex flex-row md:gap-x-5 lg:gap-x-7 w-full">
+              <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
                 <div className="w-1/3">
                   <Input
                     required
@@ -120,7 +120,7 @@ const CreateParent: NextPage = () => {
                     label="Initials"
                     className={(valid?: boolean) =>
                       classNames(
-                        "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                         {
                           "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                             valid === true,
@@ -143,7 +143,7 @@ const CreateParent: NextPage = () => {
                     label="Other name"
                     className={(valid?: boolean) =>
                       classNames(
-                        "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                         {
                           "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                             valid === true,
@@ -156,7 +156,7 @@ const CreateParent: NextPage = () => {
                   />
                 </div>
               </div>
-              <div className="flex flex-row md:gap-x-5 lg:gap-x-7 items-end w-full">
+              <div className="flex w-full flex-row items-end md:gap-x-5 lg:gap-x-7">
                 <div className="w-full grow">
                   <Input
                     required
@@ -167,7 +167,7 @@ const CreateParent: NextPage = () => {
                     onChange={setOccupation}
                     className={(valid?: boolean) =>
                       classNames(
-                        "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                         {
                           "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                             valid === true,
@@ -179,32 +179,32 @@ const CreateParent: NextPage = () => {
                   />
                 </div>
                 <Input.Date className="w-max space-y-3.5">
-                  <Input.Date.Label className="text-sm font-medium text-slate-500 tracking-wide">
+                  <Input.Date.Label className="text-sm font-medium tracking-wide text-slate-500">
                     Date of Birth
                   </Input.Date.Label>
                   <Input.Date.Field
                     value={dob}
                     onChange={setDOB}
-                    className="flex flex-row gap-x-4 items-center justify-start"
+                    className="flex flex-row items-center justify-start gap-x-4"
                   />
                 </Input.Date>
               </div>
             </div>
           </div>
-          <div className="flex items-stretch justify-start md:gap-x-6 lg:gap-x-12 w-full p-7 bg-white shadow-md rounded-lg">
+          <div className="flex w-full items-stretch justify-start rounded-lg bg-white p-7 shadow-md md:gap-x-6 lg:gap-x-12">
             <div className="md:w-[27rem]">
-              <h3 className="text-lg text-slate-800 font-medium">Contact</h3>
+              <h3 className="text-lg font-medium text-slate-800">Contact</h3>
               <p className="text-sm text-slate-500">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam.
               </p>
             </div>
-            <div className="flex flex-col gap-y-8 w-full xl:w-[40rem]">
-              <div className="flex flex-col md:gap-y-4 lg:gap-y-8 w-full">
-                <span className="w-full pb-0.5 text-sm text-semibold text-slate-800 border-b border-slate-400">
+            <div className="flex w-full flex-col gap-y-8 xl:w-[40rem]">
+              <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8">
+                <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
                   Email addresses
                 </span>
-                <div className="grid grid-cols-4 gap-x-3 items-center w-full">
-                  <span className="text-sm text-slate-600 col-start-1 col-end-2">
+                <div className="grid w-full grid-cols-4 items-center gap-x-3">
+                  <span className="col-start-1 col-end-2 text-sm text-slate-600">
                     Primary
                   </span>
                   <div className="col-start-2 col-end-5">
@@ -214,7 +214,7 @@ const CreateParent: NextPage = () => {
                       value={email.primary}
                       className={(valid?: boolean) =>
                         classNames(
-                          "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+                          "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                           {
                             "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                               valid === true,
@@ -229,8 +229,8 @@ const CreateParent: NextPage = () => {
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-4 gap-x-3 items-center w-full mt-4">
-                  <span className="text-sm text-slate-600 col-start-1 col-end-2">
+                <div className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
+                  <span className="col-start-1 col-end-2 text-sm text-slate-600">
                     Work <span className="text-[0.675rem]">(other)</span>
                   </span>
                   <div className="col-start-2 col-end-5">
@@ -239,7 +239,7 @@ const CreateParent: NextPage = () => {
                       value={email.other}
                       className={(valid?: boolean) =>
                         classNames(
-                          "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+                          "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                           {
                             "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                               valid === true,
@@ -255,12 +255,12 @@ const CreateParent: NextPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col md:gap-y-4 lg:gap-y-8 w-full">
-                <span className="w-full pb-0.5 text-sm text-semibold text-slate-800 border-b border-slate-400">
+              <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8">
+                <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
                   Phone numbers
                 </span>
-                <Input.Phone className="grid grid-cols-4 gap-x-3 items-center w-full">
-                  <Input.Phone.Label className="text-sm text-slate-600 col-start-1 col-end-2">
+                <Input.Phone className="grid w-full grid-cols-4 items-center gap-x-3">
+                  <Input.Phone.Label className="col-start-1 col-end-2 text-sm text-slate-600">
                     Primary
                   </Input.Phone.Label>
                   <div className="col-start-2 col-end-5">
@@ -271,8 +271,8 @@ const CreateParent: NextPage = () => {
                     />
                   </div>
                 </Input.Phone>
-                <Input.Phone className="grid grid-cols-4 gap-x-3 items-center w-full mt-4">
-                  <Input.Phone.Label className="text-sm text-slate-600 col-start-1 col-end-2">
+                <Input.Phone className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
+                  <Input.Phone.Label className="col-start-1 col-end-2 text-sm text-slate-600">
                     Work <span className="text-[0.675rem]">(other)</span>
                   </Input.Phone.Label>
                   <div className="col-start-2 col-end-5">
@@ -283,12 +283,12 @@ const CreateParent: NextPage = () => {
                   </div>
                 </Input.Phone>
               </div>
-              <div className="flex flex-col md:gap-y-4 lg:gap-y-8 w-full">
-                <span className="w-full pb-0.5 text-sm text-semibold text-slate-800 border-b border-slate-400">
+              <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8">
+                <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
                   Address
                 </span>
-                <Input.Textarea className="grid grid-cols-4 gap-x-3 items-center w-full">
-                  <Input.Textarea.Label className="text-sm text-slate-600 col-start-1 col-end-2">
+                <Input.Textarea className="grid w-full grid-cols-4 items-center gap-x-3">
+                  <Input.Textarea.Label className="col-start-1 col-end-2 text-sm text-slate-600">
                     Home
                   </Input.Textarea.Label>
                   <Input.Textarea.Field
@@ -302,7 +302,7 @@ const CreateParent: NextPage = () => {
                     }
                     className={(valid?: boolean) =>
                       classNames(
-                        "w-full h-20 p-3 border border-slate-300 focus:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 ring-transparent focus:ring-blue-400 [-webkit-appearance:none]",
+                        "h-20 w-full overflow-hidden rounded-lg border border-slate-300 p-3 ring-2 ring-transparent [-webkit-appearance:none] focus:border-transparent focus:outline-none focus:ring-blue-400",
                         {
                           "focus:ring-emerald-400": valid === true,
                           "focus:ring-red-400": valid === false,
@@ -311,8 +311,8 @@ const CreateParent: NextPage = () => {
                     }
                   />
                 </Input.Textarea>
-                <Input.Textarea className="grid grid-cols-4 gap-x-3 items-center w-full mt-4">
-                  <Input.Textarea.Label className="text-sm text-slate-600 col-start-1 col-end-2">
+                <Input.Textarea className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
+                  <Input.Textarea.Label className="col-start-1 col-end-2 text-sm text-slate-600">
                     Work <span className="text-[0.675rem]">(other)</span>
                   </Input.Textarea.Label>
                   <Input.Textarea.Field
@@ -325,7 +325,7 @@ const CreateParent: NextPage = () => {
                     }
                     className={(valid?: boolean) =>
                       classNames(
-                        "w-full h-20 p-3 border border-slate-300 focus:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 ring-transparent focus:ring-blue-400 [-webkit-appearance:none]",
+                        "h-20 w-full overflow-hidden rounded-lg border border-slate-300 p-3 ring-2 ring-transparent [-webkit-appearance:none] focus:border-transparent focus:outline-none focus:ring-blue-400",
                         {
                           "focus:ring-emerald-400": valid === true,
                           "focus:ring-red-400": valid === false,
@@ -337,15 +337,15 @@ const CreateParent: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-stretch justify-start md:gap-x-6 lg:gap-x-12 w-full p-7 bg-white shadow-md rounded-lg">
+          <div className="flex w-full items-stretch justify-start rounded-lg bg-white p-7 shadow-md md:gap-x-6 lg:gap-x-12">
             <div className="md:w-[27rem]">
-              <h3 className="text-lg text-slate-800 font-medium">Profile</h3>
+              <h3 className="text-lg font-medium text-slate-800">Profile</h3>
               <p className="text-sm text-slate-500">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Explicabo, eveniet.
               </p>
             </div>
-            <div className="flex flex-col gap-y-8 w-full xl:w-[40rem]">
+            <div className="flex w-full flex-col gap-y-8 xl:w-[40rem]">
               <div className="w-3/4">
                 <Input
                   required
@@ -355,7 +355,7 @@ const CreateParent: NextPage = () => {
                   value={name.username}
                   className={(valid?: boolean) =>
                     classNames(
-                      "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                       {
                         "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                           valid === true,
@@ -376,7 +376,7 @@ const CreateParent: NextPage = () => {
                   value={password}
                   className={(valid?: boolean) =>
                     classNames(
-                      "w-full h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent [-webkit-appearance:none]",
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                       {
                         "valid:ring-emerald-400 focus:valid:ring-emerald-400":
                           valid === true,
@@ -391,10 +391,10 @@ const CreateParent: NextPage = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row gap-x-5 items-center justify-end p-10 pl-0 w-full">
+        <div className="flex w-full flex-row items-center justify-end gap-x-5 p-10 pl-0">
           <button
             type="submit"
-            className="rounded-lg shadow-sm bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2.5 px-7"
+            className="rounded-lg bg-indigo-500 py-2.5 px-7 font-medium text-white shadow-sm hover:bg-indigo-600"
           >
             Save
           </button>

@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 
 const CreateSubject: NextPage = () => {
   return (
-    <main className="flex items-center justify-center w-screen h-screen">
+    <main className="flex h-screen w-screen items-center justify-center">
       <Head>
         <title>Create Subject | Portal | GRS™</title>
         <meta name="description" content="Page for Subject Creation" />

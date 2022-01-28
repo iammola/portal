@@ -27,7 +27,7 @@ export function useCountryFlag(regionCode: string) {
       ifEmoji(emoji) ? (
         <span className="text-xl">{emoji}</span>
       ) : (
-        <Icon className="w-[25px] h-7" />
+        <Icon className="h-7 w-[25px]" />
       )
     );
   }, [regionCode]);

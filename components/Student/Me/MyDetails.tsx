@@ -2,95 +2,95 @@ import { FunctionComponent } from "react";
 
 const MyDetails: FunctionComponent = () => {
   return (
-    <div className="flex flex-col gap-y-4 w-full divide-y-2 border-slate-200">
-      <div className="flex flex-col md:flex-row gap-y-4 items-start justify-between w-full first:pt-0 first:pb-5 pt-8">
+    <div className="flex w-full flex-col gap-y-4 divide-y-2 border-slate-200">
+      <div className="flex w-full flex-col items-start justify-between gap-y-4 pt-8 first:pt-0 first:pb-5 md:flex-row">
         <div>
-          <h5 className="text-slate-700 font-medium">Personal info</h5>
+          <h5 className="font-medium text-slate-700">Personal info</h5>
           <p className="text-sm text-slate-500">
             Lorem ipsum dolor sit amet consectetur.
           </p>
         </div>
-        <form className="divide-y divide-slate-200 w-full lg:w-[55%] md:w-[65%] bg-white rounded-lg shadow-lg">
+        <form className="w-full divide-y divide-slate-200 rounded-lg bg-white shadow-lg md:w-[65%] lg:w-[55%]">
           <div className="flex flex-col items-start justify-start gap-y-6 px-6 pt-8 pb-5">
-            <div className="flex items-center justify-between gap-4 w-full">
-              <div className="flex flex-col gap-2.5 w-full grow">
-                <label className="text-[0.8rem] text-slate-500 min-w-max font-medium">
+            <div className="flex w-full items-center justify-between gap-4">
+              <div className="flex w-full grow flex-col gap-2.5">
+                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">
                   First name
                 </label>
                 <input
                   required
                   type="text"
-                  className="border rounded-md shadow shadow-slate-300 transition-shadow focus:ring-2 focus:ring-slate-400 focus:outline-none min-w-80 py-3 px-4"
+                  className="min-w-80 rounded-md border py-3 px-4 shadow shadow-slate-300 transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-400"
                 />
               </div>
-              <div className="flex flex-col gap-2.5 w-full grow">
-                <label className="text-[0.8rem] text-slate-500 min-w-max font-medium">
+              <div className="flex w-full grow flex-col gap-2.5">
+                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">
                   Last name
                 </label>
                 <input
                   required
                   type="text"
-                  className="border rounded-md shadow shadow-slate-300 transition-shadow focus:ring-2 focus:ring-slate-400 focus:outline-none min-w-80 py-3 px-4"
+                  className="min-w-80 rounded-md border py-3 px-4 shadow shadow-slate-300 transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-400"
                 />
               </div>
             </div>
-            <div className="flex items-center justify-between gap-4 w-full">
-              <div className="flex flex-col gap-2.5 w-full grow">
-                <label className="text-[0.8rem] text-slate-500 min-w-max font-medium">
+            <div className="flex w-full items-center justify-between gap-4">
+              <div className="flex w-full grow flex-col gap-2.5">
+                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">
                   Other name(s)
                 </label>
                 <input
                   required
                   type="text"
-                  className="border rounded-md shadow shadow-slate-300 transition-shadow focus:ring-2 focus:ring-slate-400 focus:outline-none min-w-80 py-3 px-4"
+                  className="min-w-80 rounded-md border py-3 px-4 shadow shadow-slate-300 transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-400"
                 />
               </div>
-              <div className="flex flex-col gap-2.5 grow">
-                <label className="text-[0.8rem] text-slate-500 min-w-max font-medium">
+              <div className="flex grow flex-col gap-2.5">
+                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">
                   Initials
                 </label>
                 <input
                   required
                   type="text"
-                  className="border rounded-md shadow shadow-slate-300 transition-shadow focus:ring-2 focus:ring-slate-400 focus:outline-none w-40 py-3 px-4"
+                  className="w-40 rounded-md border py-3 px-4 shadow shadow-slate-300 transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-400"
                 />
               </div>
             </div>
-            <div className="flex flex-col gap-2.5 w-full grow">
-              <label className="text-[0.8rem] text-slate-500 min-w-max font-medium">
+            <div className="flex w-full grow flex-col gap-2.5">
+              <label className="min-w-max text-[0.8rem] font-medium text-slate-500">
                 Full name
               </label>
               <input
                 required
                 type="text"
-                className="border rounded-md shadow shadow-slate-300 transition-shadow focus:ring-2 focus:ring-slate-400 focus:outline-none min-w-80 py-3 px-4"
+                className="min-w-80 rounded-md border py-3 px-4 shadow shadow-slate-300 transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-400"
               />
             </div>
-            <div className="flex items-center justify-between gap-4 w-full">
+            <div className="flex w-full items-center justify-between gap-4">
               {/* // TODO: Use Select input for Gender field */}
-              <div className="flex flex-col gap-2.5 w-full grow">
-                <label className="text-[0.8rem] text-slate-500 min-w-max font-medium">
+              <div className="flex w-full grow flex-col gap-2.5">
+                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">
                   Gender
                 </label>
                 <input
                   required
                   type="text"
-                  className="border rounded-md shadow shadow-slate-300 transition-shadow focus:ring-2 focus:ring-slate-400 focus:outline-none min-w-80 py-3 px-4"
+                  className="min-w-80 rounded-md border py-3 px-4 shadow shadow-slate-300 transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-400"
                 />
               </div>
               {/* // TODO: Use custom Date input for DOB field */}
-              <div className="flex flex-col gap-2.5 grow">
-                <label className="text-[0.8rem] text-slate-500 xl:min-w-[20rem] font-medium">
+              <div className="flex grow flex-col gap-2.5">
+                <label className="text-[0.8rem] font-medium text-slate-500 xl:min-w-[20rem]">
                   DOB
                 </label>
-                <label className="relative flex items-center justify-start w-full pl-3 bg-white border overflow-hidden rounded-md shadow shadow-slate-300 focus-within:ring-2 focus-within:ring-purple-400 focus-within:outline-none">
+                <label className="relative flex w-full items-center justify-start overflow-hidden rounded-md border bg-white pl-3 shadow shadow-slate-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-purple-400">
                   <span className="inline-block p-2">
                     <svg
                       aria-hidden={true}
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-5 h-5 fill-slate-500"
+                      className="h-5 w-5 fill-slate-500"
                     >
                       <path
                         clipRule="evenodd"
@@ -102,113 +102,113 @@ const MyDetails: FunctionComponent = () => {
                   <input
                     required
                     type="date"
-                    className="grow text-slate-700 p-3 focus:outline-none"
+                    className="grow p-3 text-slate-700 focus:outline-none"
                   />
                 </label>
               </div>
             </div>
           </div>
-          <div className="flex gap-x-5 items-center justify-end px-6 py-5 w-full">
+          <div className="flex w-full items-center justify-end gap-x-5 px-6 py-5">
             <button
               type="button"
-              className="text-sm text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-lg shadow-lg py-2.5 px-4"
+              className="rounded-lg bg-slate-100 py-2.5 px-4 text-sm text-slate-800 shadow-lg hover:bg-slate-200"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="text-sm text-white bg-slate-700 hover:bg-slate-800 rounded-lg shadow-lg py-2.5 px-4"
+              className="rounded-lg bg-slate-700 py-2.5 px-4 text-sm text-white shadow-lg hover:bg-slate-800"
             >
               Update
             </button>
           </div>
         </form>
       </div>
-      <div className="flex flex-col md:flex-row gap-y-4 items-start justify-between w-full first:pt-0 first:pb-5 pt-8">
+      <div className="flex w-full flex-col items-start justify-between gap-y-4 pt-8 first:pt-0 first:pb-5 md:flex-row">
         <div>
-          <h5 className="text-slate-700 font-medium">Contacts</h5>
+          <h5 className="font-medium text-slate-700">Contacts</h5>
           <p className="text-sm text-slate-500">
             Lorem ipsum dolor sit amet, consectetur adipisicing.
           </p>
         </div>
-        <div className="flex flex-col gap-y-8 w-full lg:w-[55%] md:w-[65%]">
-          <form className="flex flex-col items-start justify-start gap-y-4 w-full pt-8 pb-5 bg-white rounded-lg shadow-lg divide-y divide-slate-200">
+        <div className="flex w-full flex-col gap-y-8 md:w-[65%] lg:w-[55%]">
+          <form className="flex w-full flex-col items-start justify-start gap-y-4 divide-y divide-slate-200 rounded-lg bg-white pt-8 pb-5 shadow-lg">
             <h4 className="py-1.5 px-6 font-bold text-slate-700">
               Email Addresses
             </h4>
-            <div className="flex flex-col gap-y-4 items-start justify-center w-full pt-5 pb-2 px-6">
-              <div className="grid grid-cols-4 gap-x-4 w-full py-4">
-                <h4 className="flex items-center w-max min-w-max text-sm text-slate-700 font-medium col-start-1 col-end-2">
+            <div className="flex w-full flex-col items-start justify-center gap-y-4 px-6 pt-5 pb-2">
+              <div className="grid w-full grid-cols-4 gap-x-4 py-4">
+                <h4 className="col-start-1 col-end-2 flex w-max min-w-max items-center text-sm font-medium text-slate-700">
                   Primary
                 </h4>
-                <div className="w-full col-start-2 col-end-5">
+                <div className="col-start-2 col-end-5 w-full">
                   <input
                     required
                     type="email"
-                    className="text-slate-800 text-xl font-extrabold rounded-md shadow shadow-slate-300 transition-shadow focus:ring-2 focus:ring-slate-400 focus:outline-none w-full py-3 px-4"
+                    className="w-full rounded-md py-3 px-4 text-xl font-extrabold text-slate-800 shadow shadow-slate-300 transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-400"
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-4 gap-x-4 w-full py-4">
-                <h4 className="flex items-center w-max min-w-max text-sm text-slate-700 font-medium col-start-1 col-end-2">
+              <div className="grid w-full grid-cols-4 gap-x-4 py-4">
+                <h4 className="col-start-1 col-end-2 flex w-max min-w-max items-center text-sm font-medium text-slate-700">
                   Secondary
                 </h4>
-                <div className="w-full col-start-2 col-end-5">
+                <div className="col-start-2 col-end-5 w-full">
                   <input
                     required
                     type="email"
-                    className="text-slate-800 text-xl font-extrabold rounded-md shadow shadow-slate-300 transition-shadow focus:ring-2 focus:ring-slate-400 focus:outline-none w-full py-3 px-4"
+                    className="w-full rounded-md py-3 px-4 text-xl font-extrabold text-slate-800 shadow shadow-slate-300 transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-400"
                   />
                 </div>
               </div>
             </div>
-            <div className="flex gap-x-5 items-center justify-end px-6 pt-5 w-full">
+            <div className="flex w-full items-center justify-end gap-x-5 px-6 pt-5">
               <button
                 type="button"
-                className="text-sm text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-lg shadow-lg py-2.5 px-4"
+                className="rounded-lg bg-slate-100 py-2.5 px-4 text-sm text-slate-800 shadow-lg hover:bg-slate-200"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="text-sm text-white bg-slate-700 hover:bg-slate-800 rounded-lg shadow-lg py-2.5 px-4"
+                className="rounded-lg bg-slate-700 py-2.5 px-4 text-sm text-white shadow-lg hover:bg-slate-800"
               >
                 Update
               </button>
             </div>
           </form>
-          <form className="flex flex-col items-start justify-start gap-y-4 w-full pt-8 pb-5 bg-white rounded-lg shadow-lg divide-y divide-slate-200">
+          <form className="flex w-full flex-col items-start justify-start gap-y-4 divide-y divide-slate-200 rounded-lg bg-white pt-8 pb-5 shadow-lg">
             <h4 className="py-1.5 px-6 font-bold text-slate-700">
               Phone Numbers
             </h4>
-            <div className="flex flex-col gap-y-4 items-start justify-center w-full pt-5 pb-2 px-6">
-              <div className="grid grid-cols-4 gap-x-4 w-full py-4">
-                <h4 className="flex items-center w-max min-w-max text-sm text-slate-700 font-medium col-start-1 col-end-2">
+            <div className="flex w-full flex-col items-start justify-center gap-y-4 px-6 pt-5 pb-2">
+              <div className="grid w-full grid-cols-4 gap-x-4 py-4">
+                <h4 className="col-start-1 col-end-2 flex w-max min-w-max items-center text-sm font-medium text-slate-700">
                   Primary
                 </h4>
-                <div className="w-full col-start-2 col-end-5">
+                <div className="col-start-2 col-end-5 w-full">
                   {/* // TODO: Add Custom Phone Number Picker */}
                 </div>
               </div>
-              <div className="grid grid-cols-4 gap-x-4 w-full py-4">
-                <h4 className="flex items-center w-max min-w-max text-sm text-slate-700 font-medium col-start-1 col-end-2">
+              <div className="grid w-full grid-cols-4 gap-x-4 py-4">
+                <h4 className="col-start-1 col-end-2 flex w-max min-w-max items-center text-sm font-medium text-slate-700">
                   Secondary
                 </h4>
-                <div className="w-full col-start-2 col-end-5">
+                <div className="col-start-2 col-end-5 w-full">
                   {/* // TODO: Add Custom Phone Number Picker */}
                 </div>
               </div>
             </div>
-            <div className="flex gap-x-5 items-center justify-end px-6 pt-5 w-full">
+            <div className="flex w-full items-center justify-end gap-x-5 px-6 pt-5">
               <button
                 type="button"
-                className="text-sm text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-lg shadow-lg py-2.5 px-4"
+                className="rounded-lg bg-slate-100 py-2.5 px-4 text-sm text-slate-800 shadow-lg hover:bg-slate-200"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="text-sm text-white bg-slate-700 hover:bg-slate-800 rounded-lg shadow-lg py-2.5 px-4"
+                className="rounded-lg bg-slate-700 py-2.5 px-4 text-sm text-white shadow-lg hover:bg-slate-800"
               >
                 Update
               </button>
