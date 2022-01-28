@@ -35,7 +35,7 @@ const CreateParent: NextPage = () => {
             Parent
           </span>
         </h1>
-        <div className="h-full w-full grow space-y-10 self-center px-10">
+        <form className="h-full w-full grow space-y-10 self-center px-10">
           <div className="flex w-full items-stretch justify-start rounded-lg bg-white p-7 shadow-md md:gap-x-6 lg:gap-x-12">
             <div className="md:w-[27rem]">
               <h3 className="text-lg font-medium text-slate-800">
@@ -390,7 +390,7 @@ const CreateParent: NextPage = () => {
               </div>
             </div>
           </div>
-        </div>
+        </form>
         <div className="flex w-full flex-row items-center justify-end gap-x-5 p-10 pl-0">
           <button
             type="submit"
