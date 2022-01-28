@@ -78,10 +78,14 @@ Input.Number = NumberInput;
 Input.Textarea = TextareaInput;
 Input.DynamicEmail = DynamicEmailInput;
 
-export type InputProps = Omit<ComponentProps<"input">, "id" | "className" | "onChange" | "ref"> & {
+export type InputProps = Omit<
+    ComponentProps<"input">,
+    "id" | "className" | "onChange" | "ref" | "value"
+> & {
+    value?: string;
     showIcons?: boolean;
+    onChange(v: string): void;
     className: string | ((valid?: boolean) => string);
-    onChange(v: NonNullable<InputProps["value"]>): void;
 } & (
         | {
               id: string;
