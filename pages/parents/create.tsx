@@ -385,6 +385,14 @@ const CreateParent: NextPage = () => {
                         </div>
                     </div>
                 </div>
+                <div className="flex flex-row gap-x-5 items-center justify-end p-10 pl-0 w-full">
+                    <button
+                        type="submit"
+                        className="rounded-lg shadow-sm bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2.5 px-7"
+                    >
+                        Save
+                    </button>
+                </div>
             </section>
         </main>
     );
