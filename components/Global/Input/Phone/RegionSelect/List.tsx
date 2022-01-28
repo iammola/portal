@@ -52,14 +52,14 @@ const List: List = ({
           {...{ country, countryCode, regionCode, visible }}
           className={(selected) =>
             classNames(
-              "flex flex-row gap-x-4 items-center justify-start p-2 rounded-xl cursor-pointer hover:bg-slate-100 focus:outline-none",
+              "flex cursor-pointer flex-row items-center justify-start gap-x-4 rounded-xl p-2 hover:bg-slate-100 focus:outline-none",
               [selected, "focus:bg-slate-50", ""]
             )
           }
         />
       ))}
       {filteredRegions.length === 0 && (
-        <div className="flex items-center justify-center text-sm text-slate-700 font-medium p-2">
+        <div className="flex items-center justify-center p-2 text-sm font-medium text-slate-700">
           Change your search phrase 🙏
         </div>
       )}
@@ -108,11 +108,11 @@ List.Item = function Item({
       className={className(selected)}
     >
       {countryFlag}
-      <span className="text-sm text-slate-700 font-medium">
+      <span className="text-sm font-medium text-slate-700">
         {country} (+{countryCode})
       </span>
       {selected === true && (
-        <CheckIcon className="w-5 h-5 text-slate-800 ml-auto mr-2" />
+        <CheckIcon className="ml-auto mr-2 h-5 w-5 text-slate-800" />
       )}
     </li>
   );

@@ -10,13 +10,13 @@ const Search: Search = ({ className, handleSearch, search, visible }) => {
 
   return (
     <div className={className}>
-      <SearchIcon className="w-6 h-6 stroke-slate-700" />
+      <SearchIcon className="h-6 w-6 stroke-slate-700" />
       <input
         ref={ref}
         value={search}
         placeholder="Search"
         onChange={(e) => handleSearch(e.target.value)}
-        className="grow w-full p-2 text-slate-700 font-medium focus:outline-none"
+        className="w-full grow p-2 font-medium text-slate-700 focus:outline-none"
       />
     </div>
   );

@@ -63,7 +63,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
       onFocus={handleFocus}
       suppressContentEditableWarning
       className={classNames(
-        "flex flex-row gap-x-2.5 items-center justify-between min-w-max max-w-full border p-[2px] pr-3 rounded-full relative cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white",
+        "relative flex min-w-max max-w-full cursor-pointer flex-row items-center justify-between gap-x-2.5 rounded-full border p-[2px] pr-3 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white",
         {
           "border-red-300 bg-red-100/20 focus:ring-red-300": valid === false,
           "border-slate-300 bg-white": valid === undefined,
@@ -74,21 +74,21 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
     >
       <span
         className={classNames(
-          "flex items-center justify-center rounded-full overflow-hidden text-sm text-white uppercase aspect-square w-[1.85rem]",
+          "flex aspect-square w-[1.85rem] items-center justify-center overflow-hidden rounded-full text-sm uppercase text-white",
           selectedColor
         )}
       >
         {(item.name?.initials ?? item.schoolMail)[0]}
       </span>
-      <span className="text-sm text-gray-600 tracking-wide">
+      <span className="text-sm tracking-wide text-gray-600">
         {item.name?.username ?? item.schoolMail}
       </span>
       <Popover
         {...{ selectedColor, item, edit, remove, valid }}
         className={classNames(
-          "absolute top-1 left-1 z-50 font-poppins divide-y divide-slate-400 bg-white w-[18.5rem] rounded-md overflow-hidden shadow-md",
+          "absolute top-1 left-1 z-50 w-[18.5rem] divide-y divide-slate-400 overflow-hidden rounded-md bg-white font-poppins shadow-md",
           {
-            "opacity-0 invisible pointer-events-none": showDrawer === false,
+            "pointer-events-none invisible opacity-0": showDrawer === false,
           }
         )}
       />

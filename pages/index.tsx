@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 
 const Home: NextPage = () => {
   return (
-    <main className="flex items-center justify-center w-screen h-screen bg-center bg-cover bg-[url(/BG.jpg)]">
+    <main className="flex h-screen w-screen items-center justify-center bg-[url(/BG.jpg)] bg-cover bg-center">
       <Head>
         <title>Login Page | Portal | GRS™</title>
         <meta name="description" content="Login Page" />
