@@ -17,6 +17,7 @@ import RegionSelect from "./RegionSelect";
 
 const Field: Field = ({ onChange, required, value = "", ...props }) => {
   const defaultRegionCode = "GB";
+  const [typing, setTyping] = useState(false);
   const [valid, setValid] = useState<boolean>();
   const [regionCode, setRegionCode] = useState("");
   const [countryCode, setCountryCode] = useState(0);
@@ -46,7 +47,9 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
         setFormattedValue(removeCountryCode(formatted));
         if (removeCountryCode(formatted) !== "") onChange(formatted);
         setValid(
-          removeCountryCode(formatted) === "" ? undefined : phone.isValid()
+          removeCountryCode(formatted) === "" || typing
+            ? undefined
+            : phone.isValid()
         );
       }
     },
@@ -74,6 +77,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
       ),
     [handleRegionChange, props.regionCode, regionCode, value]
   );
+
   useEffect(() => {
     if (showCountrySelect === true)
       (document.activeElement as HTMLElement)?.addEventListener(
@@ -120,6 +124,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
           <Input
             type="tel"
             required={required}
+            setTyping={setTyping}
             value={formattedValue}
             onChange={handleChange}
             onBeforeInput={validateCharacter}

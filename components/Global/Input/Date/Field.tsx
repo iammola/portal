@@ -14,6 +14,7 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
   const prevDate = useRef<Date | null>(null);
 
   const [maxDay, setMaxDay] = useState(31);
+  const [typing, setTyping] = useState(false);
   const [forceValid, setForceValid] = useState<boolean>();
 
   const [day, setDay] = useState<number>();
@@ -48,9 +49,9 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
           value,
           addMilliseconds(min ?? value, +isEqual(value, min ?? value) * -1)
         );
-      setForceValid(forceValid === true ? undefined : false);
+      setForceValid(forceValid === true || typing ? undefined : false);
     }
-  }, [max, min, value]);
+  }, [max, min, typing, value]);
 
   useEffect(() => {
     if (day !== undefined && month !== undefined && year !== undefined) {
@@ -74,6 +75,7 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
           max={maxDay}
           label="Day"
           value={day}
+          setTyping={setTyping}
           onChange={(val) => handleChange(val, setDay)}
           className={(valid?: boolean) =>
             classNames(
@@ -97,6 +99,7 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
           id="month"
           label="Month"
           value={month}
+          setTyping={setTyping}
           onChange={(val) => handleChange(val, setMonth)}
           className={(valid?: boolean) =>
             classNames(
@@ -118,6 +121,7 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
           required
           label="Year"
           value={year}
+          setTyping={setTyping}
           min={min?.getFullYear() ?? 0}
           max={max?.getFullYear() ?? 9999}
           onChange={(val) => handleChange(val, setYear)}

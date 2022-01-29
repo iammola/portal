@@ -10,12 +10,13 @@ const Password: Password = ({
   validators,
   ...props
 }) => {
+  const [typing, setTyping] = useState(false);
   const [valid, setValid] = useState<boolean>();
 
   function handleChange(val: string) {
     onChange(val);
     setValid(
-      val === ""
+      val === "" || typing
         ? undefined
         : validators?.every(({ regex }) => regex.test(val)) ?? true
     );
@@ -25,6 +26,7 @@ const Password: Password = ({
     <Input
       {...props}
       type="password"
+      setTyping={setTyping}
       onChange={handleChange}
       {...({ id, label } as { [key: string]: string })}
       className={typeof className === "string" ? className : className(valid)}
