@@ -5,7 +5,7 @@ import Field, { FieldProps } from "./Field";
 
 const PasswordInput: PasswordInput = ({ validators, value, ...props }) => {
   return (
-    <div className="">
+    <div className="space-y-3">
       <Field {...{ validators, value, ...props }} />
       {validators !== undefined && validators.length > 0 && (
         <Conditions {...{ validators, value }} />
