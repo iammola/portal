@@ -30,12 +30,18 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
 
   const countryFlag = useCountryFlag(regionCode);
 
+  const removeFormatting = useCallback(
+    (str: string) => str.replaceAll(/[^+\d]/g, ""),
+    []
+  );
+
+  const removeCountryCode = useCallback(
+    (str: string) => str.replace(new RegExp(`^\\+${countryCode} ?`), ""),
+    [countryCode]
+  );
+
   const handleChange = useCallback(
     (tel: string) => {
-      const removeFormatting = (str: string) => str.replaceAll(/[^+\d]/g, "");
-      const removeCountryCode = (str: string) =>
-        str.replace(new RegExp(`^\\+${countryCode} ?`), "");
-
       if (tel !== "0") {
         const phone = PhoneNumber(removeFormatting(tel), regionCode);
         const formatted = formatter.reset(
@@ -46,14 +52,16 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
 
         setFormattedValue(removeCountryCode(formatted));
         if (removeCountryCode(formatted) !== "") onChange(formatted);
-        setValid(
-          removeCountryCode(formatted) === "" || typing
-            ? undefined
-            : phone.isValid()
-        );
       }
     },
-    [countryCode, formatter, onChange, regionCode]
+    [
+      countryCode,
+      formatter,
+      onChange,
+      regionCode,
+      removeCountryCode,
+      removeFormatting,
+    ]
   );
   const handleRegionChange = useCallback(
     (region: string = defaultRegionCode) => {
@@ -64,6 +72,16 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
       setCountryCode(PhoneNumber.getCountryCodeForRegionCode(region));
     },
     [handleChange, regionCode]
+  );
+
+  useEffect(
+    () =>
+      setValid(
+        removeCountryCode(value) === "" || typing
+          ? undefined
+          : PhoneNumber(removeFormatting(value)).isValid()
+      ),
+    [removeCountryCode, removeFormatting, typing, value]
   );
 
   useEffect(
