@@ -2,7 +2,7 @@ import { FunctionComponent, useState } from "react";
 
 import Input, { InputProps } from "components/Global/Input";
 
-const Password: Password = ({
+const Field: Field = ({
   id,
   className,
   label,
@@ -34,13 +34,13 @@ const Password: Password = ({
   );
 };
 
-type Password = FunctionComponent<
-  Omit<InputProps, "type"> & {
-    validators?: {
-      regex: RegExp;
-      message: string;
-    }[];
-  }
->;
+export type FieldProps = Omit<InputProps, "type"> & {
+  validators?: {
+    regex: RegExp;
+    message: string;
+  }[];
+};
 
-export default Password;
+type Field = FunctionComponent<FieldProps>;
+
+export default Field;
