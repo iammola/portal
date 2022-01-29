@@ -53,7 +53,7 @@ const CreateParent: NextPage = () => {
                 type="text"
                 id="fullName"
                 label="Full name"
-                className={(valid?: boolean) =>
+                className={(valid) =>
                   classNames(
                     "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                     {
@@ -74,7 +74,7 @@ const CreateParent: NextPage = () => {
                     type="text"
                     id="firstName"
                     label="First name"
-                    className={(valid?: boolean) =>
+                    className={(valid) =>
                       classNames(
                         "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                         {
@@ -95,7 +95,7 @@ const CreateParent: NextPage = () => {
                     type="text"
                     id="lastName"
                     label="Last name"
-                    className={(valid?: boolean) =>
+                    className={(valid) =>
                       classNames(
                         "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                         {
@@ -118,7 +118,7 @@ const CreateParent: NextPage = () => {
                     type="text"
                     id="initials"
                     label="Initials"
-                    className={(valid?: boolean) =>
+                    className={(valid) =>
                       classNames(
                         "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                         {
@@ -141,7 +141,7 @@ const CreateParent: NextPage = () => {
                     type="text"
                     id="otherName"
                     label="Other name"
-                    className={(valid?: boolean) =>
+                    className={(valid) =>
                       classNames(
                         "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                         {
@@ -165,7 +165,7 @@ const CreateParent: NextPage = () => {
                     label="Occupation"
                     value={occupation}
                     onChange={setOccupation}
-                    className={(valid?: boolean) =>
+                    className={(valid) =>
                       classNames(
                         "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                         {
@@ -212,7 +212,7 @@ const CreateParent: NextPage = () => {
                       required
                       type="email"
                       value={email.primary}
-                      className={(valid?: boolean) =>
+                      className={(valid) =>
                         classNames(
                           "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                           {
@@ -237,7 +237,7 @@ const CreateParent: NextPage = () => {
                     <Input
                       type="email"
                       value={email.other}
-                      className={(valid?: boolean) =>
+                      className={(valid) =>
                         classNames(
                           "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                           {
@@ -300,7 +300,7 @@ const CreateParent: NextPage = () => {
                     onChange={(primary: string) =>
                       setAddress({ ...address, primary })
                     }
-                    className={(valid?: boolean) =>
+                    className={(valid) =>
                       classNames(
                         "h-20 w-full overflow-hidden rounded-lg border border-slate-300 p-3 ring-2 ring-transparent [-webkit-appearance:none] focus:border-transparent focus:outline-none focus:ring-blue-400",
                         {
@@ -323,7 +323,7 @@ const CreateParent: NextPage = () => {
                     onChange={(other: string) =>
                       setAddress({ ...address, other })
                     }
-                    className={(valid?: boolean) =>
+                    className={(valid) =>
                       classNames(
                         "h-20 w-full overflow-hidden rounded-lg border border-slate-300 p-3 ring-2 ring-transparent [-webkit-appearance:none] focus:border-transparent focus:outline-none focus:ring-blue-400",
                         {
@@ -353,7 +353,7 @@ const CreateParent: NextPage = () => {
                   id="userName"
                   label="User name"
                   value={name.username}
-                  className={(valid?: boolean) =>
+                  className={(valid) =>
                     classNames(
                       "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                       {
@@ -374,7 +374,7 @@ const CreateParent: NextPage = () => {
                   id="password"
                   label="Password"
                   value={password}
-                  className={(valid?: boolean) =>
+                  className={(valid) =>
                     classNames(
                       "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                       {

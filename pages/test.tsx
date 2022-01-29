@@ -22,7 +22,7 @@ const Test: NextPage = () => {
             id="password"
             label="Password"
             onChange={setValue}
-            className={(valid?: boolean) =>
+            className={(valid) =>
               classNames(
                 "h-[3.75rem] w-[22.5rem] overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                 {

@@ -77,7 +77,7 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
           value={day}
           setTyping={setTyping}
           onChange={(val) => handleChange(val, setDay)}
-          className={(valid?: boolean) =>
+          className={(valid) =>
             classNames(
               "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
               {
@@ -101,7 +101,7 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
           value={month}
           setTyping={setTyping}
           onChange={(val) => handleChange(val, setMonth)}
-          className={(valid?: boolean) =>
+          className={(valid) =>
             classNames(
               "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
               {
@@ -125,7 +125,7 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
           min={min?.getFullYear() ?? 0}
           max={max?.getFullYear() ?? 9999}
           onChange={(val) => handleChange(val, setYear)}
-          className={(valid?: boolean) =>
+          className={(valid) =>
             classNames(
               "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
               {

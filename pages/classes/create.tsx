@@ -19,7 +19,7 @@ const CreateClass: NextPage = () => {
   const [teachers, setTeachers] = useState<Value[]>([]);
 
   const inputClassName = useCallback(
-    (valid?: boolean) =>
+    (valid) =>
       classNames(
         "w-[20rem] h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
         {
