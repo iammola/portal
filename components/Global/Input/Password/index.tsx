@@ -1,11 +1,15 @@
 import { FunctionComponent } from "react";
 
+import Conditions from "./Conditions";
 import Field, { FieldProps } from "./Field";
 
-const PasswordInput: PasswordInput = (props) => {
+const PasswordInput: PasswordInput = ({ validators, value, ...props }) => {
   return (
     <div className="">
-      <Field {...props} />
+      <Field {...{ validators, value, ...props }} />
+      {validators !== undefined && validators.length > 0 && (
+        <Conditions {...{ validators, value }} />
+      )}
     </div>
   );
 };
