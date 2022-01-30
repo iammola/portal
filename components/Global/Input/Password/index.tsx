@@ -14,10 +14,13 @@ const PasswordInput: PasswordInput = ({
   const [confirmValue, setConfirmValue] = useState("");
 
   return (
-    <div className="space-y-3">
+    <div className="flex flex-col gap-y-3">
       <Field {...{ validators, value, ...props }} />
       {!hideConditions && !!validators?.length && (
         <Conditions {...{ validators, value }} />
+      )}
+      {!!withConfirm && !hideConditions && !!validators?.length && (
+        <span className="-mt-1" />
       )}
       {!!withConfirm && (
         <Field
