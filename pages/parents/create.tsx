@@ -346,6 +346,9 @@ const CreateParent: NextPage = () => {
               </p>
             </div>
             <div className="flex w-full flex-col gap-y-8 xl:w-[40rem]">
+              <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
+                Username
+              </span>
               <div className="w-3/4">
                 <Input
                   required
@@ -367,6 +370,9 @@ const CreateParent: NextPage = () => {
                   onChange={(username) => setName({ ...name, username })}
                 />
               </div>
+              <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
+                Password
+              </span>
               <div className="w-3/4">
                 <Input.Password
                   required
