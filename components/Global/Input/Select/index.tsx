@@ -1,9 +1,15 @@
 import { FunctionComponent } from "react";
 
-const Select: Select = () => {
-  return <></>;
+import Button from "./Button";
+
+const Select: Select = ({ children }) => {
+  return <div>{children}</div>;
 };
 
-type Select = FunctionComponent;
+interface Select extends FunctionComponent {
+  Button: Button;
+}
+
+Select.Button = Button;
 
 export default Select;
