@@ -368,9 +368,9 @@ const CreateParent: NextPage = () => {
                 />
               </div>
               <div className="w-3/4">
-                <Input
+                <Input.Password
                   required
-                  type="text"
+                  withConfirm
                   id="password"
                   label="Password"
                   value={password}
