@@ -19,24 +19,24 @@ const PasswordInput: PasswordInput = ({
       {!hideConditions && !!validators?.length && (
         <Conditions {...{ validators, value }} />
       )}
-      {!!withConfirm && !hideConditions && !!validators?.length && (
-        <span className="-mt-1" />
-      )}
       {!!withConfirm && (
-        <Field
-          value={confirmValue}
-          required={props.required}
-          onChange={setConfirmValue}
-          className={props.className}
-          id={confirmProps?.id ?? `confirm${props.id ?? ""}`}
-          label={confirmProps?.label ?? `Confirm ${props.label ?? ""}`}
-          validators={[
-            {
-              message: "",
-              regex: new RegExp(`^${value ?? ""}$`),
-            },
-          ]}
-        />
+        <>
+          <span className="-mt-1" />
+          <Field
+            value={confirmValue}
+            required={props.required}
+            onChange={setConfirmValue}
+            className={props.className}
+            id={confirmProps?.id ?? `confirm${props.id ?? ""}`}
+            label={confirmProps?.label ?? `Confirm ${props.label ?? ""}`}
+            validators={[
+              {
+                message: "",
+                regex: new RegExp(`^${value ?? ""}$`),
+              },
+            ]}
+          />
+        </>
       )}
     </div>
   );
