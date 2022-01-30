@@ -18,6 +18,7 @@ const Test: NextPage = () => {
         <div className="w-[22.5rem]">
           <Input.Password
             required
+            withConfirm
             value={value}
             id="password"
             label="Password"
