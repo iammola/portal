@@ -1,7 +1,7 @@
 import ifEmoji from "if-emoji";
 import Flags from "country-flag-icons/react/3x2";
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 export function useIsChanging<V>(value: V) {
   const [changing, setChanging] = useState(false);
@@ -55,3 +55,6 @@ export function useTraceUpdate(dependencies: Record<string, unknown>) {
     prev.current = dependencies;
   });
 }
+
+export const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
