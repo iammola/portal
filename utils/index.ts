@@ -26,4 +26,7 @@ export const classNames = (
         return [...acc, classes];
       }, [])
     ),
-  ].join(" ");
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .replaceAll(/\s{2,}/g, " ");
