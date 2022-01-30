@@ -1,13 +1,7 @@
-import {
-  ComponentProps,
-  FunctionComponent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ComponentProps, FunctionComponent, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 
-import { useIsChanging } from "hooks";
+import { useIsChanging, useIsomorphicLayoutEffect } from "hooks";
 import { classNames } from "utils";
 
 import DateInput from "./Date";
@@ -35,7 +29,7 @@ const Input: Input = ({
 
   const typing = useIsChanging(value);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const input = ref.current;
     setTyping?.(typing);
     if (typing === false)

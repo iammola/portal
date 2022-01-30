@@ -8,6 +8,7 @@ import {
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 
 import NumberInput from "components/Global/Input/Number";
+import { useIsomorphicLayoutEffect } from "hooks";
 import { classNames } from "utils";
 
 const Field: Field = ({ className, max, min, onChange, value }) => {
@@ -39,6 +40,15 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
   }, [month, year]);
 
   useEffect(() => {
+    if (day !== undefined && month !== undefined && year !== undefined) {
+      const newDate = new Date(year, month - 1, day);
+
+      onChange(newDate);
+      prevDate.current = newDate;
+    }
+  }, [day, month, onChange, year]);
+
+  useIsomorphicLayoutEffect(() => {
     if (value !== undefined) {
       const forceValid =
         isBefore(
@@ -52,15 +62,6 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
       setForceValid(forceValid === true || typing ? undefined : false);
     }
   }, [max, min, typing, value]);
-
-  useEffect(() => {
-    if (day !== undefined && month !== undefined && year !== undefined) {
-      const newDate = new Date(year, month - 1, day);
-
-      onChange(newDate);
-      prevDate.current = newDate;
-    }
-  }, [day, month, onChange, year]);
 
   const handleChange = (val: number, func: (val?: number) => void) =>
     func(val === 0 ? undefined : val);

@@ -1,14 +1,9 @@
-import {
-  FocusEvent,
-  FunctionComponent,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { FocusEvent, FunctionComponent, useMemo, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 
 import { classNames } from "utils";
 import { fetchAPIEndpoint } from "utils/api";
+import { useIsomorphicLayoutEffect } from "hooks";
 
 import Popover from "./Popover";
 
@@ -45,7 +40,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
     )
   );
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (data !== undefined && item.name === undefined) {
       setValid(data.success);
       if (data.success === true) setItem(data.data);

@@ -1,6 +1,6 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useState } from "react";
 
-import { useIsChanging } from "hooks";
+import { useIsChanging, useIsomorphicLayoutEffect } from "hooks";
 import { classNames } from "utils";
 
 const Field: Field = ({
@@ -16,14 +16,14 @@ const Field: Field = ({
   const [valid, setValid] = useState<boolean>();
   const [limitPassed, setLimitPassed] = useState(false);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (typing === false) {
       const length = value?.length ?? 0;
       setValid(required === true ? length > 0 : length < 1 ? undefined : true);
     }
   }, [required, typing, value]);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setLimitPassed(max !== undefined && (value?.length ?? 0) > max);
   }, [max, value]);
 

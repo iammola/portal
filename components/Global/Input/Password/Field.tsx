@@ -1,6 +1,7 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useState } from "react";
 
 import Input, { InputProps } from "components/Global/Input";
+import { useIsomorphicLayoutEffect } from "hooks";
 
 const Field: Field = ({
   id,
@@ -13,7 +14,7 @@ const Field: Field = ({
   const [typing, setTyping] = useState(false);
   const [valid, setValid] = useState<boolean>();
 
-  useEffect(
+  useIsomorphicLayoutEffect(
     () =>
       setValid(
         props.value === "" || typing

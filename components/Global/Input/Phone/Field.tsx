@@ -10,8 +10,8 @@ import {
 } from "react";
 
 import { classNames } from "utils";
-import { useCountryFlag } from "hooks";
 import Input from "components/Global/Input";
+import { useCountryFlag, useIsomorphicLayoutEffect } from "hooks";
 
 import RegionSelect from "./RegionSelect";
 
@@ -74,7 +74,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
     [handleChange, regionCode]
   );
 
-  useEffect(
+  useIsomorphicLayoutEffect(
     () =>
       setValid(
         removeCountryCode(value) === "" || typing
@@ -84,7 +84,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
     [removeCountryCode, removeFormatting, typing, value]
   );
 
-  useEffect(
+  useIsomorphicLayoutEffect(
     () =>
       handleRegionChange(
         regionCode === undefined
