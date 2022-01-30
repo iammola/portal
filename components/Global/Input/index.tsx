@@ -12,6 +12,7 @@ import { classNames } from "utils";
 
 import DateInput from "./Date";
 import PhoneInput from "./Phone";
+import SelectInput from "./Select";
 import NumberInput from "./Number";
 import PasswordInput from "./Password";
 import TextareaInput from "./Textarea";
@@ -93,6 +94,7 @@ const Input: Input = ({
 
 Input.Date = DateInput;
 Input.Phone = PhoneInput;
+Input.Select = SelectInput;
 Input.Number = NumberInput;
 Input.Password = PasswordInput;
 Input.Textarea = TextareaInput;
@@ -122,6 +124,7 @@ interface Input extends FunctionComponent<InputProps> {
   Date: DateInput;
   Phone: PhoneInput;
   Number: NumberInput;
+  Select: SelectInput;
   Password: PasswordInput;
   Textarea: TextareaInput;
   DynamicEmail: DynamicEmailInput;
