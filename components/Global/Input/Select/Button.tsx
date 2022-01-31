@@ -8,9 +8,9 @@ const Button: Button = ({ children, open, setOpen }) => {
     <button
       type="button"
       onClick={() => setOpen(!open)}
-      className="group relative grid w-full cursor-pointer grid-cols-[1fr_max-content] items-center justify-start gap-x-8 overflow-hidden rounded-lg border border-slate-300 p-4 ring-2 ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400"
+      className="group relative grid w-full cursor-pointer grid-cols-[1fr_max-content] items-center justify-start gap-x-8 rounded-lg border border-slate-300 p-4 ring-2 ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400"
     >
-      <span className="absolute left-[-0.4rem] -top-4 col-start-1 bg-white p-1 text-xs font-medium tracking-wide text-slate-600 transition-all group-focus:left-[-0.4rem] group-focus:top-[-0.95rem] group-focus:bg-white group-focus:text-xs group-focus:tracking-wide group-focus-visible:font-medium">
+      <span className="absolute left-[-0.4rem] -top-3.5 col-start-1 bg-white p-1 text-xs font-medium tracking-wide text-slate-600 transition-all group-focus:left-[-0.4rem] group-focus:-top-3.5 group-focus:bg-white group-focus:text-xs group-focus:tracking-wide group-focus-visible:font-medium">
         {children}
       </span>
       <ChevronUpIcon
