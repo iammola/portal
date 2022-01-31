@@ -5,10 +5,13 @@ import { Option, List } from "./List";
 
 const Select: Select = ({ label }) => {
   const [open, setOpen] = useState(false);
+  const [value] = useState<unknown>();
 
   return (
     <div className="relative">
-      <Button {...{ open, setOpen }}>{label}</Button>
+      <Button {...{ open, setOpen }} valueSelected={value != undefined}>
+        {label}
+      </Button>
     </div>
   );
 };
