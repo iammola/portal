@@ -1,13 +1,18 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, MouseEvent } from "react";
 import { ChevronUpIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
 const Button: Button = ({ children, label, open, setOpen, valueSelected }) => {
+  function handleClick(e: MouseEvent<HTMLDivElement>) {
+    setOpen(!open);
+    open && (e.target as HTMLDivElement).blur();
+  }
+
   return (
-    <button
-      type="button"
-      onClick={() => setOpen(!open)}
+    <div
+      tabIndex={0}
+      onClick={handleClick}
       className="group relative grid w-full cursor-pointer grid-cols-[1fr_max-content] items-center justify-start gap-x-8 rounded-lg border border-slate-300 p-4 ring-2 ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400"
     >
       {valueSelected && (
@@ -36,7 +41,7 @@ const Button: Button = ({ children, label, open, setOpen, valueSelected }) => {
           "rotate-180": open === false,
         })}
       />
-    </button>
+    </div>
   );
 };
 
