@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import Input from "components/Global/Input";
 import { classNames } from "utils";
@@ -21,6 +21,31 @@ const CreateParent: NextPage = () => {
   const [address, setAddress] = useState<
     Partial<ParentSchema["contact"]["address"]>
   >({});
+  const titleOptions = useMemo(
+    () => [
+      {
+        id: "Mr,",
+        value: "Mr.",
+      },
+      {
+        id: "Ms.",
+        value: "Ms.",
+      },
+      {
+        id: "Mrs.",
+        value: "Mrs.",
+      },
+      {
+        id: "Dr.",
+        value: "Dr.",
+      },
+      {
+        id: "Barr.",
+        value: "Barr.",
+      },
+    ],
+    []
+  );
 
   return (
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-50 font-poppins dark:bg-slate-900">
@@ -46,7 +71,6 @@ const CreateParent: NextPage = () => {
               </p>
             </div>
             <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8 xl:w-[40rem]">
-              {/* // Todo: Add the select for the title */}
               <Input
                 required
                 value={name.full}
@@ -66,6 +90,16 @@ const CreateParent: NextPage = () => {
                 }
                 onChange={(full: string) => setName({ ...name, full })}
               />
+              <div className="w-1/3">
+                <Input.Select
+                  label="Title"
+                  options={titleOptions}
+                  value={titleOptions.find(({ id }) => id === name.title)}
+                  onChange={({ id }) =>
+                    setName((name) => ({ ...name, title: id as string }))
+                  }
+                />
+              </div>
               <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
                 <div className="w-1/2">
                   <Input
