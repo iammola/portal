@@ -26,7 +26,7 @@ const Select: Select = ({ label, onChange, options, value }) => {
   }
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <Button {...{ label, open, setOpen }} valueSelected={value != undefined}>
         {value?.value ?? label}
       </Button>
