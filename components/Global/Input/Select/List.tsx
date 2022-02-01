@@ -1,3 +1,4 @@
+import { CheckIcon } from "@heroicons/react/solid";
 import { FunctionComponent } from "react";
 
 export const List: List = ({ children, className }) => {
@@ -8,6 +9,9 @@ export const Option: Option = ({ children, className, selected }) => {
   return (
     <li className={className(selected)}>
       <span className="text-sm font-medium text-slate-700">{children}</span>
+      {selected && (
+        <CheckIcon className="ml-auto mr-2 h-5 w-5 fill-slate-800" />
+      )}
     </li>
   );
 };
