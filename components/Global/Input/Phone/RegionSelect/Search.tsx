@@ -1,12 +1,21 @@
 import { SearchIcon } from "@heroicons/react/outline";
 import { FunctionComponent, useEffect, useRef } from "react";
 
-const Search: Search = ({ className, handleSearch, search, visible }) => {
+const Search: Search = ({
+  className,
+  handleBlur,
+  handleSearch,
+  search,
+  visible,
+}) => {
   const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    visible && setTimeout(() => ref.current?.focus(), 0);
-  }, [visible]);
+    if (visible) {
+      ref.current?.focus();
+      ref.current?.addEventListener("blur", handleBlur, { once: true });
+    }
+  }, [handleBlur, visible]);
 
   return (
     <div className={className}>
@@ -26,6 +35,7 @@ type Search = FunctionComponent<{
   search: string;
   visible: boolean;
   className: string;
+  handleBlur(e: FocusEvent): void;
   handleSearch(search: string): void;
 }>;
 

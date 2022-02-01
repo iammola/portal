@@ -8,6 +8,7 @@ import { classNames } from "utils";
 
 const List: List = ({
   className,
+  handleBlur,
   handleRegionChange,
   search,
   selectedRegion,
@@ -49,7 +50,7 @@ const List: List = ({
           key={regionCode}
           selected={regionCode === selectedRegion}
           onClick={() => handleRegionChange(regionCode)}
-          {...{ country, countryCode, regionCode, visible }}
+          {...{ country, countryCode, handleBlur, regionCode, visible }}
           className={(selected) =>
             classNames(
               "flex cursor-pointer flex-row items-center justify-start gap-x-4 rounded-xl p-2 hover:bg-slate-100 focus:outline-none",
@@ -72,6 +73,7 @@ List.Item = function Item({
   countryCode,
   regionCode,
   className,
+  handleBlur,
   onClick,
   selected,
   visible,
@@ -91,8 +93,9 @@ List.Item = function Item({
           ref.current?.offsetTop -
             ref.current?.parentElement?.offsetHeight / 2.6
         );
+      ref.current?.addEventListener("blur", handleBlur, { once: true });
     }
-  }, [selected, visible]);
+  }, [handleBlur, selected, visible]);
 
   useEffect(() => {
     if (country === undefined)
@@ -122,19 +125,21 @@ type ListProps = {
   visible: boolean;
   className: string;
   selectedRegion: string;
+  handleBlur(e: FocusEvent): void;
   handleRegionChange(regionCode: string): void;
 };
 
 interface List extends FunctionComponent<ListProps> {
-  Item: FunctionComponent<{
-    country?: string;
-    visible: boolean;
-    selected: boolean;
-    regionCode: string;
-    countryCode: number;
-    onClick(): void;
-    className: (selected: boolean) => string;
-  }>;
+  Item: FunctionComponent<
+    Pick<ListProps, "visible" | "handleBlur"> & {
+      country?: string;
+      selected: boolean;
+      regionCode: string;
+      countryCode: number;
+      onClick(): void;
+      className: (selected: boolean) => string;
+    }
+  >;
 }
 
 export default List;

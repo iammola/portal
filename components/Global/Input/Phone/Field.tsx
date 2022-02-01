@@ -118,6 +118,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
         onClick={() =>
           allowRegionChange && setShowCountrySelect(!showCountrySelect)
         }
+        // NOTE: The `onBlur` prop in RegionSelect gets called when this click event is triggered to close
         className="flex min-w-[65px] cursor-pointer flex-row items-center justify-center gap-x-0.5 rounded-l-xl bg-slate-100 px-3.5 py-3 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none"
       >
         {countryFlag}
@@ -150,6 +151,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
           visible={showCountrySelect}
           selectedRegion={regionCode}
           onRegionChange={handleRegionChange}
+          onBlur={() => setShowCountrySelect(false)}
         />
       )}
     </div>
