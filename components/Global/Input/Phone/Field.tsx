@@ -4,7 +4,6 @@ import {
   FormEvent,
   FunctionComponent,
   useCallback,
-  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -100,7 +99,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
       );
   }, [handleRegionChange, props.regionCode, regionCode, value]);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (showCountrySelect)
       (document.activeElement as HTMLElement)?.addEventListener(
         "blur",
