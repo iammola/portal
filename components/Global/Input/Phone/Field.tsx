@@ -21,7 +21,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
   const [regionCode, setRegionCode] = useState("");
   const [countryCode, setCountryCode] = useState(0);
   const [formattedValue, setFormattedValue] = useState("");
-  const [showCountrySelect, setShowCountrySelect] = useState(false);
+  const [showRegions, setShowRegions] = useState(false);
   const allowRegionChange = useMemo(
     () => props.regionCode === undefined,
     [props.regionCode]
@@ -72,7 +72,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
       if (region !== regionCode) handleChange(""); // Todo: focus input after
 
       setRegionCode(region);
-      setShowCountrySelect(false);
+      setShowRegions(false);
       setCountryCode(PhoneNumber.getCountryCodeForRegionCode(region));
     },
     [handleChange, regionCode]
@@ -115,9 +115,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
       )}
     >
       <div
-        onClick={() =>
-          allowRegionChange && setShowCountrySelect(!showCountrySelect)
-        }
+        onClick={() => allowRegionChange && setShowRegions(!showRegions)}
         // NOTE: The `onBlur` prop in RegionSelect gets called when this click event is triggered to close
         className="flex min-w-[65px] cursor-pointer flex-row items-center justify-center gap-x-0.5 rounded-l-xl bg-slate-100 px-3.5 py-3 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none"
       >
@@ -125,7 +123,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
         {allowRegionChange && (
           <ChevronUpIcon
             className={classNames("h-6 w-6 fill-slate-600", {
-              "rotate-180": !showCountrySelect,
+              "rotate-180": !showRegions,
             })}
           />
         )}
@@ -148,10 +146,10 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
       </div>
       {allowRegionChange && (
         <RegionSelect
-          visible={showCountrySelect}
+          visible={showRegions}
           selectedRegion={regionCode}
           onRegionChange={handleRegionChange}
-          onBlur={() => setShowCountrySelect(false)}
+          onBlur={() => setShowRegions(false)}
         />
       )}
     </div>
