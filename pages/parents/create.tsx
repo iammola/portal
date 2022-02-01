@@ -85,27 +85,8 @@ const CreateParent: NextPage = () => {
               </p>
             </div>
             <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8 xl:w-[40rem]">
-              <Input
-                required
-                value={name.full}
-                type="text"
-                id="fullName"
-                label="Full name"
-                className={(valid) =>
-                  classNames(
-                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                    {
-                      "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                        valid === true,
-                      "invalid:ring-red-400 focus:invalid:ring-red-400":
-                        valid === false,
-                    }
-                  )
-                }
-                onChange={(full: string) => setName({ ...name, full })}
-              />
               <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
-                <div className="w-1/3">
+                <div className="w-1/4">
                   <Input.Select
                     label="Title"
                     options={titleOptions}
@@ -115,14 +96,25 @@ const CreateParent: NextPage = () => {
                     }
                   />
                 </div>
-                <div className="w-1/3">
-                  <Input.Select
-                    label="Gender"
-                    options={genderOptions}
-                    onChange={({ id }) => setGender(id as string)}
-                    value={genderOptions.find(({ id }) => id === gender)}
-                  />
-                </div>
+                <Input
+                  required
+                  value={name.full}
+                  type="text"
+                  id="fullName"
+                  label="Full name"
+                  className={(valid) =>
+                    classNames(
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                      {
+                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                          valid === true,
+                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                          valid === false,
+                      }
+                    )
+                  }
+                  onChange={(full: string) => setName({ ...name, full })}
+                />
               </div>
               <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
                 <div className="w-1/2">
@@ -169,7 +161,28 @@ const CreateParent: NextPage = () => {
                 </div>
               </div>
               <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
-                <div className="w-1/3">
+                <div className="w-10/12">
+                  <Input
+                    required
+                    value={name.other}
+                    type="text"
+                    id="otherName"
+                    label="Other name"
+                    className={(valid) =>
+                      classNames(
+                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                        {
+                          "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                            valid === true,
+                          "invalid:ring-red-400 focus:invalid:ring-red-400":
+                            valid === false,
+                        }
+                      )
+                    }
+                    onChange={(other: string) => setName({ ...name, other })}
+                  />
+                </div>
+                <div className="w-2/12">
                   <Input
                     required
                     value={name.initials}
@@ -192,50 +205,8 @@ const CreateParent: NextPage = () => {
                     }
                   />
                 </div>
-                <div className="w-2/3">
-                  <Input
-                    required
-                    value={name.other}
-                    type="text"
-                    id="otherName"
-                    label="Other name"
-                    className={(valid) =>
-                      classNames(
-                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                        {
-                          "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                            valid === true,
-                          "invalid:ring-red-400 focus:invalid:ring-red-400":
-                            valid === false,
-                        }
-                      )
-                    }
-                    onChange={(other: string) => setName({ ...name, other })}
-                  />
-                </div>
               </div>
               <div className="flex w-full flex-row items-end md:gap-x-5 lg:gap-x-7">
-                <div className="w-full grow">
-                  <Input
-                    required
-                    type="text"
-                    id="occupation"
-                    label="Occupation"
-                    value={occupation}
-                    onChange={setOccupation}
-                    className={(valid) =>
-                      classNames(
-                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                        {
-                          "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                            valid === true,
-                          "invalid:ring-red-400 focus:invalid:ring-red-400":
-                            valid === false,
-                        }
-                      )
-                    }
-                  />
-                </div>
                 <Input.Date className="w-max space-y-3.5">
                   <Input.Date.Label className="text-sm font-medium tracking-wide text-slate-500">
                     Date of Birth
@@ -246,6 +217,33 @@ const CreateParent: NextPage = () => {
                     className="flex flex-row items-center justify-start gap-x-4"
                   />
                 </Input.Date>
+                <Input.Select
+                  label="Gender"
+                  options={genderOptions}
+                  onChange={({ id }) => setGender(id as string)}
+                  value={genderOptions.find(({ id }) => id === gender)}
+                />
+              </div>
+              <div className="w-3/4">
+                <Input
+                  required
+                  type="text"
+                  id="occupation"
+                  label="Occupation"
+                  value={occupation}
+                  onChange={setOccupation}
+                  className={(valid) =>
+                    classNames(
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                      {
+                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                          valid === true,
+                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                          valid === false,
+                      }
+                    )
+                  }
+                />
               </div>
             </div>
           </div>
