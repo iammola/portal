@@ -9,6 +9,7 @@ import type { ParentSchema } from "types/schema";
 
 const CreateParent: NextPage = () => {
   const [password, setPassword] = useState("");
+  const [gender, setGender] = useState<string>();
   const [dob, setDOB] = useState<ParentSchema["dob"]>();
   const [name, setName] = useState<Partial<ParentSchema["name"]>>({});
   const [occupation, setOccupation] = useState<ParentSchema["occupation"]>();
@@ -42,6 +43,19 @@ const CreateParent: NextPage = () => {
       {
         id: "Barr.",
         value: "Barr.",
+      },
+    ],
+    []
+  );
+  const genderOptions = useMemo(
+    () => [
+      {
+        id: "M",
+        value: "Male",
+      },
+      {
+        id: "F",
+        value: "Female",
       },
     ],
     []
@@ -90,15 +104,25 @@ const CreateParent: NextPage = () => {
                 }
                 onChange={(full: string) => setName({ ...name, full })}
               />
-              <div className="w-1/3">
-                <Input.Select
-                  label="Title"
-                  options={titleOptions}
-                  value={titleOptions.find(({ id }) => id === name.title)}
-                  onChange={({ id }) =>
-                    setName((name) => ({ ...name, title: id as string }))
-                  }
-                />
+              <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
+                <div className="w-1/3">
+                  <Input.Select
+                    label="Title"
+                    options={titleOptions}
+                    value={titleOptions.find(({ id }) => id === name.title)}
+                    onChange={({ id }) =>
+                      setName((name) => ({ ...name, title: id as string }))
+                    }
+                  />
+                </div>
+                <div className="w-1/3">
+                  <Input.Select
+                    label="Gender"
+                    options={genderOptions}
+                    onChange={({ id }) => setGender(id as string)}
+                    value={genderOptions.find(({ id }) => id === gender)}
+                  />
+                </div>
               </div>
               <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
                 <div className="w-1/2">
