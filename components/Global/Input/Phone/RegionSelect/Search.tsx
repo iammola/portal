@@ -14,8 +14,8 @@ const Search: Search = ({
     if (visible) {
       ref.current?.focus();
       ref.current?.addEventListener("blur", handleBlur, { once: true });
-    }
-  }, [handleBlur, visible]);
+    } else handleSearch("");
+  }, [handleBlur, handleSearch, visible]);
 
   return (
     <div className={className}>
