@@ -11,7 +11,7 @@ const Select: Select = ({ label, onChange, options, value }) => {
   return (
     <div className="relative">
       <Button {...{ open, setOpen }} valueSelected={value != undefined}>
-        {label}
+        {value?.value ?? label}
       </Button>
       <List
         className={classNames(
