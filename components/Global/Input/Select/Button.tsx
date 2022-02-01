@@ -14,7 +14,7 @@ const Button: Button = ({ children, open, setOpen, valueSelected }) => {
         className={classNames(
           "absolute col-start-1 select-none p-1 text-slate-600 transition-all",
           [
-            valueSelected || open,
+            !valueSelected && open,
             "left-[-0.4rem] -top-3 bg-white text-xs font-medium tracking-normal",
             "left-0 top-1/2 -translate-y-1/2 bg-transparent text-sm tracking-wide group-focus:left-[-0.4rem] group-focus:-top-3 group-focus:-translate-y-0 group-focus:bg-white group-focus:text-xs group-focus:font-medium group-focus:tracking-wide",
           ]
