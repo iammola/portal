@@ -3,13 +3,18 @@ import { ChevronUpIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
-const Button: Button = ({ children, open, setOpen, valueSelected }) => {
+const Button: Button = ({ children, label, open, setOpen, valueSelected }) => {
   return (
     <button
       type="button"
       onClick={() => setOpen(!open)}
       className="group relative grid w-full cursor-pointer grid-cols-[1fr_max-content] items-center justify-start gap-x-8 rounded-lg border border-slate-300 p-4 ring-2 ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400"
     >
+      {valueSelected && (
+        <span className="absolute left-[-0.4rem] -top-3 col-start-1 select-none bg-white p-1 text-xs font-medium tracking-normal text-slate-600">
+          {label}
+        </span>
+      )}
       <span
         className={classNames(
           "absolute col-start-1 select-none p-1 text-slate-600 transition-all",
@@ -37,6 +42,7 @@ const Button: Button = ({ children, open, setOpen, valueSelected }) => {
 
 type Button = FunctionComponent<{
   open: boolean;
+  label: string;
   valueSelected: boolean;
   setOpen(open: boolean): void;
 }>;
