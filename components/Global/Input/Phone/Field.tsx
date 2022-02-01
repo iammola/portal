@@ -91,7 +91,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
   useIsomorphicLayoutEffect(
     () =>
       handleRegionChange(
-        regionCode === undefined
+        regionCode === undefined && props.regionCode !== undefined
           ? value === ""
             ? defaultRegionCode
             : PhoneNumber(value).getRegionCode()
