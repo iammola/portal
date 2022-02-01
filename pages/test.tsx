@@ -22,7 +22,7 @@ const Test: NextPage = () => {
   );
 
   return (
-    <main className="flex h-screen w-screen flex-row items-center justify-center bg-slate-200 font-poppins dark:bg-slate-800">
+    <main className="flex h-screen w-screen flex-row items-center justify-center bg-slate-200 font-inter dark:bg-slate-800">
       <Head>
         <title>Test</title>
       </Head>
