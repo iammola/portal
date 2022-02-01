@@ -91,7 +91,6 @@ List.Item = function Item({
           ref.current?.offsetTop -
             ref.current?.parentElement?.offsetHeight / 2.6
         );
-      ref.current?.focus();
     }
   }, [selected, visible]);
 
