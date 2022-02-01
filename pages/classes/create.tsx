@@ -50,7 +50,7 @@ const CreateClass: NextPage = () => {
         }
       );
 
-      if (result.success === true) {
+      if (result.success) {
         console.warn(result.message, result.data);
       }
     } catch (error: any) {

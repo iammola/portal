@@ -5,7 +5,7 @@ import Input, { InputProps } from ".";
 const NumberInput: NumberInput = ({ onChange, value, ...props }) => {
   const validateCharacter = (
     e: FormEvent<HTMLInputElement> & { data: string }
-  ) => /\d/.test(e.data) === false && e.preventDefault();
+  ) => !/\d/.test(e.data) && e.preventDefault();
 
   const padValue = () => {
     const v = +(value ?? 0);

@@ -32,7 +32,7 @@ const Input: Input = ({
   useIsomorphicLayoutEffect(() => {
     const input = ref.current;
     setTyping?.(typing);
-    if (typing === false)
+    if (!typing)
       setValid(input?.value === "" ? undefined : input?.validity.valid);
   }, [props, setTyping, typing]);
 

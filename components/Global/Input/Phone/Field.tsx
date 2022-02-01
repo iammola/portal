@@ -101,20 +101,20 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
   }, [handleRegionChange, props.regionCode, regionCode, value]);
 
   useEffect(() => {
-    if (showCountrySelect === true)
+    if (showCountrySelect)
       (document.activeElement as HTMLElement)?.addEventListener(
         "blur",
         (e) =>
-          (e.target as HTMLElement)?.parentElement?.parentElement?.contains(
+          !(e.target as HTMLElement)?.parentElement?.parentElement?.contains(
             e.relatedTarget as Node
-          ) === false && setShowCountrySelect(false),
+          ) && setShowCountrySelect(false),
         { once: true }
       );
   }, [showCountrySelect]);
 
   const validateCharacter = (
     e: FormEvent<HTMLInputElement> & { data: string }
-  ) => /\d/.test(e.data) === false && e.preventDefault();
+  ) => !/\d/.test(e.data) && e.preventDefault();
 
   return (
     <div
@@ -135,7 +135,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
         {allowRegionChange && (
           <ChevronUpIcon
             className={classNames("h-6 w-6 fill-slate-600", {
-              "rotate-180": showCountrySelect === false,
+              "rotate-180": !showCountrySelect,
             })}
           />
         )}

@@ -20,7 +20,7 @@ const StudentMe: FunctionComponent = () => {
   );
 
   useEffect(() => {
-    if (router.isReady === true) {
+    if (router.isReady) {
       const initialTab = (router.query.tab as Tab) ?? "My details";
       const [pathname, query, ...args] = [
         "/me",

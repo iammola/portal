@@ -9,13 +9,13 @@ const Select: Select = ({ label, onChange, options, value }) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (open === true)
+    if (open)
       (document.activeElement as HTMLElement)?.addEventListener(
         "blur",
         (e) =>
-          (e.target as HTMLElement)?.parentElement?.contains(
+          !(e.target as HTMLElement)?.parentElement?.contains(
             e.relatedTarget as Node
-          ) === false && setOpen(false),
+          ) && setOpen(false),
         { once: true }
       );
   }, [open]);
@@ -33,7 +33,7 @@ const Select: Select = ({ label, onChange, options, value }) => {
       <List
         className={classNames(
           "absolute top-full left-0 z-[1000] mt-2 max-h-[13.5rem] w-full space-y-1 overflow-hidden overflow-y-auto overflow-x-hidden rounded-xl border border-slate-200 bg-white py-2 px-2 shadow-lg",
-          { "pointer-events-none invisible opacity-0": open === false }
+          { "pointer-events-none invisible opacity-0": !open }
         )}
       >
         {options.map((option) => (

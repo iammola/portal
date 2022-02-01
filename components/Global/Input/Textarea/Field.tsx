@@ -17,7 +17,7 @@ const Field: Field = ({
   const [limitPassed, setLimitPassed] = useState(false);
 
   useIsomorphicLayoutEffect(() => {
-    if (typing === false) {
+    if (!typing) {
       const length = value?.length ?? 0;
       setValid(required === true ? length > 0 : length < 1 ? undefined : true);
     }
@@ -36,7 +36,7 @@ const Field: Field = ({
         className={
           typeof className === "string"
             ? className
-            : className(limitPassed === false && valid)
+            : className(!limitPassed && valid)
         }
       />
       {required !== true && (

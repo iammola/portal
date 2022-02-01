@@ -47,7 +47,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
   }
 
   function handleKeyDown(e: KeyboardEvent<HTMLElement>) {
-    if (["Enter", "Space"].includes(e.code) === true) {
+    if (["Enter", "Space"].includes(e.code)) {
       const textNode = getSelection()?.anchorNode as ChildNode | null;
       const schoolMail = (textNode?.textContent?.trim() ?? "").toLowerCase();
       e.preventDefault();

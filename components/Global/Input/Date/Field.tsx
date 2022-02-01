@@ -59,7 +59,7 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
           value,
           addMilliseconds(min ?? value, +isEqual(value, min ?? value) * -1)
         );
-      setForceValid(forceValid === true || typing ? undefined : false);
+      setForceValid(forceValid || typing ? undefined : false);
     }
   }, [max, min, typing, value]);
 

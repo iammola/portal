@@ -43,7 +43,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
   useIsomorphicLayoutEffect(() => {
     if (data !== undefined && item.name === undefined) {
       setValid(data.success);
-      if (data.success === true) setItem(data.data);
+      if (data.success) setItem(data.data);
     }
   }, [data, item, setItem]);
 

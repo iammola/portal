@@ -84,7 +84,7 @@ List.Item = function Item({
   const countryFlag = useCountryFlag(regionCode);
 
   useEffect(() => {
-    if (selected === true && visible === true) {
+    if (selected && visible) {
       ref.current?.scrollIntoViewIfNeeded?.() ??
         ref.current?.parentElement?.scroll(
           0,
@@ -111,7 +111,7 @@ List.Item = function Item({
       <span className="text-sm font-medium text-slate-700">
         {country} (+{countryCode})
       </span>
-      {selected === true && (
+      {selected && (
         <CheckIcon className="ml-auto mr-2 h-5 w-5 fill-slate-800" />
       )}
     </li>
