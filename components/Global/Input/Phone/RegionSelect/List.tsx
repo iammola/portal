@@ -112,7 +112,7 @@ List.Item = function Item({
         {country} (+{countryCode})
       </span>
       {selected === true && (
-        <CheckIcon className="ml-auto mr-2 h-5 w-5 text-slate-800" />
+        <CheckIcon className="ml-auto mr-2 h-5 w-5 fill-slate-800" />
       )}
     </li>
   );
