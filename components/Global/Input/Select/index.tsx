@@ -5,7 +5,7 @@ import { classNames } from "utils";
 import Button from "./Button";
 import { Option, List } from "./List";
 
-const Select: Select = ({ label, options, value }) => {
+const Select: Select = ({ label, onChange, options, value }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -23,6 +23,7 @@ const Select: Select = ({ label, options, value }) => {
           <Option
             key={String(option.id)}
             selected={value === option}
+            handleChange={() => onChange(option)}
             className={(selected) =>
               classNames(
                 "flex cursor-pointer flex-row items-center justify-start gap-x-4 rounded-xl p-2 hover:bg-slate-100 focus:outline-none",
