@@ -67,6 +67,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
       removeFormatting,
     ]
   );
+
   const handleRegionChange = useCallback(
     (region: string = defaultRegionCode) => {
       if (region !== regionCode) handleChange(""); // Todo: focus input after
@@ -88,17 +89,16 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
     [removeCountryCode, removeFormatting, typing, value]
   );
 
-  useIsomorphicLayoutEffect(
-    () =>
+  useIsomorphicLayoutEffect(() => {
+    if (regionCode === "")
       handleRegionChange(
-        regionCode === undefined && props.regionCode !== undefined
-          ? value === ""
-            ? defaultRegionCode
-            : PhoneNumber(value).getRegionCode()
-          : props.regionCode
-      ),
-    [handleRegionChange, props.regionCode, regionCode, value]
-  );
+        props.regionCode !== undefined
+          ? props.regionCode
+          : value === ""
+          ? regionCode || defaultRegionCode
+          : PhoneNumber(value).getRegionCode()
+      );
+  }, [handleRegionChange, props.regionCode, regionCode, value]);
 
   useEffect(() => {
     if (showCountrySelect === true)
