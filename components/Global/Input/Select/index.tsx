@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 
 import { classNames } from "utils";
 
@@ -7,6 +7,23 @@ import { Option, List } from "./List";
 
 const Select: Select = ({ label, onChange, options, value }) => {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (open === true)
+      (document.activeElement as HTMLElement)?.addEventListener(
+        "blur",
+        (e) =>
+          (e.target as HTMLElement)?.parentElement?.contains(
+            e.relatedTarget as Node
+          ) === false && setOpen(false),
+        { once: true }
+      );
+  }, [open]);
+
+  function handleChange(option: Value) {
+    setOpen(false);
+    onChange(option);
+  }
 
   return (
     <div className="relative">
@@ -23,7 +40,7 @@ const Select: Select = ({ label, onChange, options, value }) => {
           <Option
             key={String(option.id)}
             selected={value === option}
-            handleChange={() => onChange(option)}
+            handleChange={() => handleChange(option)}
             className={(selected) =>
               classNames(
                 "flex cursor-pointer flex-row items-center justify-start gap-x-4 rounded-xl p-2 hover:bg-slate-100 focus:outline-none",
