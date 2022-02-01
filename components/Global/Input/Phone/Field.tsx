@@ -4,7 +4,6 @@ import {
   FormEvent,
   FunctionComponent,
   useCallback,
-  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -100,18 +99,6 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
       );
   }, [handleRegionChange, props.regionCode, regionCode, value]);
 
-  useEffect(() => {
-    if (showCountrySelect)
-      (document.activeElement as HTMLElement)?.addEventListener(
-        "blur",
-        (e) =>
-          !(e.target as HTMLElement)?.parentElement?.parentElement?.contains(
-            e.relatedTarget as Node
-          ) && setShowCountrySelect(false),
-        { once: true }
-      );
-  }, [showCountrySelect]);
-
   const validateCharacter = (
     e: FormEvent<HTMLInputElement> & { data: string }
   ) => !/\d/.test(e.data) && e.preventDefault();
@@ -128,7 +115,9 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
       )}
     >
       <div
-        onClick={() => allowRegionChange && setShowCountrySelect((i) => !i)}
+        onClick={() =>
+          allowRegionChange && setShowCountrySelect(!showCountrySelect)
+        }
         className="flex min-w-[65px] cursor-pointer flex-row items-center justify-center gap-x-0.5 rounded-l-xl bg-slate-100 px-3.5 py-3 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none"
       >
         {countryFlag}
