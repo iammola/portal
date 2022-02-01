@@ -23,6 +23,10 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
   const [countryCode, setCountryCode] = useState(0);
   const [formattedValue, setFormattedValue] = useState("");
   const [showCountrySelect, setShowCountrySelect] = useState(false);
+  const allowRegionChange = useMemo(
+    () => props.regionCode === undefined,
+    [props.regionCode]
+  );
   const formatter = useMemo(
     () => PhoneNumber.getAsYouType(regionCode),
     [regionCode]
@@ -124,15 +128,17 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
       )}
     >
       <div
-        onClick={() => setShowCountrySelect((i) => !i)}
-        className="flex cursor-pointer flex-row items-center justify-center gap-x-0.5 rounded-l-xl bg-slate-100 px-3.5 py-3 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none"
+        onClick={() => allowRegionChange && setShowCountrySelect((i) => !i)}
+        className="flex min-w-[65px] cursor-pointer flex-row items-center justify-center gap-x-0.5 rounded-l-xl bg-slate-100 px-3.5 py-3 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none"
       >
         {countryFlag}
-        <ChevronUpIcon
-          className={classNames("h-6 w-6 fill-slate-600", {
-            "rotate-180": showCountrySelect === false,
-          })}
-        />
+        {allowRegionChange && (
+          <ChevronUpIcon
+            className={classNames("h-6 w-6 fill-slate-600", {
+              "rotate-180": showCountrySelect === false,
+            })}
+          />
+        )}
       </div>
       <div className="flex grow flex-row items-center justify-start gap-x-2 rounded-r-xl">
         <span className="text-lg font-medium tracking-wide text-slate-500">
@@ -150,11 +156,13 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
           />
         </div>
       </div>
-      <RegionSelect
-        visible={showCountrySelect}
-        selectedRegion={regionCode}
-        onRegionChange={handleRegionChange}
-      />
+      {allowRegionChange && (
+        <RegionSelect
+          visible={showCountrySelect}
+          selectedRegion={regionCode}
+          onRegionChange={handleRegionChange}
+        />
+      )}
     </div>
   );
 };
