@@ -1,5 +1,5 @@
 import { FunctionComponent, MouseEvent } from "react";
-import { ChevronUpIcon } from "@heroicons/react/solid";
+import { SelectorIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
@@ -36,11 +36,7 @@ const Button: Button = ({ children, label, open, setOpen, valueSelected }) => {
       >
         {children}
       </span>
-      <ChevronUpIcon
-        className={classNames("col-start-2 h-5 w-5 fill-slate-600", {
-          "rotate-180": open === false,
-        })}
-      />
+      <SelectorIcon className="col-start-2 h-5 w-5 fill-slate-600" />
     </div>
   );
 };
