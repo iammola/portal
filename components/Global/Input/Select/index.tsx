@@ -1,7 +1,6 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 
 import { classNames } from "utils";
-import { useIsomorphicLayoutEffect } from "hooks";
 
 import Button from "./Button";
 import { Option, List } from "./List";
@@ -9,7 +8,7 @@ import { Option, List } from "./List";
 const Select: Select = ({ label, onChange, options, value }) => {
   const [open, setOpen] = useState(false);
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     if (open)
       (document.activeElement as HTMLElement)?.addEventListener(
         "blur",
