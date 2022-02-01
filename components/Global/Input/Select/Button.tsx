@@ -13,7 +13,7 @@ const Button: Button = ({ children, label, open, setOpen, valueSelected }) => {
     <div
       tabIndex={0}
       onClick={handleClick}
-      className="group relative grid w-full cursor-pointer grid-cols-[1fr_max-content] items-center justify-start gap-x-8 rounded-lg border border-slate-300 p-4 ring-2 ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400"
+      className="group relative grid h-[3.75rem] w-full cursor-pointer grid-cols-[1fr_max-content] items-center justify-start gap-x-8 rounded-lg border border-slate-300 p-4 ring-2 ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400"
     >
       {valueSelected && (
         <span className="absolute left-[-0.4rem] -top-3 col-start-1 select-none bg-white p-1 text-xs font-medium tracking-normal text-slate-600">
