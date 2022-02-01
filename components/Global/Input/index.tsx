@@ -11,6 +11,7 @@ import NumberInput from "./Number";
 import PasswordInput from "./Password";
 import TextareaInput from "./Textarea";
 import DynamicEmailInput from "./DynamicEmail";
+import UserPortraitInput from "./UserPortrait";
 
 const XIcon = dynamic(() => import("@heroicons/react/solid/XIcon"));
 const CheckIcon = dynamic(() => import("@heroicons/react/solid/CheckIcon"));
@@ -93,6 +94,7 @@ Input.Number = NumberInput;
 Input.Password = PasswordInput;
 Input.Textarea = TextareaInput;
 Input.DynamicEmail = DynamicEmailInput;
+Input.UserPortrait = UserPortraitInput;
 
 export type InputProps = Omit<
   ComponentProps<"input">,
@@ -121,6 +123,7 @@ interface Input extends FunctionComponent<InputProps> {
   Select: SelectInput;
   Password: PasswordInput;
   Textarea: TextareaInput;
+  UserPortrait: UserPortraitInput;
   DynamicEmail: DynamicEmailInput;
 }
 
