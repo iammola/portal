@@ -59,7 +59,7 @@ const UserPortrait: UserPortrait = ({ onChange, value }) => {
             <button
               type="button"
               onClick={removeImage}
-              className="absolute top-1.5 right-1.5 z-50 h-6 w-6 rounded-full bg-slate-100 p-[5px] shadow-md hover:bg-slate-200"
+              className="absolute top-1.5 right-1.5 z-50 h-6 w-6 rounded-full bg-slate-100 p-[5px] shadow-md hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:ring-offset-2 focus:ring-offset-white"
             >
               <XIcon className="h-full w-full stroke-slate-600" />
             </button>
@@ -69,7 +69,7 @@ const UserPortrait: UserPortrait = ({ onChange, value }) => {
       <input
         type="file"
         onChange={handleChange}
-        className="w-[113px] text-sm file:cursor-pointer file:rounded-full file:border-none file:bg-blue-200 file:px-4 file:py-2 file:font-medium file:tracking-wide file:text-blue-700 hover:file:bg-blue-300"
+        className="w-[113px] rounded-full text-sm file:cursor-pointer file:rounded-full file:border-none file:bg-blue-200 file:px-4 file:py-2 file:font-medium file:tracking-wide file:text-blue-700 hover:file:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-white"
       />
       <span className="truncate text-sm font-medium tracking-wide text-slate-500">
         {fileName ?? "no file selected"}
