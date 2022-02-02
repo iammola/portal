@@ -42,7 +42,7 @@ const UserPortrait: UserPortrait = ({ onChange, value }) => {
   }
 
   return (
-    <div className="flex w-[25rem] flex-row items-center justify-start gap-x-2">
+    <div className="flex w-full flex-row items-center justify-start gap-x-2">
       <div className="relative aspect-square h-[6.5rem] w-[6.5rem] shrink-0 rounded-full bg-slate-300 dark:bg-slate-800">
         {src === "" ? (
           <Placeholder className="w-full rounded-full fill-slate-500 dark:fill-white" />
