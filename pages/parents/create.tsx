@@ -12,6 +12,9 @@ const CreateParent: NextPage = () => {
   const [gender, setGender] = useState<string>();
   const [dob, setDOB] = useState<ParentSchema["dob"]>();
   const [name, setName] = useState<Partial<ParentSchema["name"]>>({});
+  const [image, setImage] = useState<
+    Partial<{ [K in "cover" | "portrait"]: File }>
+  >({});
   const [occupation, setOccupation] = useState<ParentSchema["occupation"]>();
   const [email, setEmail] = useState<Partial<ParentSchema["contact"]["email"]>>(
     {}
@@ -450,6 +453,13 @@ const CreateParent: NextPage = () => {
                   onChange={setPassword}
                 />
               </div>
+              <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
+                Photos
+              </span>
+              <Input.UserPortrait
+                value={image.portrait}
+                onChange={(portrait) => setImage({ ...image, portrait })}
+              />
             </div>
           </div>
         </form>
