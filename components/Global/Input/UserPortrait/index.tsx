@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { XIcon } from "@heroicons/react/outline";
 import { ChangeEvent, FunctionComponent, useEffect, useState } from "react";
 
 import Placeholder from "./Placeholder";
@@ -21,6 +22,12 @@ const UserPortrait: UserPortrait = ({ onChange, value }) => {
     setSrc((target?.result as string) ?? "");
   }
 
+  function removeImage() {
+    setSrc("");
+    setUnoptimized(false);
+    setFileName(undefined);
+  }
+
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
 
@@ -38,16 +45,25 @@ const UserPortrait: UserPortrait = ({ onChange, value }) => {
     <div className="flex w-[25rem] flex-row items-center justify-start gap-x-2">
       <div className="relative aspect-square h-[6.5rem] w-[6.5rem] shrink-0 rounded-full bg-slate-300 dark:bg-slate-800">
         {src === "" ? (
-          <Placeholder className="w-full fill-slate-500 dark:fill-white" />
+          <Placeholder className="w-full rounded-full fill-slate-500 dark:fill-white" />
         ) : (
-          <Image
-            layout="fill"
-            objectFit="cover"
-            alt="Image Preview"
-            objectPosition="center"
-            className="h-full w-full"
-            {...{ src, unoptimized }}
-          />
+          <>
+            <Image
+              layout="fill"
+              objectFit="cover"
+              alt="Image Preview"
+              objectPosition="center"
+              {...{ src, unoptimized }}
+              className="h-full w-full rounded-full"
+            />
+            <button
+              type="button"
+              onClick={removeImage}
+              className="absolute top-1.5 right-1.5 z-50 h-6 w-6 rounded-full bg-slate-100 p-[5px] shadow-md hover:bg-slate-200"
+            >
+              <XIcon className="h-full w-full stroke-slate-600" />
+            </button>
+          </>
         )}
       </div>
       <input
