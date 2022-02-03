@@ -3,7 +3,7 @@ import { FunctionComponent, useState } from "react";
 import Conditions from "./Conditions";
 import Field, { FieldProps } from "./Field";
 
-const PasswordInput: PasswordInput = ({
+const Password: Password = ({
   confirmProps,
   hideConditions,
   validators,
@@ -42,7 +42,7 @@ const PasswordInput: PasswordInput = ({
   );
 };
 
-type PasswordInput = FunctionComponent<
+type Password = FunctionComponent<
   FieldProps & {
     hideConditions?: boolean;
     withConfirm?: boolean;
@@ -50,4 +50,4 @@ type PasswordInput = FunctionComponent<
   }
 >;
 
-export default PasswordInput;
+export default Password;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Head from "next/head";
 
-import Input from "components/Global/Input";
+import Avatar from "components/Form/Avatar";
 
 import type { NextPage } from "next";
 
@@ -14,7 +14,7 @@ const Test: NextPage = () => {
         <title>Test</title>
       </Head>
       <form className="rounded-lg bg-white p-8">
-        <Input.UserPortrait value={value} onChange={setValue} />
+        <Avatar value={value} onChange={setValue} />
       </form>
     </main>
   );

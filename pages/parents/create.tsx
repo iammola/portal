@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useMemo, useState } from "react";
 
-import Input from "components/Global/Input";
+import * as Form from "components/Form";
 import { classNames } from "utils";
 
 import type { NextPage } from "next";
@@ -90,7 +90,7 @@ const CreateParent: NextPage = () => {
             <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8 xl:w-[40rem]">
               <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
                 <div className="w-1/4">
-                  <Input.Select
+                  <Form.Select
                     label="Title"
                     options={titleOptions}
                     value={titleOptions.find(({ id }) => id === name.title)}
@@ -99,7 +99,7 @@ const CreateParent: NextPage = () => {
                     }
                   />
                 </div>
-                <Input
+                <Form.Input
                   required
                   value={name.full}
                   type="text"
@@ -121,7 +121,7 @@ const CreateParent: NextPage = () => {
               </div>
               <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
                 <div className="w-1/2">
-                  <Input
+                  <Form.Input
                     required
                     value={name.first}
                     type="text"
@@ -142,7 +142,7 @@ const CreateParent: NextPage = () => {
                   />
                 </div>
                 <div className="w-1/2">
-                  <Input
+                  <Form.Input
                     required
                     value={name.last}
                     type="text"
@@ -165,7 +165,7 @@ const CreateParent: NextPage = () => {
               </div>
               <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
                 <div className="w-10/12">
-                  <Input
+                  <Form.Input
                     required
                     value={name.other}
                     type="text"
@@ -186,7 +186,7 @@ const CreateParent: NextPage = () => {
                   />
                 </div>
                 <div className="w-2/12">
-                  <Input
+                  <Form.Input
                     required
                     value={name.initials}
                     type="text"
@@ -210,17 +210,17 @@ const CreateParent: NextPage = () => {
                 </div>
               </div>
               <div className="flex w-full flex-row items-end md:gap-x-5 lg:gap-x-7">
-                <Input.Date className="w-max space-y-3.5">
-                  <Input.Date.Label className="text-sm font-medium tracking-wide text-slate-500">
+                <Form.Date className="w-max space-y-3.5">
+                  <Form.Date.Label className="text-sm font-medium tracking-wide text-slate-500">
                     Date of Birth
-                  </Input.Date.Label>
-                  <Input.Date.Field
+                  </Form.Date.Label>
+                  <Form.Date.Field
                     value={dob}
                     onChange={setDOB}
                     className="flex flex-row items-center justify-start gap-x-4"
                   />
-                </Input.Date>
-                <Input.Select
+                </Form.Date>
+                <Form.Select
                   label="Gender"
                   options={genderOptions}
                   onChange={({ id }) => setGender(id as string)}
@@ -228,7 +228,7 @@ const CreateParent: NextPage = () => {
                 />
               </div>
               <div className="w-3/4">
-                <Input
+                <Form.Input
                   required
                   type="text"
                   id="occupation"
@@ -267,7 +267,7 @@ const CreateParent: NextPage = () => {
                     Primary
                   </span>
                   <div className="col-start-2 col-end-5">
-                    <Input
+                    <Form.Input
                       required
                       type="email"
                       value={email.primary}
@@ -293,7 +293,7 @@ const CreateParent: NextPage = () => {
                     Work <span className="text-[0.675rem]">(other)</span>
                   </span>
                   <div className="col-start-2 col-end-5">
-                    <Input
+                    <Form.Input
                       type="email"
                       value={email.other}
                       className={(valid) =>
@@ -318,39 +318,39 @@ const CreateParent: NextPage = () => {
                 <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
                   Phone numbers
                 </span>
-                <Input.Phone className="grid w-full grid-cols-4 items-center gap-x-3">
-                  <Input.Phone.Label className="col-start-1 col-end-2 text-sm text-slate-600">
+                <Form.Phone className="grid w-full grid-cols-4 items-center gap-x-3">
+                  <Form.Phone.Label className="col-start-1 col-end-2 text-sm text-slate-600">
                     Primary
-                  </Input.Phone.Label>
+                  </Form.Phone.Label>
                   <div className="col-start-2 col-end-5">
-                    <Input.Phone.Field
+                    <Form.Phone.Field
                       required
                       value={phone.primary ?? ""}
                       onChange={(primary) => setPhone({ ...phone, primary })}
                     />
                   </div>
-                </Input.Phone>
-                <Input.Phone className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
-                  <Input.Phone.Label className="col-start-1 col-end-2 text-sm text-slate-600">
+                </Form.Phone>
+                <Form.Phone className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
+                  <Form.Phone.Label className="col-start-1 col-end-2 text-sm text-slate-600">
                     Work <span className="text-[0.675rem]">(other)</span>
-                  </Input.Phone.Label>
+                  </Form.Phone.Label>
                   <div className="col-start-2 col-end-5">
-                    <Input.Phone.Field
+                    <Form.Phone.Field
                       value={phone.other ?? ""}
                       onChange={(other) => setPhone({ ...phone, other })}
                     />
                   </div>
-                </Input.Phone>
+                </Form.Phone>
               </div>
               <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8">
                 <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
                   Address
                 </span>
-                <Input.Textarea className="grid w-full grid-cols-4 items-center gap-x-3">
-                  <Input.Textarea.Label className="col-start-1 col-end-2 text-sm text-slate-600">
+                <Form.Textarea className="grid w-full grid-cols-4 items-center gap-x-3">
+                  <Form.Textarea.Label className="col-start-1 col-end-2 text-sm text-slate-600">
                     Home
-                  </Input.Textarea.Label>
-                  <Input.Textarea.Field
+                  </Form.Textarea.Label>
+                  <Form.Textarea.Field
                     required
                     max={500}
                     id="homeAddress"
@@ -369,12 +369,12 @@ const CreateParent: NextPage = () => {
                       )
                     }
                   />
-                </Input.Textarea>
-                <Input.Textarea className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
-                  <Input.Textarea.Label className="col-start-1 col-end-2 text-sm text-slate-600">
+                </Form.Textarea>
+                <Form.Textarea className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
+                  <Form.Textarea.Label className="col-start-1 col-end-2 text-sm text-slate-600">
                     Work <span className="text-[0.675rem]">(other)</span>
-                  </Input.Textarea.Label>
-                  <Input.Textarea.Field
+                  </Form.Textarea.Label>
+                  <Form.Textarea.Field
                     max={500}
                     id="workAddress"
                     value={address.other}
@@ -392,7 +392,7 @@ const CreateParent: NextPage = () => {
                       )
                     }
                   />
-                </Input.Textarea>
+                </Form.Textarea>
               </div>
             </div>
           </div>
@@ -409,7 +409,7 @@ const CreateParent: NextPage = () => {
                 Username
               </span>
               <div className="w-3/4">
-                <Input
+                <Form.Input
                   required
                   type="text"
                   id="userName"
@@ -433,7 +433,7 @@ const CreateParent: NextPage = () => {
                 Password
               </span>
               <div className="w-3/4">
-                <Input.Password
+                <Form.Password
                   required
                   withConfirm
                   id="password"
@@ -456,7 +456,7 @@ const CreateParent: NextPage = () => {
               <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
                 Photos
               </span>
-              <Input.UserPortrait
+              <Form.Avatar
                 value={image.portrait}
                 onChange={(portrait) => setImage({ ...image, portrait })}
               />

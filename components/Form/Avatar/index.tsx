@@ -4,7 +4,7 @@ import { ChangeEvent, FunctionComponent, useEffect, useState } from "react";
 
 import Placeholder from "./Placeholder";
 
-const UserPortrait: UserPortrait = ({ onChange, value }) => {
+const Avatar: Avatar = ({ onChange, value }) => {
   const [src, setSrc] = useState("");
   const [fileName, setFileName] = useState<string>();
   const [unoptimized, setUnoptimized] = useState(false);
@@ -79,9 +79,9 @@ const UserPortrait: UserPortrait = ({ onChange, value }) => {
   );
 };
 
-type UserPortrait = FunctionComponent<{
+type Avatar = FunctionComponent<{
   value?: File | string;
   onChange(value: File): void;
 }>;
 
-export default UserPortrait;
+export default Avatar;

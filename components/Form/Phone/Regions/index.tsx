@@ -5,7 +5,7 @@ import { classNames } from "utils";
 import List from "./List";
 import Search from "./Search";
 
-const RegionSelect: RegionSelect = ({
+const Regions: Regions = ({
   onBlur,
   onRegionChange,
   selectedRegion,
@@ -39,11 +39,11 @@ const RegionSelect: RegionSelect = ({
   );
 };
 
-type RegionSelect = FunctionComponent<{
+type Regions = FunctionComponent<{
   onBlur(): void;
   visible: boolean;
   selectedRegion: string;
   onRegionChange(regionCode: string): void;
 }>;
 
-export default RegionSelect;
+export default Regions;

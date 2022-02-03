@@ -9,10 +9,10 @@ import {
 } from "react";
 
 import { classNames } from "utils";
-import Input from "components/Global/Input";
+import Input from "components/Form/Input";
 import { useCountryFlag, useIsomorphicLayoutEffect } from "hooks";
 
-import RegionSelect from "./RegionSelect";
+import Regions from "./Regions";
 
 const Field: Field = ({ onChange, required, value = "", ...props }) => {
   const defaultRegionCode = "GB";
@@ -145,7 +145,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
         </div>
       </div>
       {allowRegionChange && (
-        <RegionSelect
+        <Regions
           visible={showRegions}
           selectedRegion={regionCode}
           onRegionChange={handleRegionChange}

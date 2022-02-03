@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
 
-import Input, { InputProps } from "components/Global/Input";
+import Input, { InputProps } from "components/Form/Input";
 import { useIsomorphicLayoutEffect } from "hooks";
 
 const Field: Field = ({

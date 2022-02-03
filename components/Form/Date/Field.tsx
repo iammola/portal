@@ -7,7 +7,7 @@ import {
 } from "date-fns";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 
-import NumberInput from "components/Global/Input/Number";
+import NumberInput from "components/Form/Number";
 import { useIsomorphicLayoutEffect } from "hooks";
 import { classNames } from "utils";
 
