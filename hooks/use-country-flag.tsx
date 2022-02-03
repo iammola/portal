@@ -9,17 +9,18 @@ export function useCountryFlag(regionCode: string) {
   const [countryFlag, setCountryFlag] = useState<JSX.Element>();
 
   useIsomorphicLayoutEffect(() => {
-    if (!regionCode) return;
-    const emoji = getCountryFlag(regionCode);
-    const Icon = Flags[regionCode as keyof typeof Flags] ?? <></>;
+    if (regionCode) {
+      const emoji = getCountryFlag(regionCode);
+      const Icon = Flags[regionCode as keyof typeof Flags] ?? <></>;
 
-    setCountryFlag(
-      ifEmoji(emoji) ? (
-        <span className="text-xl">{emoji}</span>
-      ) : (
-        <Icon className="h-7 w-[25px]" />
-      )
-    );
+      setCountryFlag(
+        ifEmoji(emoji) ? (
+          <span className="text-xl">{emoji}</span>
+        ) : (
+          <Icon className="h-7 w-[25px]" />
+        )
+      );
+    }
   }, [regionCode]);
 
   return countryFlag;
