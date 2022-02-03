@@ -23,10 +23,6 @@ const StudentGuardianSchema = new Schema<GuardianSchema>(
       // TODO: Sort out ref Model
       required: [true, "Guardian ID required"],
     },
-    linkedOn: {
-      type: Date,
-      default: new Date(),
-    },
     relationship: {
       type: String,
       required: [true, "Guardian Relationship required"],
