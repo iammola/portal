@@ -1,7 +1,8 @@
 import Head from "next/head";
 import { useMemo, useState } from "react";
 
-import * as Form from "components/Form";
+import * as FormComponents from "components/Form";
+import { Form, Section } from "components/Create/User";
 import { classNames } from "utils";
 
 import type { NextPage } from "next";
@@ -77,392 +78,372 @@ const CreateParent: NextPage = () => {
             Parent
           </span>
         </h1>
-        <form className="h-full w-full grow space-y-10 self-center px-10">
-          <div className="flex w-full items-stretch justify-start rounded-lg bg-white p-7 shadow-md md:gap-x-6 lg:gap-x-12">
-            <div className="md:w-[27rem]">
-              <h3 className="text-lg font-medium text-slate-800">
-                Personal Information
-              </h3>
-              <p className="text-sm text-slate-500">
-                Use a permanent address where you can receive mail.
-              </p>
-            </div>
-            <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8 xl:w-[40rem]">
-              <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
-                <div className="w-1/4">
-                  <Form.Select
-                    label="Title"
-                    options={titleOptions}
-                    value={titleOptions.find(({ id }) => id === name.title)}
-                    onChange={({ id }) =>
-                      setName((name) => ({ ...name, title: id as string }))
-                    }
-                  />
-                </div>
-                <Form.Input
-                  required
-                  value={name.full}
-                  type="text"
-                  id="fullName"
-                  label="Full name"
-                  className={(valid) =>
-                    classNames(
-                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                      {
-                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                          valid === true,
-                        "invalid:ring-red-400 focus:invalid:ring-red-400":
-                          valid === false,
-                      }
-                    )
-                  }
-                  onChange={(full: string) => setName({ ...name, full })}
-                />
-              </div>
-              <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
-                <div className="w-1/2">
-                  <Form.Input
-                    required
-                    value={name.first}
-                    type="text"
-                    id="firstName"
-                    label="First name"
-                    className={(valid) =>
-                      classNames(
-                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                        {
-                          "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                            valid === true,
-                          "invalid:ring-red-400 focus:invalid:ring-red-400":
-                            valid === false,
-                        }
-                      )
-                    }
-                    onChange={(first: string) => setName({ ...name, first })}
-                  />
-                </div>
-                <div className="w-1/2">
-                  <Form.Input
-                    required
-                    value={name.last}
-                    type="text"
-                    id="lastName"
-                    label="Last name"
-                    className={(valid) =>
-                      classNames(
-                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                        {
-                          "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                            valid === true,
-                          "invalid:ring-red-400 focus:invalid:ring-red-400":
-                            valid === false,
-                        }
-                      )
-                    }
-                    onChange={(last: string) => setName({ ...name, last })}
-                  />
-                </div>
-              </div>
-              <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
-                <div className="w-10/12">
-                  <Form.Input
-                    required
-                    value={name.other}
-                    type="text"
-                    id="otherName"
-                    label="Other name"
-                    className={(valid) =>
-                      classNames(
-                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                        {
-                          "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                            valid === true,
-                          "invalid:ring-red-400 focus:invalid:ring-red-400":
-                            valid === false,
-                        }
-                      )
-                    }
-                    onChange={(other: string) => setName({ ...name, other })}
-                  />
-                </div>
-                <div className="w-2/12">
-                  <Form.Input
-                    required
-                    value={name.initials}
-                    type="text"
-                    id="initials"
-                    label="Initials"
-                    className={(valid) =>
-                      classNames(
-                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                        {
-                          "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                            valid === true,
-                          "invalid:ring-red-400 focus:invalid:ring-red-400":
-                            valid === false,
-                        }
-                      )
-                    }
-                    onChange={(initials: string) =>
-                      setName({ ...name, initials })
-                    }
-                  />
-                </div>
-              </div>
-              <div className="flex w-full flex-row items-end md:gap-x-5 lg:gap-x-7">
-                <Form.Date className="w-max space-y-3.5">
-                  <Form.Date.Label className="text-sm font-medium tracking-wide text-slate-500">
-                    Date of Birth
-                  </Form.Date.Label>
-                  <Form.Date.Field
-                    value={dob}
-                    onChange={setDOB}
-                    className="flex flex-row items-center justify-start gap-x-4"
-                  />
-                </Form.Date>
-                <Form.Select
-                  label="Gender"
-                  options={genderOptions}
-                  onChange={({ id }) => setGender(id as string)}
-                  value={genderOptions.find(({ id }) => id === gender)}
-                />
-              </div>
-              <div className="w-3/4">
-                <Form.Input
-                  required
-                  type="text"
-                  id="occupation"
-                  label="Occupation"
-                  value={occupation}
-                  onChange={setOccupation}
-                  className={(valid) =>
-                    classNames(
-                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                      {
-                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                          valid === true,
-                        "invalid:ring-red-400 focus:invalid:ring-red-400":
-                          valid === false,
-                      }
-                    )
+        <Form>
+          <Section
+            title="Personal Information"
+            description="Use a permanent address where you can receive mail."
+          >
+            <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
+              <div className="w-1/4">
+                <FormComponents.Select
+                  label="Title"
+                  options={titleOptions}
+                  value={titleOptions.find(({ id }) => id === name.title)}
+                  onChange={({ id }) =>
+                    setName((name) => ({ ...name, title: id as string }))
                   }
                 />
               </div>
-            </div>
-          </div>
-          <div className="flex w-full items-stretch justify-start rounded-lg bg-white p-7 shadow-md md:gap-x-6 lg:gap-x-12">
-            <div className="md:w-[27rem]">
-              <h3 className="text-lg font-medium text-slate-800">Contact</h3>
-              <p className="text-sm text-slate-500">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam.
-              </p>
-            </div>
-            <div className="flex w-full flex-col gap-y-8 xl:w-[40rem]">
-              <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8">
-                <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
-                  Email addresses
-                </span>
-                <div className="grid w-full grid-cols-4 items-center gap-x-3">
-                  <span className="col-start-1 col-end-2 text-sm text-slate-600">
-                    Primary
-                  </span>
-                  <div className="col-start-2 col-end-5">
-                    <Form.Input
-                      required
-                      type="email"
-                      value={email.primary}
-                      className={(valid) =>
-                        classNames(
-                          "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                          {
-                            "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                              valid === true,
-                            "invalid:ring-red-400 focus:invalid:ring-red-400":
-                              valid === false,
-                          }
-                        )
-                      }
-                      onChange={(primary: string) =>
-                        setEmail({ ...email, primary })
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
-                  <span className="col-start-1 col-end-2 text-sm text-slate-600">
-                    Work <span className="text-[0.675rem]">(other)</span>
-                  </span>
-                  <div className="col-start-2 col-end-5">
-                    <Form.Input
-                      type="email"
-                      value={email.other}
-                      className={(valid) =>
-                        classNames(
-                          "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                          {
-                            "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                              valid === true,
-                            "invalid:ring-red-400 focus:invalid:ring-red-400":
-                              valid === false,
-                          }
-                        )
-                      }
-                      onChange={(other: string) =>
-                        setEmail({ ...email, other })
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8">
-                <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
-                  Phone numbers
-                </span>
-                <Form.Phone className="grid w-full grid-cols-4 items-center gap-x-3">
-                  <Form.Phone.Label className="col-start-1 col-end-2 text-sm text-slate-600">
-                    Primary
-                  </Form.Phone.Label>
-                  <div className="col-start-2 col-end-5">
-                    <Form.Phone.Field
-                      required
-                      value={phone.primary ?? ""}
-                      onChange={(primary) => setPhone({ ...phone, primary })}
-                    />
-                  </div>
-                </Form.Phone>
-                <Form.Phone className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
-                  <Form.Phone.Label className="col-start-1 col-end-2 text-sm text-slate-600">
-                    Work <span className="text-[0.675rem]">(other)</span>
-                  </Form.Phone.Label>
-                  <div className="col-start-2 col-end-5">
-                    <Form.Phone.Field
-                      value={phone.other ?? ""}
-                      onChange={(other) => setPhone({ ...phone, other })}
-                    />
-                  </div>
-                </Form.Phone>
-              </div>
-              <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8">
-                <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
-                  Address
-                </span>
-                <Form.Textarea className="grid w-full grid-cols-4 items-center gap-x-3">
-                  <Form.Textarea.Label className="col-start-1 col-end-2 text-sm text-slate-600">
-                    Home
-                  </Form.Textarea.Label>
-                  <Form.Textarea.Field
-                    required
-                    max={500}
-                    id="homeAddress"
-                    value={address.primary}
-                    parentClassName="w-[inherit] h-[inherit] col-start-2 col-end-5"
-                    onChange={(primary: string) =>
-                      setAddress({ ...address, primary })
+              <FormComponents.Input
+                required
+                value={name.full}
+                type="text"
+                id="fullName"
+                label="Full name"
+                className={(valid) =>
+                  classNames(
+                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                    {
+                      "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                        valid === true,
+                      "invalid:ring-red-400 focus:invalid:ring-red-400":
+                        valid === false,
                     }
-                    className={(valid) =>
-                      classNames(
-                        "h-20 w-full overflow-hidden rounded-lg border border-slate-300 p-3 ring-2 ring-transparent [-webkit-appearance:none] focus:border-transparent focus:outline-none focus:ring-blue-400",
-                        {
-                          "focus:ring-emerald-400": valid === true,
-                          "focus:ring-red-400": valid === false,
-                        }
-                      )
-                    }
-                  />
-                </Form.Textarea>
-                <Form.Textarea className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
-                  <Form.Textarea.Label className="col-start-1 col-end-2 text-sm text-slate-600">
-                    Work <span className="text-[0.675rem]">(other)</span>
-                  </Form.Textarea.Label>
-                  <Form.Textarea.Field
-                    max={500}
-                    id="workAddress"
-                    value={address.other}
-                    parentClassName="w-[inherit] h-[inherit] col-start-2 col-end-5"
-                    onChange={(other: string) =>
-                      setAddress({ ...address, other })
-                    }
-                    className={(valid) =>
-                      classNames(
-                        "h-20 w-full overflow-hidden rounded-lg border border-slate-300 p-3 ring-2 ring-transparent [-webkit-appearance:none] focus:border-transparent focus:outline-none focus:ring-blue-400",
-                        {
-                          "focus:ring-emerald-400": valid === true,
-                          "focus:ring-red-400": valid === false,
-                        }
-                      )
-                    }
-                  />
-                </Form.Textarea>
-              </div>
-            </div>
-          </div>
-          <div className="flex w-full items-stretch justify-start rounded-lg bg-white p-7 shadow-md md:gap-x-6 lg:gap-x-12">
-            <div className="md:w-[27rem]">
-              <h3 className="text-lg font-medium text-slate-800">Profile</h3>
-              <p className="text-sm text-slate-500">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Explicabo, eveniet.
-              </p>
-            </div>
-            <div className="flex w-full flex-col gap-y-8 xl:w-[40rem]">
-              <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
-                Username
-              </span>
-              <div className="w-3/4">
-                <Form.Input
-                  required
-                  type="text"
-                  id="userName"
-                  label="User name"
-                  value={name.username}
-                  className={(valid) =>
-                    classNames(
-                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                      {
-                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                          valid === true,
-                        "invalid:ring-red-400 focus:invalid:ring-red-400":
-                          valid === false,
-                      }
-                    )
-                  }
-                  onChange={(username) => setName({ ...name, username })}
-                />
-              </div>
-              <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
-                Password
-              </span>
-              <div className="w-3/4">
-                <Form.Password
-                  required
-                  withConfirm
-                  id="password"
-                  label="Password"
-                  value={password}
-                  className={(valid) =>
-                    classNames(
-                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                      {
-                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                          valid === true,
-                        "invalid:ring-red-400 focus:invalid:ring-red-400":
-                          valid === false,
-                      }
-                    )
-                  }
-                  onChange={setPassword}
-                />
-              </div>
-              <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
-                Photos
-              </span>
-              <Form.Avatar
-                value={image.portrait}
-                onChange={(portrait) => setImage({ ...image, portrait })}
+                  )
+                }
+                onChange={(full: string) => setName({ ...name, full })}
               />
             </div>
-          </div>
-        </form>
+            <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
+              <div className="w-1/2">
+                <FormComponents.Input
+                  required
+                  value={name.first}
+                  type="text"
+                  id="firstName"
+                  label="First name"
+                  className={(valid) =>
+                    classNames(
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                      {
+                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                          valid === true,
+                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                          valid === false,
+                      }
+                    )
+                  }
+                  onChange={(first: string) => setName({ ...name, first })}
+                />
+              </div>
+              <div className="w-1/2">
+                <FormComponents.Input
+                  required
+                  value={name.last}
+                  type="text"
+                  id="lastName"
+                  label="Last name"
+                  className={(valid) =>
+                    classNames(
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                      {
+                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                          valid === true,
+                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                          valid === false,
+                      }
+                    )
+                  }
+                  onChange={(last: string) => setName({ ...name, last })}
+                />
+              </div>
+            </div>
+            <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
+              <div className="w-10/12">
+                <FormComponents.Input
+                  required
+                  value={name.other}
+                  type="text"
+                  id="otherName"
+                  label="Other name"
+                  className={(valid) =>
+                    classNames(
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                      {
+                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                          valid === true,
+                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                          valid === false,
+                      }
+                    )
+                  }
+                  onChange={(other: string) => setName({ ...name, other })}
+                />
+              </div>
+              <div className="w-2/12">
+                <FormComponents.Input
+                  required
+                  value={name.initials}
+                  type="text"
+                  id="initials"
+                  label="Initials"
+                  className={(valid) =>
+                    classNames(
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                      {
+                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                          valid === true,
+                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                          valid === false,
+                      }
+                    )
+                  }
+                  onChange={(initials: string) =>
+                    setName({ ...name, initials })
+                  }
+                />
+              </div>
+            </div>
+            <div className="flex w-full flex-row items-end md:gap-x-5 lg:gap-x-7">
+              <FormComponents.Date className="w-max space-y-3.5">
+                <FormComponents.Date.Label className="text-sm font-medium tracking-wide text-slate-500">
+                  Date of Birth
+                </FormComponents.Date.Label>
+                <FormComponents.Date.Field
+                  value={dob}
+                  onChange={setDOB}
+                  className="flex flex-row items-center justify-start gap-x-4"
+                />
+              </FormComponents.Date>
+              <FormComponents.Select
+                label="Gender"
+                options={genderOptions}
+                onChange={({ id }) => setGender(id as string)}
+                value={genderOptions.find(({ id }) => id === gender)}
+              />
+            </div>
+            <div className="w-3/4">
+              <FormComponents.Input
+                required
+                type="text"
+                id="occupation"
+                label="Occupation"
+                value={occupation}
+                onChange={setOccupation}
+                className={(valid) =>
+                  classNames(
+                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                    {
+                      "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                        valid === true,
+                      "invalid:ring-red-400 focus:invalid:ring-red-400":
+                        valid === false,
+                    }
+                  )
+                }
+              />
+            </div>
+          </Section>
+          <Section
+            title="Contact"
+            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam."
+          >
+            <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8">
+              <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
+                Email addresses
+              </span>
+              <div className="grid w-full grid-cols-4 items-center gap-x-3">
+                <span className="col-start-1 col-end-2 text-sm text-slate-600">
+                  Primary
+                </span>
+                <div className="col-start-2 col-end-5">
+                  <FormComponents.Input
+                    required
+                    type="email"
+                    value={email.primary}
+                    className={(valid) =>
+                      classNames(
+                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                        {
+                          "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                            valid === true,
+                          "invalid:ring-red-400 focus:invalid:ring-red-400":
+                            valid === false,
+                        }
+                      )
+                    }
+                    onChange={(primary: string) =>
+                      setEmail({ ...email, primary })
+                    }
+                  />
+                </div>
+              </div>
+              <div className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
+                <span className="col-start-1 col-end-2 text-sm text-slate-600">
+                  Work <span className="text-[0.675rem]">(other)</span>
+                </span>
+                <div className="col-start-2 col-end-5">
+                  <FormComponents.Input
+                    type="email"
+                    value={email.other}
+                    className={(valid) =>
+                      classNames(
+                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                        {
+                          "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                            valid === true,
+                          "invalid:ring-red-400 focus:invalid:ring-red-400":
+                            valid === false,
+                        }
+                      )
+                    }
+                    onChange={(other: string) => setEmail({ ...email, other })}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8">
+              <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
+                Phone numbers
+              </span>
+              <FormComponents.Phone className="grid w-full grid-cols-4 items-center gap-x-3">
+                <FormComponents.Phone.Label className="col-start-1 col-end-2 text-sm text-slate-600">
+                  Primary
+                </FormComponents.Phone.Label>
+                <div className="col-start-2 col-end-5">
+                  <FormComponents.Phone.Field
+                    required
+                    value={phone.primary ?? ""}
+                    onChange={(primary) => setPhone({ ...phone, primary })}
+                  />
+                </div>
+              </FormComponents.Phone>
+              <FormComponents.Phone className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
+                <FormComponents.Phone.Label className="col-start-1 col-end-2 text-sm text-slate-600">
+                  Work <span className="text-[0.675rem]">(other)</span>
+                </FormComponents.Phone.Label>
+                <div className="col-start-2 col-end-5">
+                  <FormComponents.Phone.Field
+                    value={phone.other ?? ""}
+                    onChange={(other) => setPhone({ ...phone, other })}
+                  />
+                </div>
+              </FormComponents.Phone>
+            </div>
+            <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8">
+              <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
+                Address
+              </span>
+              <FormComponents.Textarea className="grid w-full grid-cols-4 items-center gap-x-3">
+                <FormComponents.Textarea.Label className="col-start-1 col-end-2 text-sm text-slate-600">
+                  Home
+                </FormComponents.Textarea.Label>
+                <FormComponents.Textarea.Field
+                  required
+                  max={500}
+                  id="homeAddress"
+                  value={address.primary}
+                  parentClassName="w-[inherit] h-[inherit] col-start-2 col-end-5"
+                  onChange={(primary: string) =>
+                    setAddress({ ...address, primary })
+                  }
+                  className={(valid) =>
+                    classNames(
+                      "h-20 w-full overflow-hidden rounded-lg border border-slate-300 p-3 ring-2 ring-transparent [-webkit-appearance:none] focus:border-transparent focus:outline-none focus:ring-blue-400",
+                      {
+                        "focus:ring-emerald-400": valid === true,
+                        "focus:ring-red-400": valid === false,
+                      }
+                    )
+                  }
+                />
+              </FormComponents.Textarea>
+              <FormComponents.Textarea className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
+                <FormComponents.Textarea.Label className="col-start-1 col-end-2 text-sm text-slate-600">
+                  Work <span className="text-[0.675rem]">(other)</span>
+                </FormComponents.Textarea.Label>
+                <FormComponents.Textarea.Field
+                  max={500}
+                  id="workAddress"
+                  value={address.other}
+                  parentClassName="w-[inherit] h-[inherit] col-start-2 col-end-5"
+                  onChange={(other: string) =>
+                    setAddress({ ...address, other })
+                  }
+                  className={(valid) =>
+                    classNames(
+                      "h-20 w-full overflow-hidden rounded-lg border border-slate-300 p-3 ring-2 ring-transparent [-webkit-appearance:none] focus:border-transparent focus:outline-none focus:ring-blue-400",
+                      {
+                        "focus:ring-emerald-400": valid === true,
+                        "focus:ring-red-400": valid === false,
+                      }
+                    )
+                  }
+                />
+              </FormComponents.Textarea>
+            </div>
+          </Section>
+          <Section
+            title="Profile"
+            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, eveniet."
+          >
+            <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
+              Username
+            </span>
+            <div className="w-3/4">
+              <FormComponents.Input
+                required
+                type="text"
+                id="userName"
+                label="User name"
+                value={name.username}
+                className={(valid) =>
+                  classNames(
+                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                    {
+                      "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                        valid === true,
+                      "invalid:ring-red-400 focus:invalid:ring-red-400":
+                        valid === false,
+                    }
+                  )
+                }
+                onChange={(username) => setName({ ...name, username })}
+              />
+            </div>
+            <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
+              Password
+            </span>
+            <div className="w-3/4">
+              <FormComponents.Password
+                required
+                withConfirm
+                id="password"
+                label="Password"
+                value={password}
+                className={(valid) =>
+                  classNames(
+                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                    {
+                      "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                        valid === true,
+                      "invalid:ring-red-400 focus:invalid:ring-red-400":
+                        valid === false,
+                    }
+                  )
+                }
+                onChange={setPassword}
+              />
+            </div>
+            <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
+              Photos
+            </span>
+            <FormComponents.Avatar
+              value={image.portrait}
+              onChange={(portrait) => setImage({ ...image, portrait })}
+            />
+          </Section>
+        </Form>
         <div className="flex w-full flex-row items-center justify-end gap-x-5 p-10 pl-0">
           <button
             type="submit"
