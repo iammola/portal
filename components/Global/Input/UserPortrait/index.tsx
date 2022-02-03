@@ -68,6 +68,7 @@ const UserPortrait: UserPortrait = ({ onChange, value }) => {
       </div>
       <input
         type="file"
+        accept="image/*"
         onChange={handleChange}
         className="w-[117px] rounded-full text-sm file:cursor-pointer file:rounded-full file:border-none file:bg-blue-200 file:px-4 file:py-2 file:font-medium file:tracking-wide file:text-blue-700 hover:file:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-white"
       />
