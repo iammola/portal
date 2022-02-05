@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import Head from "next/head";
 
 import { Email, Select } from "components/Form";
-import { classNames } from "utils";
 
 import type { NextPage } from "next";
 
@@ -70,16 +69,7 @@ const Test: NextPage = () => {
                 }
                 className="peer flex h-[3.75rem] w-full grow flex-row flex-wrap items-center justify-start gap-x-3 gap-y-2 rounded-lg border border-slate-200 bg-white p-3 ring-2 ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400"
               />
-              <Email.Label
-                className={classNames(
-                  "absolute bg-white p-1 tracking-normal text-slate-600 transition-all",
-                  [
-                    !!guardian.mail,
-                    "left-3 -top-3 text-xs font-medium",
-                    "left-3 top-1/2 -translate-y-1/2 text-sm peer-focus:left-3 peer-focus:-top-3 peer-focus:translate-y-0 peer-focus:text-xs peer-focus:font-medium",
-                  ]
-                )}
-              >
+              <Email.Label className="absolute left-3 -top-3 bg-white p-1 text-xs font-medium tracking-normal text-slate-600 transition-all peer-empty:top-1/2 peer-empty:-translate-y-1/2 peer-empty:text-sm peer-focus:-top-3 peer-focus:translate-y-0 peer-focus:text-xs">
                 Mail
               </Email.Label>
             </Email>
