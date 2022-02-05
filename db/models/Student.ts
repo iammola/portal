@@ -26,6 +26,7 @@ const StudentGuardianSchema = new Schema<GuardianSchema>(
     relationship: {
       type: String,
       required: [true, "Guardian Relationship required"],
+      enum: ["father", "mother", "other"],
     },
   },
   { _id: false }

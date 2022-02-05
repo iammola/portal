@@ -4,7 +4,7 @@ import type { ModelRecord, ObjectId } from "types/schema";
 
 export interface StudentGuardianSchema {
   guardian: ObjectId;
-  relationship: "father" | "mother" | string;
+  relationship: "father" | "mother" | "other";
 }
 
 export interface StudentSchema extends UserBase<false> {
