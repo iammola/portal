@@ -25,3 +25,9 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 export type FlattenIntersection<U> = UnionToIntersection<U> extends infer O
   ? { [K in keyof O]: O[K] }
   : never;
+
+export type OneKey<V, K extends keyof V = keyof V> = {
+  [P in K]: FlattenIntersection<
+    Record<P, V[P]> & Partial<Record<Exclude<K, P>, never>>
+  >;
+}[K];
