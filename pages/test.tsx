@@ -1,3 +1,4 @@
+import { PlusSmIcon } from "@heroicons/react/solid";
 import { useMemo, useState } from "react";
 import Head from "next/head";
 
@@ -12,9 +13,8 @@ type Value = {
 };
 
 const Test: NextPage = () => {
-  const [guardians, setGuardians] = useState<Value[]>([
-    { mail: "", relationship: "" },
-  ]);
+  const template = useMemo(() => ({ mail: "", relationship: "" }), []);
+  const [guardians, setGuardians] = useState<Value[]>([{ ...template }]);
   const guardianOptions = useMemo(
     () => [
       {
@@ -43,38 +43,52 @@ const Test: NextPage = () => {
       <Head>
         <title>Test</title>
       </Head>
-      <ul className="flex flex-col items-start justify-start gap-y-3 rounded-lg bg-white p-8">
-        {guardians.map((guardian, i) => (
-          <li
-            key={guardian.mail}
-            className="flex flex-row items-end justify-start gap-x-3"
-          >
-            <div className="w-40 space-y-2">
-              <Select
-                label="Relationship"
-                options={guardianOptions}
-                onChange={(v) =>
-                  updateGuardian({ i, relationship: v.id as string })
-                }
-                value={guardianOptions.find(
-                  ({ id }) => id === guardian.relationship
-                )}
-              />
-            </div>
-            <Email className="relative flex w-[20rem] flex-col items-start justify-start gap-y-2 font-inter">
-              <Email.Field
-                userType="parent"
-                values={guardian.mail ? [{ schoolMail: guardian.mail }] : []}
-                onChange={([v]) => updateGuardian({ i, mail: v.schoolMail })}
-                className="peer flex h-[3.75rem] w-full grow flex-row flex-wrap items-center justify-start gap-x-3 gap-y-2 rounded-lg border border-slate-200 bg-white p-3 ring-2 ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400"
-              />
-              <Email.Label className="absolute left-3 -top-3 bg-white p-1 text-xs font-medium tracking-normal text-slate-600 transition-all peer-empty:top-1/2 peer-empty:-translate-y-1/2 peer-empty:text-sm peer-focus:-top-3 peer-focus:translate-y-0 peer-focus:text-xs">
-                Mail
-              </Email.Label>
-            </Email>
-          </li>
-        ))}
-      </ul>
+      <div className="space-y-4 rounded-lg bg-white p-8">
+        <ul className="space-y-3">
+          {guardians.map((guardian, i) => (
+            <li
+              key={guardian.mail}
+              className="flex flex-row items-end justify-start gap-x-3"
+            >
+              <div className="w-40 space-y-2">
+                <Select
+                  label="Relationship"
+                  options={guardianOptions}
+                  onChange={(v) =>
+                    updateGuardian({ i, relationship: v.id as string })
+                  }
+                  value={guardianOptions.find(
+                    ({ id }) => id === guardian.relationship
+                  )}
+                />
+              </div>
+              <Email className="relative flex w-[20rem] flex-col items-start justify-start gap-y-2 font-inter">
+                <Email.Field
+                  userType="parent"
+                  values={guardian.mail ? [{ schoolMail: guardian.mail }] : []}
+                  onChange={([v]) => updateGuardian({ i, mail: v.schoolMail })}
+                  className="peer flex h-[3.75rem] w-full grow flex-row flex-wrap items-center justify-start gap-x-3 gap-y-2 rounded-lg border border-slate-200 bg-white p-3 ring-2 ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400"
+                />
+                <Email.Label className="absolute left-3 -top-3 bg-white p-1 text-xs font-medium tracking-normal text-slate-600 transition-all peer-empty:top-1/2 peer-empty:-translate-y-1/2 peer-empty:text-sm peer-focus:-top-3 peer-focus:translate-y-0 peer-focus:text-xs">
+                  Mail
+                </Email.Label>
+              </Email>
+            </li>
+          ))}
+        </ul>
+        <button
+          type="button"
+          onClick={() => setGuardians([...guardians, { ...template }])}
+          className="flex flex-row items-center justify-start gap-x-2 p-1"
+        >
+          <span className="rounded-full bg-sky-400 p-1 shadow">
+            <PlusSmIcon className="h-5 w-5 fill-white" />
+          </span>
+          <span className="text-sm font-medium tracking-wide text-slate-600">
+            Add Guardian
+          </span>
+        </button>
+      </div>
     </main>
   );
 };
