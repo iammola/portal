@@ -13,6 +13,8 @@ const CreateStudent: NextPage = () => {
   const [gender, setGender] = useState<string>();
   const [dob, setDOB] = useState<StudentSchema["dob"]>();
   const [name, setName] = useState<Partial<StudentSchema["name"]>>({});
+  const [guardians, setGuardians] =
+    useState<{ mail: string; relation: string }[]>();
   const [image, setImage] = useState<
     Partial<{ [K in keyof StudentSchema["image"]]: File }>
   >({});
@@ -325,6 +327,15 @@ const CreateStudent: NextPage = () => {
                 />
               </FormComponents.Textarea>
             </div>
+          </Section>
+          <Section
+            title="Guardians"
+            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, fugit!"
+          >
+            <FormComponents.Guardians
+              values={guardians}
+              onChange={setGuardians}
+            />
           </Section>
           <Section
             title="Profile"

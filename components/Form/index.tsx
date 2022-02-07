@@ -7,3 +7,4 @@ export { default as Number } from "./Number";
 export { default as Avatar } from "./Avatar";
 export { default as Textarea } from "./Textarea";
 export { default as Password } from "./Password";
+export { default as Guardians } from "./Guardians";
