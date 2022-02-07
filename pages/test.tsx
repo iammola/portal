@@ -47,7 +47,7 @@ const Test: NextPage = () => {
         <ul className="space-y-3">
           {guardians.map((guardian, i) => (
             <li
-              key={guardian.mail}
+              key={i}
               className="flex flex-row items-end justify-start gap-x-3"
             >
               <div className="w-40 space-y-2">
