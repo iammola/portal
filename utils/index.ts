@@ -10,8 +10,8 @@ export const classNames = (
     | [boolean, string, string]
     | { [key: string]: boolean }
   )[]
-) =>
-  [
+) => {
+  const formattedClasses = [
     ...new Set(
       classes.reduce((acc: string[], cur) => {
         let classes = "";
@@ -26,7 +26,16 @@ export const classNames = (
         return [...acc, classes];
       }, [])
     ),
-  ]
-    .filter(Boolean)
-    .join(" ")
-    .replaceAll(/\s{2,}/g, " ");
+  ];
+
+  const filtered = formattedClasses?.filter?.(Boolean);
+  const joined = filtered?.join?.(" ");
+  const replaced = joined?.replaceAll?.(/\s{2,}/g, " ") as string | undefined;
+
+  if (
+    [classes, formattedClasses, filtered, joined, replaced].includes(undefined)
+  )
+    // eslint-disable-next-line no-console
+    console.log({ classes, formattedClasses, filtered, joined, replaced });
+  return replaced;
+};
