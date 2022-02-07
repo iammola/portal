@@ -27,6 +27,6 @@ export const classNames = (
       }, [])
     ),
   ]
-    .filter(Boolean)
-    .join(" ")
-    .replaceAll?.(/\s{2,}/g, " ");
+    ?.filter(Boolean)
+    ?.join(" ")
+    ?.replaceAll(/\s{2,}/g, " ");
