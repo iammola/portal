@@ -16,9 +16,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
   const setValueName = useCallback(
     (item: Required<Value>) =>
       onChange(
-        values.map((value) =>
-          value.schoolMail === item.schoolMail ? item : value
-        )
+        values.map((value) => (value.mail === item.mail ? item : value))
       ),
     [onChange, values]
   );
@@ -30,7 +28,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
   }, [values]);
 
   function editValue(schoolMail: string) {
-    onChange(values.filter((value) => value.schoolMail !== schoolMail));
+    onChange(values.filter((value) => value.mail !== schoolMail));
     removeSpace();
     ref.current?.insertAdjacentHTML("beforeend", schoolMail);
     focusCursor();
@@ -49,17 +47,16 @@ const Field: Field = ({ className, onChange, userType, values }) => {
   function handleKeyDown(e: KeyboardEvent<HTMLElement>) {
     if (["Enter", "Space"].includes(e.code)) {
       const textNode = getSelection()?.anchorNode as ChildNode | null;
-      const schoolMail = (textNode?.textContent?.trim() ?? "").toLowerCase();
+      const mail = (textNode?.textContent?.trim() ?? "").toLowerCase();
       e.preventDefault();
 
       if (
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(schoolMail) ===
-          true &&
-        values.find((item) => item.schoolMail === schoolMail) === undefined
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(mail) === true &&
+        values.find((item) => item.mail === mail) === undefined
       ) {
         removeSpace();
         textNode?.remove();
-        onChange([...values, { schoolMail }]);
+        onChange([...values, { mail }]);
         setTimeout(addSpace);
       }
     }
@@ -116,13 +113,11 @@ const Field: Field = ({ className, onChange, userType, values }) => {
       {values.map((item) => (
         <Badge
           {...{ item, userType }}
-          key={item.schoolMail}
+          key={item.mail}
           setItem={setValueName}
-          edit={() => editValue(item.schoolMail)}
+          edit={() => editValue(item.mail)}
           remove={() =>
-            onChange(
-              values.filter((value) => value.schoolMail !== item.schoolMail)
-            )
+            onChange(values.filter((value) => value.mail !== item.mail))
           }
         />
       ))}

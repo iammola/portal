@@ -34,7 +34,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
       { method: "SEARCH" },
       {
         userType,
-        schoolMail: item.schoolMail,
+        mail: item.mail,
         select: "name.username name.initials",
       }
     )
@@ -43,7 +43,11 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
   useIsomorphicLayoutEffect(() => {
     if (data !== undefined && item.name === undefined) {
       setValid(data.success);
-      if (data.success) setItem(data.data);
+
+      if (data.success) {
+        const { schoolMail, ...other } = data.data;
+        setItem({ ...other, mail: schoolMail });
+      }
     }
   }, [data, item, setItem]);
 
@@ -73,10 +77,10 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
           selectedColor
         )}
       >
-        {(item.name?.initials ?? item.schoolMail)[0]}
+        {(item.name?.initials ?? item.mail)[0]}
       </span>
       <span className="text-sm tracking-wide text-gray-600">
-        {item.name?.username ?? item.schoolMail}
+        {item.name?.username ?? item.mail}
       </span>
       <Popover
         {...{ selectedColor, item, edit, remove, valid }}
@@ -91,10 +95,11 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
   );
 };
 
-export type Value = Pick<UserBase, "schoolMail"> & {
+export interface Value {
   _id?: UserBase["_id"];
+  mail: string;
   name?: Pick<UserBase["name"], "username" | "initials">;
-};
+}
 
 type Badge = FunctionComponent<{
   item: Value;

@@ -1,7 +1,8 @@
 import type { UserBase, UserType } from "types/schema";
 
-export type UsersEmailRequestBody = Pick<UserBase, "schoolMail"> & {
+export type UsersEmailRequestBody = {
   select?: string;
+  mail: string;
   userType: UserType;
 };
 

@@ -51,7 +51,7 @@ const Popover: Popover = ({
             selectedColor
           )}
         >
-          {(item.name?.initials ?? item.schoolMail)[0]}
+          {(item.name?.initials ?? item.mail)[0]}
         </span>
         <span
           className={classNames(
@@ -68,7 +68,7 @@ const Popover: Popover = ({
             "row-start-4 row-end-5 text-sm",
           ])}
         >
-          {item.schoolMail}
+          {item.mail}
         </span>
       </div>
       <div className="flex flex-col gap-y-3 pt-2 pb-3">
