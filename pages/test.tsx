@@ -45,7 +45,7 @@ const Test: NextPage = () => {
       </Head>
       <div className="space-y-4 rounded-lg bg-white p-8">
         <ul className="space-y-3">
-          {guardians.map((guardian, i) => (
+          {guardians.map(({ mail, relationship }, i) => (
             <li
               key={i}
               className="flex flex-row items-end justify-start gap-x-3"
@@ -57,15 +57,13 @@ const Test: NextPage = () => {
                   onChange={(v) =>
                     updateGuardian({ i, relationship: v.id as string })
                   }
-                  value={guardianOptions.find(
-                    ({ id }) => id === guardian.relationship
-                  )}
+                  value={guardianOptions.find(({ id }) => id === relationship)}
                 />
               </div>
               <Email className="relative flex w-[20rem] flex-col items-start justify-start gap-y-2 font-inter">
                 <Email.Field
                   userType="parent"
-                  values={guardian.mail ? [{ schoolMail: guardian.mail }] : []}
+                  values={mail ? [{ schoolMail: mail }] : []}
                   onChange={([v]) => updateGuardian({ i, mail: v.schoolMail })}
                   className="peer flex h-[3.75rem] w-full grow flex-row flex-wrap items-center justify-start gap-x-3 gap-y-2 rounded-lg border border-slate-200 bg-white p-3 ring-2 ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400"
                 />
