@@ -5,7 +5,7 @@ import {
   userName,
   UserImage,
   userGender,
-  UserContact,
+  userContact,
   UserPassword,
   userSchoolMail,
 } from "db/schema/User";
@@ -23,13 +23,10 @@ const StudentGuardianSchema = new Schema<GuardianSchema>(
       // TODO: Sort out ref Model
       required: [true, "Guardian ID required"],
     },
-    linkedOn: {
-      type: Date,
-      default: new Date(),
-    },
-    relationship: {
+    relation: {
       type: String,
       required: [true, "Guardian Relationship required"],
+      enum: ["father", "mother", "other"],
     },
   },
   { _id: false }
@@ -56,7 +53,7 @@ export const StudentSchema = new Schema<StudentRecord, StudentModelType>({
     type: [StudentGuardianSchema],
   },
   contact: {
-    type: UserContact,
+    type: userContact(),
     required: [true, "Student Contact required"],
   },
 });

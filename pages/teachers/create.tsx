@@ -1,30 +1,29 @@
 import Head from "next/head";
-import { useMemo, useState } from "react";
+import { useState, useMemo } from "react";
 
+import { classNames } from "utils";
 import * as FormComponents from "components/Form";
 import { Form, Section } from "components/Create/User";
-import { classNames } from "utils";
 
 import type { NextPage } from "next";
-import type { ParentSchema } from "types/schema";
+import type { TeacherSchema } from "types/schema";
 
-const CreateParent: NextPage = () => {
+const CreateTeacher: NextPage = () => {
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState<string>();
-  const [dob, setDOB] = useState<ParentSchema["dob"]>();
-  const [name, setName] = useState<Partial<ParentSchema["name"]>>({});
+  const [dob, setDOB] = useState<TeacherSchema["dob"]>();
+  const [name, setName] = useState<Partial<TeacherSchema["name"]>>({});
   const [image, setImage] = useState<
     Partial<{ [K in "cover" | "portrait"]: File }>
   >({});
-  const [occupation, setOccupation] = useState<ParentSchema["occupation"]>();
-  const [email, setEmail] = useState<Partial<ParentSchema["contact"]["email"]>>(
-    {}
-  );
-  const [phone, setPhone] = useState<Partial<ParentSchema["contact"]["phone"]>>(
-    {}
-  );
+  const [email, setEmail] = useState<
+    Partial<TeacherSchema["contact"]["email"]>
+  >({});
+  const [phone, setPhone] = useState<
+    Partial<TeacherSchema["contact"]["phone"]>
+  >({});
   const [address, setAddress] = useState<
-    Partial<ParentSchema["contact"]["address"]>
+    Partial<TeacherSchema["contact"]["address"]>
   >({});
   const titleOptions = useMemo(
     () => [
@@ -68,14 +67,14 @@ const CreateParent: NextPage = () => {
   return (
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-50 font-poppins dark:bg-slate-900">
       <Head>
-        <title>Create Parent | GRIS Portal</title>
-        <meta name="description" content="Create parent" />
+        <title>Create Student | GRIS Portal</title>
+        <meta name="description" content="Create student" />
       </Head>
       <section className="flex w-full grow flex-col items-start justify-start py-10">
         <h1 className="p-10 pt-0 text-5xl font-semibold text-slate-600 dark:text-slate-300">
           <span>Create</span>{" "}
-          <span className="bg-gradient-to-br from-indigo-300 to-indigo-600 bg-clip-text text-transparent">
-            Parent
+          <span className="bg-gradient-to-br from-rose-300 to-rose-600 bg-clip-text text-transparent">
+            Teacher
           </span>
         </h1>
         <Form>
@@ -222,27 +221,6 @@ const CreateParent: NextPage = () => {
                 value={genderOptions.find(({ id }) => id === gender)}
               />
             </div>
-            <div className="w-3/4">
-              <FormComponents.Input
-                required
-                type="text"
-                id="occupation"
-                label="Occupation"
-                value={occupation}
-                onChange={setOccupation}
-                className={(valid) =>
-                  classNames(
-                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                    {
-                      "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                        valid === true,
-                      "invalid:ring-red-400 focus:invalid:ring-red-400":
-                        valid === false,
-                    }
-                  )
-                }
-              />
-            </div>
           </Section>
           <Section
             title="Contact"
@@ -278,29 +256,6 @@ const CreateParent: NextPage = () => {
                   />
                 </div>
               </div>
-              <div className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
-                <span className="col-start-1 col-end-2 text-sm text-slate-600">
-                  Work <span className="text-[0.675rem]">(other)</span>
-                </span>
-                <div className="col-start-2 col-end-5">
-                  <FormComponents.Input
-                    type="email"
-                    value={email.other}
-                    className={(valid) =>
-                      classNames(
-                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                        {
-                          "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                            valid === true,
-                          "invalid:ring-red-400 focus:invalid:ring-red-400":
-                            valid === false,
-                        }
-                      )
-                    }
-                    onChange={(other: string) => setEmail({ ...email, other })}
-                  />
-                </div>
-              </div>
             </div>
             <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8">
               <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
@@ -315,17 +270,6 @@ const CreateParent: NextPage = () => {
                     required
                     value={phone.primary ?? ""}
                     onChange={(primary) => setPhone({ ...phone, primary })}
-                  />
-                </div>
-              </FormComponents.Phone>
-              <FormComponents.Phone className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
-                <FormComponents.Phone.Label className="col-start-1 col-end-2 text-sm text-slate-600">
-                  Work <span className="text-[0.675rem]">(other)</span>
-                </FormComponents.Phone.Label>
-                <div className="col-start-2 col-end-5">
-                  <FormComponents.Phone.Field
-                    value={phone.other ?? ""}
-                    onChange={(other) => setPhone({ ...phone, other })}
                   />
                 </div>
               </FormComponents.Phone>
@@ -346,29 +290,6 @@ const CreateParent: NextPage = () => {
                   parentClassName="w-[inherit] h-[inherit] col-start-2 col-end-5"
                   onChange={(primary: string) =>
                     setAddress({ ...address, primary })
-                  }
-                  className={(valid) =>
-                    classNames(
-                      "h-20 w-full overflow-hidden rounded-lg border border-slate-300 p-3 ring-2 ring-transparent [-webkit-appearance:none] focus:border-transparent focus:outline-none focus:ring-blue-400",
-                      {
-                        "focus:ring-emerald-400": valid === true,
-                        "focus:ring-red-400": valid === false,
-                      }
-                    )
-                  }
-                />
-              </FormComponents.Textarea>
-              <FormComponents.Textarea className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
-                <FormComponents.Textarea.Label className="col-start-1 col-end-2 text-sm text-slate-600">
-                  Work <span className="text-[0.675rem]">(other)</span>
-                </FormComponents.Textarea.Label>
-                <FormComponents.Textarea.Field
-                  max={500}
-                  id="workAddress"
-                  value={address.other}
-                  parentClassName="w-[inherit] h-[inherit] col-start-2 col-end-5"
-                  onChange={(other: string) =>
-                    setAddress({ ...address, other })
                   }
                   className={(valid) =>
                     classNames(
@@ -457,4 +378,4 @@ const CreateParent: NextPage = () => {
   );
 };
 
-export default CreateParent;
+export default CreateTeacher;

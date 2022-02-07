@@ -14,7 +14,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 type Return = ApiInternalResponse<UsersEmailData>;
 
 async function searchByEmail({
-  schoolMail,
+  mail: schoolMail,
   select,
   userType,
 }: UsersEmailRequestBody) {

@@ -1,12 +1,12 @@
 import { FormEvent, useCallback, useState } from "react";
 import Head from "next/head";
 
-import Input from "components/Global/Input";
+import { Input, Email } from "components/Form";
 import { classNames } from "utils";
 import { fetchAPIEndpoint } from "utils/api";
 
 import type { NextPage } from "next";
-import type { Value } from "components/Global/Input/DynamicEmail";
+import type { Value } from "components/Form/Email";
 import type {
   CreateClassData,
   CreateClassRequestBody,
@@ -19,7 +19,7 @@ const CreateClass: NextPage = () => {
   const [teachers, setTeachers] = useState<Value[]>([]);
 
   const inputClassName = useCallback(
-    (valid?: boolean) =>
+    (valid) =>
       classNames(
         "w-[20rem] h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
         {
@@ -50,7 +50,7 @@ const CreateClass: NextPage = () => {
         }
       );
 
-      if (result.success === true) {
+      if (result.success) {
         console.warn(result.message, result.data);
       }
     } catch (error: any) {
@@ -103,17 +103,17 @@ const CreateClass: NextPage = () => {
               onChange={setSpecial}
               className={inputClassName}
             />
-            <Input.DynamicEmail className="flex w-[20rem] flex-col items-start justify-start gap-y-4 font-inter">
-              <Input.DynamicEmail.Label className="font-medium text-slate-800">
+            <Email className="flex w-[20rem] flex-col items-start justify-start gap-y-4 font-inter">
+              <Email.Label className="font-medium text-slate-800">
                 Teachers
-              </Input.DynamicEmail.Label>
-              <Input.DynamicEmail.Field
+              </Email.Label>
+              <Email.Field
                 values={teachers}
                 userType="teacher"
                 onChange={setTeachers}
                 className="flex w-full grow flex-row flex-wrap items-center justify-start gap-x-3 gap-y-2 rounded-lg border border-slate-200 bg-white p-3 ring-2 ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400"
               />
-            </Input.DynamicEmail>
+            </Email>
             <button
               type="submit"
               className="mt-5 w-full overflow-hidden rounded-lg bg-emerald-500 py-3 px-5 font-medium uppercase tracking-wide text-white hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-white focus:hover:ring-emerald-600"

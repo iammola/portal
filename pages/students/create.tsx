@@ -1,56 +1,32 @@
 import Head from "next/head";
-import { useMemo, useState } from "react";
+import { useState, useMemo } from "react";
 
+import { classNames } from "utils";
 import * as FormComponents from "components/Form";
 import { Form, Section } from "components/Create/User";
-import { classNames } from "utils";
 
 import type { NextPage } from "next";
-import type { ParentSchema } from "types/schema";
+import type { StudentSchema } from "types/schema";
 
-const CreateParent: NextPage = () => {
+const CreateStudent: NextPage = () => {
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState<string>();
-  const [dob, setDOB] = useState<ParentSchema["dob"]>();
-  const [name, setName] = useState<Partial<ParentSchema["name"]>>({});
+  const [dob, setDOB] = useState<StudentSchema["dob"]>();
+  const [name, setName] = useState<Partial<StudentSchema["name"]>>({});
+  const [guardians, setGuardians] =
+    useState<{ mail: string; relation: string }[]>();
   const [image, setImage] = useState<
-    Partial<{ [K in "cover" | "portrait"]: File }>
+    Partial<{ [K in keyof StudentSchema["image"]]: File }>
   >({});
-  const [occupation, setOccupation] = useState<ParentSchema["occupation"]>();
-  const [email, setEmail] = useState<Partial<ParentSchema["contact"]["email"]>>(
-    {}
-  );
-  const [phone, setPhone] = useState<Partial<ParentSchema["contact"]["phone"]>>(
-    {}
-  );
+  const [email, setEmail] = useState<
+    Partial<StudentSchema["contact"]["email"]>
+  >({});
+  const [phone, setPhone] = useState<
+    Partial<StudentSchema["contact"]["phone"]>
+  >({});
   const [address, setAddress] = useState<
-    Partial<ParentSchema["contact"]["address"]>
+    Partial<StudentSchema["contact"]["address"]>
   >({});
-  const titleOptions = useMemo(
-    () => [
-      {
-        id: "Mr,",
-        value: "Mr.",
-      },
-      {
-        id: "Ms.",
-        value: "Ms.",
-      },
-      {
-        id: "Mrs.",
-        value: "Mrs.",
-      },
-      {
-        id: "Dr.",
-        value: "Dr.",
-      },
-      {
-        id: "Barr.",
-        value: "Barr.",
-      },
-    ],
-    []
-  );
   const genderOptions = useMemo(
     () => [
       {
@@ -68,14 +44,14 @@ const CreateParent: NextPage = () => {
   return (
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-50 font-poppins dark:bg-slate-900">
       <Head>
-        <title>Create Parent | GRIS Portal</title>
-        <meta name="description" content="Create parent" />
+        <title>Create Student | GRIS Portal</title>
+        <meta name="description" content="Create student" />
       </Head>
       <section className="flex w-full grow flex-col items-start justify-start py-10">
         <h1 className="p-10 pt-0 text-5xl font-semibold text-slate-600 dark:text-slate-300">
           <span>Create</span>{" "}
-          <span className="bg-gradient-to-br from-indigo-300 to-indigo-600 bg-clip-text text-transparent">
-            Parent
+          <span className="bg-gradient-to-br from-amber-300 to-amber-600 bg-clip-text text-transparent">
+            Student
           </span>
         </h1>
         <Form>
@@ -84,16 +60,6 @@ const CreateParent: NextPage = () => {
             description="Use a permanent address where you can receive mail."
           >
             <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
-              <div className="w-1/4">
-                <FormComponents.Select
-                  label="Title"
-                  options={titleOptions}
-                  value={titleOptions.find(({ id }) => id === name.title)}
-                  onChange={({ id }) =>
-                    setName((name) => ({ ...name, title: id as string }))
-                  }
-                />
-              </div>
               <FormComponents.Input
                 required
                 value={name.full}
@@ -222,27 +188,6 @@ const CreateParent: NextPage = () => {
                 value={genderOptions.find(({ id }) => id === gender)}
               />
             </div>
-            <div className="w-3/4">
-              <FormComponents.Input
-                required
-                type="text"
-                id="occupation"
-                label="Occupation"
-                value={occupation}
-                onChange={setOccupation}
-                className={(valid) =>
-                  classNames(
-                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
-                    {
-                      "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                        valid === true,
-                      "invalid:ring-red-400 focus:invalid:ring-red-400":
-                        valid === false,
-                    }
-                  )
-                }
-              />
-            </div>
           </Section>
           <Section
             title="Contact"
@@ -280,7 +225,7 @@ const CreateParent: NextPage = () => {
               </div>
               <div className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
                 <span className="col-start-1 col-end-2 text-sm text-slate-600">
-                  Work <span className="text-[0.675rem]">(other)</span>
+                  Other
                 </span>
                 <div className="col-start-2 col-end-5">
                   <FormComponents.Input
@@ -320,7 +265,7 @@ const CreateParent: NextPage = () => {
               </FormComponents.Phone>
               <FormComponents.Phone className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
                 <FormComponents.Phone.Label className="col-start-1 col-end-2 text-sm text-slate-600">
-                  Work <span className="text-[0.675rem]">(other)</span>
+                  Other
                 </FormComponents.Phone.Label>
                 <div className="col-start-2 col-end-5">
                   <FormComponents.Phone.Field
@@ -360,7 +305,7 @@ const CreateParent: NextPage = () => {
               </FormComponents.Textarea>
               <FormComponents.Textarea className="mt-4 grid w-full grid-cols-4 items-center gap-x-3">
                 <FormComponents.Textarea.Label className="col-start-1 col-end-2 text-sm text-slate-600">
-                  Work <span className="text-[0.675rem]">(other)</span>
+                  Other
                 </FormComponents.Textarea.Label>
                 <FormComponents.Textarea.Field
                   max={500}
@@ -382,6 +327,15 @@ const CreateParent: NextPage = () => {
                 />
               </FormComponents.Textarea>
             </div>
+          </Section>
+          <Section
+            title="Guardians"
+            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, fugit!"
+          >
+            <FormComponents.Guardians
+              values={guardians}
+              onChange={setGuardians}
+            />
           </Section>
           <Section
             title="Profile"
@@ -444,17 +398,9 @@ const CreateParent: NextPage = () => {
             />
           </Section>
         </Form>
-        <div className="flex w-full flex-row items-center justify-end gap-x-5 p-10 pl-0">
-          <button
-            type="submit"
-            className="rounded-lg bg-indigo-500 py-2.5 px-7 font-medium text-white shadow-sm hover:bg-indigo-600"
-          >
-            Save
-          </button>
-        </div>
       </section>
     </main>
   );
 };
 
-export default CreateParent;
+export default CreateStudent;
