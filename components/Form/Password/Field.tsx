@@ -32,7 +32,7 @@ const Field: Field = ({
       onChange={onChange}
       setTyping={setTyping}
       {...({ id, label } as { [key: string]: string })}
-      className={typeof className === "string" ? className : className?.(valid)}
+      className={typeof className === "string" ? className : className(valid)}
     />
   );
 };

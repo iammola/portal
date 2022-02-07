@@ -107,7 +107,7 @@ List.Item = function Item({
       ref={ref}
       tabIndex={0}
       onClick={onClick}
-      className={className?.(selected)}
+      className={className(selected)}
     >
       {countryFlag}
       <span className="text-sm font-medium text-slate-700">
@@ -137,7 +137,7 @@ interface List extends FunctionComponent<ListProps> {
       regionCode: string;
       countryCode: number;
       onClick(): void;
-      className?: (selected: boolean) => string;
+      className: (selected: boolean) => string;
     }
   >;
 }

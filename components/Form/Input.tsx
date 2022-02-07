@@ -38,7 +38,7 @@ const Input: Input = ({
         onChange={(e) => onChange(e.target.value)}
         className={classNames(
           "peer row-start-1 p-2 pl-4",
-          typeof className === "string" ? className : className?.(valid)
+          typeof className === "string" ? className : className(valid)
         )}
       />
       {label && (
@@ -86,7 +86,7 @@ export type InputProps = Omit<
   showIcons?: boolean;
   onChange(v: string): void;
   setTyping?: (typing: boolean) => void;
-  className?: string | ((valid?: boolean) => string);
+  className: string | ((valid?: boolean) => string);
 } & (
     | {
         id: string;
