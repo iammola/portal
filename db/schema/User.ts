@@ -50,14 +50,21 @@ const userSubName = (
 
 const userSubContact = (
   required: string,
+  withOther?: false,
   validate?: SchemaTypeOptions<string | undefined>["validate"],
   lowercase?: boolean
 ) => {
   const [trim, type] = [true, String];
 
-  return new Schema<Required<SubContactSchemaType>>(
+  return new Schema<Required<SubContactSchemaType<true>>>(
     {
-      other: { trim, type, lowercase, default: undefined, validate },
+      other: !withOther && {
+        trim,
+        type,
+        validate,
+        lowercase,
+        default: undefined,
+      },
       primary: { trim, type, lowercase, required: [true, required], validate },
     },
     { _id: false }
@@ -74,6 +81,37 @@ export const userName = (withTitle?: true | undefined) =>
       initials: userSubName("Initials required"),
       username: userSubName("User name required", true),
       title: withTitle && userSubName("Title required"),
+    },
+    { _id: false }
+  );
+
+export const userContact = (withOther?: false | undefined) =>
+  new Schema<ContactSchemaType>(
+    {
+      email: {
+        required: [true, "User email required"],
+        type: userSubContact(
+          "User email required",
+          withOther,
+          {
+            validator: (v?: string) =>
+              /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? ""),
+            msg: "Invalid email address",
+          },
+          true
+        ),
+      },
+      phone: {
+        required: [true, "User phone required"],
+        type: userSubContact("User phone required", withOther, {
+          validator: (v?: string) => PhoneNumber(v ?? "").isValid(),
+          msg: "Invalid phone number",
+        }),
+      },
+      address: {
+        required: [true, "User address required"],
+        type: userSubContact("User address required", withOther),
+      },
     },
     { _id: false }
   );
@@ -101,35 +139,6 @@ export const UserImage = new Schema<ImageSchemaType>(
     portrait: {
       type: String,
       default: undefined,
-    },
-  },
-  { _id: false }
-);
-
-export const UserContact = new Schema<ContactSchemaType>(
-  {
-    email: {
-      required: [true, "User email required"],
-      type: userSubContact(
-        "User email required",
-        {
-          validator: (v?: string) =>
-            /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? ""),
-          msg: "Invalid email address",
-        },
-        true
-      ),
-    },
-    phone: {
-      required: [true, "User phone required"],
-      type: userSubContact("User phone required", {
-        validator: (v?: string) => PhoneNumber(v ?? "").isValid(),
-        msg: "Invalid phone number",
-      }),
-    },
-    address: {
-      required: [true, "User address required"],
-      type: userSubContact("User address required"),
     },
   },
   { _id: false }

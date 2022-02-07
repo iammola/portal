@@ -5,7 +5,7 @@ import {
   userName,
   UserImage,
   userGender,
-  UserContact,
+  userContact,
   UserPassword,
   userSchoolMail,
 } from "db/schema/User";
@@ -53,7 +53,7 @@ export const StudentSchema = new Schema<StudentRecord, StudentModelType>({
     type: [StudentGuardianSchema],
   },
   contact: {
-    type: UserContact,
+    type: userContact(),
     required: [true, "Student Contact required"],
   },
 });

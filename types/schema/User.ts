@@ -1,4 +1,5 @@
 import type { DocumentId } from "types/schema";
+import type { FlattenIntersection } from "types/utils";
 
 export type UserType = "parent" | "teacher" | "student";
 
@@ -18,21 +19,24 @@ export interface UserImage {
   portrait?: string;
 }
 
-export interface UserSubContact {
+export type UserSubContact<C = true> = {
   primary: string;
-  other?: string;
-}
+} & (C extends true
+  ? {
+      other?: string;
+    }
+  : unknown);
 
-export type UserContact = {
-  [K in "email" | "phone" | "address"]: UserSubContact;
+export type UserContact<C = true> = {
+  [K in "email" | "phone" | "address"]: FlattenIntersection<UserSubContact<C>>;
 };
 
-export interface UserBase<T extends boolean = true> extends DocumentId {
+export interface UserBase<T = true, C = true> extends DocumentId {
   dob?: Date;
   gender: "M" | "F";
   schoolMail: string;
   image: UserImage;
   name: UserName<T>;
-  contact: UserContact;
+  contact: UserContact<C>;
   password: UserPassword;
 }
