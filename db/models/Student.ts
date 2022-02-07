@@ -23,7 +23,7 @@ const StudentGuardianSchema = new Schema<GuardianSchema>(
       // TODO: Sort out ref Model
       required: [true, "Guardian ID required"],
     },
-    relationship: {
+    relation: {
       type: String,
       required: [true, "Guardian Relationship required"],
       enum: ["father", "mother", "other"],

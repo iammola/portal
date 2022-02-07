@@ -9,11 +9,11 @@ import type { OneKey } from "types/utils";
 
 type Value = {
   mail: string;
-  relationship: string;
+  relation: string;
 };
 
 const Test: NextPage = () => {
-  const template = useMemo(() => ({ mail: "", relationship: "" }), []);
+  const template = useMemo<Value>(() => ({ mail: "", relation: "" }), []);
   const [guardians, setGuardians] = useState<Value[]>([{ ...template }]);
   const guardianOptions = useMemo(
     () => [
@@ -45,7 +45,7 @@ const Test: NextPage = () => {
       </Head>
       <div className="space-y-4 rounded-lg bg-white p-8">
         <ul className="space-y-3">
-          {guardians.map(({ mail, relationship }, i) => (
+          {guardians.map(({ mail, relation }, i) => (
             <li
               key={i}
               className="flex flex-row items-end justify-start gap-x-3"
@@ -55,9 +55,9 @@ const Test: NextPage = () => {
                   label="Relationship"
                   options={guardianOptions}
                   onChange={(v) =>
-                    updateGuardian({ i, relationship: v.id as string })
+                    updateGuardian({ i, relation: v.id as string })
                   }
-                  value={guardianOptions.find(({ id }) => id === relationship)}
+                  value={guardianOptions.find(({ id }) => id === relation)}
                 />
               </div>
               <Email className="relative flex w-[20rem] flex-col items-start justify-start gap-y-2 font-inter">
