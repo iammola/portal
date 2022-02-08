@@ -1,5 +1,7 @@
 import { Schema } from "mongoose";
 
+import { ModelNames } from "db";
+
 import type { SubjectDivisionSchema as SchemaType } from "types/schema";
 
 export const subjectName = (required: string) => ({
@@ -24,7 +26,7 @@ export const subjectAlias = (
 
 export const subjectTeachers = () => ({
   default: undefined,
-  // TODO: Sort out ref Model
+  ref: ModelNames.TEACHER,
   type: [Schema.Types.ObjectId],
 });
 

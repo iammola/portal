@@ -1,5 +1,10 @@
 import { Schema, model, models } from "mongoose";
 
+import { ModelNames } from "db";
+import {
+  StudentAcademicSchema,
+  StudentGuardianSchema,
+} from "db/schema/Student";
 import {
   userDOB,
   userName,
@@ -13,26 +18,9 @@ import {
 import type {
   StudentRecord,
   StudentModel as StudentModelType,
-  StudentGuardianSchema as GuardianSchema,
 } from "types/schema";
 
-const StudentGuardianSchema = new Schema<GuardianSchema>(
-  {
-    guardian: {
-      type: Schema.Types.ObjectId,
-      // TODO: Sort out ref Model
-      required: [true, "Guardian ID required"],
-    },
-    relation: {
-      type: String,
-      required: [true, "Guardian Relationship required"],
-      enum: ["father", "mother", "other"],
-    },
-  },
-  { _id: false }
-);
-
-export const StudentSchema = new Schema<StudentRecord, StudentModelType>({
+const StudentSchema = new Schema<StudentRecord, StudentModelType>({
   gender: userGender(),
   schoolMail: userSchoolMail(),
   dob: userDOB({ required: [true, "Student DOB required"] }),
@@ -45,12 +33,16 @@ export const StudentSchema = new Schema<StudentRecord, StudentModelType>({
     default: undefined,
   },
   name: {
-    type: userName(),
+    type: userName(false),
     required: [true, "Student name required"],
   },
   guardians: {
     default: undefined,
     type: [StudentGuardianSchema],
+  },
+  academic: {
+    default: undefined,
+    type: [StudentAcademicSchema],
   },
   contact: {
     type: userContact(),
@@ -59,5 +51,5 @@ export const StudentSchema = new Schema<StudentRecord, StudentModelType>({
 });
 
 export const StudentModel =
-  (models.Student as StudentModelType) ??
-  model<StudentRecord, StudentModelType>("Student", StudentSchema);
+  (models[ModelNames.STUDENT] as StudentModelType) ??
+  model<StudentRecord, StudentModelType>(ModelNames.STUDENT, StudentSchema);

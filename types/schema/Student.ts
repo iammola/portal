@@ -7,7 +7,19 @@ export interface StudentGuardianSchema {
   relation: "father" | "mother" | "other";
 }
 
+export interface StudentAcademicSchema {
+  class: ObjectId;
+  session: ObjectId;
+  terms: StudentAcademicTermSchema[];
+}
+
+export interface StudentAcademicTermSchema {
+  term: ObjectId;
+  subjects: ObjectId[];
+}
+
 export interface StudentSchema extends UserBase<false> {
+  academic: StudentAcademicSchema[];
   guardians: StudentGuardianSchema[];
 }
 

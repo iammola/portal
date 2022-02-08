@@ -71,7 +71,7 @@ const userSubContact = (
   );
 };
 
-export const userName = (withTitle?: true | undefined) =>
+export const userName = (withTitle?: false | undefined) =>
   new Schema<NameSchemaType<true>>(
     {
       last: userSubName("Last name required"),
@@ -80,7 +80,7 @@ export const userName = (withTitle?: true | undefined) =>
       first: userSubName("First name required"),
       initials: userSubName("Initials required"),
       username: userSubName("User name required", true),
-      title: withTitle && userSubName("Title required"),
+      title: !withTitle && userSubName("Title required"),
     },
     { _id: false }
   );

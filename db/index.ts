@@ -20,6 +20,14 @@ export async function connect(): Promise<typeof mongoose> {
   return (cached.conn ??= await cached.promise);
 }
 
+export enum ModelNames {
+  CLASS = "Class",
+  PARENT = "Parent",
+  STUDENT = "Student",
+  TEACHER = "Teacher",
+  SUBJECT = "Subject",
+}
+
 interface ConnectOptionsExt extends mongoose.ConnectOptions {
   /** False by default. If `true`, this connection will use `createIndex()` instead of `ensureIndex()` for automatic index builds via `Model.init()`. */
   useCreateIndex?: boolean;
