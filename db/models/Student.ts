@@ -20,8 +20,8 @@ import type {
 const StudentGuardianSchema = new Schema<GuardianSchema>(
   {
     guardian: {
+      ref: ModelNames.PARENT,
       type: Schema.Types.ObjectId,
-      // TODO: Sort out ref Model
       required: [true, "Guardian ID required"],
     },
     relation: {

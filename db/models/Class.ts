@@ -30,14 +30,14 @@ export const ClassSchema = new Schema<ClassRecord, ClassModelType>({
     default: new Date(),
   },
   teachers: {
-    // TODO: Sort out ref Model
+    ref: ModelNames.TEACHER,
     type: [Schema.Types.ObjectId],
   },
 });
 
 ClassSchema.virtual("subjectsCount", {
   count: true,
-  ref: "Subject",
+  ref: ModelNames.SUBJECT,
   localField: "_id",
   foreignField: "class",
 });
