@@ -11,7 +11,7 @@ export const classNames = (
     | { [key: string]: boolean }
   )[]
 ) => {
-  const formattedClasses = [
+  const formatted = [
     ...new Set(
       classes.reduce((acc: string[], cur) => {
         let classes = "";
@@ -28,14 +28,18 @@ export const classNames = (
     ),
   ];
 
-  const filtered = formattedClasses?.filter?.(Boolean);
-  const joined = filtered?.join?.(" ");
-  const replaced = joined?.replaceAll?.(/\s{2,}/g, " ") as string | undefined;
+  const result = formatted
+    .filter(Boolean)
+    .join(" ")
+    .replaceAll?.(/\s{2,}/g, " ");
 
-  if (
-    [classes, formattedClasses, filtered, joined, replaced].includes(undefined)
-  )
+  if (result === undefined)
     // eslint-disable-next-line no-console
-    console.log({ classes, formattedClasses, filtered, joined, replaced });
-  return replaced as string;
+    console.log({
+      formatted,
+      replace: typeof "".replace,
+      replaceAll: typeof "".replaceAll,
+    });
+
+  return result ?? "";
 };
