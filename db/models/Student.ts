@@ -1,7 +1,10 @@
 import { Schema, model, models } from "mongoose";
 
 import { ModelNames } from "db";
-import { StudentGuardianSchema } from "db/schema/Student";
+import {
+  StudentAcademicSchema,
+  StudentGuardianSchema,
+} from "db/schema/Student";
 import {
   userDOB,
   userName,
@@ -36,6 +39,10 @@ const StudentSchema = new Schema<StudentRecord, StudentModelType>({
   guardians: {
     default: undefined,
     type: [StudentGuardianSchema],
+  },
+  academic: {
+    default: undefined,
+    type: [StudentAcademicSchema],
   },
   contact: {
     type: userContact(),
