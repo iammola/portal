@@ -45,7 +45,7 @@ export const StudentSchema = new Schema<StudentRecord, StudentModelType>({
     default: undefined,
   },
   name: {
-    type: userName(),
+    type: userName(false),
     required: [true, "Student name required"],
   },
   guardians: {
