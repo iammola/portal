@@ -32,7 +32,7 @@ const StudentGuardianSchema = new Schema<GuardianSchema>(
   { _id: false }
 );
 
-export const StudentSchema = new Schema<StudentRecord, StudentModelType>({
+const StudentSchema = new Schema<StudentRecord, StudentModelType>({
   gender: userGender(),
   schoolMail: userSchoolMail(),
   dob: userDOB({ required: [true, "Student DOB required"] }),
