@@ -37,5 +37,5 @@ export const classNames = (
   )
     // eslint-disable-next-line no-console
     console.log({ classes, formattedClasses, filtered, joined, replaced });
-  return replaced as string;
+  return replaced;
 };
