@@ -1,5 +1,6 @@
 import { Schema, model, models } from "mongoose";
 
+import { ModelNames } from "db";
 import {
   userDOB,
   userName,
@@ -42,5 +43,5 @@ const ParentSchema = new Schema<ParentRecord, ParentModelType>({
 });
 
 export const ParentModel =
-  (models.Parent as ParentModelType) ??
-  model<ParentRecord, ParentModelType>("Parent", ParentSchema);
+  (models[ModelNames.PARENT] as ParentModelType) ??
+  model<ParentRecord, ParentModelType>(ModelNames.PARENT, ParentSchema);

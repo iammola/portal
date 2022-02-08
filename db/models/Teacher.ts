@@ -1,5 +1,6 @@
 import { Schema, model, models } from "mongoose";
 
+import { ModelNames } from "db";
 import {
   userDOB,
   userName,
@@ -38,5 +39,5 @@ const TeacherSchema = new Schema<TeacherRecord, TeacherModelType>({
 });
 
 export const TeacherModel =
-  (models.Teacher as TeacherModelType) ??
-  model<TeacherRecord, TeacherModelType>("Teacher", TeacherSchema);
+  (models[ModelNames.TEACHER] as TeacherModelType) ??
+  model<TeacherRecord, TeacherModelType>(ModelNames.TEACHER, TeacherSchema);

@@ -1,5 +1,7 @@
 import { Schema, model, models } from "mongoose";
 
+import { ModelNames } from "db";
+
 import type { ClassModel as ClassModelType, ClassRecord } from "types/schema";
 
 export const ClassSchema = new Schema<ClassRecord, ClassModelType>({
@@ -41,5 +43,5 @@ ClassSchema.virtual("subjectsCount", {
 });
 
 export const ClassModel =
-  (models.Class as ClassModelType) ??
-  model<ClassRecord, ClassModelType>("Class", ClassSchema);
+  (models[ModelNames.CLASS] as ClassModelType) ??
+  model<ClassRecord, ClassModelType>(ModelNames.CLASS, ClassSchema);

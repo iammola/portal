@@ -1,5 +1,6 @@
 import { Schema, model, models } from "mongoose";
 
+import { ModelNames } from "db";
 import {
   subjectName,
   subjectAlias,
@@ -8,8 +9,8 @@ import {
 } from "db/schema/Subject";
 
 import type {
-  SubjectModel as SubjectModelType,
   SubjectRecord,
+  SubjectModel as SubjectModelType,
 } from "types/schema";
 
 export const SubjectSchema = new Schema<SubjectRecord, SubjectModelType>({
@@ -37,5 +38,5 @@ export const SubjectSchema = new Schema<SubjectRecord, SubjectModelType>({
 });
 
 export const SubjectModel =
-  (models.Subject as SubjectModelType) ??
-  model<SubjectRecord, SubjectModelType>("Subject", SubjectSchema);
+  (models[ModelNames.SUBJECT] as SubjectModelType) ??
+  model<SubjectRecord, SubjectModelType>(ModelNames.SUBJECT, SubjectSchema);
