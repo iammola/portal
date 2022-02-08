@@ -1,6 +1,7 @@
 import { Schema, model, models } from "mongoose";
 
 import { ModelNames } from "db";
+import { StudentGuardianSchema } from "db/schema/Student";
 import {
   userDOB,
   userName,
@@ -14,24 +15,7 @@ import {
 import type {
   StudentRecord,
   StudentModel as StudentModelType,
-  StudentGuardianSchema as GuardianSchema,
 } from "types/schema";
-
-const StudentGuardianSchema = new Schema<GuardianSchema>(
-  {
-    guardian: {
-      ref: ModelNames.PARENT,
-      type: Schema.Types.ObjectId,
-      required: [true, "Guardian ID required"],
-    },
-    relation: {
-      type: String,
-      required: [true, "Guardian Relationship required"],
-      enum: ["father", "mother", "other"],
-    },
-  },
-  { _id: false }
-);
 
 const StudentSchema = new Schema<StudentRecord, StudentModelType>({
   gender: userGender(),
