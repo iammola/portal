@@ -1,4 +1,4 @@
-import { FormEvent, useCallback, useState } from "react";
+import { FormEvent, useState } from "react";
 import Head from "next/head";
 
 import { Input, Email } from "components/Form";
@@ -17,18 +17,6 @@ const CreateClass: NextPage = () => {
   const [alias, setAlias] = useState("");
   const [special, setSpecial] = useState("");
   const [teachers, setTeachers] = useState<Value[]>([]);
-
-  const inputClassName = useCallback(
-    (valid) =>
-      classNames(
-        "w-[20rem] h-[3.75rem] border placeholder-shown:border-slate-300 focus:border-transparent focus:valid:border-transparent focus:invalid:border-transparent rounded-lg overflow-hidden focus:outline-none ring-2 focus:ring-blue-400 placeholder-shown:ring-transparent placeholder-transparent",
-        {
-          "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
-          "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
-        }
-      ),
-    []
-  );
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -83,7 +71,17 @@ const CreateClass: NextPage = () => {
               value={name}
               label="Name"
               onChange={setName}
-              className={inputClassName}
+              className={(valid) =>
+                classNames(
+                  "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                  {
+                    "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                      valid === true,
+                    "invalid:ring-red-400 focus:invalid:ring-red-400":
+                      valid === false,
+                  }
+                )
+              }
             />
             <Input
               required
@@ -92,7 +90,17 @@ const CreateClass: NextPage = () => {
               value={alias}
               label="Alias"
               onChange={setAlias}
-              className={inputClassName}
+              className={(valid) =>
+                classNames(
+                  "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                  {
+                    "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                      valid === true,
+                    "invalid:ring-red-400 focus:invalid:ring-red-400":
+                      valid === false,
+                  }
+                )
+              }
             />
             <Input
               required
@@ -101,7 +109,17 @@ const CreateClass: NextPage = () => {
               value={special}
               label="Special name"
               onChange={setSpecial}
-              className={inputClassName}
+              className={(valid) =>
+                classNames(
+                  "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                  {
+                    "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                      valid === true,
+                    "invalid:ring-red-400 focus:invalid:ring-red-400":
+                      valid === false,
+                  }
+                )
+              }
             />
             <Email className="flex w-[20rem] flex-col items-start justify-start gap-y-4 font-inter">
               <Email.Label className="font-medium text-slate-800">
