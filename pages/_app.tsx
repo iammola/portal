@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { SWRConfig } from "swr";
 
 import "style/index.css";
 
@@ -6,7 +7,12 @@ import type { AppProps } from "next/app";
 
 const App = ({ Component, pageProps }: AppProps): JSX.Element => {
   return (
-    <>
+    <SWRConfig
+      value={{
+        fetcher: (e: RequestInfo, i?: RequestInit) =>
+          fetch(e, i).then((r) => r.json()),
+      }}
+    >
       <Component {...pageProps} />
       <Head>
         <link rel="icon" href="/favicon.ico" />
@@ -30,7 +36,7 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
           href="/apple-touch-icon.png"
         />
       </Head>
-    </>
+    </SWRConfig>
   );
 };
 

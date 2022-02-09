@@ -58,7 +58,7 @@ const Select: Select = ({ label, onChange, options, value }) => {
   );
 };
 
-interface Value {
+export interface Value {
   id: unknown;
   value: string;
 }

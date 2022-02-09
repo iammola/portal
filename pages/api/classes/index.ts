@@ -5,13 +5,14 @@ import { ClassModel } from "db/models";
 import { formatApiError } from "utils/api";
 
 import type {
+  GetClassesData,
   CreateClassData,
   CreateClassRequestBody,
 } from "types/api/classes";
 import type { ApiInternal, ApiInternalResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type Return = ApiInternalResponse<CreateClassData>;
+type Return = ApiInternalResponse<CreateClassData | GetClassesData>;
 
 async function createClass(data: CreateClassRequestBody) {
   let [result, statusCode]: ApiInternal<CreateClassData> = ["", 0];
@@ -31,11 +32,29 @@ async function createClass(data: CreateClassRequestBody) {
   return [result, statusCode] as const;
 }
 
+async function getClasses(field: string) {
+  let [result, statusCode]: ApiInternal<GetClassesData> = ["", 0];
+
+  await connect();
+  const data = await ClassModel.find({}, field);
+
+  [result, statusCode] = [
+    {
+      data,
+      success: true,
+      message: ReasonPhrases.OK,
+    },
+    StatusCodes.OK,
+  ];
+
+  return [result, statusCode] as const;
+}
+
 export default async function handler(
-  { method = "", body }: NextApiRequest,
+  { body, method = "", query }: NextApiRequest,
   res: NextApiResponse<Return[0]>
 ) {
-  const allow = ["POST"];
+  const allow = ["POST", "GET"];
   let [result, statusCode]: Return = [
     {
       success: false,
@@ -50,6 +69,9 @@ export default async function handler(
       [result, statusCode] = await createClass(
         JSON.parse(body) as CreateClassRequestBody
       );
+
+    if (method === "GET" && typeof query.field === "string")
+      [result, statusCode] = await getClasses(query.field);
   } catch (error: any) {
     [result, statusCode] = [
       {

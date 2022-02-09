@@ -40,6 +40,10 @@ const CreateStudent: NextPage = () => {
     ],
     []
   );
+  const [academic, setAcademic] = useState({
+    class: "",
+    subjects: [] as string[],
+  });
 
   return (
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-50 font-poppins dark:bg-slate-900">
@@ -188,6 +192,18 @@ const CreateStudent: NextPage = () => {
                 value={genderOptions.find(({ id }) => id === gender)}
               />
             </div>
+          </Section>
+          <Section
+            title="Academic"
+            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, enim."
+          >
+            <FormComponents.Academic
+              {...academic}
+              handleClassChange={(c) => setAcademic({ ...academic, class: c })}
+              handleSubjectsChange={(subjects) =>
+                setAcademic({ ...academic, subjects })
+              }
+            />
           </Section>
           <Section
             title="Contact"

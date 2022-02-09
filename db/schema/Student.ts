@@ -25,6 +25,10 @@ export const StudentGuardianSchema = new Schema<GuardianSchema>(
 
 const StudentAcademicTermSchema = new Schema(
   {
+    current: {
+      type: Boolean,
+      default: undefined,
+    },
     term: {
       type: Schema.Types.ObjectId,
       required: [true, "Term ID required"],
@@ -40,6 +44,10 @@ const StudentAcademicTermSchema = new Schema(
 
 export const StudentAcademicSchema = new Schema<AcademicSchema>(
   {
+    current: {
+      type: Boolean,
+      default: undefined,
+    },
     class: {
       ref: ModelNames.CLASS,
       type: Schema.Types.ObjectId,
