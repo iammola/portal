@@ -8,6 +8,7 @@ export interface StudentGuardianSchema {
 }
 
 export interface StudentAcademicSchema {
+  current?: true;
   class: ObjectId;
   session: ObjectId;
   terms: StudentAcademicTermSchema[];
@@ -15,6 +16,7 @@ export interface StudentAcademicSchema {
 
 export interface StudentAcademicTermSchema {
   term: ObjectId;
+  current?: true;
   subjects: ObjectId[];
 }
 
