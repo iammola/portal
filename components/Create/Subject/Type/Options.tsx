@@ -4,7 +4,7 @@ import { ModelNames } from "db";
 
 import type { SubjectRecord } from "types/schema";
 
-const Options: Options = () => {
+const Options: Options = ({ id, onChange, value }) => {
   const options = useMemo<Option[]>(
     () => [
       {
@@ -22,8 +22,34 @@ const Options: Options = () => {
     ],
     []
   );
+  const IDs = useMemo(
+    () => options.map(() => id + Math.random().toString(36).slice(2)),
+    [id, options]
+  );
 
-  return <></>;
+  return (
+    <ul>
+      {options.map((option, i) => (
+        <li key={option.id} className="">
+          <label htmlFor={IDs[i]} className="grid grid-cols-5 grid-rows-4">
+            <input
+              name={id}
+              id={IDs[i]}
+              type="radio"
+              checked={option.id === value}
+              onChange={(e) => e.target.checked && onChange(option.id)}
+            />
+            <h4 className="col-start-1 col-end-5 row-start-1 row-end-2 text-sm font-bold uppercase tracking-wide">
+              {option.label}
+            </h4>
+            <p className="col-start-1 col-end-6 row-start-2 row-end-5 text-sm text-slate-400">
+              {option.description}
+            </p>
+          </label>
+        </li>
+      ))}
+    </ul>
+  );
 };
 
 export type Option = {
@@ -33,6 +59,7 @@ export type Option = {
 };
 
 type OptionsProps = {
+  id: string;
   value?: Option["id"];
   onChange(v: Option["id"]): void;
 };
