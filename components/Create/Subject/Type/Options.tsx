@@ -9,11 +9,15 @@ const Options: Options = () => {
     () => [
       {
         id: ModelNames.B_SUBJECT,
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, vitae!",
         label: "Base",
       },
       {
         id: ModelNames.G_SUBJECT,
         label: "Grouped",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, nulla.",
       },
     ],
     []
@@ -24,6 +28,7 @@ const Options: Options = () => {
 
 export type Option = {
   label: string;
+  description: string;
   id: SubjectRecord["__type"];
 };
 
