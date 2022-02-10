@@ -1,1 +1,1 @@
-export { default as Type } from "./Type";
+export { default as SubjectType } from "./Type";
