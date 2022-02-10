@@ -1,12 +1,6 @@
 import { Schema, model, models } from "mongoose";
 
 import { ModelNames } from "db";
-import {
-  subjectName,
-  subjectAlias,
-  subjectTeachers,
-  SubjectDivisionSchema,
-} from "db/schema/Subject";
 
 import type {
   SubjectRecord,
@@ -14,26 +8,19 @@ import type {
 } from "types/schema";
 
 export const SubjectSchema = new Schema<SubjectRecord, SubjectModelType>({
-  teachers: subjectTeachers(),
-  name: subjectName("Subject name required"),
-  alias: subjectAlias(
-    "Subject alias required",
-    "Subject alias min-length = 3",
-    "Subject alias max-length = 5"
-  ),
   class: {
     ref: ModelNames.CLASS,
     type: Schema.Types.ObjectId,
     required: [true, "Subject class required"],
   },
+  required: {
+    type: Boolean,
+    default: undefined,
+  },
   sessions: {
     // TODO: Sort out ref Model
     default: undefined,
     type: [Schema.Types.ObjectId],
-  },
-  divisions: {
-    default: undefined,
-    type: [SubjectDivisionSchema],
   },
 });
 
