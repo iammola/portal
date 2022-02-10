@@ -1,12 +1,34 @@
+import type { ModelNames } from "db";
 import type { Model } from "mongoose";
-import type { ModelRecord, ObjectId } from "types/schema";
+import type { DocumentId, ModelRecord, ObjectId } from "types/schema";
 
-export interface SubjectSchema {
+interface SubjectSchema {
   class: ObjectId;
   required?: true;
   sessions?: ObjectId[];
 }
 
-export type SubjectRecord = ModelRecord<SubjectSchema>;
+interface Subject<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT>
+  extends DocumentId,
+    SubjectSchema {
+  __type: T;
+  name: string;
+  alias: string;
+}
 
-export type SubjectModel = Model<SubjectSchema>;
+interface BaseSubjectSchema extends Subject<ModelNames.B_SUBJECT> {
+  teachers: ObjectId[];
+}
+
+interface GroupSubjectSchema extends Subject<ModelNames.G_SUBJECT> {
+  divisions: Omit<BaseSubjectSchema, "__type">[];
+}
+
+export type SubjectModel = Model<BaseSubjectSchema | GroupSubjectSchema>;
+export type SubjectRecord = ModelRecord<BaseSubjectSchema | GroupSubjectSchema>;
+
+export type BaseSubjectModel = Model<BaseSubjectSchema>;
+export type BaseSubjectRecord = ModelRecord<BaseSubjectSchema>;
+
+export type GroupSubjectModel = Model<GroupSubjectSchema>;
+export type GroupSubjectRecord = ModelRecord<GroupSubjectSchema>;
