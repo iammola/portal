@@ -27,6 +27,10 @@ type Option = {
   id: SubjectRecord["__type"];
 };
 
-type SubjectType = FunctionComponent<{ label: string }>;
+type SubjectType = FunctionComponent<{
+  label: string;
+  value: Option["id"];
+  onChange(v: Option["id"]): void;
+}>;
 
 export default SubjectType;
