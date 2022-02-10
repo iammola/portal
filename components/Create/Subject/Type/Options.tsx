@@ -1,6 +1,7 @@
-import { FunctionComponent, useLayoutEffect, useMemo } from "react";
+import { FunctionComponent, useMemo } from "react";
 
 import { ModelNames } from "db";
+import { useIsomorphicLayoutEffect } from "hooks";
 
 import type { SubjectRecord } from "types/schema";
 
@@ -27,7 +28,7 @@ const Options: Options = ({ id, onChange, value }) => {
     [id, options]
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (value === undefined) onChange(options[0].id);
   }, [onChange, options, value]);
 
