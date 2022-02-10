@@ -1,4 +1,4 @@
-import { FunctionComponent, useMemo } from "react";
+import { FunctionComponent, useLayoutEffect, useMemo } from "react";
 
 import { ModelNames } from "db";
 
@@ -26,6 +26,10 @@ const Options: Options = ({ id, onChange, value }) => {
     () => options.map(() => id + Math.random().toString(36).slice(2)),
     [id, options]
   );
+
+  useLayoutEffect(() => {
+    if (value === undefined) onChange(options[0].id);
+  }, [onChange, options, value]);
 
   return (
     <ul>
