@@ -33,7 +33,7 @@ export type Option = {
 };
 
 type OptionsProps = {
-  value: Option["id"];
+  value?: Option["id"];
   onChange(v: Option["id"]): void;
 };
 
