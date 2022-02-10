@@ -4,7 +4,7 @@ import { ModelNames } from "db";
 
 import type { SubjectRecord } from "types/schema";
 
-const SubjectType: SubjectType = () => {
+const SubjectType: SubjectType = ({ children, className }) => {
   const options = useMemo<Option[]>(
     () => [
       {
@@ -19,7 +19,7 @@ const SubjectType: SubjectType = () => {
     []
   );
 
-  return <></>;
+  return <div className={className}>{children}</div>;
 };
 
 type Option = {
@@ -29,6 +29,7 @@ type Option = {
 
 type SubjectType = FunctionComponent<{
   label: string;
+  className: string;
   value: Option["id"];
   onChange(v: Option["id"]): void;
 }>;
