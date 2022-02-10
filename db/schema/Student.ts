@@ -5,6 +5,7 @@ import { ModelNames } from "db";
 import type {
   StudentGuardianSchema as GuardianSchema,
   StudentAcademicSchema as AcademicSchema,
+  StudentAcademicTermSchema as AcademicTermSchema,
 } from "types/schema";
 
 export const StudentGuardianSchema = new Schema<GuardianSchema>(
@@ -23,7 +24,7 @@ export const StudentGuardianSchema = new Schema<GuardianSchema>(
   { _id: false }
 );
 
-const StudentAcademicTermSchema = new Schema(
+const StudentAcademicTermSchema = new Schema<AcademicTermSchema>(
   {
     current: {
       type: Boolean,
