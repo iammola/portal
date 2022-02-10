@@ -21,6 +21,7 @@ const Dev: NextPage = () => {
           value={value}
           id="subjectType"
           onChange={setValue}
+          className="flex flex-row items-center justify-start gap-x-4"
         />
       </SubjectType>
     </main>

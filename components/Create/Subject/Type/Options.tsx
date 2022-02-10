@@ -5,7 +5,7 @@ import { useIsomorphicLayoutEffect } from "hooks";
 
 import type { SubjectRecord } from "types/schema";
 
-const Options: Options = ({ id, onChange, value }) => {
+const Options: Options = ({ className, id, onChange, value }) => {
   const options = useMemo<Option[]>(
     () => [
       {
@@ -33,7 +33,7 @@ const Options: Options = ({ id, onChange, value }) => {
   }, [onChange, options, value]);
 
   return (
-    <ul>
+    <ul className={className}>
       {options.map((option, i) => (
         <li key={option.id} className="">
           <label htmlFor={IDs[i]} className="grid grid-cols-5 grid-rows-4">
@@ -65,6 +65,7 @@ export type Option = {
 
 type OptionsProps = {
   id: string;
+  className: string;
   value?: Option["id"];
   onChange(v: Option["id"]): void;
 };
