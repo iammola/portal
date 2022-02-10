@@ -6,7 +6,7 @@ import { classNames } from "utils";
 import { fetchAPIEndpoint } from "utils/api";
 
 import type { NextPage } from "next";
-import type { Value } from "components/Form/Email";
+import type { Value as EmailValue } from "components/Form/Email";
 import type {
   CreateClassData,
   CreateClassRequestBody,
@@ -16,7 +16,7 @@ const CreateClass: NextPage = () => {
   const [name, setName] = useState("");
   const [alias, setAlias] = useState("");
   const [special, setSpecial] = useState("");
-  const [teachers, setTeachers] = useState<Value[]>([]);
+  const [teachers, setTeachers] = useState<EmailValue[]>([]);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
