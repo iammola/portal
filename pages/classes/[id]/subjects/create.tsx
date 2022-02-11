@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { classNames } from "utils";
 import { Input } from "components/Form";
+import { useIsomorphicLayoutEffect } from "hooks";
 import {
   BaseSubject,
   GroupSubject,
@@ -21,6 +22,23 @@ const CreateSubject: NextPage = () => {
   const [teachers, setTeachers] = useState<EmailValue[]>();
   const [__type, setType] = useState<SubjectRecord["__type"]>();
   const [groupSubjects, setGroupSubjects] = useState<DivisionValue[]>();
+
+  useIsomorphicLayoutEffect(() => {
+    if (__type !== undefined) {
+      setTeachers(undefined);
+      setGroupSubjects(
+        __type === "group"
+          ? [
+              {
+                name: "",
+                alias: "",
+                teachers: [],
+              },
+            ]
+          : undefined
+      );
+    }
+  }, [__type]);
 
   return (
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-200 font-poppins">
