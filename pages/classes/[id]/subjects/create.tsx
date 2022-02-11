@@ -96,7 +96,7 @@ const CreateSubject: NextPage = () => {
                 value={__type}
                 id="subjectType"
                 onChange={setType}
-                className="flex w-full flex-row items-center justify-start md:gap-x-3 lg:gap-x-5"
+                className="flex w-full flex-row items-stretch justify-start md:gap-x-3 lg:gap-x-5"
               />
             </SubjectType>
             {__type === "base" && (
