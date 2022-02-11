@@ -16,9 +16,11 @@ const Teachers: Teachers = ({ onChange, values = [] }) => {
   );
 };
 
-type Teachers = FunctionComponent<{
+export type TeachersProps = {
   values?: Value[];
   onChange(v: Value[]): void;
 };
+
+type Teachers = FunctionComponent<TeachersProps>;
 
 export default Teachers;
