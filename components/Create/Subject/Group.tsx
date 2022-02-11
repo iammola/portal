@@ -4,7 +4,7 @@ import { MinusSmIcon, PlusSmIcon } from "@heroicons/react/solid";
 import { classNames } from "utils";
 import { Input } from "components/Form";
 
-import Teachers from "../Teachers";
+import Teachers from "./Teachers";
 
 import type { OneKey } from "types/utils";
 import type { Value as EmailValue } from "components/Form/Email";
