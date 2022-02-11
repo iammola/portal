@@ -21,7 +21,7 @@ interface BaseSubjectSchema extends Subject<ModelNames.B_SUBJECT> {
 }
 
 interface GroupSubjectSchema extends Subject<ModelNames.G_SUBJECT> {
-  divisions: Omit<BaseSubjectSchema, "__type">[];
+  divisions: Pick<BaseSubjectSchema, "_id" | "name" | "alias" | "teachers">[];
 }
 
 export type SubjectModel = Model<BaseSubjectSchema | GroupSubjectSchema>;
