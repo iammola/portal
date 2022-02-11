@@ -15,13 +15,15 @@ const Dev: NextPage = () => {
         <title>Development Page</title>
         <meta name="description" content="Test Components" />
       </Head>
-      <SubjectType className="w-[35rem] space-y-3 overflow-hidden rounded-xl bg-white shadow-lg">
-        <SubjectType.Label className="">Select subject type</SubjectType.Label>
+      <SubjectType className="w-[48.5rem] space-y-5 overflow-hidden rounded-xl bg-white px-14 py-16 shadow-lg">
+        <SubjectType.Label className="font-medium text-slate-800">
+          Select subject type
+        </SubjectType.Label>
         <SubjectType.Options
           value={value}
           id="subjectType"
           onChange={setValue}
-          className="flex flex-row items-center justify-start gap-x-4"
+          className="flex w-full flex-row items-center justify-start gap-x-8"
         />
       </SubjectType>
     </main>

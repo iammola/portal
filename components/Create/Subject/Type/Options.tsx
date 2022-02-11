@@ -1,6 +1,7 @@
 import { FunctionComponent, useMemo } from "react";
 
 import { ModelNames } from "db";
+import { classNames } from "utils";
 import { useIsomorphicLayoutEffect } from "hooks";
 
 import type { SubjectRecord } from "types/schema";
@@ -56,19 +57,29 @@ const Option: Option = ({
   );
 
   return (
-    <li>
-      <label htmlFor={unique} className="grid grid-cols-5 grid-rows-4">
+    <li
+      className={classNames("w-1/2 rounded-lg ring-2 hover:shadow-md", [
+        selected,
+        "bg-blue-50 ring-blue-500",
+        "bg-white ring-slate-300",
+      ])}
+    >
+      <label
+        htmlFor={unique}
+        className="grid cursor-pointer grid-cols-5 gap-y-1 py-5 px-7"
+      >
         <input
           name={id}
           id={unique}
           type="radio"
           checked={selected}
           onChange={(e) => e.target.checked && onChange(id)}
+          className="col-start-5 col-end-6 row-start-1 h-3.5 w-3.5 justify-self-end"
         />
-        <h4 className="col-start-1 col-end-5 row-start-1 row-end-2 text-sm font-bold uppercase tracking-wide">
+        <h4 className="col-start-1 col-end-5 row-start-1 text-lg font-medium text-slate-700">
           {label}
         </h4>
-        <p className="col-start-1 col-end-6 row-start-2 row-end-5 text-sm text-slate-400">
+        <p className="col-start-1 col-end-6 text-[0.85rem] text-slate-500">
           {description}
         </p>
       </label>
