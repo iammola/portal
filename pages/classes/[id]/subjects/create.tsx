@@ -3,7 +3,11 @@ import { useState } from "react";
 
 import { classNames } from "utils";
 import { Input } from "components/Form";
-import { BaseSubject, SubjectType } from "components/Create/Subject";
+import {
+  BaseSubject,
+  GroupSubject,
+  SubjectType,
+} from "components/Create/Subject";
 
 import type { NextPage } from "next";
 import type { SubjectRecord } from "types/schema";
@@ -99,10 +103,12 @@ const CreateSubject: NextPage = () => {
                 className="flex w-full flex-row items-stretch justify-start md:gap-x-3 lg:gap-x-5"
               />
             </SubjectType>
-            {__type === "base" && (
+            {__type === "base" ? (
               <BaseSubject
                 teachers={{ values: teachers, onChange: setTeachers }}
               />
+            ) : (
+              <GroupSubject />
             )}
           </div>
           <button
