@@ -17,7 +17,7 @@ const Dev: NextPage = () => {
       </Head>
       <SubjectType className="w-[48.5rem] space-y-5 overflow-hidden rounded-xl bg-white px-14 py-16 shadow-lg">
         <SubjectType.Label className="font-medium text-slate-800">
-          Select subject type
+          Choose a subject type
         </SubjectType.Label>
         <SubjectType.Options
           value={value}
