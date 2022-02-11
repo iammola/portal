@@ -22,7 +22,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
   );
   const resetField = useCallback(() => {
     const target = ref.current;
-    if (values.length === 0 && target?.childNodes.length !== 0)
+    if (values.length === 0 && target?.children.length !== 0)
       target?.replaceChildren();
   }, [values.length]);
 
