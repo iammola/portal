@@ -1,15 +1,15 @@
 import { FunctionComponent } from "react";
 
-import Teachers from "./Teachers";
+import Teachers, { TeachersProps } from "./Teachers";
 
-const BaseSubject: BaseSubject = () => {
+const BaseSubject: BaseSubject = ({ teachers }) => {
   return (
     <>
-      <Teachers />
+      <Teachers {...teachers} />
     </>
   );
 };
 
-type BaseSubject = FunctionComponent;
+type BaseSubject = FunctionComponent<{ teachers: TeachersProps }>;
 
 export default BaseSubject;
