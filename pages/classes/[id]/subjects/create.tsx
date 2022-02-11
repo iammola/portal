@@ -12,6 +12,7 @@ import {
 import type { NextPage } from "next";
 import type { SubjectRecord } from "types/schema";
 import type { Value as EmailValue } from "components/Form/Email";
+import type { DivisionValue } from "components/Create/Subject/Group";
 
 const CreateSubject: NextPage = () => {
   const [name, setName] = useState("");
@@ -19,6 +20,7 @@ const CreateSubject: NextPage = () => {
   const [required, setRequired] = useState(false);
   const [teachers, setTeachers] = useState<EmailValue[]>();
   const [__type, setType] = useState<SubjectRecord["__type"]>();
+  const [groupSubjects, setGroupSubjects] = useState<DivisionValue[]>();
 
   return (
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-200 font-poppins">
@@ -108,7 +110,10 @@ const CreateSubject: NextPage = () => {
                 teachers={{ values: teachers, onChange: setTeachers }}
               />
             ) : (
-              <GroupSubject />
+              <GroupSubject
+                values={groupSubjects}
+                onChange={setGroupSubjects}
+              />
             )}
           </div>
           <button
