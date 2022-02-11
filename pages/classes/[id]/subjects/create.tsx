@@ -1,12 +1,16 @@
 import Head from "next/head";
 import { useState } from "react";
 
+import { classNames } from "utils";
+import { Input } from "components/Form";
 import { SubjectType } from "components/Create/Subject";
 
 import type { NextPage } from "next";
 import type { SubjectRecord } from "types/schema";
 
 const CreateSubject: NextPage = () => {
+  const [name, setName] = useState("");
+  const [alias, setAlias] = useState("");
   const [__type, setType] = useState<SubjectRecord["__type"]>();
 
   return (
@@ -24,6 +28,48 @@ const CreateSubject: NextPage = () => {
             </span>
           </h1>
           <div className="space-y-8">
+            <div className="flex w-full flex-row md:gap-x-3 lg:gap-x-5">
+              <div className="w-1/2">
+                <Input
+                  required
+                  id="name"
+                  value={name}
+                  onChange={setName}
+                  label="Subject name"
+                  className={(valid) =>
+                    classNames(
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border border-transparent placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                      {
+                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                          valid === true,
+                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                          valid === false,
+                      }
+                    )
+                  }
+                />
+              </div>
+              <div className="w-1/2">
+                <Input
+                  required
+                  id="alias"
+                  value={alias}
+                  onChange={setAlias}
+                  label="Subject alias"
+                  className={(valid) =>
+                    classNames(
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border border-transparent placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                      {
+                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
+                          valid === true,
+                        "invalid:ring-red-400 focus:invalid:ring-red-400":
+                          valid === false,
+                      }
+                    )
+                  }
+                />
+              </div>
+            </div>
             <SubjectType className="w-full space-y-5">
               <SubjectType.Label className="font-medium text-slate-800">
                 Choose a subject type
