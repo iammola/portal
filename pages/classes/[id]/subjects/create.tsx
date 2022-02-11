@@ -11,6 +11,7 @@ import type { SubjectRecord } from "types/schema";
 const CreateSubject: NextPage = () => {
   const [name, setName] = useState("");
   const [alias, setAlias] = useState("");
+  const [required, setRequired] = useState(false);
   const [__type, setType] = useState<SubjectRecord["__type"]>();
 
   return (
@@ -69,6 +70,21 @@ const CreateSubject: NextPage = () => {
                   }
                 />
               </div>
+            </div>
+            <div className="flex w-full flex-row items-center justify-start gap-x-2">
+              <input
+                type="checkbox"
+                checked={required}
+                className="h-4 w-4"
+                id="requiredSubject"
+                onChange={(e) => setRequired(e.target.checked)}
+              />
+              <label
+                htmlFor="requiredSubject"
+                className="text-sm font-medium text-slate-700"
+              >
+                Should this subject be required?
+              </label>
             </div>
             <SubjectType className="w-full space-y-5">
               <SubjectType.Label className="font-medium text-slate-800">
