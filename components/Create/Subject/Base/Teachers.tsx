@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 
 import Email, { Value } from "components/Form/Email";
 
-const Teachers: Teachers = ({ onChange, values }) => {
+const Teachers: Teachers = ({ onChange, values = [] }) => {
   return (
     <Email className="space-y-2">
       <Email.Label className="font-medium text-slate-800">Teachers</Email.Label>
