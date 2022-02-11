@@ -1,7 +1,13 @@
 import { FunctionComponent } from "react";
 
+import Teachers from "./Teachers";
+
 const BaseSubject: BaseSubject = () => {
-  return <></>;
+  return (
+    <>
+      <Teachers />
+    </>
+  );
 };
 
 type BaseSubject = FunctionComponent;
