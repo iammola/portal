@@ -51,11 +51,6 @@ const Option: Option = ({
   selected,
   uniqueId,
 }) => {
-  const unique = useMemo(
-    () => uniqueId + Math.random().toString(36).slice(2),
-    [uniqueId]
-  );
-
   return (
     <li
       className={classNames("w-1/2 rounded-lg ring-2 hover:shadow-md", [
@@ -65,14 +60,14 @@ const Option: Option = ({
       ])}
     >
       <label
-        htmlFor={unique}
+        htmlFor={`${uniqueId}${id}`}
         className="grid cursor-pointer grid-cols-5 gap-y-1 py-5 px-7"
       >
         <input
           name={id}
-          id={unique}
           type="radio"
           checked={selected}
+          id={`${uniqueId}${id}`}
           onChange={(e) => e.target.checked && onChange(id)}
           className="col-start-5 col-end-6 row-start-1 h-3.5 w-3.5 justify-self-end"
         />
