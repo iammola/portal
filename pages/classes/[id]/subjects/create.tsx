@@ -2,11 +2,14 @@ import Head from "next/head";
 import { useState } from "react";
 
 import { Select } from "components/Form";
+import { SubjectType } from "components/Create/Subject";
 
 import type { NextPage } from "next";
+import type { SubjectRecord } from "types/schema";
 import type { Value as SelectValue } from "components/Form/Select";
 
 const CreateSubject: NextPage = () => {
+  const [__type, setType] = useState<SubjectRecord["__type"]>();
   const [selectedClass, setSelectedClass] = useState<SelectValue>();
 
   return (
@@ -30,6 +33,17 @@ const CreateSubject: NextPage = () => {
               value={selectedClass}
               onChange={setSelectedClass}
             />
+            <SubjectType className="w-full space-y-5">
+              <SubjectType.Label className="font-medium text-slate-800">
+                Choose a subject type
+              </SubjectType.Label>
+              <SubjectType.Options
+                value={__type}
+                id="subjectType"
+                onChange={setType}
+                className="flex w-full flex-row items-center justify-start md:gap-x-3 lg:gap-x-5"
+              />
+            </SubjectType>
           </div>
           <button
             type="submit"
