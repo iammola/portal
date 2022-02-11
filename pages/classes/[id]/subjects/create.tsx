@@ -3,15 +3,17 @@ import { useState } from "react";
 
 import { classNames } from "utils";
 import { Input } from "components/Form";
-import { SubjectType } from "components/Create/Subject";
+import { BaseSubject, SubjectType } from "components/Create/Subject";
 
 import type { NextPage } from "next";
 import type { SubjectRecord } from "types/schema";
+import type { Value as EmailValue } from "components/Form/Email";
 
 const CreateSubject: NextPage = () => {
   const [name, setName] = useState("");
   const [alias, setAlias] = useState("");
   const [required, setRequired] = useState(false);
+  const [teachers, setTeachers] = useState<EmailValue[]>();
   const [__type, setType] = useState<SubjectRecord["__type"]>();
 
   return (
@@ -97,6 +99,11 @@ const CreateSubject: NextPage = () => {
                 className="flex w-full flex-row items-center justify-start md:gap-x-3 lg:gap-x-5"
               />
             </SubjectType>
+            {__type === "base" && (
+              <BaseSubject
+                teachers={{ values: teachers, onChange: setTeachers }}
+              />
+            )}
           </div>
           <button
             type="submit"
