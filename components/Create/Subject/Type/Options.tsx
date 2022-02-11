@@ -12,14 +12,14 @@ const Options: Options = ({ className, id, onChange, value }) => {
       {
         id: ModelNames.B_SUBJECT,
         description:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, vitae!",
+          "This subject doesn't have divisions. It is a standalone subject.",
         label: "Base",
       },
       {
         id: ModelNames.G_SUBJECT,
         label: "Grouped",
         description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, nulla.",
+          "This subject has divisions. It is grouped with a collective name.",
       },
     ],
     []
