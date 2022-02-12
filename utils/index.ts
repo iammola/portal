@@ -1,3 +1,5 @@
+export * from "./password";
+
 /**
  * @param classes strings you want to add to final string
  * @returns all the valid strings
