@@ -5,7 +5,9 @@ import Email, { Value } from "components/Form/Email";
 const Teachers: Teachers = ({ onChange, values = [] }) => {
   return (
     <Email className="flex h-full flex-col space-y-2">
-      <Email.Label className="font-medium text-slate-800">Teachers</Email.Label>
+      <Email.Label className="text-sm font-medium text-slate-800">
+        Teachers
+      </Email.Label>
       <Email.Field
         values={values}
         userType="teacher"
