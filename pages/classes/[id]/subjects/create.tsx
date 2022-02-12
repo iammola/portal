@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import { Input } from "components/Form";
@@ -22,23 +22,26 @@ const CreateSubject: NextPage = () => {
   const [teachers, setTeachers] = useState<EmailValue[]>();
   const [__type, setType] = useState<SubjectRecord["__type"]>();
   const [groupSubjects, setGroupSubjects] = useState<DivisionValue[]>();
+  const divisionTemplate = useMemo<DivisionValue>(
+    () => ({
+      name: "",
+      alias: "",
+      teachers: [],
+    }),
+    []
+  );
+
+  const addSubjectDivision = () =>
+    setGroupSubjects((p) => [...(p ?? []), { ...divisionTemplate }]);
 
   useIsomorphicLayoutEffect(() => {
     if (__type !== undefined) {
       setTeachers(undefined);
       setGroupSubjects(
-        __type === "group"
-          ? [
-              {
-                name: "",
-                alias: "",
-                teachers: [],
-              },
-            ]
-          : undefined
+        __type === "group" ? [{ ...divisionTemplate }] : undefined
       );
     }
-  }, [__type]);
+  }, [__type, divisionTemplate]);
 
   return (
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-200 font-poppins">
@@ -131,6 +134,7 @@ const CreateSubject: NextPage = () => {
               <GroupSubject
                 values={groupSubjects}
                 onChange={setGroupSubjects}
+                addDivision={addSubjectDivision}
               />
             )}
           </div>

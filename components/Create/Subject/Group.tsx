@@ -9,7 +9,7 @@ import Teachers from "./Teachers";
 import type { OneKey } from "types/utils";
 import type { Value as EmailValue } from "components/Form/Email";
 
-const GroupSubject: GroupSubject = ({ onChange, values = [] }) => {
+const GroupSubject: GroupSubject = ({ addDivision, onChange, values = [] }) => {
   const handleChange = ({ i, ...obj }: OneKey<DivisionValue> & { i: number }) =>
     onChange(values.map((a, b) => Object.assign(a, b === i && obj)));
 
@@ -27,6 +27,13 @@ const GroupSubject: GroupSubject = ({ onChange, values = [] }) => {
           </li>
         ))}
       </ol>
+      <button
+        type="button"
+        onClick={addDivision}
+        className="rounded-full border bg-slate-700 px-5 py-2.5 text-sm font-medium text-white ring-2 ring-transparent ring-offset-1 ring-offset-white hover:bg-slate-600 focus:outline-none focus:ring-slate-500"
+      >
+        Add division
+      </button>
     </div>
   );
 };
@@ -105,6 +112,7 @@ type Division = FunctionComponent<
 >;
 
 type GroupSubject = FunctionComponent<{
+  addDivision(): void;
   values?: DivisionValue[];
   onChange(v: DivisionValue[]): void;
 }>;
