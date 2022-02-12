@@ -56,7 +56,7 @@ const CreateSubject: NextPage = () => {
         <title>Create Subject | Portal | GRS™</title>
         <meta name="description" content="Page for Subject Creation" />
       </Head>
-      <section className="flex w-full grow flex-col items-center justify-center">
+      <section className="flex w-full grow flex-col items-center justify-center py-12">
         <form className="w-[35rem] space-y-10 rounded-2xl bg-white px-10 py-8 shadow-lg">
           <h1 className="text-center text-4xl font-bold text-slate-600">
             <span>Create</span>{" "}
