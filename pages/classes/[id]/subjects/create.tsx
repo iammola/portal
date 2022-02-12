@@ -18,7 +18,7 @@ import type { DivisionValue } from "components/Create/Subject/Group";
 const CreateSubject: NextPage = () => {
   const [name, setName] = useState("");
   const [alias, setAlias] = useState("");
-  const [required, setRequired] = useState(false);
+  const [mandatory, setMandatory] = useState(false);
   const [teachers, setTeachers] = useState<EmailValue[]>();
   const [__type, setType] = useState<SubjectRecord["__type"]>();
   const [groupSubjects, setGroupSubjects] = useState<DivisionValue[]>();
@@ -105,16 +105,16 @@ const CreateSubject: NextPage = () => {
             <div className="flex w-full flex-row items-center justify-start gap-x-2">
               <input
                 type="checkbox"
-                checked={required}
+                checked={mandatory}
                 className="h-4 w-4"
                 id="requiredSubject"
-                onChange={(e) => setRequired(e.target.checked)}
+                onChange={(e) => setMandatory(e.target.checked)}
               />
               <label
                 htmlFor="requiredSubject"
                 className="text-sm font-medium text-slate-700"
               >
-                Should this subject be required?
+                Is this subject mandatory?
               </label>
             </div>
             <SubjectType className="w-full space-y-5">

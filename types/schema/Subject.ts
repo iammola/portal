@@ -4,7 +4,7 @@ import type { DocumentId, ModelRecord, ObjectId } from "types/schema";
 
 interface SubjectSchema {
   class: ObjectId;
-  required?: true;
+  mandatory?: true;
   sessions?: ObjectId[];
 }
 

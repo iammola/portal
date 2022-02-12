@@ -17,7 +17,7 @@ export const SubjectSchema = new Schema<SubjectRecord>(
       type: Schema.Types.ObjectId,
       required: [true, "Subject class required"],
     },
-    required: {
+    mandatory: {
       type: Boolean,
       default: undefined,
     },
