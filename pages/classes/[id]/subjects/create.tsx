@@ -38,7 +38,9 @@ const CreateSubject: NextPage = () => {
     if (__type !== undefined) {
       setTeachers(undefined);
       setGroupSubjects(
-        __type === "group" ? [{ ...divisionTemplate }] : undefined
+        __type === "group"
+          ? [{ ...divisionTemplate }, { ...divisionTemplate }]
+          : undefined
       );
     }
   }, [__type, divisionTemplate]);
