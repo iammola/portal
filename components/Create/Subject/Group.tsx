@@ -16,7 +16,7 @@ const GroupSubject: GroupSubject = ({ addDivision, onChange, values = [] }) => {
   return (
     <div className="w-full space-y-5">
       <span className="font-medium text-slate-800">Divisions</span>
-      <ol className="w-full">
+      <ol className="w-full space-y-3">
         {values.map((value, id) => (
           <li key={id}>
             <Division
@@ -41,7 +41,7 @@ const GroupSubject: GroupSubject = ({ addDivision, onChange, values = [] }) => {
 const Division: Division = ({ alias, id, name, handleChange, teachers }) => {
   return (
     <details className="group">
-      <summary className="flex cursor-pointer flex-row items-center justify-start gap-x-3 [list-style:none]">
+      <summary className="flex cursor-pointer flex-row items-center justify-start gap-x-3 rounded-md py-2 px-2 [list-style:none] hover:bg-slate-200 focus:outline-none group-open:bg-slate-200">
         <span className="overflow-hidden rounded-full bg-slate-800 p-1">
           <PlusSmIcon className="block h-5 w-5 fill-white group-open:hidden" />
           <MinusSmIcon className="hidden h-5 w-5 fill-white group-open:block" />
