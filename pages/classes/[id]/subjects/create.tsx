@@ -34,6 +34,9 @@ const CreateSubject: NextPage = () => {
   const addSubjectDivision = () =>
     setGroupSubjects((p) => [...(p ?? []), { ...divisionTemplate }]);
 
+  const removeSubjectDivision = (idx: number) =>
+    setGroupSubjects((p) => p?.filter((_, i) => i !== idx));
+
   useIsomorphicLayoutEffect(() => {
     if (__type !== undefined) {
       setTeachers(undefined);
@@ -137,6 +140,7 @@ const CreateSubject: NextPage = () => {
                 values={groupSubjects}
                 onChange={setGroupSubjects}
                 addDivision={addSubjectDivision}
+                removeDivision={removeSubjectDivision}
               />
             )}
           </div>

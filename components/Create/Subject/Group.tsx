@@ -9,7 +9,12 @@ import Teachers from "./Teachers";
 import type { OneKey } from "types/utils";
 import type { Value as EmailValue } from "components/Form/Email";
 
-const GroupSubject: GroupSubject = ({ addDivision, onChange, values = [] }) => {
+const GroupSubject: GroupSubject = ({
+  addDivision,
+  onChange,
+  removeDivision,
+  values = [],
+}) => {
   const handleChange = ({ i, ...obj }: OneKey<DivisionValue> & { i: number }) =>
     onChange(values.map((a, b) => Object.assign(a, b === i && obj)));
 
@@ -23,6 +28,7 @@ const GroupSubject: GroupSubject = ({ addDivision, onChange, values = [] }) => {
               {...value}
               id={id + 1}
               handleChange={(v) => handleChange({ i: id, ...v })}
+              remove={values.length > 2 ? () => removeDivision(id) : undefined}
             />
           </li>
         ))}
@@ -38,7 +44,14 @@ const GroupSubject: GroupSubject = ({ addDivision, onChange, values = [] }) => {
   );
 };
 
-const Division: Division = ({ alias, id, name, handleChange, teachers }) => {
+const Division: Division = ({
+  alias,
+  id,
+  name,
+  handleChange,
+  remove,
+  teachers,
+}) => {
   return (
     <details className="group">
       <summary className="flex cursor-pointer flex-row items-center justify-start gap-x-3 rounded-md py-2 px-2 [list-style:none] hover:bg-slate-200 focus:outline-none group-open:bg-slate-200">
@@ -49,6 +62,14 @@ const Division: Division = ({ alias, id, name, handleChange, teachers }) => {
         <span className="truncate text-sm text-slate-800">
           {name || `Division ${id}`}
         </span>
+        {remove !== undefined && (
+          <span
+            onClick={remove}
+            className="ml-auto cursor-pointer text-xs tracking-wide text-slate-700 underline"
+          >
+            Remove
+          </span>
+        )}
       </summary>
       <div className="space-y-2 pt-5 pl-5">
         <div className="flex w-full flex-row md:gap-x-3 lg:gap-x-5">
@@ -107,6 +128,7 @@ export type DivisionValue = {
 type Division = FunctionComponent<
   DivisionValue & {
     id: number;
+    remove?: () => void;
     handleChange(v: OneKey<DivisionValue>): void;
   }
 >;
@@ -114,6 +136,7 @@ type Division = FunctionComponent<
 type GroupSubject = FunctionComponent<{
   addDivision(): void;
   values?: DivisionValue[];
+  removeDivision(idx: number): void;
   onChange(v: DivisionValue[]): void;
 }>;
 
