@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useMemo, useState } from "react";
 
 import { classNames } from "utils";
-import { Input } from "components/Form";
+import { Input, Select } from "components/Form";
 import { useIsomorphicLayoutEffect } from "hooks";
 import {
   BaseSubject,
@@ -13,6 +13,7 @@ import {
 import type { NextPage } from "next";
 import type { SubjectRecord } from "types/schema";
 import type { Value as EmailValue } from "components/Form/Email";
+import type { Value as SelectValue } from "components/Form/Select";
 import type { DivisionValue } from "components/Create/Subject/Group";
 
 const CreateSubject: NextPage = () => {
@@ -21,6 +22,7 @@ const CreateSubject: NextPage = () => {
   const [mandatory, setMandatory] = useState(false);
   const [teachers, setTeachers] = useState<EmailValue[]>();
   const [__type, setType] = useState<SubjectRecord["__type"]>();
+  const [selectedClass, setSelectedClass] = useState<SelectValue>();
   const [groupSubjects, setGroupSubjects] = useState<DivisionValue[]>();
   const divisionTemplate = useMemo<DivisionValue>(
     () => ({
@@ -63,6 +65,12 @@ const CreateSubject: NextPage = () => {
             </span>
           </h1>
           <div className="space-y-8">
+            <Select
+              options={[]}
+              label="Class name"
+              value={selectedClass}
+              onChange={setSelectedClass}
+            />
             <div className="flex w-full flex-row md:gap-x-3 lg:gap-x-5">
               <div className="w-1/2">
                 <Input
