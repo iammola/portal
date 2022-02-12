@@ -7,7 +7,7 @@ import {
   UserImage,
   userGender,
   userContact,
-  UserPassword,
+  userPassword,
   userSchoolMail,
 } from "db/schema/User";
 
@@ -20,10 +20,7 @@ const ParentSchema = new Schema<ParentRecord, ParentModelType>({
   gender: userGender(),
   schoolMail: userSchoolMail(),
   dob: userDOB({ required: [true, "Parent DOB required"] }),
-  password: {
-    type: UserPassword,
-    required: [true, "Parent Password required"],
-  },
+  password: userPassword("Parent Password required"),
   image: {
     type: UserImage,
     default: undefined,

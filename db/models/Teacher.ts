@@ -7,7 +7,7 @@ import {
   UserImage,
   userGender,
   userContact,
-  UserPassword,
+  userPassword,
   userSchoolMail,
 } from "db/schema/User";
 
@@ -20,10 +20,7 @@ const TeacherSchema = new Schema<TeacherRecord, TeacherModelType>({
   gender: userGender(),
   schoolMail: userSchoolMail(),
   dob: userDOB({ required: [true, "Teacher DOB required"] }),
-  password: {
-    type: UserPassword,
-    required: [true, "Teacher Password required"],
-  },
+  password: userPassword("Teacher Password required"),
   image: {
     type: UserImage,
     default: undefined,
