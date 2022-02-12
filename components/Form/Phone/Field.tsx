@@ -94,7 +94,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
         props.regionCode !== undefined
           ? props.regionCode
           : value === ""
-          ? regionCode || defaultRegionCode
+          ? defaultRegionCode
           : PhoneNumber(value).getRegionCode()
       );
   }, [handleRegionChange, props.regionCode, regionCode, value]);

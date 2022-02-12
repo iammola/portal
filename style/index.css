@@ -21,4 +21,8 @@
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
+
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
 }

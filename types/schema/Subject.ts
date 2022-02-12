@@ -1,23 +1,34 @@
+import type { ModelNames } from "db";
 import type { Model } from "mongoose";
-import type { ObjectId, DocumentId, ModelRecord } from "types/schema";
+import type { DocumentId, ModelRecord, ObjectId } from "types/schema";
 
-export interface SubjectDivisionSchema extends DocumentId {
+interface SubjectSchema {
+  class: ObjectId;
+  mandatory?: true;
+  sessions?: ObjectId[];
+}
+
+interface Subject<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT>
+  extends DocumentId,
+    SubjectSchema {
+  __type: T;
   name: string;
   alias: string;
-  // Note: If undefined, subject has divisions
-  teachers?: ObjectId[];
 }
 
-export interface SubjectSchema extends DocumentId, SubjectDivisionSchema {
-  class: ObjectId;
-  // Note: If undefined, subject is not required
-  required?: true;
-  // Note: If undefined, subject exists for all sessions
-  sessions?: ObjectId[];
-  // Note: If undefined, subject doesn't have divisions
-  divisions?: SubjectDivisionSchema[];
+interface BaseSubjectSchema extends Subject<ModelNames.B_SUBJECT> {
+  teachers: ObjectId[];
 }
 
-export type SubjectRecord = ModelRecord<SubjectSchema>;
+interface GroupSubjectSchema extends Subject<ModelNames.G_SUBJECT> {
+  divisions: Pick<BaseSubjectSchema, "_id" | "name" | "alias" | "teachers">[];
+}
 
-export type SubjectModel = Model<SubjectSchema>;
+export type SubjectModel = Model<BaseSubjectSchema | GroupSubjectSchema>;
+export type SubjectRecord = ModelRecord<BaseSubjectSchema | GroupSubjectSchema>;
+
+export type BaseSubjectModel = Model<BaseSubjectSchema>;
+export type BaseSubjectRecord = ModelRecord<BaseSubjectSchema>;
+
+export type GroupSubjectModel = Model<GroupSubjectSchema>;
+export type GroupSubjectRecord = ModelRecord<GroupSubjectSchema>;

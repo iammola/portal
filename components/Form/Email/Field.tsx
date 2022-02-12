@@ -20,12 +20,15 @@ const Field: Field = ({ className, onChange, userType, values }) => {
       ),
     [onChange, values]
   );
+  const resetField = useCallback(() => {
+    const target = ref.current;
+    if (values.length === 0 && target?.children.length !== 0)
+      target?.replaceChildren();
+  }, [values.length]);
 
   useEffect(() => {
-    const target = ref.current;
-    if (values.length === 0 && target?.textContent?.trim() === "")
-      target.innerHTML = "";
-  }, [values]);
+    resetField();
+  }, [resetField]);
 
   function editValue(schoolMail: string) {
     onChange(values.filter((value) => value.mail !== schoolMail));
@@ -106,6 +109,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
       contentEditable
       inputMode="email"
       onClick={addSpace}
+      onKeyUp={resetField}
       className={className}
       onKeyDown={handleKeyDown}
       suppressContentEditableWarning
