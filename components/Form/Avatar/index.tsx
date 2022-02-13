@@ -30,6 +30,7 @@ const Avatar: Avatar = ({ value, ...props }) => {
     setSrc("");
     setUnoptimized(false);
     setFileName(undefined);
+    props.onChange(undefined);
   }
 
   async function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -89,11 +90,11 @@ type Avatar = FunctionComponent<
   (
     | {
         returnAs?: "file";
-        onChange(v: File): void;
+        onChange(v?: File): void;
       }
     | {
         returnAs: "base64";
-        onChange(v: string): void;
+        onChange(v?: string): void;
       }
   ) & {
     value?: File | string;
