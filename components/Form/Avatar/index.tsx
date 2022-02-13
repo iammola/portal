@@ -4,7 +4,7 @@ import { ChangeEvent, FunctionComponent, useEffect, useState } from "react";
 
 import Placeholder from "./Placeholder";
 
-const Avatar: Avatar = ({ onChange, value }) => {
+const Avatar: Avatar = ({ value, ...props }) => {
   const [src, setSrc] = useState("");
   const [fileName, setFileName] = useState<string>();
   const [unoptimized, setUnoptimized] = useState(false);
@@ -38,10 +38,12 @@ const Avatar: Avatar = ({ onChange, value }) => {
     if (file != undefined) {
       const src = (await getFileDataURI(file)) ?? "";
 
-      onChange(file);
       setSrc(src);
       setUnoptimized(true);
       setFileName(file.name);
+
+      if (props.returnAs === "base64") props.onChange(src);
+      else props.onChange(file);
     }
   }
 
@@ -83,9 +85,19 @@ const Avatar: Avatar = ({ onChange, value }) => {
   );
 };
 
-type Avatar = FunctionComponent<{
-  value?: File | string;
-  onChange(value: File): void;
-}>;
+type Avatar = FunctionComponent<
+  (
+    | {
+        returnAs?: "file";
+        onChange(v: File): void;
+      }
+    | {
+        returnAs: "base64";
+        onChange(v: string): void;
+      }
+  ) & {
+    value?: File | string;
+  }
+>;
 
 export default Avatar;
