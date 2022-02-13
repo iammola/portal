@@ -11,6 +11,9 @@ import type {
   UserSubContact as SubContactSchemaType,
 } from "types/schema/User";
 
+const emailValidator = (v?: string) =>
+  /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");
+
 export const userGender = () => ({
   type: String,
   required: [true, "User Gender required"] as [true, string],
@@ -31,8 +34,7 @@ export const userSchoolMail = () => ({
   immutable: true,
   required: [true, "User school mail required"] as [true, string],
   validate: {
-    validator: (v?: string) =>
-      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? ""),
+    validator: emailValidator,
     msg: "Invalid email address",
   },
 });
@@ -93,8 +95,7 @@ export const userContact = (withOther?: false | undefined) =>
           "User email required",
           withOther,
           {
-            validator: (v?: string) =>
-              /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? ""),
+            validator: emailValidator,
             msg: "Invalid email address",
           },
           true
