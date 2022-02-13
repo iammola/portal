@@ -180,6 +180,7 @@ const CreateStudent: NextPage = () => {
                   Date of Birth
                 </FormComponents.Date.Label>
                 <FormComponents.Date.Field
+                  required
                   value={dob}
                   onChange={setDOB}
                   className="flex flex-row items-center justify-start gap-x-4"
