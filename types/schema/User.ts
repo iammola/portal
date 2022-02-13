@@ -32,11 +32,13 @@ export type UserContact<C = true> = {
   [K in "email" | "phone" | "address"]: FlattenIntersection<UserSubContact<C>>;
 };
 
+export type UserGender = "M" | "F";
+
 export interface UserBase<T = true, C = true> extends DocumentId {
   dob?: Date;
-  gender: "M" | "F";
   image: UserImage;
   name: UserName<T>;
+  gender: UserGender;
   contact: UserContact<C>;
   password: UserPassword;
   readonly schoolMail: string;
