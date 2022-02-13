@@ -17,10 +17,14 @@ const Avatar: Avatar = ({ onChange, value }) => {
     }
   }, [value]);
 
-  function getDataURI({ target }: ProgressEvent<FileReader>) {
-    setUnoptimized(true);
-    setSrc((target?.result as string) ?? "");
-  }
+  const getFileDataURI = async (file: File) =>
+    await new Promise<string | undefined>((resolve) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", (e) =>
+        resolve(e.target?.result as string)
+      );
+      reader.readAsDataURL(file);
+    });
 
   function removeImage() {
     setSrc("");
@@ -28,16 +32,16 @@ const Avatar: Avatar = ({ onChange, value }) => {
     setFileName(undefined);
   }
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+  async function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
 
     if (file != undefined) {
-      const reader = new FileReader();
-      reader.addEventListener("load", getDataURI);
+      const src = (await getFileDataURI(file)) ?? "";
 
       onChange(file);
+      setSrc(src);
+      setUnoptimized(true);
       setFileName(file.name);
-      reader.readAsDataURL(file);
     }
   }
 
