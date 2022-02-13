@@ -1,12 +1,17 @@
 import Head from "next/head";
-import { useMemo, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 
+import { classNames } from "utils";
+import { fetchAPIEndpoint } from "utils/api";
 import * as FormComponents from "components/Form";
 import { Form, Section } from "components/Create/User";
-import { classNames } from "utils";
 
 import type { NextPage } from "next";
-import type { ParentSchema } from "types/schema";
+import type { ParentSchema, UserGender } from "types/schema";
+import type {
+  CreateParentData,
+  CreateParentRequestBody,
+} from "types/api/parents";
 
 const CreateParent: NextPage = () => {
   const [password, setPassword] = useState("");
@@ -65,6 +70,32 @@ const CreateParent: NextPage = () => {
     []
   );
 
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    try {
+      await fetchAPIEndpoint<CreateParentData, CreateParentRequestBody>(
+        "/api/parents",
+        { method: "POST" },
+        {
+          dob,
+          image,
+          password,
+          occupation: occupation as string,
+          contact: {
+            email: email as Required<typeof email>,
+            phone: phone as Required<typeof phone>,
+            address: address as Required<typeof address>,
+          },
+          gender: gender as UserGender,
+          name: name as Required<typeof name>,
+        }
+      );
+    } catch (error: any) {
+      console.error(error);
+    }
+  }
+
   return (
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-50 font-poppins dark:bg-slate-900">
       <Head>
@@ -78,7 +109,7 @@ const CreateParent: NextPage = () => {
             Parent
           </span>
         </h1>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Section
             title="Personal Information"
             description="Use a permanent address where you can receive mail."

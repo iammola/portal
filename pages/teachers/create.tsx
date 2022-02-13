@@ -1,12 +1,17 @@
 import Head from "next/head";
-import { useState, useMemo } from "react";
+import { useState, useMemo, FormEvent } from "react";
 
 import { classNames } from "utils";
+import { fetchAPIEndpoint } from "utils/api";
 import * as FormComponents from "components/Form";
 import { Form, Section } from "components/Create/User";
 
 import type { NextPage } from "next";
-import type { TeacherSchema } from "types/schema";
+import type { TeacherSchema, UserGender } from "types/schema";
+import type {
+  CreateTeacherData,
+  CreateTeacherRequestBody,
+} from "types/api/teachers";
 
 const CreateTeacher: NextPage = () => {
   const [password, setPassword] = useState("");
@@ -64,6 +69,31 @@ const CreateTeacher: NextPage = () => {
     []
   );
 
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    try {
+      await fetchAPIEndpoint<CreateTeacherData, CreateTeacherRequestBody>(
+        "/api/parents",
+        { method: "POST" },
+        {
+          dob,
+          image,
+          password,
+          contact: {
+            email: email as Required<typeof email>,
+            phone: phone as Required<typeof phone>,
+            address: address as Required<typeof address>,
+          },
+          gender: gender as UserGender,
+          name: name as Required<typeof name>,
+        }
+      );
+    } catch (error: any) {
+      console.error(error);
+    }
+  }
+
   return (
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-50 font-poppins dark:bg-slate-900">
       <Head>
@@ -77,7 +107,7 @@ const CreateTeacher: NextPage = () => {
             Teacher
           </span>
         </h1>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Section
             title="Personal Information"
             description="Use a permanent address where you can receive mail."
