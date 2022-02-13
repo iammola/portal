@@ -14,7 +14,7 @@ const CreateParent: NextPage = () => {
   const [dob, setDOB] = useState<ParentSchema["dob"]>();
   const [name, setName] = useState<Partial<ParentSchema["name"]>>({});
   const [image, setImage] = useState<
-    Partial<{ [K in "cover" | "portrait"]: File }>
+    Partial<{ [K in "cover" | "portrait"]: string }>
   >({});
   const [occupation, setOccupation] = useState<ParentSchema["occupation"]>();
   const [email, setEmail] = useState<Partial<ParentSchema["contact"]["email"]>>(
@@ -439,6 +439,7 @@ const CreateParent: NextPage = () => {
               Photos
             </span>
             <FormComponents.Avatar
+              returnAs="base64"
               value={image.portrait}
               onChange={(portrait) => setImage({ ...image, portrait })}
             />

@@ -16,7 +16,7 @@ const CreateStudent: NextPage = () => {
   const [guardians, setGuardians] =
     useState<{ mail: string; relation: string }[]>();
   const [image, setImage] = useState<
-    Partial<{ [K in keyof StudentSchema["image"]]: File }>
+    Partial<{ [K in keyof StudentSchema["image"]]: string }>
   >({});
   const [email, setEmail] = useState<
     Partial<StudentSchema["contact"]["email"]>
@@ -410,6 +410,7 @@ const CreateStudent: NextPage = () => {
               Photos
             </span>
             <FormComponents.Avatar
+              returnAs="base64"
               value={image.portrait}
               onChange={(portrait) => setImage({ ...image, portrait })}
             />

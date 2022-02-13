@@ -14,7 +14,7 @@ const CreateTeacher: NextPage = () => {
   const [dob, setDOB] = useState<TeacherSchema["dob"]>();
   const [name, setName] = useState<Partial<TeacherSchema["name"]>>({});
   const [image, setImage] = useState<
-    Partial<{ [K in "cover" | "portrait"]: File }>
+    Partial<{ [K in "cover" | "portrait"]: string }>
   >({});
   const [email, setEmail] = useState<
     Partial<TeacherSchema["contact"]["email"]>
@@ -360,6 +360,7 @@ const CreateTeacher: NextPage = () => {
               Photos
             </span>
             <FormComponents.Avatar
+              returnAs="base64"
               value={image.portrait}
               onChange={(portrait) => setImage({ ...image, portrait })}
             />
