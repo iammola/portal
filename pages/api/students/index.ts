@@ -15,7 +15,8 @@ import type {
 type Return = ApiInternalResponse<CreateStudentData>;
 
 async function createStudent({
-  academic: _,
+  academic: _a,
+  image: _i,
   guardians,
   ...data
 }: CreateStudentRequestBody) {

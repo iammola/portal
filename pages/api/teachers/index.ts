@@ -14,7 +14,7 @@ import type {
 
 type Return = ApiInternalResponse<CreateTeacherData>;
 
-async function createTeacher(data: CreateTeacherRequestBody) {
+async function createTeacher({ image: _i, ...data }: CreateTeacherRequestBody) {
   await connect();
   let [result, statusCode]: ApiInternal<CreateTeacherData> = ["", 0];
 

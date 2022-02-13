@@ -14,7 +14,7 @@ import type {
 
 type Return = ApiInternalResponse<CreateParentData>;
 
-async function createParent(data: CreateParentRequestBody) {
+async function createParent({ image: _i, ...data }: CreateParentRequestBody) {
   await connect();
   let [result, statusCode]: ApiInternal<CreateParentData> = ["", 0];
 
