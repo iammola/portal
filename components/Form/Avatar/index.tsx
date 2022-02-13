@@ -7,13 +7,11 @@ import Placeholder from "./Placeholder";
 const Avatar: Avatar = ({ value, ...props }) => {
   const [src, setSrc] = useState("");
   const [fileName, setFileName] = useState<string>();
-  const [unoptimized, setUnoptimized] = useState(false);
 
   useEffect(() => {
     if (typeof value === "string") {
       setSrc(value);
       setFileName("");
-      setUnoptimized(false);
     }
   }, [value]);
 
@@ -28,7 +26,6 @@ const Avatar: Avatar = ({ value, ...props }) => {
 
   function removeImage() {
     setSrc("");
-    setUnoptimized(false);
     setFileName(undefined);
     props.onChange(undefined);
   }
@@ -40,7 +37,6 @@ const Avatar: Avatar = ({ value, ...props }) => {
       const src = (await getFileDataURI(file)) ?? "";
 
       setSrc(src);
-      setUnoptimized(true);
       setFileName(file.name);
 
       if (props.returnAs === "base64") props.onChange(src);
@@ -56,11 +52,12 @@ const Avatar: Avatar = ({ value, ...props }) => {
         ) : (
           <>
             <Image
+              src={src}
+              unoptimized
               layout="fill"
               objectFit="cover"
               alt="Image Preview"
               objectPosition="center"
-              {...{ src, unoptimized }}
               className="h-full w-full rounded-full"
             />
             <button
