@@ -9,6 +9,7 @@ const CheckIcon = dynamic(() => import("@heroicons/react/solid/CheckIcon"));
 
 const Input: Input = ({
   className,
+  hideOptionalLabel,
   label,
   showIcons,
   onChange,
@@ -49,7 +50,7 @@ const Input: Input = ({
           {label}
         </label>
       )}
-      {props.required !== true && (
+      {![props.required, hideOptionalLabel].includes(true) && (
         <span className="absolute right-0.5 -top-5 text-xs text-slate-500">
           Optional
         </span>
@@ -85,6 +86,7 @@ export type InputProps = Omit<
   value?: string;
   showIcons?: boolean;
   onChange(v: string): void;
+  hideOptionalLabel?: boolean;
   setTyping?: (typing: boolean) => void;
   className: string | ((valid?: boolean) => string);
 } & (
