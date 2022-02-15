@@ -33,12 +33,6 @@ const CreateSubject: NextPage = () => {
     []
   );
 
-  const addSubjectDivision = () =>
-    setGroupSubjects((p) => [...(p ?? []), { ...divisionTemplate }]);
-
-  const removeSubjectDivision = (idx: number) =>
-    setGroupSubjects((p) => p?.filter((_, i) => i !== idx));
-
   useIsomorphicLayoutEffect(() => {
     if (__type !== undefined) {
       setTeachers(undefined);
@@ -49,6 +43,12 @@ const CreateSubject: NextPage = () => {
       );
     }
   }, [__type, divisionTemplate]);
+
+  const addSubjectDivision = () =>
+    setGroupSubjects((p) => [...(p ?? []), { ...divisionTemplate }]);
+
+  const removeSubjectDivision = (idx: number) =>
+    setGroupSubjects((p) => p?.filter((_, i) => i !== idx));
 
   return (
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-200 font-poppins">
