@@ -1,7 +1,8 @@
 import Head from "next/head";
-import { useMemo, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 
 import { classNames } from "utils";
+import { fetchAPIEndpoint } from "utils/api";
 import { Input, Select } from "components/Form";
 import { useIsomorphicLayoutEffect } from "hooks";
 import {
@@ -15,6 +16,10 @@ import type { SubjectRecord } from "types/schema";
 import type { Value as EmailValue } from "components/Form/Email";
 import type { Value as SelectValue } from "components/Form/Select";
 import type { DivisionValue } from "components/Create/Subject/Group";
+import type {
+  CreateSubjectData,
+  CreateSubjectRequestBody,
+} from "types/api/subjects";
 
 const CreateSubject: NextPage = () => {
   const [name, setName] = useState("");
@@ -50,6 +55,35 @@ const CreateSubject: NextPage = () => {
   const removeSubjectDivision = (idx: number) =>
     setGroupSubjects((p) => p?.filter((_, i) => i !== idx));
 
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (selectedClass?.id && __type) {
+      try {
+        await fetchAPIEndpoint<CreateSubjectData, CreateSubjectRequestBody>(
+          "/api/classes/${selectedClass.id}/subjects",
+          {
+            method: "POST",
+          },
+          {
+            name,
+            alias,
+            __type,
+            mandatory,
+            class: selectedClass.id,
+            teachers: teachers?.map((t) => t.mail),
+            divisions: groupSubjects?.map((g) => ({
+              ...g,
+              teachers: g.teachers.map((t) => t.mail),
+            })),
+          } as unknown as CreateSubjectRequestBody
+        );
+      } catch (error: any) {
+        console.error(error);
+      }
+    }
+  }
+
   return (
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-200 font-poppins">
       <Head>
@@ -57,7 +91,10 @@ const CreateSubject: NextPage = () => {
         <meta name="description" content="Page for Subject Creation" />
       </Head>
       <section className="flex w-full grow flex-col items-center justify-center py-12">
-        <form className="w-[35rem] space-y-10 rounded-2xl bg-white px-10 py-8 shadow-lg">
+        <form
+          onSubmit={handleSubmit}
+          className="w-[35rem] space-y-10 rounded-2xl bg-white px-10 py-8 shadow-lg"
+        >
           <h1 className="text-center text-4xl font-bold text-slate-600">
             <span>Create</span>{" "}
             <span className="bg-gradient-to-br from-blue-400 to-blue-600 bg-clip-text text-transparent">
