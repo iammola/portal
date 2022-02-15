@@ -11,7 +11,7 @@ import NumberInput from "components/Form/Number";
 import { useIsomorphicLayoutEffect } from "hooks";
 import { classNames } from "utils";
 
-const Field: Field = ({ className, max, min, onChange, value }) => {
+const Field: Field = ({ className, max, min, onChange, required, value }) => {
   const prevDate = useRef<Date | null>(null);
 
   const [maxDay, setMaxDay] = useState(31);
@@ -67,15 +67,20 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
     func(val === 0 ? undefined : val);
 
   return (
-    <div className={className}>
+    <div
+      className={classNames(className, {
+        relative: required !== true,
+      })}
+    >
       <div className="w-[4.5rem]">
         <NumberInput
           id="day"
-          required
           min={1}
           max={maxDay}
           label="Day"
           value={day}
+          hideOptionalLabel
+          required={required}
           setTyping={setTyping}
           onChange={(val) => handleChange(val, setDay)}
           className={(valid) =>
@@ -94,12 +99,13 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
       </div>
       <div className="w-[5rem]">
         <NumberInput
-          required
           min={1}
           max={12}
           id="month"
           label="Month"
           value={month}
+          hideOptionalLabel
+          required={required}
           setTyping={setTyping}
           onChange={(val) => handleChange(val, setMonth)}
           className={(valid) =>
@@ -119,9 +125,10 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
       <div className="w-[6.5rem]">
         <NumberInput
           id="year"
-          required
           label="Year"
           value={year}
+          hideOptionalLabel
+          required={required}
           setTyping={setTyping}
           min={min?.getFullYear() ?? 0}
           max={max?.getFullYear() ?? 9999}
@@ -140,6 +147,11 @@ const Field: Field = ({ className, max, min, onChange, value }) => {
           }
         />
       </div>
+      {required !== true && (
+        <span className="absolute right-0.5 -top-8 text-xs text-slate-500">
+          Optional
+        </span>
+      )}
     </div>
   );
 };
@@ -149,6 +161,7 @@ type Field = FunctionComponent<{
   max?: Date;
   value?: Date;
   className: string;
+  required?: boolean;
   onChange(val: Date): void;
 }>;
 

@@ -4,40 +4,43 @@ import { ChangeEvent, FunctionComponent, useEffect, useState } from "react";
 
 import Placeholder from "./Placeholder";
 
-const Avatar: Avatar = ({ onChange, value }) => {
+const Avatar: Avatar = ({ value, ...props }) => {
   const [src, setSrc] = useState("");
   const [fileName, setFileName] = useState<string>();
-  const [unoptimized, setUnoptimized] = useState(false);
 
   useEffect(() => {
     if (typeof value === "string") {
       setSrc(value);
       setFileName("");
-      setUnoptimized(false);
     }
   }, [value]);
 
-  function getDataURI({ target }: ProgressEvent<FileReader>) {
-    setUnoptimized(true);
-    setSrc((target?.result as string) ?? "");
-  }
+  const getFileDataURI = async (file: File) =>
+    await new Promise<string | undefined>((resolve) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", (e) =>
+        resolve(e.target?.result as string)
+      );
+      reader.readAsDataURL(file);
+    });
 
   function removeImage() {
     setSrc("");
-    setUnoptimized(false);
     setFileName(undefined);
+    props.onChange(undefined);
   }
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+  async function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
 
     if (file != undefined) {
-      const reader = new FileReader();
-      reader.addEventListener("load", getDataURI);
+      const src = (await getFileDataURI(file)) ?? "";
 
-      onChange(file);
+      setSrc(src);
       setFileName(file.name);
-      reader.readAsDataURL(file);
+
+      if (props.returnAs === "base64") props.onChange(src);
+      else props.onChange(file);
     }
   }
 
@@ -49,11 +52,12 @@ const Avatar: Avatar = ({ onChange, value }) => {
         ) : (
           <>
             <Image
+              src={src}
+              unoptimized
               layout="fill"
               objectFit="cover"
               alt="Image Preview"
               objectPosition="center"
-              {...{ src, unoptimized }}
               className="h-full w-full rounded-full"
             />
             <button
@@ -79,9 +83,19 @@ const Avatar: Avatar = ({ onChange, value }) => {
   );
 };
 
-type Avatar = FunctionComponent<{
-  value?: File | string;
-  onChange(value: File): void;
-}>;
+type Avatar = FunctionComponent<
+  (
+    | {
+        returnAs?: "file";
+        onChange(v?: File): void;
+      }
+    | {
+        returnAs: "base64";
+        onChange(v?: string): void;
+      }
+  ) & {
+    value?: File | string;
+  }
+>;
 
 export default Avatar;

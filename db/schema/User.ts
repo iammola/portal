@@ -11,6 +11,9 @@ import type {
   UserSubContact as SubContactSchemaType,
 } from "types/schema/User";
 
+const emailValidator = (v?: string) =>
+  /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");
+
 export const userGender = () => ({
   type: String,
   required: [true, "User Gender required"] as [true, string],
@@ -28,23 +31,15 @@ export const userSchoolMail = () => ({
   type: String,
   unique: true,
   lowercase: true,
+  immutable: true,
   required: [true, "User school mail required"] as [true, string],
   validate: {
-    validator: (v?: string) =>
-      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? ""),
+    validator: emailValidator,
     msg: "Invalid email address",
   },
 });
 
-const userSubName = (
-  required: string,
-  unique?: true,
-  maxLength?: [number, string],
-  minLength?: [number, string]
-) => ({
-  unique,
-  maxLength,
-  minLength,
+const userSubName = (required: string) => ({
   trim: true,
   type: String,
   required: [true, required] as [true, string],
@@ -81,7 +76,11 @@ export const userName = (withTitle?: false | undefined) =>
       other: userSubName("Other name required"),
       first: userSubName("First name required"),
       initials: userSubName("Initials required"),
-      username: userSubName("User name required", true),
+      username: {
+        unique: true,
+        immutable: true,
+        ...userSubName("User name required"),
+      },
       title: !withTitle && userSubName("Title required"),
     },
     { _id: false }
@@ -96,8 +95,7 @@ export const userContact = (withOther?: false | undefined) =>
           "User email required",
           withOther,
           {
-            validator: (v?: string) =>
-              /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? ""),
+            validator: emailValidator,
             msg: "Invalid email address",
           },
           true

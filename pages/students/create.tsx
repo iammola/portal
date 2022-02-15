@@ -1,12 +1,17 @@
 import Head from "next/head";
-import { useState, useMemo } from "react";
+import { useState, useMemo, FormEvent } from "react";
 
 import { classNames } from "utils";
+import { fetchAPIEndpoint } from "utils/api";
 import * as FormComponents from "components/Form";
 import { Form, Section } from "components/Create/User";
 
 import type { NextPage } from "next";
-import type { StudentSchema } from "types/schema";
+import type { StudentSchema, UserGender } from "types/schema";
+import type {
+  CreateStudentData,
+  CreateStudentRequestBody,
+} from "types/api/students";
 
 const CreateStudent: NextPage = () => {
   const [password, setPassword] = useState("");
@@ -16,7 +21,7 @@ const CreateStudent: NextPage = () => {
   const [guardians, setGuardians] =
     useState<{ mail: string; relation: string }[]>();
   const [image, setImage] = useState<
-    Partial<{ [K in keyof StudentSchema["image"]]: File }>
+    Partial<{ [K in keyof StudentSchema["image"]]: string }>
   >({});
   const [email, setEmail] = useState<
     Partial<StudentSchema["contact"]["email"]>
@@ -45,6 +50,35 @@ const CreateStudent: NextPage = () => {
     subjects: [] as string[],
   });
 
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (dob && guardians && academic.class && academic.subjects.length) {
+      try {
+        await fetchAPIEndpoint<CreateStudentData, CreateStudentRequestBody>(
+          "/api/parents",
+          { method: "POST" },
+          {
+            dob,
+            image,
+            password,
+            academic,
+            guardians,
+            contact: {
+              email: email as Required<typeof email>,
+              phone: phone as Required<typeof phone>,
+              address: address as Required<typeof address>,
+            },
+            gender: gender as UserGender,
+            name: name as Required<typeof name>,
+          }
+        );
+      } catch (error: any) {
+        console.error(error);
+      }
+    }
+  }
+
   return (
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-50 font-poppins dark:bg-slate-900">
       <Head>
@@ -58,7 +92,7 @@ const CreateStudent: NextPage = () => {
             Student
           </span>
         </h1>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Section
             title="Personal Information"
             description="Use a permanent address where you can receive mail."
@@ -180,6 +214,7 @@ const CreateStudent: NextPage = () => {
                   Date of Birth
                 </FormComponents.Date.Label>
                 <FormComponents.Date.Field
+                  required
                   value={dob}
                   onChange={setDOB}
                   className="flex flex-row items-center justify-start gap-x-4"
@@ -409,6 +444,7 @@ const CreateStudent: NextPage = () => {
               Photos
             </span>
             <FormComponents.Avatar
+              returnAs="base64"
               value={image.portrait}
               onChange={(portrait) => setImage({ ...image, portrait })}
             />
