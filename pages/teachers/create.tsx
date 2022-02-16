@@ -395,14 +395,6 @@ const CreateTeacher: NextPage = () => {
             />
           </Section>
         </Form>
-        <div className="flex w-full flex-row items-center justify-end gap-x-5 p-10 pl-0">
-          <button
-            type="submit"
-            className="rounded-lg bg-indigo-500 py-2.5 px-7 font-medium text-white shadow-sm hover:bg-indigo-600"
-          >
-            Save
-          </button>
-        </div>
       </section>
     </main>
   );
