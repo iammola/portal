@@ -19,9 +19,7 @@ export const userGender = () => ({
   required: [true, "User Gender required"] as [true, string],
 });
 
-export const userDOB = (
-  obj: { required: [true, string] } | { default: undefined }
-) => ({
+export const userDOB = (obj?: SchemaTypeOptions<Date>) => ({
   type: Date,
   ...obj,
 });

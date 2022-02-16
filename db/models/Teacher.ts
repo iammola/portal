@@ -19,7 +19,7 @@ import type {
 const TeacherSchema = new Schema<TeacherRecord, TeacherModelType>({
   gender: userGender(),
   schoolMail: userSchoolMail(),
-  dob: userDOB({ required: [true, "Teacher DOB required"] }),
+  dob: userDOB({ default: undefined }),
   password: userPassword("Teacher Password required"),
   image: {
     type: UserImage,

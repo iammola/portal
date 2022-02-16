@@ -19,7 +19,7 @@ import type {
 const ParentSchema = new Schema<ParentRecord, ParentModelType>({
   gender: userGender(),
   schoolMail: userSchoolMail(),
-  dob: userDOB({ required: [true, "Parent DOB required"] }),
+  dob: userDOB({ default: undefined }),
   password: userPassword("Parent Password required"),
   image: {
     type: UserImage,
