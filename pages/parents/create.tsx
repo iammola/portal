@@ -192,7 +192,6 @@ const CreateParent: NextPage = () => {
             <div className="flex w-full flex-row md:gap-x-5 lg:gap-x-7">
               <div className="w-10/12">
                 <FormComponents.Input
-                  required
                   value={name.other}
                   type="text"
                   id="otherName"

@@ -39,10 +39,10 @@ export const userSchoolMail = () => ({
   },
 });
 
-const userSubName = (required: string) => ({
+const userSubName = (required?: string) => ({
   trim: true,
   type: String,
-  required: [true, required] as [true, string],
+  required: [!!required, required] as [boolean, string],
 });
 
 const userSubContact = (
@@ -71,9 +71,9 @@ const userSubContact = (
 export const userName = (withTitle?: false | undefined) =>
   new Schema<NameSchemaType<true>>(
     {
+      other: userSubName(),
       last: userSubName("Last name required"),
       full: userSubName("Full name required"),
-      other: userSubName("Other name required"),
       first: userSubName("First name required"),
       initials: userSubName("Initials required"),
       username: {
