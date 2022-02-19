@@ -74,9 +74,10 @@ export default async function handler(
 
   try {
     if (typeof query.id === "string") {
-      if (method === "DELETE") await deleteSubject(query.id);
+      if (method === "DELETE")
+        [result, statusCode] = await deleteSubject(query.id);
       if (method === "PUT" && typeof body === "string")
-        await updateSubject(
+        [result, statusCode] = await updateSubject(
           query.id,
           JSON.parse(body) as UpdateSubjectRequestBody
         );

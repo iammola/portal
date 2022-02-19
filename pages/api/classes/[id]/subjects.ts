@@ -73,7 +73,7 @@ export default async function handler(
 
   try {
     if (method === "POST" && typeof body === "string")
-      await createSubject(
+      [result, statusCode] = await createSubject(
         JSON.parse(body) as CreateSubjectRequestBody,
         query.id as string
       );

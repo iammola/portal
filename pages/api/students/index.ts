@@ -67,7 +67,9 @@ export default async function handler(
 
   try {
     if (method === "POST" && typeof body === "string")
-      await createStudent(JSON.parse(body) as CreateStudentRequestBody);
+      [result, statusCode] = await createStudent(
+        JSON.parse(body) as CreateStudentRequestBody
+      );
   } catch (error: any) {
     [result, statusCode] = [
       {

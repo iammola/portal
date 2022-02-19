@@ -51,7 +51,9 @@ export default async function handler(
 
   try {
     if (method === "POST" && typeof body === "string")
-      await createTeacher(JSON.parse(body) as CreateTeacherRequestBody);
+      [result, statusCode] = await createTeacher(
+        JSON.parse(body) as CreateTeacherRequestBody
+      );
   } catch (error: any) {
     [result, statusCode] = [
       {

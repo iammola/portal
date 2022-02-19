@@ -51,7 +51,9 @@ export default async function handler(
 
   try {
     if (method === "POST" && typeof body === "string")
-      await createParent(JSON.parse(body) as CreateParentRequestBody);
+      [result, statusCode] = await createParent(
+        JSON.parse(body) as CreateParentRequestBody
+      );
   } catch (error: any) {
     [result, statusCode] = [
       {
