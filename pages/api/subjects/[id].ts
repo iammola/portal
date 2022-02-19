@@ -1,6 +1,7 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
+import { SubjectModel } from "db/models";
 import { formatApiError } from "utils/api";
 
 import type { DeleteSubjectData } from "types/api/subjects";
@@ -11,6 +12,22 @@ type Return = ApiInternalResponse<DeleteSubjectData>;
 
 async function deleteSubject(_id: string) {
   await connect();
+  let [result, statusCode]: ApiInternal<DeleteSubjectData> = ["", 0];
+
+  const res = await SubjectModel.deleteOne({ _id });
+
+  [result, statusCode] = [
+    {
+      success: true,
+      data: {
+        success: res.acknowledged,
+      },
+      message: ReasonPhrases.OK,
+    },
+    StatusCodes.OK,
+  ];
+
+  return [result, statusCode] as const;
 }
 
 export default async function handler(
