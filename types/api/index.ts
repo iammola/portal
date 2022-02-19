@@ -1,5 +1,10 @@
 import type { StatusCodes, ReasonPhrases } from "http-status-codes";
+import type { DocumentId } from "types/schema";
 import type { FilterNumber } from "types/utils";
+
+export type CreateResult<O = unknown> = DocumentId & O;
+export type DeleteResult = Record<"success", boolean>;
+export type UpdateResult = Record<"success", boolean>;
 
 export type ApiInternal<D, E = Record<string, string | undefined>> =
   | ["", 0]

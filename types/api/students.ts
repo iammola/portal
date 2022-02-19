@@ -1,6 +1,7 @@
+import type { CreateResult } from "types/api";
 import type { StudentSchema } from "types/schema";
 
-export type CreateStudentData = Pick<StudentSchema, "_id" | "schoolMail">;
+export type CreateStudentData = CreateResult<Pick<StudentSchema, "schoolMail">>;
 export type CreateStudentRequestBody = Required<
   Pick<StudentSchema, "dob" | "gender" | "image" | "name" | "contact">
 > & {
