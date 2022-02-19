@@ -10,3 +10,7 @@ export type CreateSubjectRequestBody =
   | (Omit<BaseSubjectSchema, "_id" | "teachers"> & {
       teachers: string[];
     });
+
+export type DeleteSubjectData = {
+  success: boolean;
+};
