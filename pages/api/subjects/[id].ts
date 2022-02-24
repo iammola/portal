@@ -1,8 +1,8 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { SubjectModel } from "db/models";
 import { formatApiError } from "utils/api";
+import { BaseSubjectModel, GroupSubjectModel, SubjectModel } from "db/models";
 
 import type {
   DeleteSubjectData,
@@ -38,11 +38,18 @@ async function updateSubject(_id: string, data: UpdateSubjectRequestBody) {
   await connect();
   let [result, statusCode]: ApiInternal<UpdateSubjectData> = ["", 0];
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const res = await SubjectModel.findByIdAndUpdate(_id, data, {
-    fields: "_id",
-    runValidators: true,
-  }).lean();
+  const args = [
+    _id,
+    data,
+    {
+      fields: "_id",
+      runValidators: true,
+    },
+  ] as const;
+
+  const res = await (data.__type === "base"
+    ? BaseSubjectModel.findByIdAndUpdate(...args).lean()
+    : GroupSubjectModel.findByIdAndUpdate(...args).lean());
 
   [result, statusCode] = [
     {
