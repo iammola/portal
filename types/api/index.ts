@@ -11,7 +11,7 @@ export type HandlerResponse<D> =
   | [ApiError, FilterNumber<`${StatusCodes}`>]
   | [ApiResponse<D>, FilterNumber<`${StatusCodes}`>];
 
-export type ApiHandler<R extends Record<string, unknown>> = (
+export type ApiHandler<R extends object> = (
   req: NextApiRequest,
   res: NextApiResponse<ApiError | ApiResponse<R>>
 ) => Promise<HandlerResponse<R> | null>;

@@ -5,7 +5,7 @@ import { formatError } from "./error";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { ApiHandler, HandlerResponse } from "types/api";
 
-export async function routeWrapper<T extends Record<string, unknown>>(
+export async function routeWrapper<T extends object>(
   req: NextApiRequest,
   res: NextApiResponse<HandlerResponse<T>[0]>,
   routeHandler: ApiHandler<T>,
