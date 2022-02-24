@@ -31,9 +31,7 @@ export function formatApiError(error: any) {
           path,
           error instanceof MongooseError.ValidatorError
             ? error.properties.type
-            : error instanceof MongooseError.CastError
-            ? `Invalid ${error.path} type`
-            : error.name,
+            : `Invalid ${error.path} type`,
         ])
       )
     : error instanceof Error
