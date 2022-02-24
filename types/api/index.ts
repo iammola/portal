@@ -18,7 +18,7 @@ export type ApiHandler<R extends object> = (
   res: NextApiResponse<ApiError | ApiResponse<R>>
 ) => Promise<HandlerResponse<R> | null>;
 
-export interface ApiData<S> {
+interface ApiData<S> {
   success: S;
   message: `${ReasonPhrases}`;
 }
