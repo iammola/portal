@@ -3,14 +3,12 @@ import { serialize } from "cookie";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { formatApiError } from "utils/api";
-import { comparePassword, JWT_ALG, JWT_COOKIE } from "utils/password";
+import { routeWrapper } from "utils/api";
 import { ParentModel, StudentModel, TeacherModel } from "db/models";
+import { comparePassword, JWT_ALG, JWT_COOKIE } from "utils/password";
 
-import type { ApiInternalResponse } from "types/api";
+import type { ApiHandler } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-type Return = ApiInternalResponse<AuthData>;
 
 async function getUser({ level, password, ...data }: AuthUser) {
   await connect();
@@ -44,52 +42,32 @@ async function getUser({ level, password, ...data }: AuthUser) {
   return { token, publicKey };
 }
 
-export default async function handler(
-  { body, method = "" }: NextApiRequest,
-  res: NextApiResponse<Return[0]>
-) {
-  const allow = ["DELETE"];
-  let [result, statusCode]: Return = [
+const handler: ApiHandler<AuthData> = async (req, res) => {
+  if (req.method !== "POST" || typeof req.body !== "string") return null;
+
+  const { publicKey, token } = await getUser(JSON.parse(req.body) as AuthUser);
+
+  res.setHeader(
+    "Set-Cookie",
+    serialize(JWT_COOKIE, await jose.exportSPKI(publicKey), {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24,
+    })
+  );
+
+  return [
     {
-      success: false,
-      error: ReasonPhrases.METHOD_NOT_ALLOWED,
-      message: ReasonPhrases.METHOD_NOT_ALLOWED,
+      success: true,
+      data: { token },
+      message: ReasonPhrases.OK,
     },
-    StatusCodes.METHOD_NOT_ALLOWED,
+    StatusCodes.OK,
   ];
+};
 
-  try {
-    if (method === "POST" && typeof body === "string") {
-      const { publicKey, token } = await getUser(JSON.parse(body) as AuthUser);
-      res.setHeader(
-        "Set-Cookie",
-        serialize(JWT_COOKIE, await jose.exportSPKI(publicKey), {
-          httpOnly: true,
-          maxAge: 60 * 60 * 24,
-        })
-      );
-      [result, statusCode] = [
-        {
-          success: true,
-          data: { token },
-          message: ReasonPhrases.OK,
-        },
-        StatusCodes.OK,
-      ];
-    }
-  } catch (error) {
-    [result, statusCode] = [
-      {
-        success: false,
-        error: formatApiError(error),
-        message: ReasonPhrases.BAD_REQUEST,
-      },
-      StatusCodes.BAD_REQUEST,
-    ];
-  }
-
-  res.setHeader("Allow", allow).status(statusCode).json(result);
-}
+// eslint-disable-next-line import/no-anonymous-default-export
+export default async (req: NextApiRequest, res: NextApiResponse) =>
+  routeWrapper<AuthData>(req, res, handler, ["POST"]);
 
 type AuthUser = {
   level: string;

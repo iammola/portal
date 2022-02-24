@@ -1,26 +1,24 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { formatApiError } from "utils/api";
+import { routeWrapper } from "utils/api";
 import { BaseSubjectModel, GroupSubjectModel, SubjectModel } from "db/models";
 
 import type {
-  DeleteSubjectData,
-  UpdateSubjectData,
-  UpdateSubjectRequestBody,
+  DeleteSubjectData as DeleteData,
+  UpdateSubjectData as UpdateData,
+  UpdateSubjectRequestBody as UpdateBody,
 } from "types/api/subjects";
-import type { ApiInternal, ApiInternalResponse } from "types/api";
+import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type Return = ApiInternalResponse<DeleteSubjectData | UpdateSubjectData>;
+type D = DeleteData | UpdateData;
 
-async function deleteSubject(_id: string) {
+async function deleteSubject(_id: string): MethodResponse<DeleteData> {
   await connect();
-  let [result, statusCode]: ApiInternal<DeleteSubjectData> = ["", 0];
-
   const res = await SubjectModel.deleteOne({ _id });
 
-  [result, statusCode] = [
+  return [
     {
       success: true,
       data: {
@@ -30,14 +28,13 @@ async function deleteSubject(_id: string) {
     },
     StatusCodes.OK,
   ];
-
-  return [result, statusCode] as const;
 }
 
-async function updateSubject(_id: string, data: UpdateSubjectRequestBody) {
+async function updateSubject(
+  _id: string,
+  data: UpdateBody
+): MethodResponse<UpdateData> {
   await connect();
-  let [result, statusCode]: ApiInternal<UpdateSubjectData> = ["", 0];
-
   const args = [
     _id,
     data,
@@ -51,7 +48,7 @@ async function updateSubject(_id: string, data: UpdateSubjectRequestBody) {
     ? BaseSubjectModel.findByIdAndUpdate(...args).lean()
     : GroupSubjectModel.findByIdAndUpdate(...args).lean());
 
-  [result, statusCode] = [
+  return [
     {
       success: true,
       data: {
@@ -61,44 +58,19 @@ async function updateSubject(_id: string, data: UpdateSubjectRequestBody) {
     },
     StatusCodes.OK,
   ];
-
-  return [result, statusCode] as const;
 }
 
-export default async function handler(
-  { body, method = "", query }: NextApiRequest,
-  res: NextApiResponse<Return[0]>
-) {
-  const allow = ["DELETE"];
-  let [result, statusCode]: Return = [
-    {
-      success: false,
-      error: ReasonPhrases.METHOD_NOT_ALLOWED,
-      message: ReasonPhrases.METHOD_NOT_ALLOWED,
-    },
-    StatusCodes.METHOD_NOT_ALLOWED,
-  ];
+const handler: ApiHandler<D> = async ({ body, method, query }) => {
+  const { id } = query as Record<string, string>;
 
-  try {
-    if (typeof query.id === "string") {
-      if (method === "DELETE")
-        [result, statusCode] = await deleteSubject(query.id);
-      if (method === "PUT" && typeof body === "string")
-        [result, statusCode] = await updateSubject(
-          query.id,
-          JSON.parse(body) as UpdateSubjectRequestBody
-        );
-    }
-  } catch (error: any) {
-    [result, statusCode] = [
-      {
-        success: false,
-        error: formatApiError(error),
-        message: ReasonPhrases.BAD_REQUEST,
-      },
-      StatusCodes.BAD_REQUEST,
-    ];
-  }
+  if (method === "DELETE") return await deleteSubject(id);
 
-  res.setHeader("Allow", allow).status(statusCode).json(result);
-}
+  if (method === "PUT" && typeof body === "string")
+    return await updateSubject(id, JSON.parse(body) as UpdateBody);
+
+  return null;
+};
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default async (req: NextApiRequest, res: NextApiResponse) =>
+  routeWrapper<D>(req, res, handler, ["DELETE", "PUT"]);
