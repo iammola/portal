@@ -6,12 +6,10 @@ export type CreateResult<O = unknown> = DocumentId & O;
 export type DeleteResult = Record<"success", boolean>;
 export type UpdateResult = Record<"success", boolean>;
 
-export type ApiInternal<D, E = Record<string, string | undefined>> =
-  | ["", 0]
-  | ApiInternalResponse<D, E>;
+export type ApiInternal<D> = ["", 0] | ApiInternalResponse<D>;
 
-export type ApiInternalResponse<D, E = Record<string, string | undefined>> =
-  | [ApiError<E>, FilterNumber<`${StatusCodes}`>]
+export type ApiInternalResponse<D> =
+  | [ApiError, FilterNumber<`${StatusCodes}`>]
   | [ApiResponse<D>, FilterNumber<`${StatusCodes}`>];
 
 export interface ApiData<S> {
@@ -23,11 +21,8 @@ export interface ApiResponse<D> extends ApiData<true> {
   data: D;
 }
 
-export interface ApiError<E = Record<string, string | undefined>>
-  extends ApiData<false> {
-  error: `${ReasonPhrases}` | E;
+export interface ApiError extends ApiData<false> {
+  error: string | Record<string, string | undefined>;
 }
 
-export type ApiResult<D, E = Record<string, string | undefined>> =
-  | ApiResponse<D>
-  | ApiError<E>;
+export type ApiResult<D> = ApiResponse<D> | ApiError;
