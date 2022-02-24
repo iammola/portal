@@ -1,8 +1,8 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { StudentModel } from "db/models";
 import { routeWrapper } from "utils/api";
+import { ParentModel, StudentModel, TeacherModel } from "db/models";
 
 import type {
   UsersEmailData as UsersData,
@@ -17,9 +17,12 @@ async function searchByEmail({
   userType,
 }: UsersBody): MethodResponse<UsersData> {
   await connect();
+  const args = [{ schoolMail }, select] as const;
   const data = await (userType === "student"
-    ? StudentModel.findOne({ schoolMail }, select).lean()
-    : null);
+    ? StudentModel.findOne(...args).lean()
+    : userType === "parent"
+    ? ParentModel.findOne(...args).lean()
+    : TeacherModel.findOne(...args).lean());
 
   if (data === null) throw new Error("User does not exist");
 
