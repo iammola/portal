@@ -2,6 +2,9 @@ import { pbkdf2Sync, randomBytes } from "crypto";
 
 import type { UserPassword } from "types/schema";
 
+export const JWT_ALG = "PS256";
+export const JWT_COOKIE = "grs-jwt";
+
 const PASSWORD_LENGTH = 64;
 const PASSWORD_ITERATIONS = 1e5;
 const PASSWORD_ENCODING = "hex";

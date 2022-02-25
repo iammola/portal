@@ -1,81 +1,48 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { StudentModel } from "db/models"; // Parents and Teacher Models will be used when created
-import { formatApiError } from "utils/api";
+import { routeWrapper } from "utils/api";
+import { ParentModel, StudentModel, TeacherModel } from "db/models";
 
 import type {
-  UsersEmailData,
-  UsersEmailRequestBody,
+  UsersEmailData as UsersData,
+  UsersEmailRequestBody as UsersBody,
 } from "types/api/users/email";
-import type { ApiInternal, ApiInternalResponse } from "types/api";
+import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-type Return = ApiInternalResponse<UsersEmailData>;
 
 async function searchByEmail({
   mail: schoolMail,
   select,
   userType,
-}: UsersEmailRequestBody) {
-  let [result, statusCode]: ApiInternal<UsersEmailData> = ["", 0];
-
+}: UsersBody): MethodResponse<UsersData> {
   await connect();
+  const args = [{ schoolMail }, select] as const;
   const data = await (userType === "student"
-    ? StudentModel.findOne({ schoolMail }, select).lean()
-    : null);
+    ? StudentModel.findOne(...args).lean()
+    : userType === "parent"
+    ? ParentModel.findOne(...args).lean()
+    : TeacherModel.findOne(...args).lean());
 
-  [result, statusCode] =
-    data !== null
-      ? [
-          {
-            data,
-            success: true,
-            message: ReasonPhrases.OK,
-          },
-          StatusCodes.OK,
-        ]
-      : [
-          {
-            success: false,
-            message: ReasonPhrases.NOT_FOUND,
-            error: { message: "User does not exist" },
-          },
-          StatusCodes.NOT_FOUND,
-        ];
+  if (data === null) throw new Error("User does not exist");
 
-  return [result, statusCode] as const;
-}
-
-export default async function handler(
-  { method = "", body }: NextApiRequest,
-  res: NextApiResponse<Return[0]>
-) {
-  const allow = ["SEARCH"];
-  let [result, statusCode]: Return = [
+  return [
     {
-      success: false,
-      error: ReasonPhrases.METHOD_NOT_ALLOWED,
-      message: ReasonPhrases.METHOD_NOT_ALLOWED,
+      data,
+      success: true,
+      message: ReasonPhrases.OK,
     },
-    StatusCodes.METHOD_NOT_ALLOWED,
+    StatusCodes.OK,
   ];
-
-  try {
-    if (method === "SEARCH" && typeof body === "string")
-      [result, statusCode] = await searchByEmail(
-        JSON.parse(body) as UsersEmailRequestBody
-      );
-  } catch (error: any) {
-    [result, statusCode] = [
-      {
-        success: false,
-        error: formatApiError(error),
-        message: ReasonPhrases.BAD_REQUEST,
-      },
-      StatusCodes.BAD_REQUEST,
-    ];
-  }
-
-  res.setHeader("Allow", allow).status(statusCode).json(result);
 }
+
+const handler: ApiHandler<UsersData> = async ({ body, method }) => {
+  if (method === "SEARCH" && typeof body === "string")
+    return await searchByEmail(JSON.parse(body) as UsersBody);
+
+  return null;
+};
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default async (req: NextApiRequest, res: NextApiResponse) =>
+  routeWrapper<UsersData>(req, res, handler, ["SEARCH"]);

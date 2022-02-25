@@ -2,43 +2,35 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { ClassModel } from "db/models";
-import { formatApiError } from "utils/api";
+import { routeWrapper } from "utils/api";
 
 import type {
   GetClassesData,
   CreateClassData,
-  CreateClassRequestBody,
+  CreateClassRequestBody as CreateBody,
 } from "types/api/classes";
-import type { ApiInternal, ApiInternalResponse } from "types/api";
+import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type Return = ApiInternalResponse<CreateClassData | GetClassesData>;
-
-async function createClass(data: CreateClassRequestBody) {
-  let [result, statusCode]: ApiInternal<CreateClassData> = ["", 0];
-
+async function createClass(data: CreateBody): MethodResponse<CreateClassData> {
   await connect();
   const { _id, createdAt } = await ClassModel.create(data);
 
-  [result, statusCode] = [
+  return [
     {
       success: true,
       data: { _id, createdAt },
-      message: ReasonPhrases.OK,
+      message: ReasonPhrases.CREATED,
     },
-    StatusCodes.OK,
+    StatusCodes.CREATED,
   ];
-
-  return [result, statusCode] as const;
 }
 
-async function getClasses(field: string) {
-  let [result, statusCode]: ApiInternal<GetClassesData> = ["", 0];
-
+async function getClasses(field: string): MethodResponse<GetClassesData> {
   await connect();
   const data = await ClassModel.find({}, field);
 
-  [result, statusCode] = [
+  return [
     {
       data,
       success: true,
@@ -46,42 +38,20 @@ async function getClasses(field: string) {
     },
     StatusCodes.OK,
   ];
-
-  return [result, statusCode] as const;
 }
 
-export default async function handler(
-  { body, method = "", query }: NextApiRequest,
-  res: NextApiResponse<Return[0]>
-) {
-  const allow = ["POST", "GET"];
-  let [result, statusCode]: Return = [
-    {
-      success: false,
-      error: ReasonPhrases.METHOD_NOT_ALLOWED,
-      message: ReasonPhrases.METHOD_NOT_ALLOWED,
-    },
-    StatusCodes.METHOD_NOT_ALLOWED,
-  ];
+type D = CreateClassData | GetClassesData;
 
-  try {
-    if (method === "POST" && typeof body === "string")
-      [result, statusCode] = await createClass(
-        JSON.parse(body) as CreateClassRequestBody
-      );
+const handler: ApiHandler<D> = async ({ body, method, query }) => {
+  if (method === "POST" && typeof body === "string")
+    return await createClass(JSON.parse(body) as CreateBody);
 
-    if (method === "GET" && typeof query.field === "string")
-      [result, statusCode] = await getClasses(query.field);
-  } catch (error: any) {
-    [result, statusCode] = [
-      {
-        success: false,
-        error: formatApiError(error),
-        message: ReasonPhrases.BAD_REQUEST,
-      },
-      StatusCodes.BAD_REQUEST,
-    ];
-  }
+  if (method === "GET" && typeof query.field === "string")
+    return await getClasses(query.field);
 
-  res.setHeader("Allow", allow).status(statusCode).json(result);
-}
+  return null;
+};
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default async (req: NextApiRequest, res: NextApiResponse) =>
+  routeWrapper<D>(req, res, handler, ["POST", "GET"]);

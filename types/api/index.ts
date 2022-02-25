@@ -1,15 +1,26 @@
-import type { StatusCodes, ReasonPhrases } from "http-status-codes";
+import type { DocumentId } from "types/schema";
 import type { FilterNumber } from "types/utils";
+import type { NextApiRequest, NextApiResponse } from "next";
+import type { StatusCodes, ReasonPhrases } from "http-status-codes";
 
-export type ApiInternal<D, E = Record<string, string | undefined>> =
-  | ["", 0]
-  | ApiInternalResponse<D, E>;
+export type CreateResult<O = unknown> = DocumentId & O;
+export type DeleteResult = Record<"success", boolean>;
+export type UpdateResult = Record<"success", boolean>;
 
-export type ApiInternalResponse<D, E = Record<string, string | undefined>> =
-  | [ApiError<E>, FilterNumber<`${StatusCodes}`>]
-  | [ApiResponse<D>, FilterNumber<`${StatusCodes}`>];
+type ResponseCodes = FilterNumber<`${StatusCodes}`>;
 
-export interface ApiData<S> {
+export type MethodResponse<D> = Promise<[ApiResponse<D>, ResponseCodes]>;
+
+export type HandlerResponse<D> =
+  | [ApiError, ResponseCodes]
+  | Awaited<MethodResponse<D>>;
+
+export type ApiHandler<R extends object> = (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiError | ApiResponse<R>>
+) => Promise<HandlerResponse<R> | null>;
+
+interface ApiData<S> {
   success: S;
   message: `${ReasonPhrases}`;
 }
@@ -18,11 +29,8 @@ export interface ApiResponse<D> extends ApiData<true> {
   data: D;
 }
 
-export interface ApiError<E = Record<string, string | undefined>>
-  extends ApiData<false> {
-  error: `${ReasonPhrases}` | E;
+export interface ApiError extends ApiData<false> {
+  error: string | Record<string, string | undefined>;
 }
 
-export type ApiResult<D, E = Record<string, string | undefined>> =
-  | ApiResponse<D>
-  | ApiError<E>;
+export type ApiResult<D> = ApiResponse<D> | ApiError;

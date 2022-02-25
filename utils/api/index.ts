@@ -1,40 +1,42 @@
-import { Error as MongooseError } from "mongoose";
+import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { ApiResult } from "types/api";
+import { formatError } from "./error";
 
-/**
- *
- * @param endpoint The API endpoint to fetch
- * @param init Fetch Options
- * @param body The Request Body for non-GET method requests
- */
-export async function fetchAPIEndpoint<
-  ResponseData,
-  Body = undefined,
-  ResponseError = Record<string, undefined>
->(endpoint: string, init?: Omit<RequestInit, "body">, body?: Body) {
-  const response = await fetch(endpoint, {
-    ...init,
-    body: JSON.stringify(body),
-    headers: {
-      ...init?.headers,
-      Accept: "application/json",
-    },
-  });
-  return (await response.json()) as ApiResult<ResponseData, ResponseError>;
+import type { NextApiRequest, NextApiResponse } from "next";
+import type { ApiHandler, HandlerResponse } from "types/api";
+
+export async function routeWrapper<T extends object>(
+  req: NextApiRequest,
+  res: NextApiResponse<HandlerResponse<T>[0]>,
+  routeHandler: ApiHandler<T>,
+  methods: string[]
+) {
+  let data: HandlerResponse<T> | null = null;
+
+  try {
+    if (methods.includes(req.method ?? "")) data = await routeHandler(req, res);
+  } catch (error) {
+    data = [
+      {
+        success: false,
+        error: formatError(error),
+        message: ReasonPhrases.BAD_REQUEST,
+      },
+      StatusCodes.BAD_REQUEST,
+    ];
+  }
+
+  res
+    .status(data?.[1] ?? StatusCodes.METHOD_NOT_ALLOWED)
+    .setHeader("Allow", methods)
+    .setHeader("Content-Type", "application/json")
+    .json(
+      data?.[0] ?? {
+        success: false,
+        error: ReasonPhrases.METHOD_NOT_ALLOWED,
+        message: ReasonPhrases.METHOD_NOT_ALLOWED,
+      }
+    );
 }
 
-export function formatApiError(error: any) {
-  return error instanceof MongooseError.ValidationError
-    ? Object.fromEntries(
-        Object.entries(error.errors).map(([path, error]) => [
-          path,
-          error instanceof MongooseError.ValidatorError
-            ? error.properties.type
-            : `Invalid ${error.path} type`,
-        ])
-      )
-    : error instanceof Error
-    ? { message: error.message, name: error.name }
-    : {};
-}
+export { fetchAPIEndpoint } from "./endpoint";
