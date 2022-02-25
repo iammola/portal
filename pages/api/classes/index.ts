@@ -20,9 +20,9 @@ async function createClass(data: CreateBody): MethodResponse<CreateClassData> {
     {
       success: true,
       data: { _id, createdAt },
-      message: ReasonPhrases.OK,
+      message: ReasonPhrases.CREATED,
     },
-    StatusCodes.OK,
+    StatusCodes.CREATED,
   ];
 }
 

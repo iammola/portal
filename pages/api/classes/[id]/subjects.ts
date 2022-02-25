@@ -49,9 +49,9 @@ async function createSubject(
     {
       success: true,
       data: { _id },
-      message: ReasonPhrases.OK,
+      message: ReasonPhrases.CREATED,
     },
-    StatusCodes.OK,
+    StatusCodes.CREATED,
   ];
 }
 

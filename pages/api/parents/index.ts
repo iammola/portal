@@ -27,9 +27,9 @@ async function createParent({
     {
       success: true,
       data: { _id, schoolMail },
-      message: ReasonPhrases.OK,
+      message: ReasonPhrases.CREATED,
     },
-    StatusCodes.OK,
+    StatusCodes.CREATED,
   ];
 }
 
