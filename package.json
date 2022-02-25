@@ -12,6 +12,7 @@
     "postinstall": "git config core.hooksPath ./.github/hooks"
   },
   "dependencies": {
+    "@googleapis/drive": "^2.2.0",
     "@heroicons/react": "^1.0.5",
     "awesome-phonenumber": "^2.69.0",
     "cookie": "^0.4.2",
@@ -35,6 +36,7 @@
     "@types/prettier": "^2.4.4",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
+    "@types/sharp": "^0.29.5",
     "@types/tailwindcss": "^3.0.9",
     "@typescript-eslint/eslint-plugin": "^5.12.1",
     "@typescript-eslint/parser": "^5.12.1",
