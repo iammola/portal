@@ -1,3 +1,4 @@
+export * from "./file";
 export * from "./password";
 
 /**
