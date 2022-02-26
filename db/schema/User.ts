@@ -1,7 +1,7 @@
 import PhoneNumber from "awesome-phonenumber";
 import { Schema, SchemaTypeOptions } from "mongoose";
 
-import { getImage, hashPassword } from "utils";
+import { getImage, hashPassword, uploadImage } from "utils";
 
 import type {
   UserName as NameSchemaType,
@@ -150,3 +150,14 @@ export const UserImage = new Schema<ImageSchemaType>(
   },
   { _id: false }
 );
+
+UserImage.pre("save", async function (this: ImageSchemaType) {
+  const [cover, portrait] = await Promise.all(
+    [this.cover, this.portrait].map((url) =>
+      url ? uploadImage(url) : undefined
+    )
+  );
+
+  this.cover = cover;
+  this.portrait = portrait;
+});
