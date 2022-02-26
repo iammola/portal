@@ -47,8 +47,8 @@ const userSubContact = (
   required: string,
   withOther?: false,
   opts: Pick<SchemaTypeOptions<string>, "lowercase" | "validate"> = {}
-) =>
-  new Schema<Required<SubContactSchemaType<true>>>(
+) => {
+  return new Schema<Required<SubContactSchemaType<true>>>(
     {
       other: !withOther && {
         ...opts,
@@ -65,9 +65,10 @@ const userSubContact = (
     },
     { _id: false }
   );
+};
 
-export const userName = (withTitle?: false | undefined) =>
-  new Schema<NameSchemaType<true>>(
+export const userName = (withTitle?: false | undefined) => {
+  return new Schema<NameSchemaType<true>>(
     {
       other: userSubName(),
       last: userSubName("Last name required"),
@@ -83,9 +84,10 @@ export const userName = (withTitle?: false | undefined) =>
     },
     { _id: false }
   );
+};
 
-export const userContact = (withOther?: false | undefined) =>
-  new Schema<ContactSchemaType>(
+export const userContact = (withOther?: false | undefined) => {
+  return new Schema<ContactSchemaType>(
     {
       email: {
         required: [true, "User email required"],
@@ -110,6 +112,7 @@ export const userContact = (withOther?: false | undefined) =>
     },
     { _id: false }
   );
+};
 
 export const userPassword = (required: string) => ({
   set: hashPassword,
