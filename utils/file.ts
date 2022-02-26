@@ -1,13 +1,12 @@
 import sharp from "sharp";
 import { drive, auth } from "@googleapis/drive";
 
-const API_CRED = process.env.GOOGLE_API_CRED;
+const CRED = process.env.DRIVE_API_CRED;
 const FOLDER = process.env.DRIVE_IMAGES_FOLDER;
 
-if (!API_CRED)
-  throw new Error("Please define the GOOGLE_API_CRED env variable");
+if (!CRED) throw new Error("Please define the GOOGLE_API_CRED env variable");
 
-const keys = JSON.parse(API_CRED) as GoogleAPICred;
+const keys = JSON.parse(CRED) as GoogleAPICred;
 
 export async function uploadImage(dataURL: string) {
   if (!FOLDER)
