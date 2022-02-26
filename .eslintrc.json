@@ -61,6 +61,7 @@
         "allow": ["warn", "error"]
       }
     ],
+    "import/named": 0,
     "import/order": [
       "error",
       {
