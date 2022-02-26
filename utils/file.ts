@@ -8,7 +8,9 @@ if (!CRED) throw new Error("Please define the GOOGLE_API_CRED env variable");
 
 const keys = JSON.parse(CRED) as GoogleAPICred;
 
-export async function uploadImage(dataURL: string) {
+export async function uploadImage(dataURL?: string) {
+  if (!dataURL) return;
+
   if (!FOLDER)
     throw new Error("Please define the DRIVE_IMAGES_FOLDER env variable");
 
@@ -47,8 +49,11 @@ export async function uploadImage(dataURL: string) {
   return upload.id;
 }
 
-export const getImage = (id: string) =>
-  `https://drive.google.com/uc?id=${id}&export=download`;
+export const getImage = (id?: string) => {
+  if (!id) return;
+
+  return `https://drive.google.com/uc?id=${id}&export=download`;
+};
 
 interface GoogleAPICred {
   private_key: string;
