@@ -2,15 +2,17 @@ import sharp from "sharp";
 import { drive, auth } from "@googleapis/drive";
 
 const API_CRED = process.env.GOOGLE_API_CRED;
+const FOLDER = process.env.DRIVE_IMAGES_FOLDER;
 
 if (!API_CRED)
-  throw new Error(
-    "Please define the API_CRED environment variable inside .env.local"
-  );
+  throw new Error("Please define the GOOGLE_API_CRED env variable");
 
 const keys = JSON.parse(API_CRED) as GoogleAPICred;
 
 export async function uploadImage(dataURL: string) {
+  if (!FOLDER)
+    throw new Error("Please define the DRIVE_IMAGES_FOLDER env variable");
+
   const [, base64] = dataURL.split(/,(.+)/);
   const client = drive({
     version: "v3",
@@ -29,6 +31,7 @@ export async function uploadImage(dataURL: string) {
     },
     requestBody: {
       name: "hey.webp",
+      parents: [FOLDER],
     },
   });
 
