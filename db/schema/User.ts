@@ -1,7 +1,7 @@
 import PhoneNumber from "awesome-phonenumber";
 import { Schema, SchemaTypeOptions } from "mongoose";
 
-import { hashPassword } from "utils";
+import { getImage, hashPassword } from "utils";
 
 import type {
   UserName as NameSchemaType,
@@ -136,10 +136,12 @@ export const UserImage = new Schema<ImageSchemaType>(
   {
     cover: {
       type: String,
+      get: getImage,
       default: undefined,
     },
     portrait: {
       type: String,
+      get: getImage,
       default: undefined,
     },
   },
