@@ -1,3 +1,5 @@
+import { randomBytes } from "crypto";
+
 import sharp from "sharp";
 import { drive, auth } from "@googleapis/drive";
 
@@ -25,6 +27,7 @@ export async function uploadImage(dataURL?: string) {
     }),
   });
 
+  const name = randomBytes(32).toString("hex");
   const { data: upload } = await client.files.create({
     fields: "id",
     media: {
@@ -32,7 +35,7 @@ export async function uploadImage(dataURL?: string) {
       body: sharp(Buffer.from(base64, "base64")).toFormat("webp"),
     },
     requestBody: {
-      name: "hey.webp",
+      name: `${name}.webp`,
       parents: [FOLDER],
     },
   });
