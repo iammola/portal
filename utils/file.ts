@@ -1,10 +1,9 @@
 import sharp from "sharp";
 import { drive, auth } from "@googleapis/drive";
 
-const EMAIL = process.env.GOOGLE_ACCOUNT_EMAIL;
 const API_CRED = process.env.GOOGLE_API_CRED;
 
-if (!(API_CRED && EMAIL))
+if (!API_CRED)
   throw new Error(
     "Please define the API_CRED environment variable inside .env.local"
   );
@@ -35,25 +34,13 @@ export async function uploadImage(dataURL: string) {
 
   if (upload.id == undefined) throw new Error("Error uploading file");
 
-  const makePublic = client.permissions.create({
+  await client.permissions.create({
     fileId: upload.id,
     requestBody: {
       role: "reader",
       type: "anyone",
     },
   });
-
-  const transferOwnership = client.permissions.create({
-    fileId: upload.id,
-    transferOwnership: true,
-    requestBody: {
-      role: "owner",
-      type: "user",
-      emailAddress: EMAIL,
-    },
-  });
-
-  await Promise.all([transferOwnership, makePublic]);
 
   return upload.id;
 }
