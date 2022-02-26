@@ -2,6 +2,7 @@ import PhoneNumber from "awesome-phonenumber";
 import { Schema, SchemaTypeOptions } from "mongoose";
 
 import { hashPassword } from "utils";
+import { getImage, uploadImage } from "utils/file";
 
 import type {
   UserName as NameSchemaType,
@@ -47,15 +48,18 @@ const userSubContact = (
   required: string,
   withOther?: false,
   opts: Pick<SchemaTypeOptions<string>, "lowercase" | "validate"> = {}
-) =>
-  new Schema<Required<SubContactSchemaType<true>>>(
+) => {
+  return new Schema<Required<SubContactSchemaType<true>>>(
     {
-      other: !withOther && {
-        ...opts,
-        trim: true,
-        type: String,
-        default: undefined,
-      },
+      other:
+        withOther === undefined
+          ? {
+              ...opts,
+              trim: true,
+              type: String,
+              default: undefined,
+            }
+          : {},
       primary: {
         ...opts,
         trim: true,
@@ -65,9 +69,10 @@ const userSubContact = (
     },
     { _id: false }
   );
+};
 
-export const userName = (withTitle?: false | undefined) =>
-  new Schema<NameSchemaType<true>>(
+export const userName = (withTitle?: false) => {
+  return new Schema<NameSchemaType<true>>(
     {
       other: userSubName(),
       last: userSubName("Last name required"),
@@ -79,13 +84,14 @@ export const userName = (withTitle?: false | undefined) =>
         immutable: true,
         ...userSubName("User name required"),
       },
-      title: !withTitle && userSubName("Title required"),
+      title: withTitle === undefined ? userSubName("Title required") : {},
     },
     { _id: false }
   );
+};
 
-export const userContact = (withOther?: false | undefined) =>
-  new Schema<ContactSchemaType>(
+export const userContact = (withOther?: false | undefined) => {
+  return new Schema<ContactSchemaType>(
     {
       email: {
         required: [true, "User email required"],
@@ -110,6 +116,7 @@ export const userContact = (withOther?: false | undefined) =>
     },
     { _id: false }
   );
+};
 
 export const userPassword = (required: string) => ({
   set: hashPassword,
@@ -133,12 +140,25 @@ export const UserImage = new Schema<ImageSchemaType>(
   {
     cover: {
       type: String,
+      get: getImage,
       default: undefined,
     },
     portrait: {
       type: String,
+      get: getImage,
       default: undefined,
     },
   },
   { _id: false }
 );
+
+UserImage.pre("save", async function (this: ImageSchemaType) {
+  const [cover, portrait] = await Promise.all(
+    [this.cover, this.portrait].map((url) =>
+      url ? uploadImage(url) : undefined
+    )
+  );
+
+  this.cover = cover;
+  this.portrait = portrait;
+});

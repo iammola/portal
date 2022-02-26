@@ -12,10 +12,7 @@ import type {
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function createParent({
-  image: _i,
-  ...data
-}: CreateBody): MethodResponse<CreateData> {
+async function createParent(data: CreateBody): MethodResponse<CreateData> {
   await connect();
 
   const { _id, schoolMail } = await ParentModel.create({
