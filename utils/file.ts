@@ -47,6 +47,9 @@ export async function uploadImage(dataURL: string) {
   return upload.id;
 }
 
+export const getImage = (id: string) =>
+  `https://drive.google.com/uc?id=${id}&export=download`;
+
 interface GoogleAPICred {
   private_key: string;
   client_email: string;
