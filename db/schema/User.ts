@@ -50,12 +50,15 @@ const userSubContact = (
 ) => {
   return new Schema<Required<SubContactSchemaType<true>>>(
     {
-      other: !withOther && {
-        ...opts,
-        trim: true,
-        type: String,
-        default: undefined,
-      },
+      other:
+        withOther === undefined
+          ? {
+              ...opts,
+              trim: true,
+              type: String,
+              default: undefined,
+            }
+          : {},
       primary: {
         ...opts,
         trim: true,
@@ -67,7 +70,7 @@ const userSubContact = (
   );
 };
 
-export const userName = (withTitle?: false | undefined) => {
+export const userName = (withTitle?: false) => {
   return new Schema<NameSchemaType<true>>(
     {
       other: userSubName(),
@@ -80,7 +83,7 @@ export const userName = (withTitle?: false | undefined) => {
         immutable: true,
         ...userSubName("User name required"),
       },
-      title: !withTitle && userSubName("Title required"),
+      title: withTitle === undefined ? userSubName("Title required") : {},
     },
     { _id: false }
   );
