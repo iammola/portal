@@ -1,7 +1,8 @@
 import PhoneNumber from "awesome-phonenumber";
 import { Schema, SchemaTypeOptions } from "mongoose";
 
-import { getImage, hashPassword, uploadImage } from "utils";
+import { hashPassword } from "utils";
+import { getImage, uploadImage } from "utils/file";
 
 import type {
   UserName as NameSchemaType,
