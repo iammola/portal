@@ -14,7 +14,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 async function createStudent({
   academic: _a,
-  image: _i,
   guardians,
   ...data
 }: CreateBody): MethodResponse<CreateData> {
