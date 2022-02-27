@@ -35,6 +35,16 @@ function requireHashSalt(this: AuthSchema) {
   return this.password === undefined;
 }
 
+function updateHook(this: PreUpdateThis, next: (err?: Error) => void) {
+  if (this._update.hash || this._update.salt)
+    return next(new Error("Cannot change password hash or salt directly"));
+
+  if (!this._update.password) return next(new Error("Password is falsy?"));
+
+  this._update = getHash(this._update.password);
+  next();
+}
+
 AuthSchema.pre("save", function (this: PreSaveThis, next) {
   if (this.isModified("password")) {
     if (!this.password) return next(new Error("Password is falsy?"));
@@ -48,15 +58,8 @@ AuthSchema.pre("save", function (this: PreSaveThis, next) {
   next();
 });
 
-AuthSchema.pre("updateOne", function (this: PreUpdateThis, next) {
-  if (this._update.hash || this._update.salt)
-    return next(new Error("Cannot change password hash or salt directly"));
-
-  if (!this._update.password) return next(new Error("Password is falsy?"));
-
-  this._update = getHash(this._update.password);
-  next();
-});
+AuthSchema.pre("updateOne", updateHook);
+AuthSchema.pre("findOneAndUpdate", updateHook);
 
 export const AuthModel =
   (models[ModelNames.AUTH] as Model<AuthSchema>) ??
