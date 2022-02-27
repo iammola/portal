@@ -5,6 +5,14 @@ import { formatError } from "./error";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { ApiHandler, HandlerResponse } from "types/api";
 
+/**
+ * Used to catch errors in a route and properly format response object
+ *
+ * @param req {@link NextApiRequest}
+ * @param res {@link NextApiResponse}
+ * @param routeHandler Handler to this routes functions
+ * @param methods THe HTTP methods allowed on this route
+ */
 export async function routeWrapper<T extends object>(
   req: NextApiRequest,
   res: NextApiResponse<HandlerResponse<T>[0]>,
