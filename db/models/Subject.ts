@@ -10,7 +10,7 @@ import type {
   GroupSubjectModel as GroupSubjectType,
 } from "types/schema";
 
-export const SubjectSchema = new Schema<SubjectRecord>(
+const SubjectSchema = new Schema<SubjectRecord>(
   {
     class: {
       ref: ModelNames.CLASS,

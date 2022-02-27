@@ -4,7 +4,7 @@ import { ModelNames } from "db";
 
 import type { ClassModel as ClassModelType, ClassRecord } from "types/schema";
 
-export const ClassSchema = new Schema<ClassRecord, ClassModelType>({
+const ClassSchema = new Schema<ClassRecord, ClassModelType>({
   name: {
     trim: true,
     type: String,
