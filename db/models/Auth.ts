@@ -14,6 +14,7 @@ const AuthSchema = new Schema<AuthSchema>({
     type: Schema.Types.ObjectId,
     required: true,
     unique: true,
+    immutable: true,
   },
   hash: {
     type: String,
