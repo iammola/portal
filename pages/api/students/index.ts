@@ -2,7 +2,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { routeWrapper } from "utils/api";
-import { generateSchoolMail } from "utils/email";
+import { generateSchoolMail } from "utils";
 import { ParentModel, StudentModel } from "db/models";
 
 import type {

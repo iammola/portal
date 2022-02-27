@@ -3,7 +3,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { routeWrapper } from "utils/api";
 import { TeacherModel } from "db/models";
-import { generateSchoolMail } from "utils/email";
+import { generateSchoolMail } from "utils";
 
 import type {
   CreateTeacherData as CreateData,

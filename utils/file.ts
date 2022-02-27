@@ -53,6 +53,22 @@ export async function uploadImage(dataURL?: string) {
   return upload.id;
 }
 
+/**
+ * This URL template can also be gotten with by accessing the `drive.files.get` method
+ * 
+ * @example
+ * 
+ * ```js
+ * const file = await client.files.get({
+     fileId: id,
+     fields: "webContentLink",
+  });
+  return file.webContentLink; // link to download file
+ * ```
+ * 
+ * @param id The file's ID
+ * @returns A link to download the file
+ */
 export const getImage = (id?: string) => {
   if (!id) return;
 

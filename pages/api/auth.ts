@@ -4,8 +4,8 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { routeWrapper } from "utils/api";
+import { comparePassword, JWT_ALG, JWT_COOKIE } from "utils";
 import { ParentModel, StudentModel, TeacherModel } from "db/models";
-import { comparePassword, JWT_ALG, JWT_COOKIE } from "utils/password";
 
 import type { ApiHandler } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
