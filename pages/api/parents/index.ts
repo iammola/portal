@@ -3,7 +3,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ParentModel } from "db/models";
 import { routeWrapper } from "utils/api";
-import { generateSchoolMail } from "utils/email";
+import { generateSchoolMail } from "utils";
 
 import type {
   CreateParentData as CreateData,
