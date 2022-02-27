@@ -11,9 +11,10 @@ import {
   UserImage,
   userGender,
   userContact,
-  userPassword,
   userSchoolMail,
 } from "db/schema/User";
+
+import { UserAuthVirtual } from "./Auth";
 
 import type {
   StudentRecord,
@@ -24,7 +25,6 @@ const StudentSchema = new Schema<StudentRecord, StudentModelType>({
   gender: userGender(),
   schoolMail: userSchoolMail(),
   dob: userDOB({ required: [true, "Student DOB required"] }),
-  password: userPassword("Student Password required"),
   image: {
     type: UserImage,
     default: undefined,
@@ -46,6 +46,8 @@ const StudentSchema = new Schema<StudentRecord, StudentModelType>({
     required: [true, "Student Contact required"],
   },
 });
+
+StudentSchema.virtual(...UserAuthVirtual);
 
 export const StudentModel =
   (models[ModelNames.STUDENT] as StudentModelType) ??

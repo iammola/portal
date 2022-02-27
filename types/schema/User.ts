@@ -40,6 +40,9 @@ export interface UserBase<T = true, C = true> extends DocumentId {
   name: UserName<T>;
   gender: UserGender;
   contact: UserContact<C>;
-  password: UserPassword;
   readonly schoolMail: string;
+}
+
+export interface UserVirtuals {
+  password: UserPassword;
 }

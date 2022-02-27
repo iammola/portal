@@ -1,6 +1,6 @@
 import type { Model } from "mongoose";
-import type { UserBase } from "types/schema/User";
 import type { ModelRecord, ObjectId } from "types/schema";
+import type { UserBase, UserVirtuals } from "types/schema/User";
 
 export interface StudentGuardianSchema {
   guardian: ObjectId;
@@ -25,6 +25,7 @@ export interface StudentSchema extends UserBase<false> {
   guardians: StudentGuardianSchema[];
 }
 
-export type StudentRecord = ModelRecord<StudentSchema>;
+export type StudentRecord<V extends boolean | keyof UserVirtuals = false> =
+  ModelRecord<StudentSchema, UserVirtuals, V>;
 
-export type StudentModel = Model<StudentSchema>;
+export type StudentModel = Model<StudentSchema, unknown, unknown, UserVirtuals>;
