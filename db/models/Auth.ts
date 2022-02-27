@@ -45,6 +45,8 @@ function updateHook(this: PreUpdateThis, next: (err?: Error) => void) {
   next();
 }
 
+AuthSchema.pre("updateOne", updateHook);
+AuthSchema.pre("findOneAndUpdate" as "save", updateHook);
 AuthSchema.pre("save", function (this: PreSaveThis, next) {
   if (this.isModified("password")) {
     if (!this.password) return next(new Error("Password is falsy?"));
@@ -57,9 +59,6 @@ AuthSchema.pre("save", function (this: PreSaveThis, next) {
 
   next();
 });
-
-AuthSchema.pre("updateOne", updateHook);
-AuthSchema.pre("findOneAndUpdate", updateHook);
 
 export const AuthModel =
   (models[ModelNames.AUTH] as Model<AuthSchema>) ??
