@@ -1,4 +1,5 @@
 import { Schema, model, models } from "mongoose";
+import mongooseLeanVirtuals from "mongoose-lean-virtuals";
 
 import { ModelNames } from "db";
 import {
@@ -48,6 +49,7 @@ const StudentSchema = new Schema<StudentRecord, StudentModelType>({
 });
 
 StudentSchema.virtual(...UserAuthVirtual);
+StudentSchema.plugin(mongooseLeanVirtuals);
 
 export const StudentModel =
   (models[ModelNames.STUDENT] as StudentModelType) ??

@@ -1,4 +1,5 @@
 import { Schema, model, models } from "mongoose";
+import mongooseLeanVirtuals from "mongoose-lean-virtuals";
 
 import { ModelNames } from "db";
 import {
@@ -40,6 +41,7 @@ const ParentSchema = new Schema<ParentRecord, ParentModelType>({
 });
 
 ParentSchema.virtual(...UserAuthVirtual);
+ParentSchema.plugin(mongooseLeanVirtuals);
 
 export const ParentModel =
   (models[ModelNames.PARENT] as ParentModelType) ??
