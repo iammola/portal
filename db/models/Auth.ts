@@ -26,6 +26,11 @@ const AuthSchema = new Schema<AuthSchema>({
   },
 });
 
+const getHash = (p: string) => ({
+  ...hashPassword(p),
+  password: undefined,
+});
+
 function requireHashSalt(this: AuthSchema) {
   return this.password === undefined;
 }
@@ -34,13 +39,22 @@ AuthSchema.pre("save", function (this: PreSaveThis, next) {
   if (this.isModified("password")) {
     if (!this.password) return next(new Error("Password is falsy?"));
 
-    const { hash, salt } = hashPassword(this.password);
-
-    this.salt = salt;
-    this.hash = hash;
-    this.password = undefined;
+    Object.entries(getHash(this.password)).forEach(
+      ([key, val]) =>
+        (this[key as keyof ReturnType<typeof getHash>] = val as string)
+    );
   }
 
+  next();
+});
+
+AuthSchema.pre("updateOne", function (this: PreUpdateThis, next) {
+  if (this._update.hash || this._update.salt)
+    return next(new Error("Cannot change password hash or salt directly"));
+
+  if (!this._update.password) return next(new Error("Password is falsy?"));
+
+  this._update = getHash(this._update.password);
   next();
 });
 
@@ -55,4 +69,8 @@ interface AuthSchema extends UserPassword {
 
 interface PreSaveThis extends AuthSchema {
   isModified(k: keyof AuthSchema): boolean;
+}
+
+interface PreUpdateThis {
+  _update: Partial<AuthSchema>;
 }
