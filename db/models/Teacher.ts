@@ -1,4 +1,5 @@
 import { Schema, model, models } from "mongoose";
+import mongooseLeanVirtuals from "mongoose-lean-virtuals";
 
 import { ModelNames } from "db";
 import {
@@ -7,9 +8,10 @@ import {
   UserImage,
   userGender,
   userContact,
-  userPassword,
   userSchoolMail,
 } from "db/schema/User";
+
+import { UserAuthVirtual } from "./Auth";
 
 import type {
   TeacherRecord,
@@ -20,7 +22,6 @@ const TeacherSchema = new Schema<TeacherRecord, TeacherModelType>({
   gender: userGender(),
   schoolMail: userSchoolMail(),
   dob: userDOB({ default: undefined }),
-  password: userPassword("Teacher Password required"),
   image: {
     type: UserImage,
     default: undefined,
@@ -34,6 +35,9 @@ const TeacherSchema = new Schema<TeacherRecord, TeacherModelType>({
     required: [true, "Teacher Contact required"],
   },
 });
+
+TeacherSchema.virtual(...UserAuthVirtual);
+TeacherSchema.plugin(mongooseLeanVirtuals);
 
 export const TeacherModel =
   (models[ModelNames.TEACHER] as TeacherModelType) ??

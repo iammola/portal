@@ -1,4 +1,5 @@
 import { Schema, model, models } from "mongoose";
+import mongooseLeanVirtuals from "mongoose-lean-virtuals";
 
 import { ModelNames } from "db";
 import {
@@ -7,9 +8,10 @@ import {
   UserImage,
   userGender,
   userContact,
-  userPassword,
   userSchoolMail,
 } from "db/schema/User";
+
+import { UserAuthVirtual } from "./Auth";
 
 import type {
   ParentRecord,
@@ -20,7 +22,6 @@ const ParentSchema = new Schema<ParentRecord, ParentModelType>({
   gender: userGender(),
   schoolMail: userSchoolMail(),
   dob: userDOB({ default: undefined }),
-  password: userPassword("Parent Password required"),
   image: {
     type: UserImage,
     default: undefined,
@@ -38,6 +39,9 @@ const ParentSchema = new Schema<ParentRecord, ParentModelType>({
     trim: true,
   },
 });
+
+ParentSchema.virtual(...UserAuthVirtual);
+ParentSchema.plugin(mongooseLeanVirtuals);
 
 export const ParentModel =
   (models[ModelNames.PARENT] as ParentModelType) ??

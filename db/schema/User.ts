@@ -1,14 +1,12 @@
 import PhoneNumber from "awesome-phonenumber";
 import { Schema, SchemaTypeOptions } from "mongoose";
 
-import { hashPassword } from "utils";
 import { getImage, uploadImage } from "utils/file";
 
 import type {
   UserName as NameSchemaType,
   UserImage as ImageSchemaType,
   UserContact as ContactSchemaType,
-  UserPassword as PasswordSchemaType,
   UserSubContact as SubContactSchemaType,
 } from "types/schema/User";
 
@@ -117,24 +115,6 @@ export const userContact = (withOther?: false | undefined) => {
     { _id: false }
   );
 };
-
-export const userPassword = (required: string) => ({
-  set: hashPassword,
-  type: new Schema<PasswordSchemaType>(
-    {
-      hash: {
-        type: String,
-        required: [true, "Password Hash required"],
-      },
-      salt: {
-        type: String,
-        required: [true, "Password Salt required"],
-      },
-    },
-    { _id: false }
-  ),
-  required: [true, required] as [true, string],
-});
 
 export const UserImage = new Schema<ImageSchemaType>(
   {

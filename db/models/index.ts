@@ -1,3 +1,4 @@
+export { AuthModel } from "./Auth";
 export { ClassModel } from "./Class";
 export { ParentModel } from "./Parent";
 export { TeacherModel } from "./Teacher";
