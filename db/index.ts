@@ -20,6 +20,7 @@ export async function connect(): Promise<typeof mongoose> {
 }
 
 export enum ModelNames {
+  AUTH = "Auth",
   CLASS = "Class",
   PARENT = "Parent",
   STUDENT = "Student",
