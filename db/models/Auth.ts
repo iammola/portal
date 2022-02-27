@@ -29,6 +29,20 @@ function requireHashSalt(this: AuthSchema) {
   return this.password === undefined;
 }
 
+AuthSchema.pre("save", function (this: PreSaveThis, next) {
+  if (this.isModified("password")) {
+    if (!this.password) return next(new Error("Password is falsy?"));
+
+    const { hash, salt } = hashPassword(this.password);
+
+    this.salt = salt;
+    this.hash = hash;
+    this.password = undefined;
+  }
+
+  next();
+});
+
 export const AuthModel =
   (models[ModelNames.AUTH] as Model<AuthSchema>) ??
   model<AuthSchema>(ModelNames.AUTH, AuthSchema);
@@ -36,4 +50,8 @@ export const AuthModel =
 interface AuthSchema extends UserPassword {
   userId: ObjectId;
   password?: string;
+}
+
+interface PreSaveThis extends AuthSchema {
+  isModified(k: keyof AuthSchema): boolean;
 }
