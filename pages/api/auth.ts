@@ -16,12 +16,20 @@ async function getUser({ level, password, ...data }: AuthUser) {
   if (!data.schoolMail && !data.username)
     throw new Error("Username or Password required");
 
-  const args = [data, "password"] as const;
+  const args = [
+    data,
+    "password",
+    {
+      populate: "password",
+      lean: { virtuals: ["username"] },
+    },
+  ] as const;
+
   const user = await (level === "teacher"
-    ? TeacherModel.findOne(...args).lean()
+    ? TeacherModel.findOne(...args)
     : level === "parent"
-    ? ParentModel.findOne(...args).lean()
-    : StudentModel.findOne(...args).lean());
+    ? ParentModel.findOne(...args)
+    : StudentModel.findOne(...args));
 
   if (user === null) throw new Error("User not found");
 
