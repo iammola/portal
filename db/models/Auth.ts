@@ -17,13 +17,17 @@ const AuthSchema = new Schema<AuthSchema>({
   },
   hash: {
     type: String,
-    required: [true, "Password Hash required"],
+    required: [requireHashSalt, "Password Hash required"],
   },
   salt: {
     type: String,
-    required: [true, "Password Salt required"],
+    required: [requireHashSalt, "Password Salt required"],
   },
 });
+
+function requireHashSalt(this: AuthSchema) {
+  return this.password === undefined;
+}
 
 export const AuthModel =
   (models[ModelNames.AUTH] as Model<AuthSchema>) ??
