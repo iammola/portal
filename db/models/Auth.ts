@@ -1,4 +1,4 @@
-import { Schema, Model, model, models } from "mongoose";
+import { Schema, Model, model, models, VirtualTypeOptions } from "mongoose";
 
 import { ModelNames } from "db";
 import { hashPassword } from "utils";
@@ -63,6 +63,15 @@ AuthSchema.pre("save", function (this: PreSaveThis, next) {
 export const AuthModel =
   (models[ModelNames.AUTH] as Model<AuthSchema>) ??
   model<AuthSchema>(ModelNames.AUTH, AuthSchema);
+
+export const UserAuthVirtual: [string, VirtualTypeOptions] = [
+  "password",
+  {
+    ref: ModelNames.AUTH,
+    localField: "_id",
+    foreignField: "userId",
+  },
+];
 
 interface AuthSchema extends UserPassword {
   userId: ObjectId;
