@@ -4,13 +4,13 @@ FILES=$(git diff --cached --name-only --diff-filter=ACMR);
 [ -z "$FILES" ] && exit 0;
 
 # run type-check
-./node_modules/.bin/tsc --pretty --noEmit;
+npx tsc --pretty --noEmit && npm run build;
 tsc_exit_code=$?;
 
 # check the tsc exit code
 if [ $tsc_exit_code -ne 0 ]; then
-    echo "❌ Typescript errors";
-    exit 1;
+  echo "❌ Typescript errors";
+  exit 1;
 fi
 
 echo "👍";
