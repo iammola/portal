@@ -9,8 +9,8 @@ tsc_exit_code=$?;
 
 # check the tsc exit code
 if [ $tsc_exit_code -ne 0 ]; then
-    echo "❌ Typescript errors";
-    exit 1;
+  echo "❌ Typescript errors";
+  exit 1;
 fi
 
 echo "👍";
