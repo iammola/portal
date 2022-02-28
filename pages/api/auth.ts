@@ -1,5 +1,7 @@
-import * as jose from "jose";
+import { randomBytes } from "crypto";
+
 import { serialize } from "cookie";
+import { exportSPKI, generateKeyPair, SignJWT } from "jose";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
@@ -36,11 +38,12 @@ async function getUser({ level, password, ...data }: AuthUser) {
   if (!comparePassword(password, user.password))
     throw new Error("Invalid password");
 
-  const { privateKey, publicKey } = await jose.generateKeyPair(JWT_ALG);
+  const { privateKey, publicKey } = await generateKeyPair(JWT_ALG);
 
-  const token = await new jose.SignJWT(data as Record<string, unknown>)
+  const token = await new SignJWT({})
+    .setJti(randomBytes(32).toString("hex"))
+    .setExpirationTime("1 day")
     .setIssuedAt()
-    .setExpirationTime(60 * 60 * 24)
     .setProtectedHeader({
       typ: "JWT",
       alg: JWT_ALG,
@@ -57,7 +60,7 @@ const handler: ApiHandler<AuthData> = async (req, res) => {
 
   res.setHeader(
     "Set-Cookie",
-    serialize(JWT_COOKIE, await jose.exportSPKI(publicKey), {
+    serialize(JWT_COOKIE, await exportSPKI(publicKey), {
       httpOnly: true,
       maxAge: 60 * 60 * 24,
     })
