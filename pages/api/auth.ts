@@ -16,7 +16,7 @@ async function getUser({ level, password, ...data }: AuthUser) {
   await connect();
 
   if (!data.schoolMail && !data.username)
-    throw new Error("Username or Password required");
+    throw new Error("Username or School email required");
 
   const args = [
     data,
