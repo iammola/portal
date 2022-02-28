@@ -1,7 +1,7 @@
 import { importSPKI, jwtVerify } from "jose";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { JWT_ALG, JWT_COOKIE } from "utils";
+import { JWT_ALG, JWT_COOKIE } from "utils/constants";
 
 // eslint-disable-next-line @next/next/no-server-import-in-page
 import type { NextRequest } from "next/server";
