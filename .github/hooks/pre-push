@@ -4,7 +4,7 @@ FILES=$(git diff --cached --name-only --diff-filter=ACMR);
 [ -z "$FILES" ] && exit 0;
 
 # run type-check
-npx tsc --pretty --noEmit;
+npx tsc --pretty --noEmit && npm run build;
 tsc_exit_code=$?;
 
 # check the tsc exit code
