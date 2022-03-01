@@ -107,7 +107,7 @@ const CreateTeacher: NextPage = () => {
             Teacher
           </span>
         </h1>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={(e) => void handleSubmit(e)}>
           <Section
             title="Personal Information"
             description="Use a permanent address where you can receive mail."
