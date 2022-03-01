@@ -54,7 +54,7 @@ const CreateClass: NextPage = () => {
       </Head>
       <section className="flex w-full grow flex-col items-center justify-center">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e) => void handleSubmit(e)}
           className="w-[35rem] space-y-10 rounded-2xl bg-white px-10 py-8 shadow-lg"
         >
           <h1 className="text-center text-4xl font-bold text-slate-600">
