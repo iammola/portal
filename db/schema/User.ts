@@ -1,6 +1,7 @@
 import PhoneNumber from "awesome-phonenumber";
 import { Schema, SchemaTypeOptions } from "mongoose";
 
+import { generateSchoolMail } from "utils";
 import { getImage, uploadImage } from "utils/file";
 
 import type {
@@ -29,6 +30,7 @@ export const userSchoolMail = () => ({
   unique: true,
   lowercase: true,
   immutable: true,
+  set: generateSchoolMail,
   required: [true, "User school mail required"] as [true, string],
   validate: {
     validator: emailValidator,

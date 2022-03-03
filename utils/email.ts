@@ -1,11 +1,16 @@
-const DOMAIN = "fake.io";
+import { Document } from "mongoose";
+
+import type { UserBase } from "types/schema";
 
 /**
- * Generates an email address for a new user
+ * Creates an email address with the user's username
  *
  * @todo Add actual code to create an email address
  *
- * @param username the user's username. should never be changed or reused
- * @returns the formatted email address
+ * @returns the email address
  */
-export const generateSchoolMail = (username: string) => `${username}@${DOMAIN}`;
+export function generateSchoolMail(this: UserBase & Document) {
+  const DOMAIN = "fake.io";
+  if (this instanceof Document && this.isNew)
+    return `${this.name.username}@${DOMAIN}`;
+}
