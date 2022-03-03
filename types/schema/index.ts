@@ -2,6 +2,9 @@ import type { FlattenIntersection } from "types/utils";
 import type { Schema as MSchema } from "mongoose";
 import type { ObjectId as BsonId } from "bson";
 
+// Todo: Get a better name than "Thing" for this type. Meant to group classes or subjects or terms or sessions
+export type ThingName = Record<"long" | "short", string> & { special?: string };
+
 export type ObjectId = BsonId & MSchema.Types.ObjectId;
 
 export interface DocumentId {

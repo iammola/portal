@@ -1,6 +1,11 @@
 import type { ModelNames } from "db";
 import type { Model } from "mongoose";
-import type { DocumentId, ModelRecord, ObjectId } from "types/schema";
+import type {
+  DocumentId,
+  ModelRecord,
+  ObjectId,
+  ThingName,
+} from "types/schema";
 
 interface SubjectSchema {
   class: ObjectId;
@@ -8,20 +13,15 @@ interface SubjectSchema {
   sessions?: ObjectId[];
 }
 
-interface Subject<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT>
-  extends DocumentId,
-    SubjectSchema {
-  __type: T;
-  name: string;
-  alias: string;
-}
+type Subject<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT> =
+  DocumentId & SubjectSchema & { __type: T; name: ThingName };
 
 export interface BaseSubjectSchema extends Subject<ModelNames.B_SUBJECT> {
   teachers: ObjectId[];
 }
 
 export interface GroupSubjectSchema extends Subject<ModelNames.G_SUBJECT> {
-  divisions: Pick<BaseSubjectSchema, "_id" | "name" | "alias" | "teachers">[];
+  divisions: Pick<BaseSubjectSchema, "_id" | "name" | "teachers">[];
 }
 
 export type SubjectModel = Model<BaseSubjectSchema | GroupSubjectSchema>;

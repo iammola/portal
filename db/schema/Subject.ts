@@ -1,6 +1,7 @@
 import { Schema } from "mongoose";
 
 import { ModelNames } from "db";
+import { ThingName } from "db/schema/Thing";
 
 import type { BaseSubjectRecord, GroupSubjectRecord } from "types/schema";
 
@@ -21,18 +22,22 @@ export const subjectAlias = () => ({
 });
 
 export const BaseSubjectSchema = new Schema<BaseSubjectRecord>({
+  name: {
+    type: ThingName(),
+    required: [true, "Name required"],
+  },
   teachers: {
     default: undefined,
     ref: ModelNames.TEACHER,
     type: [Schema.Types.ObjectId],
   },
-  name: subjectName(),
-  alias: subjectAlias(),
 });
 
 export const GroupSubjectSchema = new Schema<GroupSubjectRecord>({
-  name: subjectName(),
-  alias: subjectAlias(),
+  name: {
+    type: ThingName(),
+    required: [true, "Name required"],
+  },
   divisions: {
     default: undefined,
     type: [BaseSubjectSchema],
