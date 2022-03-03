@@ -1,5 +1,5 @@
-import type { CreateResult } from "types/api";
-import type { TeacherSchema } from "types/schema";
+import { CreateResult } from "types/api";
+import { TeacherSchema } from "types/schema";
 
 export type CreateTeacherData = CreateResult<Pick<TeacherSchema, "schoolMail">>;
 export type CreateTeacherRequestBody = Omit<

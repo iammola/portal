@@ -1,11 +1,7 @@
-import type { ModelNames } from "db";
-import type { Model } from "mongoose";
-import type {
-  DocumentId,
-  ModelRecord,
-  ObjectId,
-  ThingName,
-} from "types/schema";
+import { Model } from "mongoose";
+
+import { ModelNames } from "db";
+import { DocumentId, ModelRecord, ObjectId, ThingName } from "types/schema";
 
 interface SubjectSchema {
   class: ObjectId;

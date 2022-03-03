@@ -1,6 +1,6 @@
-import type { CreateResult } from "types/api";
-import type { ClassSchema } from "types/schema";
-import type { FlattenIntersection } from "types/utils";
+import { CreateResult } from "types/api";
+import { ClassSchema } from "types/schema";
+import { FlattenIntersection } from "types/utils";
 
 export type CreateClassData = CreateResult<Pick<ClassSchema, "createdAt">>;
 export type CreateClassRequestBody = Pick<ClassSchema, "name" | "teachers">;

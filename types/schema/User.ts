@@ -1,5 +1,5 @@
-import type { DocumentId } from "types/schema";
-import type { FlattenIntersection } from "types/utils";
+import { DocumentId } from "types/schema";
+import { FlattenIntersection } from "types/utils";
 
 export type UserType = "parent" | "teacher" | "student";
 

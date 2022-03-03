@@ -1,6 +1,7 @@
-import type { Model } from "mongoose";
-import type { ModelRecord } from "types/schema";
-import type { UserBase, UserVirtuals } from "types/schema/User";
+import { Model } from "mongoose";
+
+import { ModelRecord } from "types/schema";
+import { UserBase, UserVirtuals } from "types/schema/User";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface TeacherSchema extends UserBase<true, false> {

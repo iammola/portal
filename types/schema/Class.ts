@@ -1,10 +1,6 @@
-import type { Model } from "mongoose";
-import type {
-  DocumentId,
-  ModelRecord,
-  ObjectId,
-  ThingName,
-} from "types/schema";
+import { Model } from "mongoose";
+
+import { DocumentId, ModelRecord, ObjectId, ThingName } from "types/schema";
 
 export interface ClassSchema extends DocumentId {
   name: ThingName;
