@@ -47,4 +47,5 @@ export async function routeWrapper<T extends object>(
     );
 }
 
+export * from "./user";
 export { fetchAPIEndpoint } from "./endpoint";
