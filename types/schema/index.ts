@@ -22,8 +22,10 @@ export type ModelRecord<
     : FlattenIntersection<K extends keyof V ? Pick<V, K> : unknown>);
 
 export * from "./User";
+export * from "./Term";
 export * from "./Class";
 export * from "./Parent";
+export * from "./Session";
 export * from "./Subject";
 export * from "./Student";
 export * from "./Teacher";
