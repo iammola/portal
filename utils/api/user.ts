@@ -10,7 +10,7 @@ export async function createUser<
   await connect();
   const session = await startSession();
 
-  await session.withTransaction(async () => {
+  const res = await session.withTransaction(async () => {
     let doc;
     const opts = { session };
     const { password, ...obj } = body;
@@ -26,6 +26,9 @@ export async function createUser<
   });
 
   await session.endSession();
+  return res as NonNullableObject<typeof res>;
 }
+
+type NonNullableObject<J> = { [K in keyof J]: NonNullable<J[K]> };
 
 type User = "parent" | "student" | "teacher";
