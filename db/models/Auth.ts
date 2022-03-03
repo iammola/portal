@@ -66,8 +66,9 @@ export const AuthModel = (models[ModelNames.AUTH] ??
 export const UserAuthVirtual: [string, VirtualTypeOptions] = [
   "password",
   {
-    ref: ModelNames.AUTH,
+    justOne: true,
     localField: "_id",
+    ref: ModelNames.AUTH,
     foreignField: "userId",
   },
 ];
