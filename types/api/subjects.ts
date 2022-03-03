@@ -1,13 +1,13 @@
-import type { CreateResult, DeleteResult, UpdateResult } from "types/api";
-import type { OneKey } from "types/utils";
-import type { BaseSubjectSchema, GroupSubjectSchema } from "types/schema";
+import { OneKey } from "types/utils";
+import { CreateResult, DeleteResult, UpdateResult } from "types/api";
+import { BaseSubjectSchema, GroupSubjectSchema } from "types/schema";
 
 type BaseRequestBody = Omit<BaseSubjectSchema, "_id" | "teachers"> & {
   teachers: string[];
 };
 
 type GroupRequestBody = Omit<GroupSubjectSchema, "_id" | "divisions"> & {
-  divisions: (Pick<BaseSubjectSchema, "_id" | "name" | "alias"> & {
+  divisions: (Pick<BaseSubjectSchema, "_id" | "name"> & {
     teachers: string[];
   })[];
 };

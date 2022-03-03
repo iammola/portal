@@ -14,7 +14,7 @@ export const Class: Class = ({ onChange, value }) => {
 
   useEffect(() => {
     if (classes?.success)
-      setOptions(classes.data.map((d) => ({ id: d._id, value: d.name })));
+      setOptions(classes.data.map((d) => ({ id: d._id, value: d.name.long })));
   }, [classes]);
 
   return (
@@ -36,7 +36,7 @@ export const Subjects: Subjects = ({ onChange, selectedClass, values }) => {
 
   useEffect(() => {
     if (subjects?.success)
-      setOptions(subjects.data.map((d) => ({ id: d._id, value: d.name })));
+      setOptions(subjects.data.map((d) => ({ id: d._id, value: d.name.long })));
   }, [subjects]);
 
   return (

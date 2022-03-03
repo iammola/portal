@@ -1,6 +1,7 @@
-import type { Model } from "mongoose";
-import type { ModelRecord, ObjectId } from "types/schema";
-import type { UserBase, UserVirtuals } from "types/schema/User";
+import { Model } from "mongoose";
+
+import { ModelRecord, ObjectId } from "types/schema";
+import { UserBase, UserVirtuals } from "types/schema/User";
 
 export interface StudentGuardianSchema {
   guardian: ObjectId;

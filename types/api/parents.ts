@@ -1,5 +1,5 @@
-import type { CreateResult } from "types/api";
-import type { ParentSchema } from "types/schema";
+import { CreateResult } from "types/api";
+import { ParentSchema } from "types/schema";
 
 export type CreateParentData = CreateResult<Pick<ParentSchema, "schoolMail">>;
 export type CreateParentRequestBody = Omit<

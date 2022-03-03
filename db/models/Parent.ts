@@ -43,6 +43,5 @@ const ParentSchema = new Schema<ParentRecord, ParentModelType>({
 ParentSchema.virtual(...UserAuthVirtual);
 ParentSchema.plugin(mongooseLeanVirtuals);
 
-export const ParentModel =
-  (models[ModelNames.PARENT] as ParentModelType) ??
-  model<ParentRecord, ParentModelType>(ModelNames.PARENT, ParentSchema);
+export const ParentModel = (models[ModelNames.PARENT] ??
+  model(ModelNames.PARENT, ParentSchema)) as ParentModelType;

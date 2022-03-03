@@ -21,13 +21,15 @@ export async function connect(): Promise<typeof mongoose> {
 
 export enum ModelNames {
   AUTH = "Auth",
+  TERM = "Term",
   CLASS = "Class",
   PARENT = "Parent",
+  B_SUBJECT = "base",
   STUDENT = "Student",
   TEACHER = "Teacher",
   SUBJECT = "Subject",
-  B_SUBJECT = "base",
   G_SUBJECT = "group",
+  SESSION = "Session",
 }
 
 interface ConnectOptionsExt extends mongoose.ConnectOptions {

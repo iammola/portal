@@ -1,10 +1,9 @@
-import type { Model } from "mongoose";
-import type { DocumentId, ModelRecord, ObjectId } from "types/schema";
+import { Model } from "mongoose";
+
+import { DocumentId, ModelRecord, ObjectId, ThingName } from "types/schema";
 
 export interface ClassSchema extends DocumentId {
-  name: string;
-  alias: string;
-  special: string;
+  name: ThingName;
   createdAt: Date;
   teachers: ObjectId[];
 }

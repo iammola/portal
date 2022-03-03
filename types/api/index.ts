@@ -1,7 +1,8 @@
-import type { DocumentId } from "types/schema";
-import type { FilterNumber } from "types/utils";
-import type { NextApiRequest, NextApiResponse } from "next";
-import type { StatusCodes, ReasonPhrases } from "http-status-codes";
+import { NextApiRequest, NextApiResponse } from "next";
+import { StatusCodes, ReasonPhrases } from "http-status-codes";
+
+import { DocumentId } from "types/schema";
+import { FilterNumber } from "types/utils";
 
 export type CreateResult<O = unknown> = DocumentId & O;
 export type DeleteResult = Record<"success", boolean>;

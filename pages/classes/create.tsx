@@ -13,8 +13,8 @@ import type {
 } from "types/api/classes";
 
 const CreateClass: NextPage = () => {
-  const [name, setName] = useState("");
-  const [alias, setAlias] = useState("");
+  const [long, setLong] = useState("");
+  const [short, setShort] = useState("");
   const [special, setSpecial] = useState("");
   const [teachers, setTeachers] = useState<EmailValue[]>([]);
 
@@ -29,9 +29,7 @@ const CreateClass: NextPage = () => {
         "/api/classes",
         { method: "POST" },
         {
-          name,
-          alias,
-          special,
+          name: { long, short, special },
           teachers: teachers
             .map(({ _id }) => _id as NonNullable<typeof _id>)
             .filter(Boolean),
@@ -68,9 +66,9 @@ const CreateClass: NextPage = () => {
               required
               id="name"
               type="text"
-              value={name}
+              value={long}
               label="Class name"
-              onChange={setName}
+              onChange={setLong}
               className={(valid) =>
                 classNames(
                   "h-[3.75rem] w-full overflow-hidden rounded-lg border border-transparent placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
@@ -89,9 +87,9 @@ const CreateClass: NextPage = () => {
                   required
                   id="alias"
                   type="text"
-                  value={alias}
+                  value={short}
                   label="Class alias"
-                  onChange={setAlias}
+                  onChange={setShort}
                   className={(valid) =>
                     classNames(
                       "h-[3.75rem] w-full overflow-hidden rounded-lg border border-transparent placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",

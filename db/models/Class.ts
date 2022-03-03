@@ -1,29 +1,14 @@
 import { Schema, model, models } from "mongoose";
 
 import { ModelNames } from "db";
+import { ThingName } from "db/schema/Thing";
 
 import type { ClassModel as ClassModelType, ClassRecord } from "types/schema";
 
 const ClassSchema = new Schema<ClassRecord, ClassModelType>({
   name: {
-    trim: true,
-    type: String,
-    unique: true,
+    type: ThingName(true),
     required: [true, "Class name required"],
-  },
-  alias: {
-    trim: true,
-    type: String,
-    unique: true,
-    required: [true, "Class alias required"],
-    minLength: [3, "Class alias min-length = 3"],
-    maxLength: [5, "Class alias max-length = 5"],
-  },
-  special: {
-    trim: true,
-    type: String,
-    unique: true,
-    required: [true, "Class special required"],
   },
   createdAt: {
     type: Date,
@@ -42,6 +27,5 @@ ClassSchema.virtual("subjectsCount", {
   foreignField: "class",
 });
 
-export const ClassModel =
-  (models[ModelNames.CLASS] as ClassModelType) ??
-  model<ClassRecord, ClassModelType>(ModelNames.CLASS, ClassSchema);
+export const ClassModel = (models[ModelNames.CLASS] ??
+  model(ModelNames.CLASS, ClassSchema)) as ClassModelType;

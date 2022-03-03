@@ -1,4 +1,4 @@
-import type { UserBase, UserType } from "types/schema";
+import { UserBase, UserType } from "types/schema";
 
 export type UsersEmailRequestBody = {
   select?: string;

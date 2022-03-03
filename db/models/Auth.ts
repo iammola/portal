@@ -60,15 +60,15 @@ AuthSchema.pre("save", function (this: PreSaveThis, next) {
   next();
 });
 
-export const AuthModel =
-  (models[ModelNames.AUTH] as Model<AuthSchema>) ??
-  model<AuthSchema>(ModelNames.AUTH, AuthSchema);
+export const AuthModel = (models[ModelNames.AUTH] ??
+  model<AuthSchema>(ModelNames.AUTH, AuthSchema)) as Model<AuthSchema>;
 
 export const UserAuthVirtual: [string, VirtualTypeOptions] = [
   "password",
   {
-    ref: ModelNames.AUTH,
+    justOne: true,
     localField: "_id",
+    ref: ModelNames.AUTH,
     foreignField: "userId",
   },
 ];

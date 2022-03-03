@@ -39,6 +39,5 @@ const TeacherSchema = new Schema<TeacherRecord, TeacherModelType>({
 TeacherSchema.virtual(...UserAuthVirtual);
 TeacherSchema.plugin(mongooseLeanVirtuals);
 
-export const TeacherModel =
-  (models[ModelNames.TEACHER] as TeacherModelType) ??
-  model<TeacherRecord, TeacherModelType>(ModelNames.TEACHER, TeacherSchema);
+export const TeacherModel = (models[ModelNames.TEACHER] ??
+  model(ModelNames.TEACHER, TeacherSchema)) as TeacherModelType;
