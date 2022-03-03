@@ -26,5 +26,9 @@ SessionSchema.virtual("terms", {
   options: { populate: "-session" },
 });
 
+SessionSchema.static("findCurrent", function () {
+  return this.findOne({ current: true });
+});
+
 export const SessionModel = (models[ModelNames.SESSION] ??
   model(ModelNames.SESSION, SessionSchema)) as SessionModelType;

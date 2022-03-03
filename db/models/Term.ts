@@ -20,5 +20,9 @@ const TermSchema = new Schema<TermRecord, TermModelType>({
   },
 });
 
+TermSchema.static("findCurrent", function () {
+  return this.findOne({ current: true });
+});
+
 export const TermModel = (models[ModelNames.TERM] ??
   model(ModelNames.TERM, TermSchema)) as TermModelType;
