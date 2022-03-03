@@ -7,7 +7,7 @@ type BaseRequestBody = Omit<BaseSubjectSchema, "_id" | "teachers"> & {
 };
 
 type GroupRequestBody = Omit<GroupSubjectSchema, "_id" | "divisions"> & {
-  divisions: (Pick<BaseSubjectSchema, "_id" | "name" | "alias"> & {
+  divisions: (Pick<BaseSubjectSchema, "_id" | "name"> & {
     teachers: string[];
   })[];
 };

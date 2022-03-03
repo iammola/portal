@@ -22,8 +22,8 @@ import type {
 } from "types/api/subjects";
 
 const CreateSubject: NextPage = () => {
-  const [name, setName] = useState("");
-  const [alias, setAlias] = useState("");
+  const [long, setLong] = useState("");
+  const [short, setShort] = useState("");
   const [mandatory, setMandatory] = useState(false);
   const [teachers, setTeachers] = useState<EmailValue[]>();
   const [__type, setType] = useState<SubjectRecord["__type"]>();
@@ -66,8 +66,7 @@ const CreateSubject: NextPage = () => {
             method: "POST",
           },
           {
-            name,
-            alias,
+            name: { long, short },
             __type,
             mandatory,
             class: selectedClass.id,
@@ -113,8 +112,8 @@ const CreateSubject: NextPage = () => {
                 <Input
                   required
                   id="name"
-                  value={name}
-                  onChange={setName}
+                  value={long}
+                  onChange={setLong}
                   label="Subject name"
                   className={(valid) =>
                     classNames(
@@ -133,8 +132,8 @@ const CreateSubject: NextPage = () => {
                 <Input
                   required
                   id="alias"
-                  value={alias}
-                  onChange={setAlias}
+                  value={short}
+                  onChange={setShort}
                   label="Subject alias"
                   className={(valid) =>
                     classNames(
