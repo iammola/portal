@@ -51,6 +51,5 @@ const StudentSchema = new Schema<StudentRecord, StudentModelType>({
 StudentSchema.virtual(...UserAuthVirtual);
 StudentSchema.plugin(mongooseLeanVirtuals);
 
-export const StudentModel =
-  (models[ModelNames.STUDENT] as StudentModelType) ??
-  model<StudentRecord, StudentModelType>(ModelNames.STUDENT, StudentSchema);
+export const StudentModel = (models[ModelNames.STUDENT] ??
+  model(ModelNames.STUDENT, StudentSchema)) as StudentModelType;

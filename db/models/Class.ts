@@ -42,6 +42,5 @@ ClassSchema.virtual("subjectsCount", {
   foreignField: "class",
 });
 
-export const ClassModel =
-  (models[ModelNames.CLASS] as ClassModelType) ??
-  model<ClassRecord, ClassModelType>(ModelNames.CLASS, ClassSchema);
+export const ClassModel = (models[ModelNames.CLASS] ??
+  model(ModelNames.CLASS, ClassSchema)) as ClassModelType;
