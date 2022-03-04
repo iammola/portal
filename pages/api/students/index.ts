@@ -15,8 +15,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 async function createStudent(raw: CreateBody): MethodResponse<CreateData> {
   await connect();
 
-  const parents = await ParentModel.find(
-    { schoolMail: raw.guardians.map((g) => g.mail) },
+  const parents = await ParentModel.findBySchoolMail(
+    raw.guardians.map((g) => g.mail),
     "schoolMail"
   ).lean();
 
