@@ -1,10 +1,13 @@
 import PhoneNumber from "awesome-phonenumber";
-import { Schema, SchemaTypeOptions } from "mongoose";
+import mongooseLeanVirtuals from "mongoose-lean-virtuals";
+import { Schema, SchemaDefinitionProperty, SchemaTypeOptions } from "mongoose";
 
+import { ModelNames } from "db";
 import { generateSchoolMail } from "utils";
 import { getImage, uploadImage } from "utils/file";
 
 import type {
+  UserBase,
   UserName as Name,
   UserImage as Image,
   UserContact as Contact,
@@ -15,29 +18,53 @@ const emailValidator = (v?: string) => {
   return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");
 };
 
-export const userGender = () => ({
-  type: String,
-  required: [true, "User Gender required"] as [true, string],
-});
+export type Def<D extends UserBase> = {
+  name: ReturnType<typeof userName>;
+  contact: ReturnType<typeof userContact>;
+} & {
+  [K in keyof Omit<D, keyof UserBase>]: SchemaDefinitionProperty<D[K]>;
+};
 
-export const userDOB = (obj?: SchemaTypeOptions<Date>) => ({
-  type: Date,
-  ...obj,
-});
+export const createUserSchema = <D extends UserBase, M>(obj: Def<D>) => {
+  const schema = new Schema<UserBase>({
+    ...obj,
+    gender: {
+      type: String,
+      required: [true, "Gender required"],
+    },
+    schoolMail: {
+      trim: true,
+      type: String,
+      unique: true,
+      lowercase: true,
+      immutable: true,
+      set: generateSchoolMail,
+      required: [true, "School mail required"],
+      validate: {
+        validator: emailValidator,
+        msg: "Invalid email address",
+      },
+    },
+    dob: {
+      type: Date,
+      default: undefined,
+    },
+    image: {
+      type: UserImage,
+      default: undefined,
+    },
+  });
 
-export const userSchoolMail = () => ({
-  trim: true,
-  type: String,
-  unique: true,
-  lowercase: true,
-  immutable: true,
-  set: generateSchoolMail,
-  required: [true, "User school mail required"] as [true, string],
-  validate: {
-    validator: emailValidator,
-    msg: "Invalid email address",
-  },
-});
+  schema.plugin(mongooseLeanVirtuals);
+  schema.virtual("password", {
+    justOne: true,
+    localField: "_id",
+    ref: ModelNames.AUTH,
+    foreignField: "userId",
+  });
+
+  return schema as unknown as Schema<D, M>;
+};
 
 const userSubName = (required?: string) => ({
   trim: true,
