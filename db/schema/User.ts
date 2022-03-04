@@ -18,10 +18,10 @@ const emailValidator = (v?: string) => {
   return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");
 };
 
-export type Def<D extends UserBase> = {
   name: ReturnType<typeof userName>;
   contact: ReturnType<typeof userContact>;
 } & {
+type Def<D extends UserBase> = {
   [K in keyof Omit<D, keyof UserBase>]: SchemaDefinitionProperty<D[K]>;
 };
 
@@ -112,7 +112,7 @@ const UserName = new Schema<Name>(
   { _id: false }
 );
 
-export const UserContact = new Schema<Contact>(
+const UserContact = new Schema<Contact>(
   {
     email: {
       required: [true, "Email required"],
@@ -138,7 +138,7 @@ export const UserContact = new Schema<Contact>(
   { _id: false }
 );
 
-export const UserImage = new Schema<Image>(
+const UserImage = new Schema<Image>(
   {
     cover: {
       type: String,
