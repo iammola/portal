@@ -1,6 +1,6 @@
-import { Document, Model, Query } from "mongoose";
+import { Model } from "mongoose";
 
-import { DocumentId, ModelRecord, TermSchema, ThingName } from "types/schema";
+import { DocumentId, ModelRecord, SQuery, TermSchema, ThingName } from "types/schema";
 
 export interface SessionSchema extends DocumentId {
   current?: true;
@@ -19,12 +19,5 @@ export interface SessionModel
   /**
    * Find the term record where `{ current: true }`
    */
-  findCurrent(
-    projection?: any
-  ): Query<
-    (Document<unknown, any, SessionSchema> & SessionSchema) | null,
-    Document<unknown, any, SessionSchema> & SessionSchema,
-    Record<string, never>,
-    SessionSchema
-  >;
+  findCurrent(projection?: any): SQuery<SessionSchema>;
 }
