@@ -3,10 +3,7 @@ import { startSession } from "mongoose";
 import { connect } from "db";
 import { AuthModel, ParentModel, StudentModel, TeacherModel } from "db/models";
 
-export async function createUser<
-  T extends User,
-  B extends { password: string }
->(type: T, body: B) {
+export async function createUser<T extends User, B extends { password: string }>(type: T, body: B) {
   await connect();
   const session = await startSession();
 

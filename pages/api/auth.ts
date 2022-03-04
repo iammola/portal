@@ -15,8 +15,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 async function getUser({ level, password, ...data }: AuthUser) {
   await connect();
 
-  if (!data.schoolMail && !data.username)
-    throw new Error("Username or School email required");
+  if (!data.schoolMail && !data.username) throw new Error("Username or School email required");
 
   const args = [
     data,
@@ -35,8 +34,7 @@ async function getUser({ level, password, ...data }: AuthUser) {
 
   if (user === null) throw new Error("User not found");
 
-  if (!comparePassword(password, user.password))
-    throw new Error("Invalid password");
+  if (!comparePassword(password, user.password)) throw new Error("Invalid password");
 
   const { privateKey, publicKey } = await generateKeyPair(JWT_ALG);
 

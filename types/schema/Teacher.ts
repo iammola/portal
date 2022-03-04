@@ -8,7 +8,10 @@ export interface TeacherSchema extends UserBase {
   // privileges: ObjectId;
 }
 
-export type TeacherRecord<V extends boolean | keyof UserVirtuals = false> =
-  ModelRecord<TeacherSchema, UserVirtuals, V>;
+export type TeacherRecord<V extends boolean | keyof UserVirtuals = false> = ModelRecord<
+  TeacherSchema,
+  UserVirtuals,
+  V
+>;
 
 export type TeacherModel = Model<TeacherSchema, unknown, unknown, UserVirtuals>;

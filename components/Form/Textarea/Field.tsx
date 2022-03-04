@@ -3,15 +3,7 @@ import { FunctionComponent, useState } from "react";
 import { useIsChanging, useIsomorphicLayoutEffect } from "hooks";
 import { classNames } from "utils";
 
-const Field: Field = ({
-  className,
-  id,
-  max,
-  onChange,
-  parentClassName,
-  required,
-  value,
-}) => {
+const Field: Field = ({ className, id, max, onChange, parentClassName, required, value }) => {
   const typing = useIsChanging(value);
   const [valid, setValid] = useState<boolean>();
   const [limitPassed, setLimitPassed] = useState(false);
@@ -33,24 +25,14 @@ const Field: Field = ({
         id={id}
         value={value ?? ""}
         onChange={(e) => onChange(e.target.value)}
-        className={
-          typeof className === "string"
-            ? className
-            : className(!limitPassed && valid)
-        }
+        className={typeof className === "string" ? className : className(!limitPassed && valid)}
       />
       {required !== true && (
-        <span className="absolute right-0.5 -top-5 text-xs text-slate-500">
-          Optional
-        </span>
+        <span className="absolute right-0.5 -top-5 text-xs text-slate-500">Optional</span>
       )}
       {max !== undefined && (
         <span
-          className={classNames("pl-0.5 text-xs", [
-            limitPassed,
-            "text-red-500",
-            "text-slate-500",
-          ])}
+          className={classNames("pl-0.5 text-xs", [limitPassed, "text-red-500", "text-slate-500"])}
         >
           {value?.length ?? 0} / {max}
         </span>

@@ -10,10 +10,7 @@ const Password = dynamic(() => import("components/Global/Me/Password"));
 const StudentMe: FunctionComponent = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>();
-  const tabs = useMemo<Tab[]>(
-    () => ["My details", "Profile", "Password", "Notifications"],
-    []
-  );
+  const tabs = useMemo<Tab[]>(() => ["My details", "Profile", "Password", "Notifications"], []);
   const tabBadges = useMemo<{ [key in Tab]?: number }>(
     () => ({ Notifications: Math.floor(1 + Math.random() * 50) }),
     []
@@ -29,8 +26,7 @@ const StudentMe: FunctionComponent = () => {
         { shallow: true },
       ] as const;
 
-      if (activeTab === undefined && tabs.includes(initialTab))
-        setActiveTab(initialTab);
+      if (activeTab === undefined && tabs.includes(initialTab)) setActiveTab(initialTab);
       else if (activeTab === "My details" && router.query.tab !== undefined)
         void router.push({ pathname }, ...args);
       else if (!["My details", router.query.tab].includes(activeTab))
@@ -47,24 +43,17 @@ const StudentMe: FunctionComponent = () => {
             onClick={() => setActiveTab(tab)}
             className={classNames(
               "group relative inline-block w-max min-w-max cursor-pointer pb-5 text-sm font-medium tracking-wide",
-              [
-                activeTab === tab,
-                "text-slate-900",
-                "text-slate-500 hover:text-slate-900",
-              ]
+              [activeTab === tab, "text-slate-900", "text-slate-500 hover:text-slate-900"]
             )}
           >
             {tab}
             {tabBadges[tab] !== undefined && (
               <span
-                className={classNames(
-                  "ml-3 rounded-full py-1 px-2.5 text-xs font-semibold",
-                  [
-                    activeTab === tab,
-                    "bg-slate-300 text-slate-900",
-                    "bg-slate-200 text-slate-700 group-hover:bg-slate-300 group-hover:text-slate-900",
-                  ]
-                )}
+                className={classNames("ml-3 rounded-full py-1 px-2.5 text-xs font-semibold", [
+                  activeTab === tab,
+                  "bg-slate-300 text-slate-900",
+                  "bg-slate-200 text-slate-700 group-hover:bg-slate-300 group-hover:text-slate-900",
+                ])}
               >
                 {tabBadges[tab]}
               </span>

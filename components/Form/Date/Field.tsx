@@ -1,10 +1,4 @@
-import {
-  addMilliseconds,
-  getDaysInMonth,
-  isAfter,
-  isBefore,
-  isEqual,
-} from "date-fns";
+import { addMilliseconds, getDaysInMonth, isAfter, isBefore, isEqual } from "date-fns";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 
 import NumberInput from "components/Form/Number";
@@ -32,9 +26,7 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
 
   useEffect(() => {
     if (month !== undefined) {
-      const maxDay = getDaysInMonth(
-        new Date(year ?? new Date().getFullYear(), month - 1)
-      );
+      const maxDay = getDaysInMonth(new Date(year ?? new Date().getFullYear(), month - 1));
       isNaN(maxDay) ? setMonth(undefined) : setMaxDay(maxDay);
     }
   }, [month, year]);
@@ -51,14 +43,8 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
   useIsomorphicLayoutEffect(() => {
     if (value !== undefined) {
       const forceValid =
-        isBefore(
-          value,
-          addMilliseconds(max ?? value, +isEqual(value, max ?? value))
-        ) &&
-        isAfter(
-          value,
-          addMilliseconds(min ?? value, +isEqual(value, min ?? value) * -1)
-        );
+        isBefore(value, addMilliseconds(max ?? value, +isEqual(value, max ?? value))) &&
+        isAfter(value, addMilliseconds(min ?? value, +isEqual(value, min ?? value) * -1));
       setForceValid(forceValid || typing ? undefined : false);
     }
   }, [max, min, typing, value]);
@@ -87,10 +73,8 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
             classNames(
               "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
               {
-                "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                  valid === true,
-                "invalid:ring-red-400 focus:invalid:ring-red-400":
-                  valid === false,
+                "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                 "!ring-red-400": forceValid === false,
               }
             )
@@ -112,10 +96,8 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
             classNames(
               "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
               {
-                "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                  valid === true,
-                "invalid:ring-red-400 focus:invalid:ring-red-400":
-                  valid === false,
+                "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                 "!ring-red-400": forceValid === false,
               }
             )
@@ -137,10 +119,8 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
             classNames(
               "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
               {
-                "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                  valid === true,
-                "invalid:ring-red-400 focus:invalid:ring-red-400":
-                  valid === false,
+                "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                 "!ring-red-400": forceValid === false,
               }
             )
@@ -148,9 +128,7 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
         />
       </div>
       {required !== true && (
-        <span className="absolute right-0.5 -top-8 text-xs text-slate-500">
-          Optional
-        </span>
+        <span className="absolute right-0.5 -top-8 text-xs text-slate-500">Optional</span>
       )}
     </div>
   );

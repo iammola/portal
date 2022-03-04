@@ -9,8 +9,8 @@ interface SubjectSchema {
   sessions?: ObjectId[];
 }
 
-type Subject<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT> =
-  DocumentId & SubjectSchema & { __type: T; name: ThingName };
+type Subject<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT> = DocumentId &
+  SubjectSchema & { __type: T; name: ThingName };
 
 export interface BaseSubjectSchema extends Subject<ModelNames.B_SUBJECT> {
   teachers: ObjectId[];

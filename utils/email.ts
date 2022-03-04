@@ -11,6 +11,5 @@ import type { UserBase } from "types/schema";
  */
 export function generateSchoolMail(this: UserBase & Document) {
   const DOMAIN = "fake.io";
-  if (this instanceof Document && this.isNew)
-    return `${this.name.username}@${DOMAIN}`;
+  if (this instanceof Document && this.isNew) return `${this.name.username}@${DOMAIN}`;
 }

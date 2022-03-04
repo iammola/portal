@@ -11,15 +11,13 @@ const Options: Options = ({ className, id, onChange, value }) => {
     () => [
       {
         id: ModelNames.B_SUBJECT,
-        description:
-          "This subject doesn't have divisions. It is a standalone subject.",
+        description: "This subject doesn't have divisions. It is a standalone subject.",
         label: "Base",
       },
       {
         id: ModelNames.G_SUBJECT,
         label: "Grouped",
-        description:
-          "This subject has divisions. It is grouped with a collective name.",
+        description: "This subject has divisions. It is grouped with a collective name.",
       },
     ],
     []
@@ -43,14 +41,7 @@ const Options: Options = ({ className, id, onChange, value }) => {
   );
 };
 
-const Option: Option = ({
-  description,
-  id,
-  label,
-  onChange,
-  selected,
-  uniqueId,
-}) => {
+const Option: Option = ({ description, id, label, onChange, selected, uniqueId }) => {
   return (
     <li
       className={classNames("w-1/2 rounded-lg ring-2 hover:shadow-md", [
@@ -74,9 +65,7 @@ const Option: Option = ({
         <h4 className="col-start-1 col-end-5 row-start-1 text-lg font-medium text-slate-700">
           {label}
         </h4>
-        <p className="col-start-1 col-end-6 text-[0.85rem] text-slate-500">
-          {description}
-        </p>
+        <p className="col-start-1 col-end-6 text-[0.85rem] text-slate-500">{description}</p>
       </label>
     </li>
   );
@@ -89,8 +78,7 @@ export type OptionValue = {
 };
 
 type Option = FunctionComponent<
-  OptionValue &
-    Pick<OptionsProps, "onChange"> & { selected: boolean; uniqueId: string }
+  OptionValue & Pick<OptionsProps, "onChange"> & { selected: boolean; uniqueId: string }
 >;
 
 type OptionsProps = {

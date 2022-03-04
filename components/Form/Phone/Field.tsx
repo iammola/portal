@@ -1,12 +1,6 @@
 import PhoneNumber from "awesome-phonenumber";
 import { ChevronUpIcon } from "@heroicons/react/solid";
-import {
-  FormEvent,
-  FunctionComponent,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
+import { FormEvent, FunctionComponent, useCallback, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import Input from "components/Form/Input";
@@ -22,21 +16,12 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
   const [countryCode, setCountryCode] = useState(0);
   const [formattedValue, setFormattedValue] = useState("");
   const [showRegions, setShowRegions] = useState(false);
-  const allowRegionChange = useMemo(
-    () => props.regionCode === undefined,
-    [props.regionCode]
-  );
-  const formatter = useMemo(
-    () => PhoneNumber.getAsYouType(regionCode),
-    [regionCode]
-  );
+  const allowRegionChange = useMemo(() => props.regionCode === undefined, [props.regionCode]);
+  const formatter = useMemo(() => PhoneNumber.getAsYouType(regionCode), [regionCode]);
 
   const countryFlag = useCountryFlag(regionCode);
 
-  const removeFormatting = useCallback(
-    (str: string) => str.replaceAll(/[^+\d]/g, ""),
-    []
-  );
+  const removeFormatting = useCallback((str: string) => str.replaceAll(/[^+\d]/g, ""), []);
 
   const removeCountryCode = useCallback(
     (str: string) => str.replace(new RegExp(`^\\+${countryCode} ?`), ""),
@@ -48,23 +33,14 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
       if (tel !== "0") {
         const phone = PhoneNumber(removeFormatting(tel), regionCode);
         const formatted = formatter.reset(
-          removeFormatting(
-            phone.getNumber("international") ?? `+${countryCode}${tel}`
-          )
+          removeFormatting(phone.getNumber("international") ?? `+${countryCode}${tel}`)
         );
 
         setFormattedValue(removeCountryCode(formatted));
         if (removeCountryCode(formatted) !== "") onChange(formatted);
       }
     },
-    [
-      countryCode,
-      formatter,
-      onChange,
-      regionCode,
-      removeCountryCode,
-      removeFormatting,
-    ]
+    [countryCode, formatter, onChange, regionCode, removeCountryCode, removeFormatting]
   );
 
   const handleRegionChange = useCallback(
@@ -99,9 +75,8 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
       );
   }, [handleRegionChange, props.regionCode, regionCode, value]);
 
-  const validateCharacter = (
-    e: FormEvent<HTMLInputElement> & { data: string }
-  ) => !/\d/.test(e.data) && e.preventDefault();
+  const validateCharacter = (e: FormEvent<HTMLInputElement> & { data: string }) =>
+    !/\d/.test(e.data) && e.preventDefault();
 
   return (
     <div
@@ -129,9 +104,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
         )}
       </div>
       <div className="flex grow flex-row items-center justify-start gap-x-2 rounded-r-xl">
-        <span className="text-lg font-medium tracking-wide text-slate-500">
-          +{countryCode}
-        </span>
+        <span className="text-lg font-medium tracking-wide text-slate-500">+{countryCode}</span>
         <div className="flex h-full w-[12.5rem] grow items-center rounded-r-xl">
           <Input
             type="tel"

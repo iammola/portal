@@ -5,17 +5,11 @@ import { classNames } from "utils";
 import List from "./List";
 import Search from "./Search";
 
-const Regions: Regions = ({
-  onBlur,
-  onRegionChange,
-  selectedRegion,
-  visible,
-}) => {
+const Regions: Regions = ({ onBlur, onRegionChange, selectedRegion, visible }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [search, setSearch] = useState("");
 
-  const handleBlur = (e: FocusEvent) =>
-    !ref.current?.contains(e.relatedTarget as Node) && onBlur();
+  const handleBlur = (e: FocusEvent) => !ref.current?.contains(e.relatedTarget as Node) && onBlur();
 
   return (
     <div

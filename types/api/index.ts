@@ -12,9 +12,7 @@ type ResponseCodes = FilterNumber<`${StatusCodes}`>;
 
 export type MethodResponse<D> = Promise<[ApiResponse<D>, ResponseCodes]>;
 
-export type HandlerResponse<D> =
-  | [ApiError, ResponseCodes]
-  | Awaited<MethodResponse<D>>;
+export type HandlerResponse<D> = [ApiError, ResponseCodes] | Awaited<MethodResponse<D>>;
 
 export type ApiHandler<R extends object> = (
   req: NextApiRequest,

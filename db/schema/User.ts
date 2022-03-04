@@ -97,10 +97,7 @@ const UserContact = new Schema<Contact>(
     phone: {
       required: [true, "Phone required"],
       type: userSubContact("Phone required", {
-        validate: [
-          (v?: string) => PhoneNumber(v ?? "").isValid(),
-          "Invalid phone number",
-        ],
+        validate: [(v?: string) => PhoneNumber(v ?? "").isValid(), "Invalid phone number"],
       }),
     },
     address: {
@@ -129,9 +126,7 @@ const UserImage = new Schema<Image>(
 
 UserImage.pre("save", async function (this: Image) {
   const [cover, portrait] = await Promise.all(
-    [this.cover, this.portrait].map((url) =>
-      url ? uploadImage(url) : undefined
-    )
+    [this.cover, this.portrait].map((url) => (url ? uploadImage(url) : undefined))
   );
 
   this.cover = cover;

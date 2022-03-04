@@ -14,8 +14,7 @@ const keys = JSON.parse(CRED) as GoogleAPICred;
 export async function uploadImage(dataURL?: string) {
   if (!dataURL) return;
 
-  if (!FOLDER)
-    throw new Error("Please define the DRIVE_IMAGES_FOLDER env variable");
+  if (!FOLDER) throw new Error("Please define the DRIVE_IMAGES_FOLDER env variable");
 
   const [, base64] = dataURL.split(dataURLRegex);
   const client = drive({
@@ -72,9 +71,7 @@ export async function uploadImage(dataURL?: string) {
 export const getImage = (id?: string) => {
   if (!id) return;
 
-  return dataURLRegex.test(id)
-    ? id
-    : `https://drive.google.com/uc?id=${id}&export=download`;
+  return dataURLRegex.test(id) ? id : `https://drive.google.com/uc?id=${id}&export=download`;
 };
 
 interface GoogleAPICred {

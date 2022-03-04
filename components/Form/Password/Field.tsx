@@ -3,14 +3,7 @@ import { FunctionComponent, useState } from "react";
 import Input, { InputProps } from "components/Form/Input";
 import { useIsomorphicLayoutEffect } from "hooks";
 
-const Field: Field = ({
-  id,
-  className,
-  label,
-  onChange,
-  validators,
-  ...props
-}) => {
+const Field: Field = ({ id, className, label, onChange, validators, ...props }) => {
   const [typing, setTyping] = useState(false);
   const [valid, setValid] = useState<boolean>();
 
@@ -19,8 +12,7 @@ const Field: Field = ({
       setValid(
         props.value === "" || typing
           ? undefined
-          : validators?.every(({ regex }) => regex.test(props.value ?? "")) ??
-              true
+          : validators?.every(({ regex }) => regex.test(props.value ?? "")) ?? true
       ),
     [props.value, typing, validators]
   );

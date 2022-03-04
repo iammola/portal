@@ -30,10 +30,7 @@ async function deleteSubject(_id: string): MethodResponse<DeleteData> {
   ];
 }
 
-async function updateSubject(
-  _id: string,
-  data: UpdateBody
-): MethodResponse<UpdateData> {
+async function updateSubject(_id: string, data: UpdateBody): MethodResponse<UpdateData> {
   await connect();
   const args = [
     _id,
