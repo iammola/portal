@@ -1,6 +1,6 @@
 import PhoneNumber from "awesome-phonenumber";
 import mongooseLeanVirtuals from "mongoose-lean-virtuals";
-import { Schema, SchemaDefinitionProperty, SchemaTypeOptions } from "mongoose";
+import { Model, Schema, SchemaDefinitionProperty, SchemaTypeOptions } from "mongoose";
 
 import { ModelNames } from "db";
 import { generateSchoolMail } from "utils";
@@ -18,8 +18,8 @@ const emailValidator = (v?: string) => {
   return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");
 };
 
-export const createUserSchema = <D extends UserBase, M>(obj: Def<D>) => {
-  const schema = new Schema<UserBase>({
+export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: Def<D>) => {
+  const schema = new Schema<UserBase, M>({
     ...obj,
     name: {
       type: UserName,
@@ -65,6 +65,22 @@ export const createUserSchema = <D extends UserBase, M>(obj: Def<D>) => {
     foreignField: "userId",
   });
 
+  schema.static(
+    "findByUsername",
+    function (username: string | string[], projection?: any) {
+      if (Array.isArray(username)) return this.find({ username }, projection);
+      return this.findOne({ username }, projection);
+    }
+  );
+
+  schema.static(
+    "findBySchoolMail",
+    function (schoolMail: string | string[], projection?: any) {
+      if (Array.isArray(schoolMail)) return this.find({ schoolMail }, projection);
+      return this.findOne({ schoolMail }, projection);
+    }
+  );
+
   return schema as unknown as Schema<D, M>;
 };
 
@@ -97,7 +113,10 @@ const UserContact = new Schema<Contact>(
     phone: {
       required: [true, "Phone required"],
       type: userSubContact("Phone required", {
-        validate: [(v?: string) => PhoneNumber(v ?? "").isValid(), "Invalid phone number"],
+        validate: [
+          (v?: string) => PhoneNumber(v ?? "").isValid(),
+          "Invalid phone number",
+        ],
       }),
     },
     address: {

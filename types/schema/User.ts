@@ -1,4 +1,4 @@
-import { DocumentId } from "types/schema";
+import { DocumentId, SQuery } from "types/schema";
 import { FlattenIntersection } from "types/utils";
 
 export type UserType = "parent" | "teacher" | "student";
@@ -41,4 +41,12 @@ export interface UserBase extends DocumentId {
 
 export interface UserVirtuals {
   password: UserPassword;
+}
+
+export interface UserStaticMethods<S> {
+  findByUsername(username: string): SQuery<S> | null;
+  findByUsername(username: string[]): SQuery<S>[];
+
+  findBySchoolMail(mail: string): SQuery<S> | null;
+  findBySchoolMail(mail: string[]): SQuery<S>[];
 }

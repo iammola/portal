@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
 
 import { ModelRecord } from "types/schema";
-import { UserBase, UserVirtuals } from "types/schema/User";
+import { UserBase, UserStaticMethods, UserVirtuals } from "types/schema/User";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface TeacherSchema extends UserBase {
@@ -14,4 +14,5 @@ export type TeacherRecord<V extends boolean | keyof UserVirtuals = false> = Mode
   V
 >;
 
-export type TeacherModel = Model<TeacherSchema, unknown, unknown, UserVirtuals>;
+export type TeacherModel = Model<TeacherSchema, unknown, unknown, UserVirtuals> &
+  UserStaticMethods<TeacherSchema>;
