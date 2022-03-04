@@ -2,7 +2,8 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { ParentModel } from "db/models";
-import { createUser, routeWrapper } from "utils/api";
+import { createUser } from "utils/user";
+import { routeWrapper } from "utils/api";
 
 import type {
   CreateStudentData as CreateData,

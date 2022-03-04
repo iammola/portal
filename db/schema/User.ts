@@ -3,7 +3,7 @@ import mongooseLeanVirtuals from "mongoose-lean-virtuals";
 import { Model, Schema, SchemaDefinitionProperty, SchemaTypeOptions } from "mongoose";
 
 import { ModelNames } from "db";
-import { generateSchoolMail } from "utils";
+import { generateSchoolMail } from "utils/user";
 import { getImage, uploadImage } from "utils/file";
 
 import type {
