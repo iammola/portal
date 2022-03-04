@@ -1,9 +1,7 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { connect } from "db";
-import { ParentModel } from "db/models";
+import { createUser } from "utils/user";
 import { routeWrapper } from "utils/api";
-import { generateSchoolMail } from "utils";
 
 import type {
   CreateParentData as CreateData,
@@ -12,19 +10,12 @@ import type {
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function createParent(data: CreateBody): MethodResponse<CreateData> {
-  await connect();
-
-  const { _id, schoolMail } = await ParentModel.create({
-    ...data,
-    schoolMail: generateSchoolMail(data.name.username),
-  });
-
+async function createParent(body: CreateBody): MethodResponse<CreateData> {
   return [
     {
       success: true,
-      data: { _id, schoolMail },
       message: ReasonPhrases.CREATED,
+      data: await createUser("parent", body),
     },
     StatusCodes.CREATED,
   ];

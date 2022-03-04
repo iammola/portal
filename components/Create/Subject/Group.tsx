@@ -9,12 +9,7 @@ import Teachers from "./Teachers";
 import type { OneKey } from "types/utils";
 import type { Value as EmailValue } from "components/Form/Email";
 
-const GroupSubject: GroupSubject = ({
-  addDivision,
-  onChange,
-  removeDivision,
-  values = [],
-}) => {
+const GroupSubject: GroupSubject = ({ addDivision, onChange, removeDivision, values = [] }) => {
   const handleChange = ({ i, ...obj }: OneKey<DivisionValue> & { i: number }) =>
     onChange(values.map((a, b) => Object.assign(a, b === i && obj)));
 
@@ -44,14 +39,7 @@ const GroupSubject: GroupSubject = ({
   );
 };
 
-const Division: Division = ({
-  alias,
-  id,
-  name,
-  handleChange,
-  remove,
-  teachers,
-}) => {
+const Division: Division = ({ alias, id, name, handleChange, remove, teachers }) => {
   return (
     <details className="group">
       <summary className="flex cursor-pointer flex-row items-center justify-start gap-x-3 rounded-md py-2 px-2 [list-style:none] hover:bg-slate-200 focus:outline-none group-open:bg-slate-200">
@@ -59,9 +47,7 @@ const Division: Division = ({
           <PlusSmIcon className="block h-5 w-5 fill-white group-open:hidden" />
           <MinusSmIcon className="hidden h-5 w-5 fill-white group-open:block" />
         </span>
-        <span className="truncate text-sm text-slate-800">
-          {name || `Division ${id}`}
-        </span>
+        <span className="truncate text-sm text-slate-800">{name || `Division ${id}`}</span>
         {remove !== undefined && (
           <span
             onClick={remove}
@@ -83,10 +69,8 @@ const Division: Division = ({
               classNames(
                 "h-[3.75rem] w-full overflow-hidden rounded-lg border border-transparent placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                 {
-                  "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                    valid === true,
-                  "invalid:ring-red-400 focus:invalid:ring-red-400":
-                    valid === false,
+                  "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                  "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                 }
               )
             }
@@ -101,19 +85,14 @@ const Division: Division = ({
               classNames(
                 "h-[3.75rem] w-full overflow-hidden rounded-lg border border-transparent placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                 {
-                  "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                    valid === true,
-                  "invalid:ring-red-400 focus:invalid:ring-red-400":
-                    valid === false,
+                  "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                  "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                 }
               )
             }
           />
         </div>
-        <Teachers
-          values={teachers}
-          onChange={(teachers) => handleChange({ teachers })}
-        />
+        <Teachers values={teachers} onChange={(teachers) => handleChange({ teachers })} />
       </div>
     </details>
   );

@@ -36,10 +36,7 @@ const List: List = ({
   );
 
   const filteredRegions = useMemo(
-    () =>
-      regions.filter((i) =>
-        i.some((j) => new RegExp(search, "gi").test(String(j ?? "")))
-      ),
+    () => regions.filter((i) => i.some((j) => new RegExp(search, "gi").test(String(j ?? "")))),
     [regions, search]
   );
 
@@ -90,32 +87,23 @@ List.Item = function Item({
       ref.current?.scrollIntoViewIfNeeded?.() ??
         ref.current?.parentElement?.scroll(
           0,
-          ref.current?.offsetTop -
-            ref.current?.parentElement?.offsetHeight / 2.6
+          ref.current?.offsetTop - ref.current?.parentElement?.offsetHeight / 2.6
         );
       ref.current?.addEventListener("blur", handleBlur, { once: true });
     }
   }, [handleBlur, selected, visible]);
 
   useEffect(() => {
-    if (country === undefined)
-      console.warn(`No country data for ${regionCode} region`);
+    if (country === undefined) console.warn(`No country data for ${regionCode} region`);
   }, [country, regionCode]);
 
   return (
-    <li
-      ref={ref}
-      tabIndex={0}
-      onClick={onClick}
-      className={className(selected)}
-    >
+    <li ref={ref} tabIndex={0} onClick={onClick} className={className(selected)}>
       {countryFlag}
       <span className="text-sm font-medium text-slate-700">
         {country} (+{countryCode})
       </span>
-      {selected && (
-        <CheckIcon className="ml-auto mr-2 h-5 w-5 fill-slate-800" />
-      )}
+      {selected && <CheckIcon className="ml-auto mr-2 h-5 w-5 fill-slate-800" />}
     </li>
   );
 };

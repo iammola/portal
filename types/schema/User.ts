@@ -1,14 +1,12 @@
-import { DocumentId } from "types/schema";
+import { DocumentId, SQuery } from "types/schema";
 import { FlattenIntersection } from "types/utils";
 
 export type UserType = "parent" | "teacher" | "student";
 
-export type UserName<T> = {
-  [K in "initials" | "full" | "first" | "last"]: string;
-} & {
+export type UserName = {
   other?: string;
   readonly username: string;
-} & (T extends true ? { title: string } : unknown);
+} & Record<"initials" | "title" | "full" | "first" | "last", string>;
 
 export interface UserPassword {
   hash: string;
@@ -20,29 +18,38 @@ export interface UserImage {
   portrait?: string;
 }
 
-export type UserSubContact<C = true> = {
+export type UserSubContact = {
   primary: string;
-} & (C extends true
-  ? {
-      other?: string;
-    }
-  : unknown);
-
-export type UserContact<C = true> = {
-  [K in "email" | "phone" | "address"]: FlattenIntersection<UserSubContact<C>>;
+  other?: string;
 };
+
+export type UserContact = Record<
+  "email" | "phone" | "address",
+  FlattenIntersection<UserSubContact>
+>;
 
 export type UserGender = "M" | "F";
 
-export interface UserBase<T = true, C = true> extends DocumentId {
+export interface UserBase extends DocumentId {
   dob?: Date;
+  name: UserName;
   image: UserImage;
-  name: UserName<T>;
   gender: UserGender;
-  contact: UserContact<C>;
+  contact: UserContact;
   readonly schoolMail: string;
 }
 
 export interface UserVirtuals {
   password: UserPassword;
+}
+
+export interface UserStaticMethods<S> {
+  /** Find a user by username */
+  findByUsername(username: string): SQuery<S> | null;
+  /** Find all users by username */
+  findByUsername(username: string[]): SQuery<S>[];
+  /** Find a user by school mail */
+  findBySchoolMail(mail: string): SQuery<S> | null;
+  /** Find all users by schoolMail */
+  findBySchoolMail(mail: string[]): SQuery<S>[];
 }

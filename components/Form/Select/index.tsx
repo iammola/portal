@@ -13,9 +13,8 @@ const Select: Select = ({ label, onChange, options, value }) => {
       (document.activeElement as HTMLElement)?.addEventListener(
         "blur",
         (e) =>
-          !(e.target as HTMLElement)?.parentElement?.contains(
-            e.relatedTarget as Node
-          ) && setOpen(false),
+          !(e.target as HTMLElement)?.parentElement?.contains(e.relatedTarget as Node) &&
+          setOpen(false),
         { once: true }
       );
   }, [open]);

@@ -6,9 +6,7 @@ const MyDetails: FunctionComponent = () => {
       <div className="flex w-full flex-col items-start justify-between gap-y-4 pt-8 first:pt-0 first:pb-5 md:flex-row">
         <div>
           <h5 className="font-medium text-slate-700">Personal info</h5>
-          <p className="text-sm text-slate-500">
-            Lorem ipsum dolor sit amet consectetur.
-          </p>
+          <p className="text-sm text-slate-500">Lorem ipsum dolor sit amet consectetur.</p>
         </div>
         <form className="w-full divide-y divide-slate-200 rounded-lg bg-white shadow-lg md:w-[65%] lg:w-[55%]">
           <div className="flex flex-col items-start justify-start gap-y-6 px-6 pt-8 pb-5">
@@ -69,9 +67,7 @@ const MyDetails: FunctionComponent = () => {
             <div className="flex w-full items-center justify-between gap-4">
               {/* // TODO: Use Select input for Gender field */}
               <div className="flex w-full grow flex-col gap-2.5">
-                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">
-                  Gender
-                </label>
+                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">Gender</label>
                 <input
                   required
                   type="text"
@@ -133,9 +129,7 @@ const MyDetails: FunctionComponent = () => {
         </div>
         <div className="flex w-full flex-col gap-y-8 md:w-[65%] lg:w-[55%]">
           <form className="flex w-full flex-col items-start justify-start gap-y-4 divide-y divide-slate-200 rounded-lg bg-white pt-8 pb-5 shadow-lg">
-            <h4 className="py-1.5 px-6 font-bold text-slate-700">
-              Email Addresses
-            </h4>
+            <h4 className="py-1.5 px-6 font-bold text-slate-700">Email Addresses</h4>
             <div className="flex w-full flex-col items-start justify-center gap-y-4 px-6 pt-5 pb-2">
               <div className="grid w-full grid-cols-4 gap-x-4 py-4">
                 <h4 className="col-start-1 col-end-2 flex w-max min-w-max items-center text-sm font-medium text-slate-700">
@@ -178,9 +172,7 @@ const MyDetails: FunctionComponent = () => {
             </div>
           </form>
           <form className="flex w-full flex-col items-start justify-start gap-y-4 divide-y divide-slate-200 rounded-lg bg-white pt-8 pb-5 shadow-lg">
-            <h4 className="py-1.5 px-6 font-bold text-slate-700">
-              Phone Numbers
-            </h4>
+            <h4 className="py-1.5 px-6 font-bold text-slate-700">Phone Numbers</h4>
             <div className="flex w-full flex-col items-start justify-center gap-y-4 px-6 pt-5 pb-2">
               <div className="grid w-full grid-cols-4 gap-x-4 py-4">
                 <h4 className="col-start-1 col-end-2 flex w-max min-w-max items-center text-sm font-medium text-slate-700">

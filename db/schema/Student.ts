@@ -3,12 +3,11 @@ import { Schema } from "mongoose";
 import { ModelNames } from "db";
 
 import type {
-  StudentGuardianSchema as GuardianSchema,
-  StudentAcademicSchema as AcademicSchema,
-  StudentAcademicTermSchema as AcademicTermSchema,
+  StudentGuardianSchema as Guardian,
+  StudentAcademicSchema as Academic,
 } from "types/schema";
 
-export const StudentGuardianSchema = new Schema<GuardianSchema>(
+export const GuardianSchema = new Schema<Guardian>(
   {
     guardian: {
       ref: ModelNames.PARENT,
@@ -24,42 +23,21 @@ export const StudentGuardianSchema = new Schema<GuardianSchema>(
   { _id: false }
 );
 
-const StudentAcademicTermSchema = new Schema<AcademicTermSchema>(
+export const AcademicSchema = new Schema<Academic>(
   {
-    current: {
-      type: Boolean,
-      default: undefined,
-    },
     term: {
       type: Schema.Types.ObjectId,
       required: [true, "Term ID required"],
+    },
+    class: {
+      ref: ModelNames.CLASS,
+      type: Schema.Types.ObjectId,
+      required: [true, "Term Class required"],
     },
     subjects: {
       default: undefined,
       ref: ModelNames.SUBJECT,
       type: [Schema.Types.ObjectId],
-    },
-  },
-  { _id: false }
-);
-
-export const StudentAcademicSchema = new Schema<AcademicSchema>(
-  {
-    current: {
-      type: Boolean,
-      default: undefined,
-    },
-    class: {
-      ref: ModelNames.CLASS,
-      type: Schema.Types.ObjectId,
-      required: [true, "Session Class ID required"],
-    },
-    session: {
-      type: Schema.Types.ObjectId,
-      required: [true, "Session ID required"],
-    },
-    terms: {
-      type: [StudentAcademicTermSchema],
     },
   },
   { _id: false }

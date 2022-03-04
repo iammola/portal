@@ -1,9 +1,9 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
+import { ParentModel } from "db/models";
+import { createUser } from "utils/user";
 import { routeWrapper } from "utils/api";
-import { generateSchoolMail } from "utils";
-import { ParentModel, StudentModel } from "db/models";
 
 import type {
   CreateStudentData as CreateData,
@@ -12,34 +12,28 @@ import type {
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function createStudent({
-  academic: _a,
-  guardians,
-  ...data
-}: CreateBody): MethodResponse<CreateData> {
+async function createStudent(raw: CreateBody): MethodResponse<CreateData> {
   await connect();
 
   const parents = await ParentModel.find(
-    {
-      schoolMail: guardians.map((g) => g.mail),
-    },
+    { schoolMail: raw.guardians.map((g) => g.mail) },
     "schoolMail"
   ).lean();
 
-  const { _id, schoolMail } = await StudentModel.create({
-    ...data,
-    schoolMail: generateSchoolMail(data.name.username),
+  const body = {
+    ...raw,
+    academic: [],
     guardians: parents.map((p) => ({
       guardian: p._id,
-      relation: guardians.find((g) => g.mail === p.schoolMail)?.relation,
+      relation: raw.guardians.find((g) => g.mail === p.schoolMail)?.relation,
     })),
-  });
+  };
 
   return [
     {
       success: true,
-      data: { _id, schoolMail },
       message: ReasonPhrases.CREATED,
+      data: await createUser("student", body),
     },
     StatusCodes.CREATED,
   ];

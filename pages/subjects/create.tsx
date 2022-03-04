@@ -5,21 +5,14 @@ import { classNames } from "utils";
 import { fetchAPIEndpoint } from "utils/api";
 import { Input, Select } from "components/Form";
 import { useIsomorphicLayoutEffect } from "hooks";
-import {
-  BaseSubject,
-  GroupSubject,
-  SubjectType,
-} from "components/Create/Subject";
+import { BaseSubject, GroupSubject, SubjectType } from "components/Create/Subject";
 
 import type { NextPage } from "next";
 import type { SubjectRecord } from "types/schema";
 import type { Value as EmailValue } from "components/Form/Email";
 import type { Value as SelectValue } from "components/Form/Select";
 import type { DivisionValue } from "components/Create/Subject/Group";
-import type {
-  CreateSubjectData,
-  CreateSubjectRequestBody,
-} from "types/api/subjects";
+import type { CreateSubjectData, CreateSubjectRequestBody } from "types/api/subjects";
 
 const CreateSubject: NextPage = () => {
   const [long, setLong] = useState("");
@@ -42,15 +35,12 @@ const CreateSubject: NextPage = () => {
     if (__type !== undefined) {
       setTeachers(undefined);
       setGroupSubjects(
-        __type === "group"
-          ? [{ ...divisionTemplate }, { ...divisionTemplate }]
-          : undefined
+        __type === "group" ? [{ ...divisionTemplate }, { ...divisionTemplate }] : undefined
       );
     }
   }, [__type, divisionTemplate]);
 
-  const addSubjectDivision = () =>
-    setGroupSubjects((p) => [...(p ?? []), { ...divisionTemplate }]);
+  const addSubjectDivision = () => setGroupSubjects((p) => [...(p ?? []), { ...divisionTemplate }]);
 
   const removeSubjectDivision = (idx: number) =>
     setGroupSubjects((p) => p?.filter((_, i) => i !== idx));
@@ -119,10 +109,8 @@ const CreateSubject: NextPage = () => {
                     classNames(
                       "h-[3.75rem] w-full overflow-hidden rounded-lg border border-transparent placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                       {
-                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                          valid === true,
-                        "invalid:ring-red-400 focus:invalid:ring-red-400":
-                          valid === false,
+                        "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                        "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                       }
                     )
                   }
@@ -139,10 +127,8 @@ const CreateSubject: NextPage = () => {
                     classNames(
                       "h-[3.75rem] w-full overflow-hidden rounded-lg border border-transparent placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                       {
-                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                          valid === true,
-                        "invalid:ring-red-400 focus:invalid:ring-red-400":
-                          valid === false,
+                        "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                        "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                       }
                     )
                   }
@@ -157,10 +143,7 @@ const CreateSubject: NextPage = () => {
                 id="requiredSubject"
                 onChange={(e) => setMandatory(e.target.checked)}
               />
-              <label
-                htmlFor="requiredSubject"
-                className="text-sm font-medium text-slate-700"
-              >
+              <label htmlFor="requiredSubject" className="text-sm font-medium text-slate-700">
                 Is this subject mandatory?
               </label>
             </div>
@@ -176,9 +159,7 @@ const CreateSubject: NextPage = () => {
               />
             </SubjectType>
             {__type === "base" ? (
-              <BaseSubject
-                teachers={{ values: teachers, onChange: setTeachers }}
-              />
+              <BaseSubject teachers={{ values: teachers, onChange: setTeachers }} />
             ) : (
               <GroupSubject
                 values={groupSubjects}

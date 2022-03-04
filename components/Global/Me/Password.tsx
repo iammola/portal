@@ -4,9 +4,7 @@ const Password: FunctionComponent = () => {
   return (
     <div className="flex w-full flex-col gap-y-4 divide-y-2 border-slate-200">
       <div>
-        <h5 className="text-2xl font-semibold tracking-wide text-slate-800">
-          Password
-        </h5>
+        <h5 className="text-2xl font-semibold tracking-wide text-slate-800">Password</h5>
         <p className="text-sm text-slate-500">
           Please enter your current password to change your password.
         </p>

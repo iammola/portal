@@ -18,9 +18,7 @@ const Avatar: Avatar = ({ value, ...props }) => {
   const getFileDataURI = async (file: File) =>
     await new Promise<string | undefined>((resolve) => {
       const reader = new FileReader();
-      reader.addEventListener("load", (e) =>
-        resolve(e.target?.result as string)
-      );
+      reader.addEventListener("load", (e) => resolve(e.target?.result as string));
       reader.readAsDataURL(file);
     });
 

@@ -3,12 +3,9 @@ import { Schema, model, models } from "mongoose";
 import { ModelNames } from "db";
 import { ThingName } from "db/schema/Thing";
 
-import type {
-  SessionModel as SessionModelType,
-  SessionRecord,
-} from "types/schema";
+import type { SessionModel as Model, SessionRecord } from "types/schema";
 
-const SessionSchema = new Schema<SessionRecord, SessionModelType>({
+const SessionSchema = new Schema<SessionRecord, Model>({
   current: {
     type: Boolean,
     default: undefined,
@@ -26,9 +23,9 @@ SessionSchema.virtual("terms", {
   options: { populate: "-session" },
 });
 
-SessionSchema.static("findCurrent", function () {
-  return this.findOne({ current: true });
+SessionSchema.static("findCurrent", function (projection?: any) {
+  return this.findOne({ current: true }, projection);
 });
 
 export const SessionModel = (models[ModelNames.SESSION] ??
-  model(ModelNames.SESSION, SessionSchema)) as SessionModelType;
+  model(ModelNames.SESSION, SessionSchema)) as Model;

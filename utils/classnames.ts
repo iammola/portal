@@ -40,9 +40,4 @@ export const classNames = (...args: C[]) => {
     .replace(/\s{2,}/g, " ");
 };
 
-type C =
-  | undefined
-  | null
-  | string
-  | [boolean, string, string]
-  | Record<string, boolean>;
+type C = undefined | null | string | [boolean, string, string] | Record<string, boolean>;

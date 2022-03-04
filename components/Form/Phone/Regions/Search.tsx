@@ -1,13 +1,7 @@
 import { SearchIcon } from "@heroicons/react/outline";
 import { FunctionComponent, useEffect, useRef } from "react";
 
-const Search: Search = ({
-  className,
-  handleBlur,
-  handleSearch,
-  search,
-  visible,
-}) => {
+const Search: Search = ({ className, handleBlur, handleSearch, search, visible }) => {
   const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {

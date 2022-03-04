@@ -8,23 +8,16 @@ import { useIsomorphicLayoutEffect } from "hooks";
 import Popover from "./Popover";
 
 import type { UserBase, UserType } from "types/schema/User";
-import type {
-  UsersEmailData,
-  UsersEmailRequestBody,
-} from "types/api/users/email";
+import type { UsersEmailData, UsersEmailRequestBody } from "types/api/users/email";
 
 const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
   const [valid, setValid] = useState<boolean>();
   const [showDrawer, setShowDrawer] = useState(false);
   const selectedColor = useMemo(
     () =>
-      [
-        "bg-slate-500",
-        "bg-emerald-500",
-        "bg-red-500",
-        "bg-blue-500",
-        "bg-amber-500",
-      ][Math.floor(Math.random() * 5)],
+      ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"][
+        Math.floor(Math.random() * 5)
+      ],
     []
   );
 
@@ -66,8 +59,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
         {
           "border-red-300 bg-red-100/20 focus:ring-red-300": valid === false,
           "border-slate-300 bg-white": valid === undefined,
-          "border-emerald-300 bg-emerald-100/20 focus:ring-emerald-300":
-            valid === true,
+          "border-emerald-300 bg-emerald-100/20 focus:ring-emerald-300": valid === true,
         }
       )}
     >

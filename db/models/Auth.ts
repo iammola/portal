@@ -52,8 +52,7 @@ AuthSchema.pre("save", function (this: PreSaveThis, next) {
     if (!this.password) return next(new Error("Password is falsy?"));
 
     Object.entries(getHash(this.password)).forEach(
-      ([key, val]) =>
-        (this[key as keyof ReturnType<typeof getHash>] = val as string)
+      ([key, val]) => (this[key as keyof ReturnType<typeof getHash>] = val as string)
     );
   }
 

@@ -3,15 +3,12 @@ import { FormEvent, FunctionComponent } from "react";
 import Input, { InputProps } from "./Input";
 
 const NumberInput: NumberInput = ({ onChange, value, ...props }) => {
-  const validateCharacter = (
-    e: FormEvent<HTMLInputElement> & { data: string }
-  ) => !/\d/.test(e.data) && e.preventDefault();
+  const validateCharacter = (e: FormEvent<HTMLInputElement> & { data: string }) =>
+    !/\d/.test(e.data) && e.preventDefault();
 
   const padValue = () => {
     const v = +(value ?? 0);
-    return v === 0
-      ? ""
-      : v.toString().padStart(+(props.max ?? v).toString().length, "0");
+    return v === 0 ? "" : v.toString().padStart(+(props.max ?? v).toString().length, "0");
   };
 
   return (
@@ -30,10 +27,7 @@ const NumberInput: NumberInput = ({ onChange, value, ...props }) => {
 };
 
 type NumberInput = FunctionComponent<
-  Omit<
-    InputProps,
-    "pattern" | "inputMode" | "onBeforeInput" | "value" | "onChange" | "type"
-  > & {
+  Omit<InputProps, "pattern" | "inputMode" | "onBeforeInput" | "value" | "onChange" | "type"> & {
     value?: number;
     onChange(value: number): void;
   }

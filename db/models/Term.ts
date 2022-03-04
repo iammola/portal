@@ -3,9 +3,9 @@ import { Schema, model, models } from "mongoose";
 import { ModelNames } from "db";
 import { ThingName } from "db/schema/Thing";
 
-import type { TermModel as TermModelType, TermRecord } from "types/schema";
+import type { TermModel as Model, TermRecord } from "types/schema";
 
-const TermSchema = new Schema<TermRecord, TermModelType>({
+const TermSchema = new Schema<TermRecord, Model>({
   current: {
     type: Boolean,
     default: undefined,
@@ -20,9 +20,9 @@ const TermSchema = new Schema<TermRecord, TermModelType>({
   },
 });
 
-TermSchema.static("findCurrent", function () {
-  return this.findOne({ current: true });
+TermSchema.static("findCurrent", function (projection?: any) {
+  return this.findOne({ current: true }, projection);
 });
 
 export const TermModel = (models[ModelNames.TERM] ??
-  model(ModelNames.TERM, TermSchema)) as TermModelType;
+  model(ModelNames.TERM, TermSchema)) as Model;

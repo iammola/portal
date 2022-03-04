@@ -1,9 +1,9 @@
 import { Schema } from "mongoose";
 
-import type { ThingName as NameType } from "types/schema";
+import type { ThingName as Name } from "types/schema";
 
 export const ThingName = (withSpecial?: true) => {
-  return new Schema<NameType>(
+  return new Schema<Name>(
     {
       long: {
         trim: true,

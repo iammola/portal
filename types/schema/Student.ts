@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
 
 import { ModelRecord, ObjectId } from "types/schema";
-import { UserBase, UserVirtuals } from "types/schema/User";
+import { UserBase, UserStaticMethods, UserVirtuals } from "types/schema/User";
 
 export interface StudentGuardianSchema {
   guardian: ObjectId;
@@ -9,24 +9,21 @@ export interface StudentGuardianSchema {
 }
 
 export interface StudentAcademicSchema {
-  current?: true;
-  class: ObjectId;
-  session: ObjectId;
-  terms: StudentAcademicTermSchema[];
-}
-
-export interface StudentAcademicTermSchema {
   term: ObjectId;
-  current?: true;
+  class: ObjectId;
   subjects: ObjectId[];
 }
 
-export interface StudentSchema extends UserBase<false> {
+export interface StudentSchema extends UserBase {
   academic: StudentAcademicSchema[];
   guardians: StudentGuardianSchema[];
 }
 
-export type StudentRecord<V extends boolean | keyof UserVirtuals = false> =
-  ModelRecord<StudentSchema, UserVirtuals, V>;
+export type StudentRecord<V extends boolean | keyof UserVirtuals = false> = ModelRecord<
+  StudentSchema,
+  UserVirtuals,
+  V
+>;
 
-export type StudentModel = Model<StudentSchema, unknown, unknown, UserVirtuals>;
+export type StudentModel = Model<StudentSchema, unknown, unknown, UserVirtuals> &
+  UserStaticMethods<StudentSchema>;

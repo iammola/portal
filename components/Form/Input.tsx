@@ -25,8 +25,7 @@ const Input: Input = ({
   useIsomorphicLayoutEffect(() => {
     const input = ref.current;
     setTyping?.(typing);
-    if (!typing)
-      setValid(input?.value === "" ? undefined : input?.validity.valid);
+    if (!typing) setValid(input?.value === "" ? undefined : input?.validity.valid);
   }, [props, setTyping, typing]);
 
   return (
@@ -51,9 +50,7 @@ const Input: Input = ({
         </label>
       )}
       {![props.required, hideOptionalLabel].includes(true) && (
-        <span className="absolute right-0.5 -top-5 text-xs text-slate-500">
-          Optional
-        </span>
+        <span className="absolute right-0.5 -top-5 text-xs text-slate-500">Optional</span>
       )}
       {showIcons === true && (
         <>

@@ -6,10 +6,7 @@ import { Select, Email } from "components/Form";
 import type { OneKey } from "types/utils";
 
 const Guardians: Guardians = ({ values = [], onChange }) => {
-  const guardianTemplate = useMemo<Value>(
-    () => ({ mail: "", relation: "" }),
-    []
-  );
+  const guardianTemplate = useMemo<Value>(() => ({ mail: "", relation: "" }), []);
   const guardianOptions = useMemo(
     () => [
       {
@@ -75,9 +72,7 @@ const Guardians: Guardians = ({ values = [], onChange }) => {
         <span className="rounded-full bg-sky-400 p-1 shadow">
           <PlusSmIcon className="h-5 w-5 fill-white" />
         </span>
-        <span className="text-sm font-medium tracking-wide text-slate-600">
-          Add Guardian
-        </span>
+        <span className="text-sm font-medium tracking-wide text-slate-600">Add Guardian</span>
       </button>
     </div>
   );

@@ -15,15 +15,12 @@ const Field: Field = ({ className, onChange, userType, values }) => {
   const ref = useRef<HTMLDivElement>(null);
   const setValueName = useCallback(
     (item: Required<Value>) =>
-      onChange(
-        values.map((value) => (value.mail === item.mail ? item : value))
-      ),
+      onChange(values.map((value) => (value.mail === item.mail ? item : value))),
     [onChange, values]
   );
   const resetField = useCallback(() => {
     const target = ref.current;
-    if (values.length === 0 && target?.children.length !== 0)
-      target?.replaceChildren();
+    if (values.length === 0 && target?.children.length !== 0) target?.replaceChildren();
   }, [values.length]);
 
   useEffect(() => {
@@ -70,8 +67,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
       onChange(values.slice(0, -1));
     }
 
-    if (lastChild?.nodeType === 3 && lastChild.previousSibling?.nodeType === 3)
-      lastChild.remove();
+    if (lastChild?.nodeType === 3 && lastChild.previousSibling?.nodeType === 3) lastChild.remove();
   }
 
   function addSpace(e?: MouseEvent<HTMLElement>) {
@@ -120,9 +116,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
           key={item.mail}
           setItem={setValueName}
           edit={() => editValue(item.mail)}
-          remove={() =>
-            onChange(values.filter((value) => value.mail !== item.mail))
-          }
+          remove={() => onChange(values.filter((value) => value.mail !== item.mail))}
         />
       ))}
     </article>

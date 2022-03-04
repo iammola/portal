@@ -7,10 +7,7 @@ import { fetchAPIEndpoint } from "utils/api";
 
 import type { NextPage } from "next";
 import type { Value as EmailValue } from "components/Form/Email";
-import type {
-  CreateClassData,
-  CreateClassRequestBody,
-} from "types/api/classes";
+import type { CreateClassData, CreateClassRequestBody } from "types/api/classes";
 
 const CreateClass: NextPage = () => {
   const [long, setLong] = useState("");
@@ -22,17 +19,12 @@ const CreateClass: NextPage = () => {
     e.preventDefault();
 
     try {
-      const result = await fetchAPIEndpoint<
-        CreateClassData,
-        CreateClassRequestBody
-      >(
+      const result = await fetchAPIEndpoint<CreateClassData, CreateClassRequestBody>(
         "/api/classes",
         { method: "POST" },
         {
           name: { long, short, special },
-          teachers: teachers
-            .map(({ _id }) => _id as NonNullable<typeof _id>)
-            .filter(Boolean),
+          teachers: teachers.map(({ _id }) => _id as NonNullable<typeof _id>).filter(Boolean),
         }
       );
 
@@ -73,10 +65,8 @@ const CreateClass: NextPage = () => {
                 classNames(
                   "h-[3.75rem] w-full overflow-hidden rounded-lg border border-transparent placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                   {
-                    "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                      valid === true,
-                    "invalid:ring-red-400 focus:invalid:ring-red-400":
-                      valid === false,
+                    "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                    "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                   }
                 )
               }
@@ -94,10 +84,8 @@ const CreateClass: NextPage = () => {
                     classNames(
                       "h-[3.75rem] w-full overflow-hidden rounded-lg border border-transparent placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                       {
-                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                          valid === true,
-                        "invalid:ring-red-400 focus:invalid:ring-red-400":
-                          valid === false,
+                        "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                        "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                       }
                     )
                   }
@@ -115,10 +103,8 @@ const CreateClass: NextPage = () => {
                     classNames(
                       "h-[3.75rem] w-full overflow-hidden rounded-lg border border-transparent placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                       {
-                        "valid:ring-emerald-400 focus:valid:ring-emerald-400":
-                          valid === true,
-                        "invalid:ring-red-400 focus:invalid:ring-red-400":
-                          valid === false,
+                        "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                        "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                       }
                     )
                   }

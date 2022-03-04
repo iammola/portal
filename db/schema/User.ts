@@ -1,122 +1,133 @@
 import PhoneNumber from "awesome-phonenumber";
-import { Schema, SchemaTypeOptions } from "mongoose";
+import mongooseLeanVirtuals from "mongoose-lean-virtuals";
+import { Model, Schema, SchemaDefinitionProperty, SchemaTypeOptions } from "mongoose";
 
+import { ModelNames } from "db";
+import { generateSchoolMail } from "utils/user";
 import { getImage, uploadImage } from "utils/file";
 
 import type {
-  UserName as NameSchemaType,
-  UserImage as ImageSchemaType,
-  UserContact as ContactSchemaType,
-  UserSubContact as SubContactSchemaType,
+  UserBase,
+  UserName as Name,
+  UserImage as Image,
+  UserContact as Contact,
+  UserSubContact as SubContact,
 } from "types/schema/User";
 
-const emailValidator = (v?: string) =>
-  /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");
+const emailValidator = (v?: string) => {
+  return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");
+};
 
-export const userGender = () => ({
-  type: String,
-  required: [true, "User Gender required"] as [true, string],
-});
+export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: Def<D>) => {
+  const schema = new Schema<UserBase, M>({
+    ...obj,
+    name: {
+      type: UserName,
+      required: [true, "Name required"],
+    },
+    contact: {
+      type: UserContact,
+      required: [true, "Contact required"],
+    },
+    gender: {
+      type: String,
+      required: [true, "Gender required"],
+    },
+    schoolMail: {
+      trim: true,
+      type: String,
+      unique: true,
+      lowercase: true,
+      immutable: true,
+      set: generateSchoolMail,
+      required: [true, "School mail required"],
+      validate: {
+        validator: emailValidator,
+        msg: "Invalid email address",
+      },
+    },
+    dob: {
+      type: Date,
+      default: undefined,
+    },
+    image: {
+      type: UserImage,
+      default: undefined,
+    },
+  });
 
-export const userDOB = (obj?: SchemaTypeOptions<Date>) => ({
-  type: Date,
-  ...obj,
-});
+  schema.plugin(mongooseLeanVirtuals);
 
-export const userSchoolMail = () => ({
-  trim: true,
-  type: String,
-  unique: true,
-  lowercase: true,
-  immutable: true,
-  required: [true, "User school mail required"] as [true, string],
-  validate: {
-    validator: emailValidator,
-    msg: "Invalid email address",
+  schema.virtual("password", {
+    justOne: true,
+    localField: "_id",
+    ref: ModelNames.AUTH,
+    foreignField: "userId",
+  });
+
+  schema.static(
+    "findByUsername",
+    function (username: string | string[], projection?: any) {
+      if (Array.isArray(username)) return this.find({ username }, projection);
+      return this.findOne({ username }, projection);
+    }
+  );
+
+  schema.static(
+    "findBySchoolMail",
+    function (schoolMail: string | string[], projection?: any) {
+      if (Array.isArray(schoolMail)) return this.find({ schoolMail }, projection);
+      return this.findOne({ schoolMail }, projection);
+    }
+  );
+
+  return schema as unknown as Schema<D, M>;
+};
+
+const UserName = new Schema<Name>(
+  {
+    other: userSubName(),
+    title: userSubName("Title required"),
+    last: userSubName("Last name required"),
+    full: userSubName("Full name required"),
+    first: userSubName("First name required"),
+    initials: userSubName("Initials required"),
+    username: {
+      unique: true,
+      immutable: true,
+      ...userSubName("User name required"),
+    },
   },
-});
+  { _id: false }
+);
 
-const userSubName = (required?: string) => ({
-  trim: true,
-  type: String,
-  required: [!!required, required] as [boolean, string],
-});
-
-const userSubContact = (
-  required: string,
-  withOther?: false,
-  opts: Pick<SchemaTypeOptions<string>, "lowercase" | "validate"> = {}
-) => {
-  return new Schema<Required<SubContactSchemaType<true>>>(
-    {
-      other:
-        withOther === undefined
-          ? {
-              ...opts,
-              trim: true,
-              type: String,
-              default: undefined,
-            }
-          : {},
-      primary: {
-        ...opts,
-        trim: true,
-        type: String,
-        required: [true, required],
-      },
+const UserContact = new Schema<Contact>(
+  {
+    email: {
+      required: [true, "Email required"],
+      type: userSubContact("Email required", {
+        lowercase: true,
+        validate: [emailValidator, "Invalid email address"],
+      }),
     },
-    { _id: false }
-  );
-};
-
-export const userName = (withTitle?: false) => {
-  return new Schema<NameSchemaType<true>>(
-    {
-      other: userSubName(),
-      last: userSubName("Last name required"),
-      full: userSubName("Full name required"),
-      first: userSubName("First name required"),
-      initials: userSubName("Initials required"),
-      username: {
-        unique: true,
-        immutable: true,
-        ...userSubName("User name required"),
-      },
-      title: withTitle === undefined ? userSubName("Title required") : {},
+    phone: {
+      required: [true, "Phone required"],
+      type: userSubContact("Phone required", {
+        validate: [
+          (v?: string) => PhoneNumber(v ?? "").isValid(),
+          "Invalid phone number",
+        ],
+      }),
     },
-    { _id: false }
-  );
-};
-
-export const userContact = (withOther?: false | undefined) => {
-  return new Schema<ContactSchemaType>(
-    {
-      email: {
-        required: [true, "User email required"],
-        type: userSubContact("User email required", withOther, {
-          lowercase: true,
-          validate: [emailValidator, "Invalid email address"],
-        }),
-      },
-      phone: {
-        required: [true, "User phone required"],
-        type: userSubContact("User phone required", withOther, {
-          validate: [
-            (v?: string) => PhoneNumber(v ?? "").isValid(),
-            "Invalid phone number",
-          ],
-        }),
-      },
-      address: {
-        required: [true, "User address required"],
-        type: userSubContact("User address required", withOther),
-      },
+    address: {
+      required: [true, "Address required"],
+      type: userSubContact("Address required"),
     },
-    { _id: false }
-  );
-};
+  },
+  { _id: false }
+);
 
-export const UserImage = new Schema<ImageSchemaType>(
+const UserImage = new Schema<Image>(
   {
     cover: {
       type: String,
@@ -132,13 +143,46 @@ export const UserImage = new Schema<ImageSchemaType>(
   { _id: false }
 );
 
-UserImage.pre("save", async function (this: ImageSchemaType) {
+UserImage.pre("save", async function (this: Image) {
   const [cover, portrait] = await Promise.all(
-    [this.cover, this.portrait].map((url) =>
-      url ? uploadImage(url) : undefined
-    )
+    [this.cover, this.portrait].map((url) => (url ? uploadImage(url) : undefined))
   );
 
   this.cover = cover;
   this.portrait = portrait;
 });
+
+function userSubName(required?: string) {
+  return {
+    trim: true,
+    type: String,
+    required: [!!required, required] as [boolean, string],
+  };
+}
+
+function userSubContact(
+  required: string,
+  opts: Pick<SchemaTypeOptions<string>, "lowercase" | "validate"> = {}
+) {
+  return new Schema<SubContact>(
+    {
+      other: {
+        ...opts,
+        trim: true,
+        type: String,
+        default: undefined,
+      },
+      primary: {
+        ...opts,
+        trim: true,
+        type: String,
+        required: [true, required],
+      },
+    },
+    { _id: false }
+  );
+}
+
+type Def<D extends UserBase> = {
+  [K in keyof Omit<D, keyof UserBase>]: SchemaDefinitionProperty<D[K]>;
+};

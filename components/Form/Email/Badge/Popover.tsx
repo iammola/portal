@@ -20,25 +20,15 @@ type Action = FunctionComponent<{
   Icon(props: ComponentProps<"svg">): JSX.Element;
 }>;
 
-const Popover: Popover = ({
-  className,
-  edit,
-  item,
-  remove,
-  selectedColor,
-  valid,
-}) => {
+const Popover: Popover = ({ className, edit, item, remove, selectedColor, valid }) => {
   return (
     <div className={className}>
       <span
-        className={classNames(
-          "block w-full !border-none py-0.5 pl-3.5 text-xs",
-          {
-            "bg-red-100 text-red-800": valid === false,
-            "bg-slate-100 text-slate-800": valid === undefined,
-            "bg-emerald-100 text-emerald-800": valid === true,
-          }
-        )}
+        className={classNames("block w-full !border-none py-0.5 pl-3.5 text-xs", {
+          "bg-red-100 text-red-800": valid === false,
+          "bg-slate-100 text-slate-800": valid === undefined,
+          "bg-emerald-100 text-emerald-800": valid === true,
+        })}
       >
         {valid === false && "Invalid email address"}
         {valid === true && "Valid email address"}

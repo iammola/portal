@@ -11,18 +11,13 @@ import type {
 import type { MethodResponse, ApiHandler } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function createSubject(
-  data: CreateBody,
-  classID: string
-): MethodResponse<CreateData> {
+async function createSubject(data: CreateBody, classID: string): MethodResponse<CreateData> {
   await connect();
 
   const teachers = await TeacherModel.find(
     {
       schoolMail:
-        data.__type === "base"
-          ? data.teachers
-          : data.divisions.map((d) => d.teachers).flat(),
+        data.__type === "base" ? data.teachers : data.divisions.map((d) => d.teachers).flat(),
     },
     "schoolMail"
   ).lean();
@@ -57,10 +52,7 @@ async function createSubject(
 
 const handler: ApiHandler<CreateData> = async ({ body, query, method }) => {
   if (method === "POST" && typeof body === "string")
-    return await createSubject(
-      JSON.parse(body) as CreateBody,
-      query.id as string
-    );
+    return await createSubject(JSON.parse(body) as CreateBody, query.id as string);
 
   return null;
 };
