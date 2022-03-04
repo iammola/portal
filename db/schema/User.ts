@@ -5,14 +5,15 @@ import { generateSchoolMail } from "utils";
 import { getImage, uploadImage } from "utils/file";
 
 import type {
-  UserName as NameSchemaType,
-  UserImage as ImageSchemaType,
-  UserContact as ContactSchemaType,
-  UserSubContact as SubContactSchemaType,
+  UserName as Name,
+  UserImage as Image,
+  UserContact as Contact,
+  UserSubContact as SubContact,
 } from "types/schema/User";
 
-const emailValidator = (v?: string) =>
-  /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");
+const emailValidator = (v?: string) => {
+  return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");
+};
 
 export const userGender = () => ({
   type: String,
@@ -49,7 +50,7 @@ const userSubContact = (
   withOther?: false,
   opts: Pick<SchemaTypeOptions<string>, "lowercase" | "validate"> = {}
 ) => {
-  return new Schema<Required<SubContactSchemaType<true>>>(
+  return new Schema<Required<SubContact<true>>>(
     {
       other:
         withOther === undefined
@@ -72,7 +73,7 @@ const userSubContact = (
 };
 
 export const userName = (withTitle?: false) => {
-  return new Schema<NameSchemaType<true>>(
+  return new Schema<Name<true>>(
     {
       other: userSubName(),
       last: userSubName("Last name required"),
@@ -91,7 +92,7 @@ export const userName = (withTitle?: false) => {
 };
 
 export const userContact = (withOther?: false | undefined) => {
-  return new Schema<ContactSchemaType>(
+  return new Schema<Contact>(
     {
       email: {
         required: [true, "User email required"],
@@ -118,7 +119,7 @@ export const userContact = (withOther?: false | undefined) => {
   );
 };
 
-export const UserImage = new Schema<ImageSchemaType>(
+export const UserImage = new Schema<Image>(
   {
     cover: {
       type: String,
@@ -134,7 +135,7 @@ export const UserImage = new Schema<ImageSchemaType>(
   { _id: false }
 );
 
-UserImage.pre("save", async function (this: ImageSchemaType) {
+UserImage.pre("save", async function (this: Image) {
   const [cover, portrait] = await Promise.all(
     [this.cover, this.portrait].map((url) =>
       url ? uploadImage(url) : undefined

@@ -17,12 +17,9 @@ import {
 
 import { UserAuthVirtual } from "./Auth";
 
-import type {
-  StudentRecord,
-  StudentModel as StudentModelType,
-} from "types/schema";
+import type { StudentRecord, StudentModel as Model } from "types/schema";
 
-const StudentSchema = new Schema<StudentRecord, StudentModelType>({
+const StudentSchema = new Schema<StudentRecord, Model>({
   gender: userGender(),
   schoolMail: userSchoolMail(),
   dob: userDOB({ required: [true, "Student DOB required"] }),
@@ -52,4 +49,4 @@ StudentSchema.virtual(...UserAuthVirtual);
 StudentSchema.plugin(mongooseLeanVirtuals);
 
 export const StudentModel = (models[ModelNames.STUDENT] ??
-  model(ModelNames.STUDENT, StudentSchema)) as StudentModelType;
+  model(ModelNames.STUDENT, StudentSchema)) as Model;

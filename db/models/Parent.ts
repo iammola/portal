@@ -13,12 +13,9 @@ import {
 
 import { UserAuthVirtual } from "./Auth";
 
-import type {
-  ParentRecord,
-  ParentModel as ParentModelType,
-} from "types/schema";
+import type { ParentRecord, ParentModel as Model } from "types/schema";
 
-const ParentSchema = new Schema<ParentRecord, ParentModelType>({
+const ParentSchema = new Schema<ParentRecord, Model>({
   gender: userGender(),
   schoolMail: userSchoolMail(),
   dob: userDOB({ default: undefined }),
@@ -44,4 +41,4 @@ ParentSchema.virtual(...UserAuthVirtual);
 ParentSchema.plugin(mongooseLeanVirtuals);
 
 export const ParentModel = (models[ModelNames.PARENT] ??
-  model(ModelNames.PARENT, ParentSchema)) as ParentModelType;
+  model(ModelNames.PARENT, ParentSchema)) as Model;

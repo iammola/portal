@@ -3,11 +3,11 @@ import { Schema } from "mongoose";
 import { ModelNames } from "db";
 
 import type {
-  StudentGuardianSchema as GuardianSchema,
-  StudentAcademicSchema as AcademicSchema,
+  StudentGuardianSchema as Guardian,
+  StudentAcademicSchema as Academic,
 } from "types/schema";
 
-export const StudentGuardianSchema = new Schema<GuardianSchema>(
+export const StudentGuardianSchema = new Schema<Guardian>(
   {
     guardian: {
       ref: ModelNames.PARENT,
@@ -23,7 +23,7 @@ export const StudentGuardianSchema = new Schema<GuardianSchema>(
   { _id: false }
 );
 
-export const StudentAcademicSchema = new Schema<AcademicSchema>(
+export const StudentAcademicSchema = new Schema<Academic>(
   {
     term: {
       type: Schema.Types.ObjectId,

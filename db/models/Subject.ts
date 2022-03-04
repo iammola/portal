@@ -5,9 +5,9 @@ import { BaseSubjectSchema, GroupSubjectSchema } from "db/schema/Subject";
 
 import type {
   SubjectRecord,
-  SubjectModel as SubjectModelType,
-  BaseSubjectModel as BaseSubjectType,
-  GroupSubjectModel as GroupSubjectType,
+  SubjectModel as Model,
+  BaseSubjectModel as Base,
+  GroupSubjectModel as Group,
 } from "types/schema";
 
 const SubjectSchema = new Schema<SubjectRecord>(
@@ -31,12 +31,12 @@ const SubjectSchema = new Schema<SubjectRecord>(
 );
 
 export const SubjectModel = (models[ModelNames.SUBJECT] ??
-  model(ModelNames.SUBJECT, SubjectSchema)) as SubjectModelType;
+  model(ModelNames.SUBJECT, SubjectSchema)) as Model;
 
 export const BaseSubjectModel =
-  (SubjectModel.discriminators?.[ModelNames.B_SUBJECT] as BaseSubjectType) ??
+  (SubjectModel.discriminators?.[ModelNames.B_SUBJECT] as Base) ??
   SubjectModel.discriminator(ModelNames.B_SUBJECT, BaseSubjectSchema);
 
 export const GroupSubjectModel =
-  (SubjectModel.discriminators?.[ModelNames.G_SUBJECT] as GroupSubjectType) ??
+  (SubjectModel.discriminators?.[ModelNames.G_SUBJECT] as Group) ??
   SubjectModel.discriminator(ModelNames.G_SUBJECT, GroupSubjectSchema);
