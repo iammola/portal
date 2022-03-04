@@ -19,7 +19,9 @@ export interface SessionModel
   /**
    * Find the term record where `{ current: true }`
    */
-  findCurrent(): Query<
+  findCurrent(
+    projection?: any
+  ): Query<
     (Document<unknown, any, SessionSchema> & SessionSchema) | null,
     Document<unknown, any, SessionSchema> & SessionSchema,
     Record<string, never>,

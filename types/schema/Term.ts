@@ -14,7 +14,9 @@ export interface TermModel extends Model<TermSchema> {
   /**
    * Find the term record where `{ current: true }`
    */
-  findCurrent(): Query<
+  findCurrent(
+    projection?: any
+  ): Query<
     (Document<unknown, any, TermSchema> & TermSchema) | null,
     Document<unknown, any, TermSchema> & TermSchema,
     Record<string, never>,

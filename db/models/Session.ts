@@ -26,8 +26,8 @@ SessionSchema.virtual("terms", {
   options: { populate: "-session" },
 });
 
-SessionSchema.static("findCurrent", function () {
-  return this.findOne({ current: true });
+SessionSchema.static("findCurrent", function (projection?: any) {
+  return this.findOne({ current: true }, projection);
 });
 
 export const SessionModel = (models[ModelNames.SESSION] ??

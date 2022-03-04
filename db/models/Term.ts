@@ -20,8 +20,8 @@ const TermSchema = new Schema<TermRecord, TermModelType>({
   },
 });
 
-TermSchema.static("findCurrent", function () {
-  return this.findOne({ current: true });
+TermSchema.static("findCurrent", function (projection?: any) {
+  return this.findOne({ current: true }, projection);
 });
 
 export const TermModel = (models[ModelNames.TERM] ??
