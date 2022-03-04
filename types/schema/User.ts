@@ -20,26 +20,24 @@ export interface UserImage {
   portrait?: string;
 }
 
-export type UserSubContact<C = true> = {
+export type UserSubContact = {
   primary: string;
-} & (C extends true
-  ? {
-      other?: string;
-    }
-  : unknown);
-
-export type UserContact<C = true> = {
-  [K in "email" | "phone" | "address"]: FlattenIntersection<UserSubContact<C>>;
+  other?: string;
 };
+
+export type UserContact = Record<
+  "email" | "phone" | "address",
+  FlattenIntersection<UserSubContact>
+>;
 
 export type UserGender = "M" | "F";
 
-export interface UserBase<T = true, C = true> extends DocumentId {
+export interface UserBase<T = true> extends DocumentId {
   dob?: Date;
   image: UserImage;
   name: UserName<T>;
   gender: UserGender;
-  contact: UserContact<C>;
+  contact: UserContact;
   readonly schoolMail: string;
 }
 

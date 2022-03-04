@@ -4,7 +4,7 @@ import { ModelRecord } from "types/schema";
 import { UserBase, UserVirtuals } from "types/schema/User";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface TeacherSchema extends UserBase<true, false> {
+export interface TeacherSchema extends UserBase<true> {
   // privileges: ObjectId;
 }
 
