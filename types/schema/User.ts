@@ -47,9 +47,9 @@ export interface UserStaticMethods<S> {
   /** Find a user by username */
   findByUsername(username: string): SQuery<S> | null;
   /** Find all users by username */
-  findByUsername(username: string[]): SQuery<S>[];
+  findByUsername(username: string[]): SQuery<S[]>;
   /** Find a user by school mail */
   findBySchoolMail(mail: string): SQuery<S> | null;
   /** Find all users by schoolMail */
-  findBySchoolMail(mail: string[]): SQuery<S>[];
+  findBySchoolMail(mail: string[]): SQuery<S[]>;
 }
