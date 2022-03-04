@@ -18,9 +18,6 @@ const emailValidator = (v?: string) => {
   return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");
 };
 
-  name: ReturnType<typeof userName>;
-  contact: ReturnType<typeof userContact>;
-} & {
 type Def<D extends UserBase> = {
   [K in keyof Omit<D, keyof UserBase>]: SchemaDefinitionProperty<D[K]>;
 };
@@ -28,6 +25,14 @@ type Def<D extends UserBase> = {
 export const createUserSchema = <D extends UserBase, M>(obj: Def<D>) => {
   const schema = new Schema<UserBase>({
     ...obj,
+    name: {
+      type: UserName,
+      required: [true, "Name required"],
+    },
+    contact: {
+      type: UserContact,
+      required: [true, "Contact required"],
+    },
     gender: {
       type: String,
       required: [true, "Gender required"],
