@@ -7,7 +7,7 @@ import type {
   StudentAcademicSchema as Academic,
 } from "types/schema";
 
-export const StudentGuardianSchema = new Schema<Guardian>(
+export const GuardianSchema = new Schema<Guardian>(
   {
     guardian: {
       ref: ModelNames.PARENT,
@@ -23,7 +23,7 @@ export const StudentGuardianSchema = new Schema<Guardian>(
   { _id: false }
 );
 
-export const StudentAcademicSchema = new Schema<Academic>(
+export const AcademicSchema = new Schema<Academic>(
   {
     term: {
       type: Schema.Types.ObjectId,
