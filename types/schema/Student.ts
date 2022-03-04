@@ -14,7 +14,7 @@ export interface StudentAcademicSchema {
   subjects: ObjectId[];
 }
 
-export interface StudentSchema extends UserBase<false> {
+export interface StudentSchema extends UserBase {
   academic: StudentAcademicSchema[];
   guardians: StudentGuardianSchema[];
 }

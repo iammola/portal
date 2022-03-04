@@ -95,24 +95,22 @@ const userSubContact = (
   );
 };
 
-export const userName = (withTitle?: false) => {
-  return new Schema<Name<true>>(
-    {
-      other: userSubName(),
-      last: userSubName("Last name required"),
-      full: userSubName("Full name required"),
-      first: userSubName("First name required"),
-      initials: userSubName("Initials required"),
-      username: {
-        unique: true,
-        immutable: true,
-        ...userSubName("User name required"),
-      },
-      title: withTitle === undefined ? userSubName("Title required") : {},
+const UserName = new Schema<Name>(
+  {
+    other: userSubName(),
+    title: userSubName("Title required"),
+    last: userSubName("Last name required"),
+    full: userSubName("Full name required"),
+    first: userSubName("First name required"),
+    initials: userSubName("Initials required"),
+    username: {
+      unique: true,
+      immutable: true,
+      ...userSubName("User name required"),
     },
-    { _id: false }
-  );
-};
+  },
+  { _id: false }
+);
 
 export const UserContact = new Schema<Contact>(
   {
