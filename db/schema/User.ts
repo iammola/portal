@@ -18,10 +18,6 @@ const emailValidator = (v?: string) => {
   return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");
 };
 
-type Def<D extends UserBase> = {
-  [K in keyof Omit<D, keyof UserBase>]: SchemaDefinitionProperty<D[K]>;
-};
-
 export const createUserSchema = <D extends UserBase, M>(obj: Def<D>) => {
   const schema = new Schema<UserBase>({
     ...obj,
@@ -61,6 +57,7 @@ export const createUserSchema = <D extends UserBase, M>(obj: Def<D>) => {
   });
 
   schema.plugin(mongooseLeanVirtuals);
+
   schema.virtual("password", {
     justOne: true,
     localField: "_id",
@@ -69,35 +66,6 @@ export const createUserSchema = <D extends UserBase, M>(obj: Def<D>) => {
   });
 
   return schema as unknown as Schema<D, M>;
-};
-
-const userSubName = (required?: string) => ({
-  trim: true,
-  type: String,
-  required: [!!required, required] as [boolean, string],
-});
-
-const userSubContact = (
-  required: string,
-  opts: Pick<SchemaTypeOptions<string>, "lowercase" | "validate"> = {}
-) => {
-  return new Schema<SubContact>(
-    {
-      other: {
-        ...opts,
-        trim: true,
-        type: String,
-        default: undefined,
-      },
-      primary: {
-        ...opts,
-        trim: true,
-        type: String,
-        required: [true, required],
-      },
-    },
-    { _id: false }
-  );
 };
 
 const UserName = new Schema<Name>(
@@ -169,3 +137,38 @@ UserImage.pre("save", async function (this: Image) {
   this.cover = cover;
   this.portrait = portrait;
 });
+
+function userSubName(required?: string) {
+  return {
+    trim: true,
+    type: String,
+    required: [!!required, required] as [boolean, string],
+  };
+}
+
+function userSubContact(
+  required: string,
+  opts: Pick<SchemaTypeOptions<string>, "lowercase" | "validate"> = {}
+) {
+  return new Schema<SubContact>(
+    {
+      other: {
+        ...opts,
+        trim: true,
+        type: String,
+        default: undefined,
+      },
+      primary: {
+        ...opts,
+        trim: true,
+        type: String,
+        required: [true, required],
+      },
+    },
+    { _id: false }
+  );
+}
+
+type Def<D extends UserBase> = {
+  [K in keyof Omit<D, keyof UserBase>]: SchemaDefinitionProperty<D[K]>;
+};
