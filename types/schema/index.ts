@@ -1,5 +1,5 @@
 import { ObjectId as BsonId } from "bson";
-import { Document, Query, Schema } from "mongoose";
+import { HydratedDocument, Query, Schema } from "mongoose";
 
 import { FlattenIntersection } from "types/utils";
 
@@ -15,12 +15,11 @@ export interface DocumentId {
 export type ModelRecord<S, V = unknown, K extends boolean | keyof V = false> = S &
   (K extends true ? V : FlattenIntersection<K extends keyof V ? Pick<V, K> : unknown>);
 
-export type SQuery<S> = Query<
-  (Document<any, any, S> & S) | null,
-  Document<any, any, S> & S,
-  Record<string, never>,
-  S
->;
+type Result<S> = S extends any[]
+  ? HydratedDocument<S[number]>[]
+  : HydratedDocument<S> | null;
+
+export type SQuery<S, R = S> = Query<Result<S>, HydratedDocument<S>, unknown, R>;
 
 export * from "./User";
 export * from "./Term";
