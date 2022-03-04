@@ -16,8 +16,6 @@ export type SessionRecord<V extends boolean | keyof SessionVirtuals = false> =
 
 export interface SessionModel
   extends Model<SessionSchema, unknown, unknown, SessionVirtuals> {
-  /**
-   * Find the term record where `{ current: true }`
-   */
+  /** Find the term record where `{ current: true }` */
   findCurrent(projection?: any): SQuery<SessionSchema>;
 }
