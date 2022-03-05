@@ -55,15 +55,16 @@ const handler: ApiHandler<AuthData> = async (req, res) => {
 
   const { publicKey, token } = await getUser(JSON.parse(req.body) as AuthUser);
 
+  const expiresIn = 60 * 60 * 24;
   res.cookie(JWT_COOKIE, await exportSPKI(publicKey), {
     httpOnly: true,
-    maxAge: 60 * 60 * 24,
+    maxAge: expiresIn,
   });
 
   return [
     {
       success: true,
-      data: { token },
+      data: { token, expiresIn },
       message: ReasonPhrases.OK,
     },
     StatusCodes.OK,
@@ -83,4 +84,5 @@ type AuthUser = {
 
 type AuthData = {
   token: string;
+  expiresIn: number;
 };
