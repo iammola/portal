@@ -52,7 +52,7 @@ async function getUser({ level, password, ...data }: AuthUser) {
 }
 
 const handler: ApiHandler<AuthData> = async (req, res) => {
-  if (req.method !== "POST" || typeof req.body !== "string") return null;
+  if (typeof req.body !== "string" || !req.body) throw new Error("Invalid Request Body");
 
   const { publicKey, token } = await getUser(JSON.parse(req.body) as AuthUser);
 
