@@ -25,4 +25,60 @@
   details > summary::-webkit-details-marker {
     display: none;
   }
+
+  @font-face {
+    font-family: "Urbane";
+    font-weight: 100;
+    font-display: swap;
+    src: url("../public/fonts/UrbaneThin.woff2") format("woff2"),
+      url("../public/fonts/UrbaneThin.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "Urbane";
+    font-weight: 200;
+    font-display: swap;
+    src: url("../public/fonts/UrbaneExtraLight.woff2") format("woff2"),
+      url("../public/fonts/UrbaneExtraLight.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "Urbane";
+    font-weight: 300;
+    font-display: swap;
+    src: url("../public/fonts/UrbaneLight.woff2") format("woff2"),
+      url("../public/fonts/UrbaneLight.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "Urbane";
+    font-weight: 500;
+    font-display: swap;
+    src: url("../public/fonts/UrbaneMedium.woff2") format("woff2"),
+      url("../public/fonts/UrbaneMedium.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "Urbane";
+    font-weight: 600;
+    font-display: swap;
+    src: url("../public/fonts/UrbaneDemiBold.woff2") format("woff2"),
+      url("../public/fonts/UrbaneDemiBold.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "Urbane";
+    font-weight: bold;
+    font-display: swap;
+    src: url("../public/fonts/UrbaneBold.woff2") format("woff2"),
+      url("../public/fonts/UrbaneBold.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "Urbane";
+    font-weight: 900;
+    font-display: swap;
+    src: url("../public/fonts/UrbaneHeavy.woff2") format("woff2"),
+      url("../public/fonts/UrbaneHeavy.woff") format("woff");
+  }
 }
