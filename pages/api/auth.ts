@@ -1,6 +1,5 @@
 import { randomBytes } from "crypto";
 
-import { serialize } from "cookie";
 import { exportSPKI, generateKeyPair, SignJWT } from "jose";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
@@ -56,13 +55,10 @@ const handler: ApiHandler<AuthData> = async (req, res) => {
 
   const { publicKey, token } = await getUser(JSON.parse(req.body) as AuthUser);
 
-  res.setHeader(
-    "Set-Cookie",
-    serialize(JWT_COOKIE, await exportSPKI(publicKey), {
-      httpOnly: true,
-      maxAge: 60 * 60 * 24,
-    })
-  );
+  res.cookie(JWT_COOKIE, await exportSPKI(publicKey), {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24,
+  });
 
   return [
     {
