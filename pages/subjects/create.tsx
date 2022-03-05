@@ -158,9 +158,10 @@ const CreateSubject: NextPage = () => {
                 className="flex w-full flex-row items-stretch justify-start md:gap-x-3 lg:gap-x-5"
               />
             </SubjectType>
-            {__type === "base" ? (
+            {__type === "base" && (
               <BaseSubject teachers={{ values: teachers, onChange: setTeachers }} />
-            ) : (
+            )}
+            {__type === "group" && (
               <GroupSubject
                 values={groupSubjects}
                 onChange={setGroupSubjects}
