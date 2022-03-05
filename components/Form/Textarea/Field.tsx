@@ -11,7 +11,7 @@ const Field: Field = ({ className, id, max, onChange, parentClassName, required,
   useIsomorphicLayoutEffect(() => {
     if (!typing) {
       const length = value?.length ?? 0;
-      setValid(required === true ? length > 0 : length < 1 ? undefined : true);
+      setValid(required ? length > 0 : length < 1 ? undefined : true);
     }
   }, [required, typing, value]);
 
@@ -27,7 +27,7 @@ const Field: Field = ({ className, id, max, onChange, parentClassName, required,
         onChange={(e) => onChange(e.target.value)}
         className={typeof className === "string" ? className : className(!limitPassed && valid)}
       />
-      {required !== true && (
+      {!required && (
         <span className="absolute right-0.5 -top-5 text-xs text-slate-500">Optional</span>
       )}
       {max !== undefined && (

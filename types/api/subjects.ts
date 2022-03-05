@@ -7,9 +7,11 @@ type BaseRequestBody = Omit<BaseSubjectSchema, "_id" | "teachers"> & {
 };
 
 type GroupRequestBody = Omit<GroupSubjectSchema, "_id" | "divisions"> & {
-  divisions: (Pick<BaseSubjectSchema, "_id" | "name"> & {
-    teachers: string[];
-  })[];
+  divisions: Array<
+    Pick<BaseSubjectSchema, "_id" | "name"> & {
+      teachers: string[];
+    }
+  >;
 };
 
 export type CreateSubjectData = CreateResult;

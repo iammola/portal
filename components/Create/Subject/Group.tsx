@@ -69,7 +69,7 @@ const Division: Division = ({ alias, id, name, handleChange, remove, teachers })
               classNames(
                 "h-[3.75rem] w-full overflow-hidden rounded-lg border border-transparent placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                 {
-                  "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                  "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                   "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                 }
               )
@@ -85,7 +85,7 @@ const Division: Division = ({ alias, id, name, handleChange, remove, teachers })
               classNames(
                 "h-[3.75rem] w-full overflow-hidden rounded-lg border border-transparent placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
                 {
-                  "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                  "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                   "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                 }
               )

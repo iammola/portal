@@ -27,11 +27,11 @@ const Popover: Popover = ({ className, edit, item, remove, selectedColor, valid 
         className={classNames("block w-full !border-none py-0.5 pl-3.5 text-xs", {
           "bg-red-100 text-red-800": valid === false,
           "bg-slate-100 text-slate-800": valid === undefined,
-          "bg-emerald-100 text-emerald-800": valid === true,
+          "bg-emerald-100 text-emerald-800": valid,
         })}
       >
         {valid === false && "Invalid email address"}
-        {valid === true && "Valid email address"}
+        {valid && "Valid email address"}
         {valid === undefined && "Validating email address..."}
       </span>
       <div className="grid h-[4.85rem] w-full grid-cols-4 grid-rows-5 items-center !border-t-0 pl-5 pr-3 pt-3 pb-3">

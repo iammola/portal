@@ -59,7 +59,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
         {
           "border-red-300 bg-red-100/20 focus:ring-red-300": valid === false,
           "border-slate-300 bg-white": valid === undefined,
-          "border-emerald-300 bg-emerald-100/20 focus:ring-emerald-300": valid === true,
+          "border-emerald-300 bg-emerald-100/20 focus:ring-emerald-300": valid,
         }
       )}
     >
@@ -79,7 +79,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
         className={classNames(
           "absolute top-1 left-1 z-50 w-[18.5rem] divide-y divide-slate-400 overflow-hidden rounded-md bg-white font-poppins shadow-md",
           {
-            "pointer-events-none invisible opacity-0": showDrawer === false,
+            "pointer-events-none invisible opacity-0": !showDrawer,
           }
         )}
       />

@@ -7,5 +7,5 @@ export type CreateStudentRequestBody = Required<
 > & {
   password: string;
   academic: { class: string; subjects: string[] };
-  guardians: { [K in "mail" | "relation"]: string }[];
+  guardians: Array<{ [K in "mail" | "relation"]: string }>;
 };

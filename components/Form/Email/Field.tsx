@@ -51,7 +51,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
       e.preventDefault();
 
       if (
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(mail) === true &&
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(mail) &&
         values.find((item) => item.mail === mail) === undefined
       ) {
         removeSpace();

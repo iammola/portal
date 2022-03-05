@@ -30,10 +30,10 @@ const Field: Field = ({ id, className, label, onChange, validators, ...props }) 
 };
 
 export type FieldProps = Omit<InputProps, "type"> & {
-  validators?: {
+  validators?: Array<{
     regex: RegExp;
     message: string;
-  }[];
+  }>;
 };
 
 type Field = FunctionComponent<FieldProps>;

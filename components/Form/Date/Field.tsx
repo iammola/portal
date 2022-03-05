@@ -55,7 +55,7 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
   return (
     <div
       className={classNames(className, {
-        relative: required !== true,
+        relative: !required,
       })}
     >
       <div className="w-[4.5rem]">
@@ -73,7 +73,7 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
             classNames(
               "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
               {
-                "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                 "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                 "!ring-red-400": forceValid === false,
               }
@@ -96,7 +96,7 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
             classNames(
               "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
               {
-                "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                 "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                 "!ring-red-400": forceValid === false,
               }
@@ -119,7 +119,7 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
             classNames(
               "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 [-webkit-appearance:none] placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
               {
-                "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid === true,
+                "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                 "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
                 "!ring-red-400": forceValid === false,
               }
@@ -127,7 +127,7 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
           }
         />
       </div>
-      {required !== true && (
+      {!required && (
         <span className="absolute right-0.5 -top-8 text-xs text-slate-500">Optional</span>
       )}
     </div>

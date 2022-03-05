@@ -52,13 +52,13 @@ const Input: Input = ({
       {![props.required, hideOptionalLabel].includes(true) && (
         <span className="absolute right-0.5 -top-5 text-xs text-slate-500">Optional</span>
       )}
-      {showIcons === true && (
+      {showIcons && (
         <>
           <CheckIcon
             className={classNames(
               "col-start-2 row-start-1 h-5 w-5 fill-emerald-500 peer-placeholder-shown:opacity-0",
               {
-                "opacity-0": valid !== true,
+                "opacity-0": !valid,
               }
             )}
           />

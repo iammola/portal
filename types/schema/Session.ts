@@ -8,7 +8,7 @@ export interface SessionSchema extends DocumentId {
 }
 
 interface SessionVirtuals {
-  terms: Omit<TermSchema, "session">[];
+  terms: Array<Omit<TermSchema, "session">>;
 }
 
 export type SessionRecord<V extends boolean | keyof SessionVirtuals = false> = ModelRecord<

@@ -17,15 +17,14 @@ export const ThingName = (withSpecial?: true) => {
         type: String,
         required: [true, "Short name required"],
       },
-      special:
-        withSpecial === true
-          ? {
-              trim: true,
-              type: String,
-              unique: true,
-              required: [true, "Class special required"],
-            }
-          : {},
+      special: withSpecial
+        ? {
+            trim: true,
+            type: String,
+            unique: true,
+            required: [true, "Class special required"],
+          }
+        : {},
     },
     { _id: false }
   );

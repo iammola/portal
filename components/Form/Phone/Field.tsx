@@ -85,7 +85,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
         {
           "ring-red-400": valid === false,
           "ring-transparent": valid === undefined,
-          "focus-within:ring-emerald-400": valid === true,
+          "focus-within:ring-emerald-400": valid,
         }
       )}
     >
