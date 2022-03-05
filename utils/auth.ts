@@ -21,7 +21,7 @@ const jsonResponse = (
 
 export async function verifyAuth(request: NextRequest) {
   const key = request.cookies[JWT_COOKIE];
-  const auth = request.headers.get("authentication")?.split("");
+  const auth = request.headers.get("authentication")?.split(" ");
 
   if (!key || !auth) return jsonResponse("Missing Authentication Token");
 
