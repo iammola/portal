@@ -1,9 +1,9 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ParentModel } from "db/models";
 import { createUser } from "utils/user";
 import { routeWrapper } from "utils/api";
+import { ClassModel, ParentModel, TermModel } from "db/models";
 
 import type {
   CreateStudentData as CreateData,
@@ -12,28 +12,34 @@ import type {
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function createStudent(raw: CreateBody): MethodResponse<CreateData> {
+async function createStudent(body: CreateBody): MethodResponse<CreateData> {
   await connect();
 
-  const parents = await ParentModel.find(
-    { schoolMail: raw.guardians.map((g) => g.mail) },
-    "schoolMail"
-  ).lean();
+  const [parents, term, classExists] = await Promise.all([
+    ParentModel.findBySchoolMail(
+      body.guardians.map((g) => g.mail),
+      "schoolMail"
+    ).lean(),
+    TermModel.findCurrent("_id").lean(),
+    ClassModel.exists({ _id: body.academic.class }),
+  ]);
 
-  const body = {
-    ...raw,
-    academic: [],
-    guardians: parents.map((p) => ({
-      guardian: p._id,
-      relation: raw.guardians.find((g) => g.mail === p.schoolMail)?.relation,
-    })),
-  };
+  if (term === null) throw new Error("Current term is not defined");
+
+  if (classExists === null) throw new Error("Class does not exist");
 
   return [
     {
       success: true,
       message: ReasonPhrases.CREATED,
-      data: await createUser("student", body),
+      data: await createUser("student", {
+        ...body,
+        academic: [{ term: term?._id, ...body.academic }],
+        guardians: parents.map((p) => ({
+          guardian: p._id,
+          relation: body.guardians.find((g) => g.mail === p.schoolMail)?.relation,
+        })),
+      }),
     },
     StatusCodes.CREATED,
   ];
