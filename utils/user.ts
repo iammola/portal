@@ -1,9 +1,7 @@
-import { Document, startSession } from "mongoose";
+import { startSession } from "mongoose";
 
 import { connect } from "db";
 import { AuthModel, ParentModel, StudentModel, TeacherModel } from "db/models";
-
-import type { UserBase } from "types/schema";
 
 export async function createUser<T extends User, B extends { password: string }>(
   type: T,
@@ -36,9 +34,9 @@ export async function createUser<T extends User, B extends { password: string }>
  * @todo Add actual code to create an email address
  * @returns the email address
  */
-export function generateSchoolMail(this: UserBase & Document) {
+export function generateSchoolMail(username: string) {
   const DOMAIN = "fake.io";
-  if (this instanceof Document && this.isNew) return `${this.name.username}@${DOMAIN}`;
+  return `${username}@${DOMAIN}`;
 }
 
 type NonNullableObject<J> = { [K in keyof J]: NonNullable<J[K]> };

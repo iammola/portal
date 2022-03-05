@@ -39,7 +39,6 @@ export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: De
       unique: true,
       lowercase: true,
       immutable: true,
-      set: generateSchoolMail,
       required: [true, "School mail required"],
       validate: {
         validator: emailValidator,
@@ -57,6 +56,11 @@ export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: De
   });
 
   schema.plugin(mongooseLeanVirtuals);
+
+  schema.pre("save", function (next) {
+    this.set("schoolMail", generateSchoolMail(this.name.username));
+    next();
+  });
 
   schema.virtual("password", {
     justOne: true,
