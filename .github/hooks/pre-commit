@@ -5,7 +5,7 @@ FILES=$(git diff --cached --name-only --diff-filter=ACMR);
 
 # run linters
 echo "$FILES" | grep -E '\.(?:t|j)sx?$' | xargs npx eslint --quiet --fix &&
-echo "$FILES" | xargs npx prettier --ignore-unknown --write;
+echo "$FILES" | grep -v '\.woff2?' | xargs npx prettier --ignore-unknown --write;
 
 linter_exit_code=$?;
 
