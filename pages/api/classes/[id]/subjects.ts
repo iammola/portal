@@ -14,11 +14,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 async function createSubject(data: CreateBody, classID: string): MethodResponse<CreateData> {
   await connect();
 
-  const teachers = await TeacherModel.find(
-    {
-      schoolMail:
-        data.__type === "base" ? data.teachers : data.divisions.map((d) => d.teachers).flat(),
-    },
+  const teachers = await TeacherModel.findBySchoolMail(
+    data.__type === "base" ? data.teachers : data.divisions.map((d) => d.teachers).flat(),
     "schoolMail"
   ).lean();
 
