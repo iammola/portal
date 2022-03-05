@@ -3,7 +3,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { createUser } from "utils/user";
 import { routeWrapper } from "utils/api";
-import { ParentModel, TermModel } from "db/models";
+import { ClassModel, ParentModel, TermModel } from "db/models";
 
 import type {
   CreateStudentData as CreateData,
@@ -15,13 +15,16 @@ import type { NextApiRequest, NextApiResponse } from "next";
 async function createStudent(raw: CreateBody): MethodResponse<CreateData> {
   await connect();
 
-  const [parents, term] = await Promise.all([
+  const [parents, term, classExists] = await Promise.all([
     ParentModel.findBySchoolMail(
       raw.guardians.map((g) => g.mail),
       "schoolMail"
     ).lean(),
     TermModel.findCurrent("_id").lean(),
+    ClassModel.exists({ _id: raw.academic.class }),
   ]);
+
+  if (classExists === null) throw new Error("Class does not exist");
 
   const body = {
     ...raw,
