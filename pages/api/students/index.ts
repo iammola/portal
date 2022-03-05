@@ -24,6 +24,8 @@ async function createStudent(raw: CreateBody): MethodResponse<CreateData> {
     ClassModel.exists({ _id: raw.academic.class }),
   ]);
 
+  if (term === null) throw new Error("Current term is not defined");
+
   if (classExists === null) throw new Error("Class does not exist");
 
   const body = {
