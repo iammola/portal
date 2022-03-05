@@ -24,5 +24,4 @@ TermSchema.static("findCurrent", function (projection?: any) {
   return this.findOne({ current: true }, projection);
 });
 
-export const TermModel = (models[ModelNames.TERM] ??
-  model(ModelNames.TERM, TermSchema)) as Model;
+export const TermModel = (models[ModelNames.TERM] ?? model(ModelNames.TERM, TermSchema)) as Model;

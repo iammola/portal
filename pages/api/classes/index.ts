@@ -46,8 +46,7 @@ const handler: ApiHandler<D> = async ({ body, method, query }) => {
   if (method === "POST" && typeof body === "string")
     return await createClass(JSON.parse(body) as CreateBody);
 
-  if (method === "GET" && typeof query.field === "string")
-    return await getClasses(query.field);
+  if (method === "GET" && typeof query.field === "string") return await getClasses(query.field);
 
   return null;
 };

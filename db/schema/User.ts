@@ -69,21 +69,15 @@ export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: De
     foreignField: "userId",
   });
 
-  schema.static(
-    "findByUsername",
-    function (username: string | string[], projection?: any) {
-      if (Array.isArray(username)) return this.find({ username }, projection);
-      return this.findOne({ username }, projection);
-    }
-  );
+  schema.static("findByUsername", function (username: string | string[], projection?: any) {
+    if (Array.isArray(username)) return this.find({ username }, projection);
+    return this.findOne({ username }, projection);
+  });
 
-  schema.static(
-    "findBySchoolMail",
-    function (schoolMail: string | string[], projection?: any) {
-      if (Array.isArray(schoolMail)) return this.find({ schoolMail }, projection);
-      return this.findOne({ schoolMail }, projection);
-    }
-  );
+  schema.static("findBySchoolMail", function (schoolMail: string | string[], projection?: any) {
+    if (Array.isArray(schoolMail)) return this.find({ schoolMail }, projection);
+    return this.findOne({ schoolMail }, projection);
+  });
 
   return schema as unknown as Schema<D, M>;
 };
@@ -117,10 +111,7 @@ const UserContact = new Schema<Contact>(
     phone: {
       required: [true, "Phone required"],
       type: userSubContact("Phone required", {
-        validate: [
-          (v?: string) => PhoneNumber(v ?? "").isValid(),
-          "Invalid phone number",
-        ],
+        validate: [(v?: string) => PhoneNumber(v ?? "").isValid(), "Invalid phone number"],
       }),
     },
     address: {

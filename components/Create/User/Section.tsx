@@ -7,9 +7,7 @@ const Section: Section = ({ children, description, title }) => {
         <h3 className="text-lg font-medium text-slate-800">{title}</h3>
         <p className="text-sm text-slate-500">{description}</p>
       </div>
-      <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8 xl:w-[40rem]">
-        {children}
-      </div>
+      <div className="flex w-full flex-col md:gap-y-4 lg:gap-y-8 xl:w-[40rem]">{children}</div>
     </section>
   );
 };

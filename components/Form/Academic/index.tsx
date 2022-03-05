@@ -2,22 +2,13 @@ import { FunctionComponent } from "react";
 
 import { Class, Subjects } from "./Components";
 
-const Academic: Academic = ({
-  handleClassChange,
-  handleSubjectsChange,
-  subjects,
-  ...props
-}) => {
+const Academic: Academic = ({ handleClassChange, handleSubjectsChange, subjects, ...props }) => {
   return (
     <div className="space-y-3">
       <div className="w-1/4">
         <Class value={props.class} onChange={handleClassChange} />
       </div>
-      <Subjects
-        values={subjects}
-        selectedClass={props.class}
-        onChange={handleSubjectsChange}
-      />
+      <Subjects values={subjects} selectedClass={props.class} onChange={handleSubjectsChange} />
     </div>
   );
 };

@@ -16,9 +16,7 @@ const Password: Password = ({
   return (
     <div className="flex flex-col gap-y-3">
       <Field {...{ validators, value, ...props }} />
-      {!hideConditions && !!validators?.length && (
-        <Conditions {...{ validators, value }} />
-      )}
+      {!hideConditions && !!validators?.length && <Conditions {...{ validators, value }} />}
       {!!withConfirm && (
         <>
           <span className="-mt-1" />

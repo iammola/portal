@@ -1,4 +1,4 @@
 /** @type {import("@types/prettier/").Config } */
 module.exports = {
-  printWidth: 90,
+  printWidth: 100,
 };

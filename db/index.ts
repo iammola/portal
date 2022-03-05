@@ -6,9 +6,7 @@ const cached = global.mongoose ?? {};
 
 export async function connect(): Promise<typeof mongoose> {
   if (!MONGODB_URI)
-    throw new Error(
-      "Please define the MONGODB_URI environment variable inside .env.local"
-    );
+    throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
 
   cached.promise ??= mongoose.connect(MONGODB_URI, {
     bufferCommands: false,

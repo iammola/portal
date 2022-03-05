@@ -1,8 +1,4 @@
-import {
-  CheckCircleIcon,
-  ExclamationCircleIcon,
-  XCircleIcon,
-} from "@heroicons/react/solid";
+import { CheckCircleIcon, ExclamationCircleIcon, XCircleIcon } from "@heroicons/react/solid";
 import { FunctionComponent } from "react";
 
 import { FieldProps } from "./Field";

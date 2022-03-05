@@ -24,6 +24,4 @@ type SubjectKeys<
 
 export type UpdateSubjectData = UpdateResult;
 
-export type UpdateSubjectRequestBody =
-  | SubjectKeys<BaseRequestBody>
-  | SubjectKeys<GroupRequestBody>;
+export type UpdateSubjectRequestBody = SubjectKeys<BaseRequestBody> | SubjectKeys<GroupRequestBody>;
