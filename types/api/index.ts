@@ -1,3 +1,4 @@
+import { CookieSerializeOptions } from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import { StatusCodes, ReasonPhrases } from "http-status-codes";
 
@@ -16,7 +17,7 @@ export type HandlerResponse<D> = [ApiError, ResponseCodes] | Awaited<MethodRespo
 
 export type ApiHandler<R extends object> = (
   req: NextApiRequest,
-  res: NextApiResponse<ApiError | ApiResponse<R>>
+  res: NextAPIResponse<ApiError | ApiResponse<R>>
 ) => Promise<HandlerResponse<R> | null>;
 
 interface ApiData<S> {
@@ -33,3 +34,14 @@ export interface ApiError extends ApiData<false> {
 }
 
 export type ApiResult<D> = ApiResponse<D> | ApiError;
+
+export type NextAPIResponse<T = any> = NextApiResponse<T> & {
+  /**
+   * Helper method to serialize a cookie name-value pair into a `Set-Cookie` header string
+   *
+   * @param name the name for the cookie
+   * @param value value to set the cookie to
+   * @param opts object containing serialization options
+   */
+  cookie(name: string, value: unknown, opts?: CookieSerializeOptions): void;
+};

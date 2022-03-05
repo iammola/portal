@@ -1,9 +1,10 @@
+import { serialize } from "cookie";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { formatError } from "./error";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiHandler, HandlerResponse } from "types/api";
+import type { ApiHandler, HandlerResponse, NextAPIResponse } from "types/api";
 
 /**
  * Used to catch errors in a route and properly format response object
@@ -15,14 +16,19 @@ import type { ApiHandler, HandlerResponse } from "types/api";
  */
 export async function routeWrapper<T extends object>(
   req: NextApiRequest,
-  res: NextApiResponse<HandlerResponse<T>[0]>,
+  res: NextApiResponse,
   routeHandler: ApiHandler<T>,
   methods: string[]
 ) {
   let data: HandlerResponse<T> | null = null;
 
   try {
-    if (methods.includes(req.method ?? "")) data = await routeHandler(req, res);
+    (res as NextAPIResponse).cookie = (name, raw, opts) => {
+      const value = typeof raw === "object" ? JSON.stringify(raw) : String(raw);
+      res.setHeader("Set-Cookie", serialize(name, value, opts));
+    };
+
+    if (methods.includes(req.method ?? "")) data = await routeHandler(req, res as NextAPIResponse);
   } catch (error) {
     data = [
       {
