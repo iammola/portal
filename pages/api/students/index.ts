@@ -12,36 +12,34 @@ import type {
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function createStudent(raw: CreateBody): MethodResponse<CreateData> {
+async function createStudent(body: CreateBody): MethodResponse<CreateData> {
   await connect();
 
   const [parents, term, classExists] = await Promise.all([
     ParentModel.findBySchoolMail(
-      raw.guardians.map((g) => g.mail),
+      body.guardians.map((g) => g.mail),
       "schoolMail"
     ).lean(),
     TermModel.findCurrent("_id").lean(),
-    ClassModel.exists({ _id: raw.academic.class }),
+    ClassModel.exists({ _id: body.academic.class }),
   ]);
 
   if (term === null) throw new Error("Current term is not defined");
 
   if (classExists === null) throw new Error("Class does not exist");
 
-  const body = {
-    ...raw,
-    academic: [{ term: term?._id, ...raw.academic }],
-    guardians: parents.map((p) => ({
-      guardian: p._id,
-      relation: raw.guardians.find((g) => g.mail === p.schoolMail)?.relation,
-    })),
-  };
-
   return [
     {
       success: true,
       message: ReasonPhrases.CREATED,
-      data: await createUser("student", body),
+      data: await createUser("student", {
+        ...body,
+        academic: [{ term: term?._id, ...body.academic }],
+        guardians: parents.map((p) => ({
+          guardian: p._id,
+          relation: body.guardians.find((g) => g.mail === p.schoolMail)?.relation,
+        })),
+      }),
     },
     StatusCodes.CREATED,
   ];
