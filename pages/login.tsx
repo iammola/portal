@@ -1,13 +1,15 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { serialize } from "cookie";
+import { FormEvent, useState } from "react";
 import { SelectorIcon } from "@heroicons/react/solid";
 import { Listbox, Transition } from "@headlessui/react";
 
-import { classNames } from "utils";
 import { Input, Password } from "components/Form";
+import { classNames, JWT_COOKIE, fetchAPIEndpoint } from "utils";
 
 import type { NextPage } from "next";
+import type { AuthData, AuthUser } from "types/api/auth";
 
 const levels = [
   { emoji: "👨‍🎓", value: "student" },
@@ -20,6 +22,32 @@ const Login: NextPage = () => {
   const [password, setPassword] = useState("");
   const [level, setLevel] = useState<{ value: string; emoji: string }>();
 
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!level) return;
+
+    try {
+      const result = await fetchAPIEndpoint<AuthData, AuthUser>(
+        "/api/auth",
+        { method: "POST" },
+        { username, password, level: level.value }
+      );
+
+      if (result.success) {
+        const { token, expiresIn } = result.data;
+
+        document.cookie = serialize(JWT_COOKIE, token, {
+          path: "/",
+          secure: true,
+          sameSite: true,
+          maxAge: expiresIn,
+        });
+      } else console.error(result.error);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <main className="flex h-screen w-screen items-stretch justify-center overflow-hidden bg-black font-urbane">
       <Head>
@@ -28,7 +56,10 @@ const Login: NextPage = () => {
       <figure className="w-[48.5vw] bg-gray-900" />
       <section className="relative flex grow flex-col items-center justify-center gap-y-[4.5rem] bg-white p-5">
         <h1 className="text-5xl font-light text-gray-600">Sign in to Portal</h1>
-        <form className="flex w-full max-w-lg flex-col items-center justify-center gap-y-6 px-10">
+        <form
+          onSubmit={(e) => void handleSubmit(e)}
+          className="flex w-full max-w-lg flex-col items-center justify-center gap-y-6 px-10"
+        >
           <div className="w-full space-y-8">
             <div className="flex w-full flex-col items-start justify-center gap-y-1">
               <label
