@@ -19,7 +19,7 @@ const Login: NextPage = () => {
       <figure className="w-[48.5vw] bg-gray-900" />
       <section className="relative flex grow flex-col items-center justify-center gap-y-[4.5rem] bg-white p-5">
         <div className="relative h-8 w-10 self-end">
-          <Image src="/Logo.png" layout="fill" objectFit="contain" />
+          <Image src="/Logo.png" layout="fill" objectFit="contain" alt="GRS Logo" />
         </div>
         <h1 className="text-5xl font-light text-gray-600">Sign in to Portal</h1>
         <form className="flex w-full max-w-lg flex-col items-center justify-center gap-y-6 px-10">
