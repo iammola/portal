@@ -21,7 +21,7 @@ async function getUser({ level, password, ...data }: AuthUser) {
     "password",
     {
       populate: "password",
-      lean: { virtuals: ["username"] },
+      lean: { virtuals: ["password"] },
     },
   ] as const;
 
