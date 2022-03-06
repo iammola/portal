@@ -36,7 +36,7 @@ const Login: NextPage = () => {
                 id="username"
                 value={username}
                 onChange={setUsername}
-                className="h-[3.5rem] w-full rounded-lg border-none bg-slate-50 pl-6 text-slate-700 placeholder-slate-200 focus:outline-none"
+                className="h-14 w-full rounded-lg border-none bg-slate-50 pl-6 text-slate-700 placeholder-slate-200 focus:outline-none"
               />
             </div>
             <div className="flex w-full flex-col items-start justify-center gap-y-1">
@@ -51,7 +51,7 @@ const Login: NextPage = () => {
                 id="password"
                 value={password}
                 onChange={setPassword}
-                className="h-[3.5rem] w-full rounded-lg border-none bg-slate-50 pl-6 text-slate-700 placeholder-slate-200 focus:outline-none"
+                className="h-14 w-full rounded-lg border-none bg-slate-50 pl-6 text-slate-700 placeholder-slate-200 focus:outline-none"
               />
             </div>
           </div>
