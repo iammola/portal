@@ -53,7 +53,7 @@ const Login: NextPage = () => {
       <Head>
         <title>Login | GRS CBT</title>
       </Head>
-      <figure className="w-[48.5vw] bg-gray-900" />
+      <figure className="w-[60vw] bg-gray-900" />
       <section className="relative flex grow flex-col items-center justify-center gap-y-[4.5rem] bg-white p-5">
         <h1 className="text-5xl font-light text-gray-600">Sign in to Portal</h1>
         <form
