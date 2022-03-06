@@ -9,6 +9,7 @@ import { comparePassword, JWT_ALG, JWT_COOKIE } from "utils";
 import { ParentModel, StudentModel, TeacherModel } from "db/models";
 
 import type { ApiHandler } from "types/api";
+import type { AuthData, AuthUser } from "types/api/auth";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 async function getUser({ level, password, username }: AuthUser) {
@@ -74,14 +75,3 @@ const handler: ApiHandler<AuthData> = async (req, res) => {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) =>
   routeWrapper<AuthData>(req, res, handler, ["POST"]);
-
-type AuthUser = {
-  level: string;
-  password: string;
-  username: string;
-};
-
-type AuthData = {
-  token: string;
-  expiresIn: number;
-};
