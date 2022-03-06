@@ -15,9 +15,12 @@ export interface DocumentId {
 export type ModelRecord<S, V = unknown, K extends boolean | keyof V = false> = S &
   (K extends true ? V : FlattenIntersection<K extends keyof V ? Pick<V, K> : unknown>);
 
-type Result<S> = S extends any[] ? Array<HydratedDocument<S[number]>> : HydratedDocument<S> | null;
-
-export type SQuery<S, R = S> = Query<Result<S>, HydratedDocument<S>, unknown, R>;
+export type SQuery<S, R = S, M = unknown, V = unknown> = Query<
+  S extends any[] ? Array<HydratedDocument<S[number], M, V>> : HydratedDocument<S, M, V> | null,
+  HydratedDocument<S, M, V>,
+  unknown,
+  R
+>;
 
 export * from "./User";
 export * from "./Term";
