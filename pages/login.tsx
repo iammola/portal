@@ -1,12 +1,16 @@
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 import { Input, Password } from "components/Form";
 
 import type { NextPage } from "next";
 
 const Login: NextPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <main className="flex h-screen w-screen items-stretch justify-center overflow-hidden bg-black font-urbane">
       <Head>
@@ -28,10 +32,10 @@ const Login: NextPage = () => {
                 Username
               </label>
               <Input
-                value=""
                 required
                 id="username"
-                onChange={() => void {}}
+                value={username}
+                onChange={setUsername}
                 className="h-[3.5rem] w-full rounded-lg border-none bg-slate-50 pl-6 text-slate-700 placeholder-slate-200 focus:outline-none"
               />
             </div>
@@ -44,9 +48,9 @@ const Login: NextPage = () => {
               </label>
               <Password
                 required
-                value=""
                 id="password"
-                onChange={() => void {}}
+                value={password}
+                onChange={setPassword}
                 className="h-[3.5rem] w-full rounded-lg border-none bg-slate-50 pl-6 text-slate-700 placeholder-slate-200 focus:outline-none"
               />
             </div>
