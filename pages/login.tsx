@@ -62,6 +62,12 @@ const Login: NextPage = () => {
               <a className="text-sm tracking-wide text-blue-500">Forgot Password?</a>
             </Link>
           </div>
+          <button
+            type="submit"
+            className="w-full rounded-lg bg-blue-500 p-3 text-sm font-medium tracking-wide text-white hover:bg-blue-600"
+          >
+            Sign in
+          </button>
         </div>
       </section>
     </main>
