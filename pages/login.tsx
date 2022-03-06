@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { SelectorIcon } from "@heroicons/react/solid";
 import { Listbox, Transition } from "@headlessui/react";
@@ -28,9 +27,6 @@ const Login: NextPage = () => {
       </Head>
       <figure className="w-[48.5vw] bg-gray-900" />
       <section className="relative flex grow flex-col items-center justify-center gap-y-[4.5rem] bg-white p-5">
-        <div className="relative h-8 w-10 self-end">
-          <Image src="/Logo.png" layout="fill" objectFit="contain" alt="GRS Logo" />
-        </div>
         <h1 className="text-5xl font-light text-gray-600">Sign in to Portal</h1>
         <form className="flex w-full max-w-lg flex-col items-center justify-center gap-y-6 px-10">
           <div className="w-full space-y-8">
@@ -143,7 +139,6 @@ const Login: NextPage = () => {
           <span className="block">© {new Date().getFullYear()} Grand Regal School.</span>{" "}
           <span className="block">All Rights Reserved</span>
         </span>
-        <div className="mt-auto"></div>
       </section>
     </main>
   );
