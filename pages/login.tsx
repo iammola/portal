@@ -28,7 +28,7 @@ const Login: NextPage = () => {
                 required
                 id="username"
                 onChange={() => void {}}
-                className="h-[3.5rem] w-full rounded-lg bg-slate-50 pl-6 text-slate-700 placeholder-slate-200 focus:outline-none"
+                className="h-[3.5rem] w-full rounded-lg border-none bg-slate-50 pl-6 text-slate-700 placeholder-slate-200 focus:outline-none"
               />
             </div>
             <div className="flex w-full flex-col items-start justify-center gap-y-1">
@@ -43,7 +43,7 @@ const Login: NextPage = () => {
                 value=""
                 id="password"
                 onChange={() => void {}}
-                className="h-[3.5rem] w-full rounded-lg bg-slate-50 pl-6 text-slate-700 placeholder-slate-200 focus:outline-none"
+                className="h-[3.5rem] w-full rounded-lg border-none bg-slate-50 pl-6 text-slate-700 placeholder-slate-200 focus:outline-none"
               />
             </div>
           </form>
@@ -52,19 +52,21 @@ const Login: NextPage = () => {
               <input
                 type="checkbox"
                 id="remember"
-                className="h-[1.15rem] w-[1.15rem] rounded border-slate-300 text-blue-500"
+                className="h-[1.15rem] w-[1.15rem] rounded border-slate-300 text-blue-500 focus:border-transparent focus:ring focus:ring-blue-200 focus:ring-offset-0"
               />
               <label htmlFor="remember" className="text-sm font-light tracking-wide text-slate-700">
                 Remember me?
               </label>
             </div>
             <Link href="/recover">
-              <a className="text-sm tracking-wide text-blue-500">Forgot Password?</a>
+              <a className="text-sm tracking-wide text-blue-500 focus:underline focus:underline-offset-4 focus:outline-none">
+                Forgot Password?
+              </a>
             </Link>
           </div>
           <button
             type="submit"
-            className="w-full rounded-lg bg-blue-500 p-3 text-sm font-medium tracking-wide text-white hover:bg-blue-600"
+            className="w-full rounded-lg bg-blue-500 p-3 text-sm font-medium tracking-wide text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
           >
             Sign in
           </button>
