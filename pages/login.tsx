@@ -20,6 +20,7 @@ const levels = [
 const Login: NextPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(false);
   const [level, setLevel] = useState<{ value: string; emoji: string }>();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -145,8 +146,10 @@ const Login: NextPage = () => {
           <div className="flex w-full items-center justify-between py-2">
             <div className="flex items-center justify-start gap-x-2">
               <input
-                type="checkbox"
                 id="remember"
+                type="checkbox"
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
                 className="h-[1.15rem] w-[1.15rem] rounded border-slate-300 text-blue-500 focus:border-transparent focus:ring focus:ring-blue-200 focus:ring-offset-0"
               />
               <label htmlFor="remember" className="text-sm font-light tracking-wide text-slate-700">
