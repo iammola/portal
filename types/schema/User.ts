@@ -1,3 +1,5 @@
+import { QueryOptions } from "mongoose";
+
 import { DocumentId, SQuery } from "types/schema";
 import { FlattenIntersection } from "types/utils";
 
@@ -45,11 +47,11 @@ export interface UserVirtuals {
 
 export interface UserStaticMethods<S> {
   /** Find a user by username */
-  findByUsername(username: string, projection?: any): SQuery<S>;
+  findByUsername(username: string, projection?: any, options?: QueryOptions): SQuery<S>;
   /** Find all users by username */
-  findByUsername(username: string[], projection?: any): SQuery<S[], S>;
+  findByUsername(username: string[], projection?: any, options?: QueryOptions): SQuery<S[], S>;
   /** Find a user by school mail */
-  findBySchoolMail(mail: string, projection?: any): SQuery<S>;
+  findBySchoolMail(mail: string, projection?: any, options?: QueryOptions): SQuery<S>;
   /** Find all users by schoolMail */
-  findBySchoolMail(mail: string[], projection?: any): SQuery<S[], S>;
+  findBySchoolMail(mail: string[], projection?: any, options?: QueryOptions): SQuery<S[], S>;
 }

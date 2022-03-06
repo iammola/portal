@@ -1,6 +1,6 @@
 import PhoneNumber from "awesome-phonenumber";
 import mongooseLeanVirtuals from "mongoose-lean-virtuals";
-import { Model, Schema, SchemaDefinitionProperty, SchemaTypeOptions } from "mongoose";
+import { Model, QueryOptions, Schema, SchemaDefinitionProperty, SchemaTypeOptions } from "mongoose";
 
 import { ModelNames } from "db";
 import { generateSchoolMail } from "utils/user";
@@ -69,15 +69,21 @@ export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: De
     foreignField: "userId",
   });
 
-  schema.static("findByUsername", function (username: string | string[], projection?: any) {
-    if (Array.isArray(username)) return this.find({ username }, projection);
-    return this.findOne({ username }, projection);
-  });
+  schema.static(
+    "findByUsername",
+    function (username: string | string[], ...args: [any?, QueryOptions?]) {
+      if (Array.isArray(username)) return this.find({ username }, ...args);
+      return this.findOne({ username }, ...args);
+    }
+  );
 
-  schema.static("findBySchoolMail", function (schoolMail: string | string[], projection?: any) {
-    if (Array.isArray(schoolMail)) return this.find({ schoolMail }, projection);
-    return this.findOne({ schoolMail }, projection);
-  });
+  schema.static(
+    "findBySchoolMail",
+    function (schoolMail: string | string[], ...args: [any?, QueryOptions?]) {
+      if (Array.isArray(schoolMail)) return this.find({ schoolMail }, ...args);
+      return this.findOne({ schoolMail }, ...args);
+    }
+  );
 
   return schema as unknown as Schema<D, M>;
 };

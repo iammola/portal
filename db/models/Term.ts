@@ -1,4 +1,4 @@
-import { Schema, model, models } from "mongoose";
+import { Schema, model, models, QueryOptions } from "mongoose";
 
 import { ModelNames } from "db";
 import { ThingName } from "db/schema/Thing";
@@ -20,8 +20,8 @@ const TermSchema = new Schema<TermRecord, Model>({
   },
 });
 
-TermSchema.static("findCurrent", function (projection?: any) {
-  return this.findOne({ current: true }, projection);
+TermSchema.static("findCurrent", function (...args: [any?, QueryOptions?]) {
+  return this.findOne({ current: true }, ...args);
 });
 
 export const TermModel = (models[ModelNames.TERM] ?? model(ModelNames.TERM, TermSchema)) as Model;
