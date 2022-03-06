@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 
 import { Input, Password } from "components/Form";
 
@@ -46,6 +47,21 @@ const Login: NextPage = () => {
               />
             </div>
           </form>
+          <div className="flex w-full items-center justify-between py-2">
+            <div className="flex items-center justify-start gap-x-2">
+              <input
+                type="checkbox"
+                id="remember"
+                className="h-[1.15rem] w-[1.15rem] rounded border-slate-300 text-blue-500"
+              />
+              <label htmlFor="remember" className="text-sm font-light tracking-wide text-slate-700">
+                Remember me?
+              </label>
+            </div>
+            <Link href="/recover">
+              <a className="text-sm tracking-wide text-blue-500">Forgot Password?</a>
+            </Link>
+          </div>
         </div>
       </section>
     </main>
