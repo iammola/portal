@@ -31,7 +31,7 @@ const Login: NextPage = () => {
       const result = await fetchAPIEndpoint<AuthData, AuthUser>(
         "/api/auth",
         { method: "POST" },
-        { username, password, level: level.value }
+        { username, password, remember, level: level.value }
       );
 
       if (result.success) {
