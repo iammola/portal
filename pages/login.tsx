@@ -69,6 +69,10 @@ const Login: NextPage = () => {
             Sign in
           </button>
         </div>
+        <span className="min-w-max text-center text-xs font-light tracking-wide text-slate-500">
+          <span className="block">© {new Date().getFullYear()} Grand Regal School.</span>{" "}
+          <span className="block">All Rights Reserved</span>
+        </span>
       </section>
     </main>
   );
