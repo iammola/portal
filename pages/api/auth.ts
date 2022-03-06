@@ -12,7 +12,7 @@ import type { ApiHandler } from "types/api";
 import type { AuthData, AuthUser } from "types/api/auth";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function getUser({ level, password, username }: AuthUser) {
+async function getUser({ level, password, remember, username }: AuthUser) {
   await connect();
 
   if (!username) throw new Error("Username required");
@@ -36,11 +36,12 @@ async function getUser({ level, password, username }: AuthUser) {
 
   if (!comparePassword(password, user.password)) throw new Error("Invalid password");
 
+  const days = remember ? 3 : 1;
   const { privateKey, publicKey } = await generateKeyPair(JWT_ALG);
 
   const token = await new SignJWT({})
     .setJti(randomBytes(32).toString("hex"))
-    .setExpirationTime("1 day")
+    .setExpirationTime(`${days} day`)
     .setIssuedAt()
     .setProtectedHeader({
       typ: "JWT",
@@ -48,15 +49,14 @@ async function getUser({ level, password, username }: AuthUser) {
     })
     .sign(privateKey);
 
-  return { token, publicKey };
+  return { token, publicKey, expiresIn: days * 24 * 3600 };
 }
 
 const handler: ApiHandler<AuthData> = async (req, res) => {
   if (typeof req.body !== "string" || !req.body) throw new Error("Invalid Request Body");
 
-  const { publicKey, token } = await getUser(JSON.parse(req.body) as AuthUser);
+  const { expiresIn, publicKey, token } = await getUser(JSON.parse(req.body) as AuthUser);
 
-  const expiresIn = 60 * 60 * 24;
   res.cookie(JWT_COOKIE, await exportSPKI(publicKey), {
     httpOnly: true,
     maxAge: expiresIn,
