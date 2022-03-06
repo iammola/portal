@@ -113,7 +113,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
             value={formattedValue}
             onChange={handleChange}
             onBeforeInput={validateCharacter}
-            className="h-[3.75rem] w-full grow rounded-r-xl !px-0 !py-3.5 text-lg font-semibold tracking-wide text-slate-600 focus:outline-none"
+            className="h-[3.75rem] w-full grow rounded-r-xl !border-none !px-0 !py-3.5 text-lg font-semibold tracking-wide text-slate-600 !ring-transparent focus:outline-none"
           />
         </div>
       </div>
