@@ -30,3 +30,4 @@ export * from "./Session";
 export * from "./Subject";
 export * from "./Student";
 export * from "./Teacher";
+export * from "./Attendance";

@@ -28,6 +28,7 @@ export enum ModelNames {
   SUBJECT = "Subject",
   G_SUBJECT = "group",
   SESSION = "Session",
+  ATTENDANCE = "Attendance",
 }
 
 interface ConnectOptionsExt extends mongoose.ConnectOptions {
