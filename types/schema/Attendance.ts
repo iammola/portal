@@ -1,6 +1,6 @@
-import { Model } from "mongoose";
+import { Model, QueryOptions, QuerySelector } from "mongoose";
 
-import { DocumentId, ModelRecord, ObjectId } from "types/schema";
+import { AQuery, DocumentId, ModelRecord, ObjectId, SQuery } from "types/schema";
 
 export interface AttendanceSchema extends DocumentId {
   userId: ObjectId;
@@ -15,4 +15,23 @@ export type AttendanceDate = {
 
 export type AttendanceRecord = ModelRecord<AttendanceSchema>;
 
-export type AttendanceModel = Model<AttendanceSchema>;
+export interface AttendanceModel extends Model<AttendanceSchema> {
+  /** Find one user's attendance records by userId */
+  findUser(userId: string, projection?: any, options?: QueryOptions): SQuery<AttendanceSchema>;
+  /** Find multiple users attendance records by userId */
+  findUser(
+    userId: string[],
+    projection?: any,
+    options?: QueryOptions
+  ): SQuery<AttendanceSchema[], AttendanceSchema>;
+  /**
+   * Filter a range of dates for specific users
+   *
+   * @param userId User to find attendance record for
+   * @param query The conditions to filter the attendance with
+   */
+  findUserRange(
+    userId: string | string[],
+    query: QuerySelector<Date>
+  ): AQuery<Pick<AttendanceSchema, "dates">>;
+}
