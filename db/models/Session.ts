@@ -1,4 +1,4 @@
-import { Schema, model, models } from "mongoose";
+import { Schema, model, models, QueryOptions } from "mongoose";
 
 import { ModelNames } from "db";
 import { ThingName } from "db/schema/Thing";
@@ -23,8 +23,8 @@ SessionSchema.virtual("terms", {
   options: { populate: "-session" },
 });
 
-SessionSchema.static("findCurrent", function (projection?: any) {
-  return this.findOne({ current: true }, projection);
+SessionSchema.static("findCurrent", function (...args: [any?, QueryOptions?]) {
+  return this.findOne({ current: true }, ...args);
 });
 
 export const SessionModel = (models[ModelNames.SESSION] ??

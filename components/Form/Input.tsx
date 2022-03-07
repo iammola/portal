@@ -34,6 +34,7 @@ const Input: Input = ({
         ref={ref}
         {...props}
         value={value ?? ""}
+        type={props.type ?? "text"}
         placeholder={label || " "}
         onChange={(e) => onChange(e.target.value)}
         className={classNames(

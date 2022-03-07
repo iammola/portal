@@ -9,37 +9,39 @@ import { comparePassword, JWT_ALG, JWT_COOKIE } from "utils";
 import { ParentModel, StudentModel, TeacherModel } from "db/models";
 
 import type { ApiHandler } from "types/api";
+import type { AuthData, AuthUser } from "types/api/auth";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function getUser({ level, password, ...data }: AuthUser) {
+async function getUser({ level, password, remember, username }: AuthUser) {
   await connect();
 
-  if (!data.schoolMail && !data.username) throw new Error("Username or School email required");
+  if (!username) throw new Error("Username required");
 
   const args = [
-    data,
+    username,
     "password",
     {
       populate: "password",
-      lean: { virtuals: ["username"] },
+      lean: { virtuals: ["password"] },
     },
   ] as const;
 
   const user = await (level === "teacher"
-    ? TeacherModel.findOne(...args)
+    ? TeacherModel.findByUsername(...args)
     : level === "parent"
-    ? ParentModel.findOne(...args)
-    : StudentModel.findOne(...args));
+    ? ParentModel.findByUsername(...args)
+    : StudentModel.findByUsername(...args));
 
   if (user === null) throw new Error("User not found");
 
   if (!comparePassword(password, user.password)) throw new Error("Invalid password");
 
+  const days = remember ? 3 : 1;
   const { privateKey, publicKey } = await generateKeyPair(JWT_ALG);
 
   const token = await new SignJWT({})
     .setJti(randomBytes(32).toString("hex"))
-    .setExpirationTime("1 day")
+    .setExpirationTime(`${days} day`)
     .setIssuedAt()
     .setProtectedHeader({
       typ: "JWT",
@@ -47,15 +49,14 @@ async function getUser({ level, password, ...data }: AuthUser) {
     })
     .sign(privateKey);
 
-  return { token, publicKey };
+  return { token, publicKey, expiresIn: days * 24 * 3600 };
 }
 
 const handler: ApiHandler<AuthData> = async (req, res) => {
   if (typeof req.body !== "string" || !req.body) throw new Error("Invalid Request Body");
 
-  const { publicKey, token } = await getUser(JSON.parse(req.body) as AuthUser);
+  const { expiresIn, publicKey, token } = await getUser(JSON.parse(req.body) as AuthUser);
 
-  const expiresIn = 60 * 60 * 24;
   res.cookie(JWT_COOKIE, await exportSPKI(publicKey), {
     httpOnly: true,
     maxAge: expiresIn,
@@ -74,15 +75,3 @@ const handler: ApiHandler<AuthData> = async (req, res) => {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) =>
   routeWrapper<AuthData>(req, res, handler, ["POST"]);
-
-type AuthUser = {
-  level: string;
-  password: string;
-  username?: string;
-  schoolMail?: string;
-};
-
-type AuthData = {
-  token: string;
-  expiresIn: number;
-};

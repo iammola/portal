@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 const { fontFamily } = require("tailwindcss/defaultTheme");
 
 /** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
@@ -6,11 +7,12 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        inter: ["Inter", ...(typeof fontFamily !== "function" ? fontFamily.sans : "")],
-        poppins: ["Poppins", ...(typeof fontFamily !== "function" ? fontFamily.sans : "")],
+        inter: ["Inter", ...fontFamily.sans],
+        urbane: ["Urbane", ...fontFamily.sans],
+        poppins: ["Poppins", ...fontFamily.sans],
       },
     },
   },
   variants: {},
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };

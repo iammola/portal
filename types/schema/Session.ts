@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, QueryOptions } from "mongoose";
 
 import { DocumentId, ModelRecord, SQuery, TermSchema, ThingName } from "types/schema";
 
@@ -19,5 +19,8 @@ export type SessionRecord<V extends boolean | keyof SessionVirtuals = false> = M
 
 export interface SessionModel extends Model<SessionSchema, unknown, unknown, SessionVirtuals> {
   /** Find the term record where `{ current: true }` */
-  findCurrent(projection?: any): SQuery<SessionSchema>;
+  findCurrent(
+    projection?: any,
+    options?: QueryOptions
+  ): SQuery<SessionSchema, SessionSchema, unknown, SessionVirtuals>;
 }
