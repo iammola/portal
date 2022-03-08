@@ -25,5 +25,6 @@ export type StudentRecord<V extends boolean | keyof UserVirtuals = false> = Mode
   V
 >;
 
-export type StudentModel = Model<StudentSchema, unknown, unknown, UserVirtuals> &
-  UserStaticMethods<StudentSchema>;
+export interface StudentModel
+  extends Model<StudentSchema, unknown, unknown, UserVirtuals>,
+    UserStaticMethods<StudentSchema> {}

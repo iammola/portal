@@ -4,7 +4,9 @@ import { HydratedDocument, Query, Schema } from "mongoose";
 import { FlattenIntersection } from "types/utils";
 
 // Todo: Get a better name than "Thing" for this type. Meant to group classes or subjects or terms or sessions
-export type ThingName = Record<"long" | "short", string> & { special?: string };
+export interface ThingName extends Record<"long" | "short", string> {
+  special?: string;
+}
 
 export type ObjectId = BsonId & Schema.Types.ObjectId;
 

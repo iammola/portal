@@ -5,10 +5,10 @@ import { FlattenIntersection } from "types/utils";
 
 export type UserType = "parent" | "teacher" | "student";
 
-export type UserName = {
+export interface UserName extends Record<"initials" | "title" | "full" | "first" | "last", string> {
   other?: string;
   readonly username: string;
-} & Record<"initials" | "title" | "full" | "first" | "last", string>;
+}
 
 export interface UserPassword {
   hash: string;
