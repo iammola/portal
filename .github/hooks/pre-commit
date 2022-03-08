@@ -3,6 +3,10 @@
 FILES=$(git diff --cached --name-only --diff-filter=ACMR);
 [ -z "$FILES" ] && exit 0;
 
+# save staged/unstaged files
+echo "$FILES" > ".github/hooks/S.log";
+echo "$(git diff --name-only --diff-filter=ACMR)" > ".github/hooks/U.log";
+
 # run linters
 echo "$FILES" | grep -E '\.(?:t|j)sx?$' | xargs npx eslint --quiet --fix &&
 echo "$FILES" | grep -v '\.woff2?' | xargs npx prettier --ignore-unknown --write;
@@ -13,10 +17,6 @@ linter_exit_code=$?;
 if [ $linter_exit_code -ne 0 ]; then
   exit 1;
 fi
-
-# save staged/unstaged files
-echo "$FILES" > ".github/hooks/S.log";
-echo "$(git diff --name-only --diff-filter=ACMR)" > ".github/hooks/U.log";
 
 # get fully-staged file names
 FULLY_STAGED=$(comm -23 ".github/hooks/S.log" ".github/hooks/U.log");
