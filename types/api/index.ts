@@ -35,7 +35,7 @@ export interface ApiError extends ApiData<false> {
 
 export type ApiResult<D> = ApiResponse<D> | ApiError;
 
-export interface NextAPIResponse<T = any> extends NextApiResponse<T> {
+export interface NextAPIResponse<T = unknown> extends NextApiResponse<T> {
   /**
    * Helper method to serialize a cookie name-value pair into a `Set-Cookie` header string
    *
