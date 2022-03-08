@@ -13,5 +13,6 @@ export type ParentRecord<V extends boolean | keyof UserVirtuals = false> = Model
   V
 >;
 
-export type ParentModel = Model<ParentSchema, unknown, unknown, UserVirtuals> &
-  UserStaticMethods<ParentSchema>;
+export interface ParentModel
+  extends Model<ParentSchema, unknown, unknown, UserVirtuals>,
+    UserStaticMethods<ParentSchema> {}

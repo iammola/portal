@@ -1,11 +1,11 @@
-export type AuthUser = {
+export interface AuthUser {
   level: string;
   password: string;
   username: string;
   remember: boolean;
-};
+}
 
-export type AuthData = {
+export interface AuthData {
   token: string;
   expiresIn: number;
-};
+}
