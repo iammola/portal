@@ -52,7 +52,7 @@ const Login: NextPage = () => {
   return (
     <main className="flex h-screen w-screen items-stretch justify-center overflow-hidden bg-black font-urbane">
       <Head>
-        <title>Login | GRS CBT</title>
+        <title>Login | GRS Portal</title>
       </Head>
       <figure className="w-[60vw] bg-gray-900" />
       <section className="relative flex grow flex-col items-center justify-center gap-y-[4.5rem] bg-white p-5">
