@@ -4,8 +4,9 @@ import { Fragment, FunctionComponent, useMemo } from "react";
 import { ChevronRightIcon, HomeIcon } from "@heroicons/react/solid";
 
 export const Breadcrumbs: FunctionComponent<Props> = ({ className }) => {
-  const { asPath } = useRouter();
-  const paths = useMemo(() => asPath.slice(1, asPath.indexOf("?")).split("/"), [asPath]);
+  const { asPath, isReady } = useRouter();
+  const length = isReady && asPath.indexOf("?") > 0 ? asPath.indexOf("?") : undefined;
+  const paths = useMemo(() => asPath.slice(1, length).split("/"), [asPath, length]);
 
   return (
     <nav className={className ?? "flex w-full gap-x-2 py-2"}>
