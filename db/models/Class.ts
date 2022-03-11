@@ -1,3 +1,4 @@
+import mongooseLeanVirtuals from "mongoose-lean-virtuals";
 import { Schema, model, models, QueryOptions } from "mongoose";
 
 import { ModelNames } from "db";
@@ -19,6 +20,8 @@ const ClassSchema = new Schema<ClassRecord, Model>({
     type: [Schema.Types.ObjectId],
   },
 });
+
+ClassSchema.plugin(mongooseLeanVirtuals);
 
 ClassSchema.virtual("subjectsCount", {
   count: true,
