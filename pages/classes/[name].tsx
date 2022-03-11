@@ -3,7 +3,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { format, formatDistance } from "date-fns";
-import { CheckCircleIcon, MailIcon, XCircleIcon } from "@heroicons/react/solid";
+import {
+  CheckCircleIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  MailIcon,
+  XCircleIcon,
+} from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 import { Breadcrumbs } from "components/Breadcrumbs";
@@ -119,6 +125,26 @@ const Class: NextPage = () => {
                 </Link>
               </div>
             ))}
+            <div className="flex items-center justify-between text-xs">
+              <div className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600">
+                <ChevronLeftIcon className="h-5 w-5 fill-slate-500" />
+                Previous
+              </div>
+              <div className="flex items-center justify-center gap-x-6">
+                <span className="relative cursor-pointer py-4 px-2 text-blue-600 after:absolute after:-top-1 after:left-0 after:h-0.5 after:w-full after:bg-blue-600">
+                  1
+                </span>
+                {new Array(5).fill(null).map((_, i) => (
+                  <span key={i} className="cursor-pointer py-4 px-2 font-light text-slate-600">
+                    {i + 2}
+                  </span>
+                ))}
+              </div>
+              <div className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600">
+                Next
+                <ChevronRightIcon className="h-5 w-5 fill-slate-500" />
+              </div>
+            </div>
           </div>
         </section>
       </section>
