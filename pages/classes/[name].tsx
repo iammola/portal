@@ -96,7 +96,7 @@ const Class: NextPage = () => {
                   </div>
                 </div>
                 <div className="flex items-center text-sm tracking-wide text-slate-500">
-                  {item.age} year{item.age > 1 && "s"}
+                  {item.age} year{item.age > 1 && "s"} old
                 </div>
                 <div className="flex flex-col items-start justify-center gap-y-1">
                   <div className="flex items-center gap-x-1 text-sm text-slate-700">
