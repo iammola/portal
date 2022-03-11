@@ -16,6 +16,8 @@ export function formatError(error: any) {
       ])
     );
 
+  if (error instanceof Error.MongooseServerSelectionError) return "Could not connect to server";
+
   return (error as Error).message;
 }
 
