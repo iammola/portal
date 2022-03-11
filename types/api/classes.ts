@@ -8,3 +8,5 @@ export type CreateClassRequestBody = Pick<ClassSchema, "name" | "teachers">;
 export type GetClassesData<S extends keyof ClassSchema = keyof ClassSchema> = Array<
   FlattenIntersection<Pick<ClassSchema, "_id" | S>>
 >;
+
+export type GetClassData = Omit<ClassSchema, "teachers">;
