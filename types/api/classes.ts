@@ -9,4 +9,4 @@ export type GetClassesData<S extends keyof ClassRecord = keyof ClassRecord> = Ar
   FlattenIntersection<Pick<ClassRecord, "_id" | S>>
 >;
 
-export type GetClassData = Omit<ClassRecord, "teachers">;
+export type GetClassData = Omit<ClassRecord<true>, "teachers">;
