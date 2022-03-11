@@ -36,6 +36,7 @@ const students = [
     online: { state: 1, since: new Date(Date.now() - 720000) },
   },
 ];
+
 const Class: NextPage<GetClassData> = (props) => {
   const { isReady, query } = useRouter();
   const [activeTab, setActiveTab] = useState("Feed");
@@ -57,7 +58,9 @@ const Class: NextPage<GetClassData> = (props) => {
             {"•"}
             <span>5 students</span>
             {"•"}
-            <span>{data.subjectsCount} subjects</span>
+            <span>
+              {data.subjectsCount} subject{data.subjectsCount !== 1 && "s"}
+            </span>
           </p>
         </header>
         <section className="w-full px-20 pt-10 pb-6">
