@@ -3,7 +3,6 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { useRouter } from "next/router";
 import { format, formatDistance } from "date-fns";
 import {
   CheckCircleIcon,
@@ -38,10 +37,9 @@ const students = [
 ];
 
 const Class: NextPage<GetClassData> = (props) => {
-  const { isReady, query } = useRouter();
   const [activeTab, setActiveTab] = useState("Feed");
   const { data: { data } = { data: props } } = useSWR<ApiResponse<GetClassData>>(
-    isReady && `/api/classes/name?long=${query.name as string}`
+    `/api/classes/${props._id.toString()}`
   );
 
   return (
