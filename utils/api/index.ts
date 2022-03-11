@@ -1,6 +1,7 @@
 import { serialize } from "cookie";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
+import { verifyAuth } from "./auth";
 import { formatError, NotFoundError, UnauthorizedError } from "./error";
 
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -23,6 +24,7 @@ export async function routeWrapper<T extends object>(
   let data: HandlerResponse<T> | null = null;
 
   try {
+    if (req.url !== "/api/auth") await verifyAuth(req);
     (res as NextAPIResponse).cookie = (name, raw, opts) => {
       const value = typeof raw === "object" ? JSON.stringify(raw) : String(raw);
       res.setHeader("Set-Cookie", serialize(name, value, opts));

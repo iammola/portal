@@ -1,14 +1,14 @@
 import { importSPKI, jwtVerify } from "jose";
 
-import { UnauthorizedError } from "utils/api";
 import { JWT_ALG, JWT_COOKIE } from "utils/constants";
 
-// eslint-disable-next-line @next/next/no-server-import-in-page
-import type { NextRequest } from "next/server";
+import { UnauthorizedError } from "./error";
 
-export async function verifyAuth(request: NextRequest) {
+import type { NextApiRequest } from "next";
+
+export async function verifyAuth(request: NextApiRequest) {
   const key = request.cookies[JWT_COOKIE];
-  const auth = request.headers.get("authentication")?.split(" ");
+  const auth = (request.headers.authentication as string)?.split(" ");
 
   if (!key || !auth) throw new UnauthorizedError("Missing Authentication Token");
 
