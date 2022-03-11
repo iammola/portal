@@ -30,10 +30,13 @@ export async function routeWrapper<T extends object>(
 
     if (methods.includes(req.method ?? "")) data = await routeHandler(req, res as NextAPIResponse);
   } catch (error) {
-    const [message, code] =
-      error instanceof NotFoundError
-        ? [ReasonPhrases.NOT_FOUND, StatusCodes.NOT_FOUND]
-        : [ReasonPhrases.BAD_REQUEST, StatusCodes.BAD_REQUEST];
+    let [message, code] = [ReasonPhrases.BAD_REQUEST, StatusCodes.BAD_REQUEST];
+
+    if (error instanceof NotFoundError)
+      [message, code] = [ReasonPhrases.NOT_FOUND, StatusCodes.NOT_FOUND];
+
+    if (error instanceof UnauthorizedError)
+      [message, code] = [ReasonPhrases.UNAUTHORIZED, StatusCodes.UNAUTHORIZED];
 
     data = [
       {
