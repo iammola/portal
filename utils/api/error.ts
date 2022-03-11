@@ -18,3 +18,17 @@ export function formatError(error: any) {
 
   return (error as Error).message;
 }
+
+export class NotFoundError extends globalThis.Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "NotFoundError";
+  }
+}
+
+export class UnauthorizedError extends globalThis.Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "UnauthorizedError";
+  }
+}

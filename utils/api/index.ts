@@ -1,7 +1,7 @@
 import { serialize } from "cookie";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { formatError } from "./error";
+import { formatError, NotFoundError, UnauthorizedError } from "./error";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { ApiHandler, HandlerResponse, NextAPIResponse } from "types/api";
@@ -59,20 +59,6 @@ export async function routeWrapper<T extends object>(
         message: ReasonPhrases.METHOD_NOT_ALLOWED,
       }
     );
-}
-
-export class NotFoundError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "NotFoundError";
-  }
-}
-
-export class UnauthorizedError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "UnauthorizedError";
-  }
 }
 
 export { fetchAPIEndpoint } from "./endpoint";
