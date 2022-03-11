@@ -63,4 +63,5 @@ export async function routeWrapper<T extends object>(
     );
 }
 
+export { NotFoundError, UnauthorizedError };
 export { fetchAPIEndpoint } from "./endpoint";
