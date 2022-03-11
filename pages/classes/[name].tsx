@@ -45,7 +45,7 @@ const Class: NextPage<GetClassData> = (props) => {
   return (
     <main className="flex h-screen w-screen items-stretch justify-center overflow-hidden font-urbane">
       <Head>
-        <title>Class-Name | **SessionIfNotCurrent** | GRS Portal</title>
+        <title>{data.name.long} | GRS Portal</title>
       </Head>
       <section className="flex w-full grow flex-col items-start justify-start">
         <header className="flex w-full flex-col bg-slate-100 px-8 pt-4 pb-6">
