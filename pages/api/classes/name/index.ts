@@ -2,7 +2,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { ClassModel } from "db/models";
-import { routeWrapper } from "utils/api";
+import { routeWrapper, NotFoundError } from "utils/api";
 
 import type { GetClassData } from "types/api/classes";
 import type { ApiHandler, MethodResponse } from "types/api";
@@ -14,7 +14,7 @@ async function getClass(name: string): MethodResponse<GetClassData> {
     virtuals: true,
   });
 
-  if (data === null) throw new Error(`Class "${name}" not found`);
+  if (data === null) throw new NotFoundError(`Class "${name}" not found`);
 
   return [
     {
