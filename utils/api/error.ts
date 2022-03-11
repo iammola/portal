@@ -16,5 +16,21 @@ export function formatError(error: any) {
       ])
     );
 
+  if (error instanceof Error.MongooseServerSelectionError) return "Could not connect to server";
+
   return (error as Error).message;
+}
+
+export class NotFoundError extends globalThis.Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "NotFoundError";
+  }
+}
+
+export class UnauthorizedError extends globalThis.Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "UnauthorizedError";
+  }
 }

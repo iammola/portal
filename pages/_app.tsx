@@ -2,16 +2,13 @@ import Head from "next/head";
 import { SWRConfig } from "swr";
 
 import "style/index.css";
+import { fetchAPIEndpoint } from "utils";
 
 import type { AppProps } from "next/app";
 
 const App = ({ Component, pageProps }: AppProps): JSX.Element => {
   return (
-    <SWRConfig
-      value={{
-        fetcher: (e: RequestInfo, i?: RequestInit) => fetch(e, i).then((r) => r.json()),
-      }}
-    >
+    <SWRConfig value={{ fetcher: fetchAPIEndpoint }}>
       <Component {...pageProps} />
       <Head>
         <link rel="icon" href="/favicon.ico" />

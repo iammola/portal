@@ -1,7 +1,8 @@
 import { serialize } from "cookie";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { formatError } from "./error";
+import { verifyAuth } from "./auth";
+import { formatError, NotFoundError, UnauthorizedError } from "./error";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { ApiHandler, HandlerResponse, NextAPIResponse } from "types/api";
@@ -23,6 +24,7 @@ export async function routeWrapper<T extends object>(
   let data: HandlerResponse<T> | null = null;
 
   try {
+    if (req.url !== "/api/auth") await verifyAuth(req);
     (res as NextAPIResponse).cookie = (name, raw, opts) => {
       const value = typeof raw === "object" ? JSON.stringify(raw) : String(raw);
       res.setHeader("Set-Cookie", serialize(name, value, opts));
@@ -30,13 +32,21 @@ export async function routeWrapper<T extends object>(
 
     if (methods.includes(req.method ?? "")) data = await routeHandler(req, res as NextAPIResponse);
   } catch (error) {
+    let [message, code] = [ReasonPhrases.BAD_REQUEST, StatusCodes.BAD_REQUEST];
+
+    if (error instanceof NotFoundError)
+      [message, code] = [ReasonPhrases.NOT_FOUND, StatusCodes.NOT_FOUND];
+
+    if (error instanceof UnauthorizedError)
+      [message, code] = [ReasonPhrases.UNAUTHORIZED, StatusCodes.UNAUTHORIZED];
+
     data = [
       {
+        message,
         success: false,
         error: formatError(error),
-        message: ReasonPhrases.BAD_REQUEST,
       },
-      StatusCodes.BAD_REQUEST,
+      code,
     ];
   }
 
@@ -53,4 +63,5 @@ export async function routeWrapper<T extends object>(
     );
 }
 
+export { NotFoundError, UnauthorizedError };
 export { fetchAPIEndpoint } from "./endpoint";

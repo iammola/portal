@@ -1,6 +1,6 @@
-import { Model } from "mongoose";
+import { Model, QueryOptions } from "mongoose";
 
-import { DocumentId, ModelRecord, ObjectId, ThingName } from "types/schema";
+import { DocumentId, ModelRecord, ObjectId, SQuery, ThingName } from "types/schema";
 
 export interface ClassSchema extends DocumentId {
   name: ThingName;
@@ -18,4 +18,12 @@ export type ClassRecord<V extends boolean | keyof ClassVirtuals = false> = Model
   V
 >;
 
-export type ClassModel = Model<ClassSchema, unknown, unknown, ClassVirtuals>;
+export interface ClassModel extends Model<ClassSchema, unknown, unknown, ClassVirtuals> {
+  /** Find a class by any it's long, short or special names */
+  findByName(
+    name: string,
+    type: keyof ThingName,
+    projection?: any,
+    options?: QueryOptions
+  ): SQuery<ClassSchema, ClassSchema, unknown, ClassVirtuals>;
+}

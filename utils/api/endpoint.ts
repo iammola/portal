@@ -9,7 +9,7 @@ import { JWT_COOKIE } from "utils/constants";
  * @param body The Request Body for non-GET method requests
  */
 export async function fetchAPIEndpoint<ResponseData, Body = undefined>(
-  endpoint: string,
+  endpoint: RequestInfo,
   init?: Omit<RequestInit, "body">,
   body?: Body
 ) {
