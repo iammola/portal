@@ -1,7 +1,9 @@
+import useSWR from "swr";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { format, formatDistance } from "date-fns";
 import {
   CheckCircleIcon,
@@ -11,10 +13,14 @@ import {
   XCircleIcon,
 } from "@heroicons/react/solid";
 
+import { connect } from "db";
 import { classNames } from "utils";
+import { ClassModel } from "db/models";
 import { Breadcrumbs } from "components/Breadcrumbs";
 
-import type { NextPage } from "next";
+import type { ApiResponse } from "types/api";
+import type { GetClassData } from "types/api/classes";
+import type { NextPage, GetServerSideProps } from "next";
 
 const students = [
   {
@@ -30,8 +36,12 @@ const students = [
     online: { state: 1, since: new Date(Date.now() - 720000) },
   },
 ];
-const Class: NextPage = () => {
+const Class: NextPage<GetClassData> = (props) => {
+  const { isReady, query } = useRouter();
   const [activeTab, setActiveTab] = useState("Feed");
+  const { data: { data } = { data: props } } = useSWR<ApiResponse<GetClassData>>(
+    isReady && `/api/classes/name?long=${query.name as string}`
+  );
 
   return (
     <main className="flex h-screen w-screen items-stretch justify-center overflow-hidden font-urbane">
@@ -41,13 +51,13 @@ const Class: NextPage = () => {
       <section className="flex w-full grow flex-col items-start justify-start">
         <header className="flex w-full flex-col bg-slate-100 px-8 pt-4 pb-6">
           <Breadcrumbs />
-          <h3 className="text-4xl font-semibold capitalize text-slate-700">Key Stage 1</h3>
+          <h3 className="text-4xl font-semibold capitalize text-slate-700">{data.name.long}</h3>
           <p className="flex gap-x-1 pt-2 text-xs font-light tracking-wide text-slate-500">
-            <span>Since {format(new Date(2018, 5, 22), "do MMMM yyyy")}</span>
+            <span>Since {format(new Date(data.createdAt), "do MMMM yyyy")}</span>
             {"•"}
             <span>5 students</span>
             {"•"}
-            <span>3 subjects</span>
+            <span>{data.subjectsCount} subjects</span>
           </p>
         </header>
         <section className="w-full px-20 pt-10 pb-6">
@@ -150,6 +160,19 @@ const Class: NextPage = () => {
       </section>
     </main>
   );
+};
+
+export const getServerSideProps: GetServerSideProps<GetClassData> = async ({ params }) => {
+  await connect();
+  const data = await ClassModel.findByName(
+    params?.name as string,
+    "long",
+    "-teachers"
+  ).lean<GetClassData>({ virtuals: true });
+
+  if (data === null) return { notFound: true };
+
+  return { props: data };
 };
 
 export default Class;
