@@ -30,13 +30,18 @@ export async function routeWrapper<T extends object>(
 
     if (methods.includes(req.method ?? "")) data = await routeHandler(req, res as NextAPIResponse);
   } catch (error) {
+    const [message, code] =
+      error instanceof NotFoundError
+        ? [ReasonPhrases.NOT_FOUND, StatusCodes.NOT_FOUND]
+        : [ReasonPhrases.BAD_REQUEST, StatusCodes.BAD_REQUEST];
+
     data = [
       {
+        message,
         success: false,
         error: formatError(error),
-        message: ReasonPhrases.BAD_REQUEST,
       },
-      StatusCodes.BAD_REQUEST,
+      code,
     ];
   }
 
@@ -51,6 +56,13 @@ export async function routeWrapper<T extends object>(
         message: ReasonPhrases.METHOD_NOT_ALLOWED,
       }
     );
+}
+
+export class NotFoundError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "NotFoundError";
+  }
 }
 
 export { fetchAPIEndpoint } from "./endpoint";
