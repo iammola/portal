@@ -27,7 +27,7 @@ const Class: NextPage = () => {
             <span>3 subjects</span>
           </p>
         </header>
-        <section className="w-full py-6 px-5">
+        <section className="w-full px-20 pt-10 pb-6">
           <div className="relative flex w-full items-center justify-start gap-x-12 border-b-2 border-slate-300">
             {["Feed", "Students", "Subjects"].map((tab) => (
               <span
