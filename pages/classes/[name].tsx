@@ -172,7 +172,7 @@ export const getServerSideProps: GetServerSideProps<GetClassData> = async ({ par
 
   if (data === null) return { notFound: true };
 
-  return { props: data };
+  return { props: JSON.parse(JSON.stringify(data)) as GetClassData };
 };
 
 export default Class;
