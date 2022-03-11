@@ -8,13 +8,11 @@ import type { GetClassData } from "types/api/classes";
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function getClass(name: string): MethodResponse<GetClassData> {
+async function getClass(id: string): MethodResponse<GetClassData> {
   await connect();
-  const data = await ClassModel.findByName(name, "long", "-teachers").lean<GetClassData>({
-    virtuals: true,
-  });
+  const data = await ClassModel.findById(id).lean<GetClassData>({ virtuals: true });
 
-  if (data === null) throw new NotFoundError(`Class "${name}" not found`);
+  if (data === null) throw new NotFoundError("Class not found");
 
   return [
     {
