@@ -30,7 +30,7 @@ ClassSchema.virtual("subjectsCount", {
 ClassSchema.static(
   "findByName",
   function (name: string, type: keyof Name, ...args: [any?, QueryOptions?]) {
-    const regex = new RegExp(name.replaceAll(/-_/g, " "), "i");
+    const regex = new RegExp(name.replaceAll(/[-_]/g, " "), "i");
     return this.findOne({ [`name.${type}`]: regex }, ...args);
   }
 );
