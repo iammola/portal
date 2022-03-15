@@ -5,4 +5,4 @@ export type CreateSessionData = CreateResult;
 
 export type CreateSessionRequestBody = Omit<SessionRecord<true>, "terms">;
 
-export type GetCurrentSessionData = SessionRecord;
+export type GetSessionData = SessionRecord;

@@ -6,7 +6,7 @@ import { routeWrapper } from "utils/api";
 
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { GetCurrentSessionData as GetData } from "types/api/sessions";
+import type { GetSessionData as GetData } from "types/api/sessions";
 
 async function getCurrentSession(): MethodResponse<GetData> {
   await connect();

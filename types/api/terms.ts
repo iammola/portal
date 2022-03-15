@@ -5,6 +5,6 @@ export type CreateTermData = CreateResult;
 
 export type CreateTermRequestBody = TermRecord;
 
-export type GetCurrentTermData = Omit<TermRecord, "session"> & {
+export type GetTermData = Omit<TermRecord, "session"> & {
   session: Omit<SessionRecord<true>, "terms">;
 };
