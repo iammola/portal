@@ -22,6 +22,13 @@ SessionSchema.virtual("terms", {
   foreignField: "session",
 });
 
+SessionSchema.virtual("termsCount", {
+  ref: ModelNames.TERM,
+  count: true,
+  localField: "_id",
+  foreignField: "session",
+});
+
 SessionSchema.static("findCurrent", function (...args: [any?, QueryOptions?]) {
   return this.findOne({ current: true }, ...args);
 });

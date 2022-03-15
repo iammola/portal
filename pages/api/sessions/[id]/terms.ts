@@ -12,7 +12,7 @@ async function getSessionTerms(id: string): MethodResponse<GetData> {
   await connect();
   const data = await SessionModel.findById(id, "terms")
     .populate("terms")
-    .lean<GetData>({ virtuals: true });
+    .lean<GetData>({ virtuals: ["terms"] });
 
   if (data === null) throw new NotFoundError("Session not found");
 
