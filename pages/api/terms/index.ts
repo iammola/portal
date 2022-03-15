@@ -1,8 +1,8 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { TermModel } from "db/models";
-import { routeWrapper } from "utils/api";
+import { SessionModel, TermModel } from "db/models";
+import { routeWrapper, NotFoundError } from "utils/api";
 
 import type {
   CreateTermData as CreateData,
@@ -13,6 +13,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 async function createTerm(body: CreateBody): MethodResponse<CreateData> {
   await connect();
+
+  const session = await SessionModel.exists({ _id: body.session }).lean();
+  if (session === null) throw new NotFoundError("Session not found");
+
   const { _id } = await TermModel.create(body);
 
   return [
