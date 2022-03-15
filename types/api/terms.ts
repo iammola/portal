@@ -1,6 +1,10 @@
 import { CreateResult } from "types/api";
-import { TermRecord } from "types/schema";
+import { SessionRecord, TermRecord } from "types/schema";
 
 export type CreateTermData = CreateResult;
 
 export type CreateTermRequestBody = TermRecord;
+
+export type GetCurrentTermData = Omit<TermRecord, "session"> & {
+  session: Omit<SessionRecord<true>, "terms">;
+};
