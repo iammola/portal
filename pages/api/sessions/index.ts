@@ -14,9 +14,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 async function getSessions(): MethodResponse<GetData> {
   await connect();
-  const data = await SessionModel.find({})
-    .populate("termsCount")
-    .lean({ virtuals: ["termsCount"] });
+  const data = await SessionModel.find({}).populate("termsCount").lean();
 
   return [
     {

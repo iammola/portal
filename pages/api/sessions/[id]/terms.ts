@@ -10,9 +10,7 @@ import type { GetSessionTermsData as GetData } from "types/api/sessions";
 
 async function getSessionTerms(id: string): MethodResponse<GetData> {
   await connect();
-  const data = await SessionModel.findById(id, "terms")
-    .populate("terms")
-    .lean<GetData>({ virtuals: ["terms"] });
+  const data = await SessionModel.findById(id, "terms").populate("terms").lean<GetData>();
 
   if (data === null) throw new NotFoundError("Session not found");
 
