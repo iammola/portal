@@ -15,6 +15,7 @@ const TermSchema = new Schema<TermRecord, Model>({
     required: [true, "Term name required"],
   },
   session: {
+    ref: ModelNames.SESSION,
     type: Schema.Types.ObjectId,
     required: [true, "Term session required"],
   },

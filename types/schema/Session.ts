@@ -8,6 +8,7 @@ export interface SessionSchema extends DocumentId {
 }
 
 interface SessionVirtuals {
+  termsCount: number;
   terms: Array<Omit<TermSchema, "session">>;
 }
 

@@ -20,7 +20,13 @@ SessionSchema.virtual("terms", {
   ref: ModelNames.TERM,
   localField: "_id",
   foreignField: "session",
-  options: { populate: "-session" },
+});
+
+SessionSchema.virtual("termsCount", {
+  ref: ModelNames.TERM,
+  count: true,
+  localField: "_id",
+  foreignField: "session",
 });
 
 SessionSchema.static("findCurrent", function (...args: [any?, QueryOptions?]) {
