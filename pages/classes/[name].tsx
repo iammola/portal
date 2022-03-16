@@ -159,7 +159,7 @@ const Class: NextPage<GetClassData> = (props) => {
               </div>
             </div>
           )}
-          {activeTab === "Teachers" && <Teachers />}
+          {activeTab === "Teachers" && <Teachers id={String(props._id)} />}
         </section>
       </section>
     </main>
