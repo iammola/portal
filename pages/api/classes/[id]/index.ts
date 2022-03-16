@@ -25,7 +25,7 @@ async function getClass(id: string): MethodResponse<GetClassData> {
 }
 
 const handler: ApiHandler<GetClassData> = async ({ method, query }) => {
-  if (method === "GET" && typeof query.long === "string") return await getClass(query.long);
+  if (method === "GET") return await getClass(query.id as string);
 
   return null;
 };
