@@ -38,5 +38,9 @@ ClassSchema.static(
   }
 );
 
+ClassSchema.static("getTeachers", function (classId: string, proj?: any, options?: QueryOptions) {
+  return this.findById(classId, "teachers", options).populate("teachers", proj);
+});
+
 export const ClassModel = (models[ModelNames.CLASS] ??
   model(ModelNames.CLASS, ClassSchema)) as Model;
