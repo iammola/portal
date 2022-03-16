@@ -23,6 +23,7 @@ export const UserImage: FunctionComponent<Props> = ({
           objectFit="cover"
           onError={() => setError(true)}
           onLoadingComplete={() => setError(false)}
+          objectPosition={props.objectPosition ?? "center"}
         />
       )}
     </figure>
