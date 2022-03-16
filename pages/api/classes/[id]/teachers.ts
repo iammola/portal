@@ -25,7 +25,8 @@ async function getTeachers(classID: string, proj: any): MethodResponse<GetData> 
 }
 
 const handler: ApiHandler<GetData> = async ({ query, method }) => {
-  if (method === "GET") return await getTeachers(query.id as string, query.filter);
+  if (method === "GET")
+    return await getTeachers(query.id as string, (query.projection as string).replaceAll(",", ""));
 
   return null;
 };

@@ -8,7 +8,9 @@ import type { GetClassesData } from "types/api/classes";
 
 export const Class: Class = ({ onChange, value }) => {
   const [options, setOptions] = useState<Value[]>([]);
-  const { data: classes } = useSWR<ApiResult<GetClassesData<"name">>>("/api/classes/?field=name");
+  const { data: classes } = useSWR<ApiResult<GetClassesData<"name">>>(
+    "/api/classes/?projection=name"
+  );
 
   useEffect(() => {
     if (classes?.success) setOptions(classes.data.map((d) => ({ id: d._id, value: d.name.long })));
@@ -28,7 +30,7 @@ export const Subjects: Subjects = ({ onChange, selectedClass, values }) => {
   const [options, setOptions] = useState<Value[]>([]);
   // NOTE: Type and API Route not yet implemented
   const { data: subjects } = useSWR<ApiResult<GetClassesData<"name">>>(
-    `/api/classes/${selectedClass}/subjects/?field=name`
+    `/api/classes/${selectedClass}/subjects/?projection=name`
   );
 
   useEffect(() => {
