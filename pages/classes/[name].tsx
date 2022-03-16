@@ -1,7 +1,6 @@
 import useSWR from "swr";
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { format, formatDistance } from "date-fns";
 import {
@@ -15,7 +14,7 @@ import {
 import { connect } from "db";
 import { classNames } from "utils";
 import { ClassModel } from "db/models";
-import { Breadcrumbs } from "components/Breadcrumbs";
+import { Breadcrumbs, UserImage } from "components";
 
 import type { ApiResponse } from "types/api";
 import type { GetClassData } from "types/api/classes";
@@ -83,14 +82,14 @@ const Class: NextPage<GetClassData> = (props) => {
                 className="grid w-full grid-cols-[1fr_max-content_25%_max-content] gap-x-28 py-5"
               >
                 <div className="flex w-full items-center justify-start gap-4">
-                  <div className="relative h-16 w-16 shrink-0 [shape-outside:circle(50%_at_50%_50%)]">
-                    <Image
-                      layout="fill"
-                      objectFit="cover"
-                      objectPosition="center"
-                      className="rounded-full"
-                      alt="John Doe's Portrait Image"
-                      src={`/Portrait ${idx + 3}.jpg`}
+                  <div
+                    style={{ shapeOutside: "circle(50% at 50% 50%)" }}
+                    className="aspect-square h-16 w-16 shrink-0 overflow-hidden rounded-full"
+                  >
+                    <UserImage
+                      alt={`${item.name}'s Portrait Image`}
+                      src={`/Users/${String(idx + 3).padStart(3, "0")}.jpg`}
+                      fallbackText={item.name.split(" ", 2).reduce((a, b) => a + b[0], "")}
                     />
                   </div>
                   <div className="space-y-1 text-sm">

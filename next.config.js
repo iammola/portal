@@ -2,4 +2,7 @@
 module.exports = {
   swcMinify: true,
   reactStrictMode: true,
+  images: {
+    domains: ["drive.google.com"],
+  },
 };

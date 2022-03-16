@@ -1,6 +1,7 @@
 import Head from "next/head";
-import Image from "next/image";
 import dynamic from "next/dynamic";
+
+import { UserImage } from "components";
 
 import type { NextPage } from "next";
 
@@ -18,16 +19,13 @@ const Me: NextPage = () => {
         <div className="w-full grow bg-slate-50 px-5 md:px-10">
           <div className="relative flex h-24 w-full items-center justify-start">
             <div className="absolute top-10 z-10 aspect-square w-44 -translate-y-1/2 overflow-x-hidden rounded-full shadow-2xl shadow-slate-300 ring-4 ring-white">
-              <div className="relative h-full w-full rounded-full">
-                <Image
-                  priority
-                  layout="fill"
-                  alt="Portrait 3"
-                  objectFit="cover"
-                  src="/Portrait 3.jpg"
-                  objectPosition="top"
-                />
-              </div>
+              <UserImage
+                priority
+                alt="User Image"
+                fallbackText="MJ"
+                src="/Users/003.jpg"
+                objectPosition="top"
+              />
             </div>
             <div className="ml-44 flex flex-col items-start justify-center gap-y-1 pl-5">
               <h3 className="text-4xl text-slate-700">Christina Andrews</h3>
