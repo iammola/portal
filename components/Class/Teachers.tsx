@@ -14,6 +14,7 @@ const teachers = [
   // Route - `/api/classes/${props._id.toString()}/teachers?filter=name schoolMail`
   // Type - import type { GetClassTeachersData } from "types/api/classes";
   {
+    _id: "1",
     image: {
       portrait: "/Users/002.jpg",
     },
@@ -24,6 +25,7 @@ const teachers = [
     },
   },
   {
+    _id: "2",
     image: {
       portrait: "/Users/006.jpg",
     },
@@ -42,52 +44,8 @@ export const Teachers: FunctionComponent<{ id: string }> = () => {
         Invite Teacher
       </button>
       <div className="w-full divide-y divide-slate-300">
-        {teachers?.map(({ name, image, schoolMail }, idx) => (
-          <div
-            key={idx}
-            className="grid w-full gap-x-28 py-5"
-            style={{ gridTemplateColumns: "1fr repeat(2, max-content)" }}
-          >
-            <div className="flex w-full items-center justify-start gap-4">
-              <div
-                style={{ shapeOutside: "circle(50% at 50% 50%)" }}
-                className="aspect-square h-16 w-16 shrink-0 overflow-hidden rounded-full"
-              >
-                <UserImage
-                  src={image.portrait ?? ""}
-                  alt={`${name.full}'s Image`}
-                  fallbackText={name.initials}
-                />
-              </div>
-              <div className="space-y-1 text-sm">
-                <Link href={`/teachers/${idx}`}>
-                  <a className="tracking-wide text-blue-600">{name.full}</a>
-                </Link>
-                <div className="flex gap-x-2">
-                  <MailIcon className="h-5 w-5 fill-slate-500" />
-                  <a
-                    href={`mailto:${schoolMail}`}
-                    className="flex gap-x-2 text-sm lowercase tracking-wide text-gray-500"
-                  >
-                    {schoolMail}
-                  </a>
-                </div>
-              </div>
-            </div>
-            <Link href={`/teachers/${idx}`}>
-              <a className="flex items-center text-sm tracking-wide text-blue-600">
-                Go to Profile
-                <ExternalLinkIcon className="h-4 w-4 fill-blue-600" />
-              </a>
-            </Link>
-            <button
-              type="button"
-              className="text-sm tracking-wide text-red-600"
-              onClick={() => alert(`Are you sure you want to remove ${name.full} from this class`)}
-            >
-              Remove
-            </button>
-          </div>
+        {teachers?.map((item) => (
+          <Row key={item._id} {...item} />
         ))}
         <div className="flex items-center justify-between text-xs">
           <div className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600">
@@ -110,6 +68,51 @@ export const Teachers: FunctionComponent<{ id: string }> = () => {
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+const Row: FunctionComponent<typeof teachers[0]> = ({ _id, image, name, schoolMail }) => {
+  return (
+    <div
+      className="grid w-full gap-x-28 py-5"
+      style={{ gridTemplateColumns: "1fr repeat(2, max-content)" }}
+    >
+      <div className="flex w-full items-center justify-start gap-4">
+        <div
+          style={{ shapeOutside: "circle(50% at 50% 50%)" }}
+          className="aspect-square h-16 w-16 shrink-0 overflow-hidden rounded-full"
+        >
+          <UserImage
+            src={image.portrait ?? ""}
+            alt={`${name.full}'s Image`}
+            fallbackText={name.initials}
+          />
+        </div>
+        <div className="space-y-1 text-sm">
+          <Link href={`/teachers/${_id}`}>
+            <a className="tracking-wide text-blue-600">{name.full}</a>
+          </Link>
+          <div className="flex gap-x-2">
+            <MailIcon className="h-5 w-5 fill-slate-500" />
+            <a
+              href={`mailto:${schoolMail}`}
+              className="flex gap-x-2 text-sm lowercase tracking-wide text-gray-500"
+            >
+              {schoolMail}
+            </a>
+          </div>
+        </div>
+      </div>
+      <Link href={`/teachers/${_id}`}>
+        <a className="flex items-center text-sm tracking-wide text-blue-600">
+          Go to Profile
+          <ExternalLinkIcon className="h-4 w-4 fill-blue-600" />
+        </a>
+      </Link>
+      <button type="button" className="text-sm tracking-wide text-red-600">
+        Remove
+      </button>
     </div>
   );
 };
