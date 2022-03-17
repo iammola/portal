@@ -69,3 +69,26 @@ const Row: FunctionComponent<TeacherSchema> = ({ _id, image, name, schoolMail })
     </div>
   );
 };
+
+const Skeleton: FunctionComponent = () => {
+  return (
+    <div
+      className="grid w-full gap-x-28 py-5"
+      style={{ gridTemplateColumns: "1fr repeat(2, max-content)" }}
+    >
+      <div className="flex w-full items-center justify-start gap-4">
+        <div className="aspect-square h-16 w-16 shrink-0 animate-pulse overflow-hidden rounded-full bg-slate-300" />
+        <div className="space-y-2">
+          <div className="h-3 w-24 animate-pulse rounded-full bg-slate-300" />
+          <div className="h-3 w-40 animate-pulse rounded-full bg-slate-300" />
+        </div>
+      </div>
+      <div className="flex items-center">
+        <div className="h-3 w-20 animate-pulse rounded-full bg-slate-300" />
+      </div>
+      <div className="flex items-center">
+        <div className="h-3 w-20 animate-pulse rounded-full bg-slate-300" />
+      </div>
+    </div>
+  );
+};
