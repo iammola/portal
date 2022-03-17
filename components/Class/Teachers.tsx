@@ -1,14 +1,9 @@
 import useSWR from "swr";
 import Link from "next/link";
 import { FunctionComponent } from "react";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ExternalLinkIcon,
-  MailIcon,
-} from "@heroicons/react/solid";
+import { ExternalLinkIcon, MailIcon } from "@heroicons/react/solid";
 
-import { UserImage } from "components";
+import { List, UserImage } from "components";
 
 import type { ApiResponse } from "types/api";
 import type { TeacherSchema } from "types/schema";
@@ -24,31 +19,11 @@ export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
       <button className="rounded bg-blue-500 px-4 py-2 text-sm tracking-wide text-white shadow hover:bg-blue-600">
         Invite Teacher
       </button>
-      <div className="w-full divide-y divide-slate-300">
+      <List className="w-full divide-y divide-slate-300">
         {res?.data.teachers.map((item) => (
           <Row key={String(item._id)} {...item} />
         ))}
-        <div className="flex items-center justify-between text-xs">
-          <div className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600">
-            <ChevronLeftIcon className="h-5 w-5 fill-slate-500" />
-            Previous
-          </div>
-          <div className="flex items-center justify-center gap-x-6">
-            <span className="relative cursor-pointer py-4 px-2 text-blue-600 after:absolute after:-top-1 after:left-0 after:h-0.5 after:w-full after:bg-blue-600">
-              1
-            </span>
-            {new Array(5).fill(null).map((_, i) => (
-              <span key={i} className="cursor-pointer py-4 px-2 font-light text-slate-600">
-                {i + 2}
-              </span>
-            ))}
-          </div>
-          <div className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600">
-            Next
-            <ChevronRightIcon className="h-5 w-5 fill-slate-500" />
-          </div>
-        </div>
-      </div>
+      </List>
     </div>
   );
 };
