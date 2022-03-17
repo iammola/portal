@@ -35,10 +35,7 @@ const Row: FunctionComponent<TeacherSchema> = ({ _id, image, name, schoolMail })
       style={{ gridTemplateColumns: "1fr repeat(2, max-content)" }}
     >
       <div className="flex w-full items-center justify-start gap-4">
-        <div
-          style={{ shapeOutside: "circle(50% at 50% 50%)" }}
-          className="aspect-square h-16 w-16 shrink-0 overflow-hidden rounded-full"
-        >
+        <div className="aspect-square h-16 w-16 shrink-0 overflow-hidden rounded-full">
           <UserImage
             src={image.portrait ?? ""}
             alt={`${name.full}'s Image`}
