@@ -40,9 +40,12 @@ AttendanceSchema.static(
           dates: {
             $filter: {
               input: "$dates",
-              cond: Object.fromEntries(
-                Object.entries(query).map(([key, val]) => [key, ["$$this.in", val]])
-              ),
+              cond: {
+                $and: Object.entries(query).reduce(
+                  (acc, [key, val]) => [...acc, { [key]: ["$$this.in", val] }],
+                  [] as Array<Record<string, any>>
+                ),
+              },
             },
           },
         },
