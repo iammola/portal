@@ -5,12 +5,12 @@ import { ExternalLinkIcon, MailIcon } from "@heroicons/react/solid";
 
 import { List, UserImage } from "components";
 
-import type { ApiResponse } from "types/api";
 import type { TeacherSchema } from "types/schema";
+import type { ApiError, ApiResponse } from "types/api";
 import type { GetClassTeachersData as Data } from "types/api/classes";
 
 export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
-  const { data: res } = useSWR<ApiResponse<Data>>(
+  const { data: { data } = {}, error } = useSWR<ApiResponse<Data>, ApiError>(
     `/api/classes/${id}/teachers?projection=schoolMail,name.full,name.initials,name.title,image.portrait`
   );
 
@@ -20,7 +20,10 @@ export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
         Invite Teacher
       </button>
       <List className="w-full divide-y divide-slate-300">
-        {res?.data.teachers.map((item) => (
+        {error && "Error State component soon"}
+        {data && !data.teachers.length && "Empty state component soon"}
+        {data === error && new Array(3).fill(null).map((_, idx) => <Skeleton key={idx} />)}
+        {data?.teachers.map((item) => (
           <Row key={String(item._id)} {...item} />
         ))}
       </List>
