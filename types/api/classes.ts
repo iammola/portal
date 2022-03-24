@@ -15,4 +15,7 @@ export type GetClassTeachersData = {
   teachers: TeacherSchema[];
 };
 
+export type AddClassTeachersData = Record<"success", boolean>;
+export type AddClassTeachersRequestBody = Record<"teachers", string[]>;
+
 export type DeleteClassTeacherData = UpdateResult & { message: string };
