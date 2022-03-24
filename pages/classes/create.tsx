@@ -24,7 +24,7 @@ const CreateClass: NextPage = () => {
         { method: "POST" },
         {
           name: { long, short, special },
-          teachers: teachers.map(({ _id }) => _id as NonNullable<typeof _id>).filter(Boolean),
+          teachers: teachers.map((t) => t.mail),
         }
       );
 

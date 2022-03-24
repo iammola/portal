@@ -3,7 +3,7 @@ import { CreateResult, UpdateResult } from "types/api";
 import { ClassRecord, TeacherSchema } from "types/schema";
 
 export type CreateClassData = CreateResult<Pick<ClassRecord, "createdAt">>;
-export type CreateClassRequestBody = Pick<ClassRecord, "name" | "teachers">;
+export type CreateClassRequestBody = Pick<ClassRecord, "name"> & Record<"teachers", string[]>;
 
 export type GetClassesData<S extends keyof ClassRecord = keyof ClassRecord> = Array<
   FlattenIntersection<Pick<ClassRecord, "_id" | S>>

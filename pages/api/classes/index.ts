@@ -1,16 +1,20 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ClassModel } from "db/models";
 import { routeWrapper } from "utils/api";
+import { ClassModel, TeacherModel } from "db/models";
 
-import type { GetClassesData, CreateClassData, CreateClassRequestBody as CreateBody } from "types/api/classes";
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { GetClassesData, CreateClassData, CreateClassRequestBody as CreateBody } from "types/api/classes";
 
-async function createClass(data: CreateBody): MethodResponse<CreateClassData> {
+async function createClass({ teachers, ...data }: CreateBody): MethodResponse<CreateClassData> {
   await connect();
-  const { _id, createdAt } = await ClassModel.create(data);
+  const teacherIDs = await TeacherModel.findBySchoolMail(teachers, "_id").lean();
+  const { _id, createdAt } = await ClassModel.create({
+    ...data,
+    teachers: teacherIDs.map((t) => t._id),
+  });
 
   return [
     {
