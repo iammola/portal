@@ -24,6 +24,7 @@
     "if-emoji": "^0.1.0",
     "jose": "^4.6.0",
     "mongoose": "^6.2.6",
+    "mongoose-lean-getters": "^0.3.0",
     "mongoose-lean-virtuals": "^0.9.0",
     "next": "latest",
     "react": "^17.0.2",
