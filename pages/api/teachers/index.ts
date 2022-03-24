@@ -8,11 +8,13 @@ import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 async function createTeacher(body: CreateBody): MethodResponse<CreateData> {
+  const { _id, schoolMail } = await createUser("teacher", body);
+
   return [
     {
       success: true,
+      data: { _id, schoolMail },
       message: ReasonPhrases.CREATED,
-      data: await createUser("teacher", body),
     },
     StatusCodes.CREATED,
   ];

@@ -22,21 +22,22 @@ async function createStudent(body: CreateBody): MethodResponse<CreateData> {
   ]);
 
   if (term === null) throw new Error("Current term is not defined");
-
   if (classExists === null) throw new Error("Class does not exist");
+
+  const { _id, schoolMail } = await createUser("student", {
+    ...body,
+    academic: [{ term: term?._id, ...body.academic }],
+    guardians: parents.map((p) => ({
+      guardian: p._id,
+      relation: body.guardians.find((g) => g.mail === p.schoolMail)?.relation,
+    })),
+  });
 
   return [
     {
       success: true,
       message: ReasonPhrases.CREATED,
-      data: await createUser("student", {
-        ...body,
-        academic: [{ term: term?._id, ...body.academic }],
-        guardians: parents.map((p) => ({
-          guardian: p._id,
-          relation: body.guardians.find((g) => g.mail === p.schoolMail)?.relation,
-        })),
-      }),
+      data: { _id, schoolMail },
     },
     StatusCodes.CREATED,
   ];
