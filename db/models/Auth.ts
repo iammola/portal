@@ -47,7 +47,7 @@ function updateHook(this: PreUpdateThis, next: (err?: Error) => void) {
 
 AuthSchema.pre("updateOne", updateHook);
 AuthSchema.pre("findOneAndUpdate" as "save", updateHook);
-AuthSchema.pre("save", function (this: PreSaveThis, next) {
+AuthSchema.pre("save", function (next) {
   if (this.isModified("password")) {
     if (!this.password) return next(new Error("Password is falsy?"));
 
@@ -75,10 +75,6 @@ export const UserAuthVirtual: [string, VirtualTypeOptions] = [
 interface AuthSchema extends UserPassword {
   userId: ObjectId;
   password?: string;
-}
-
-interface PreSaveThis extends AuthSchema {
-  isModified(k: keyof AuthSchema): boolean;
 }
 
 interface PreUpdateThis {

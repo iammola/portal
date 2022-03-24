@@ -144,7 +144,7 @@ const UserImage = new Schema<Image>(
   { _id: false }
 );
 
-UserImage.pre("save", async function (this: Image) {
+UserImage.pre("save", async function () {
   const [cover, portrait] = await Promise.all(
     [this.cover, this.portrait].map((url) => (url ? uploadImage(url) : undefined))
   );
