@@ -3,16 +3,27 @@ import Link from "next/link";
 import { FunctionComponent } from "react";
 import { ExternalLinkIcon, MailIcon } from "@heroicons/react/solid";
 
+import { fetchAPIEndpoint } from "utils";
 import { List, UserImage } from "components";
 
 import type { TeacherSchema } from "types/schema";
 import type { ApiError, ApiResponse } from "types/api";
-import type { GetClassTeachersData as Data } from "types/api/classes";
+import type { GetClassTeachersData as Data, DeleteClassTeacherData as DeleteData } from "types/api/classes";
 
 export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
   const { data: { data } = {}, error } = useSWR<ApiResponse<Data>, ApiError>(
     `/api/classes/${id}/teachers?projection=schoolMail,name.full,name.initials,name.title,image.portrait`
   );
+
+  async function deleteTeacher(teacher: string) {
+    try {
+      await fetchAPIEndpoint<DeleteData>(`api/classes/${id}/teachers/${teacher}`, {
+        method: "DELETE",
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="flex flex-col items-end justify-center gap-y-4 py-5">
@@ -27,6 +38,7 @@ export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
           <Row
             {...item}
             key={String(item._id)}
+            remove={deleteTeacher}
           />
         ))}
       </List>
@@ -34,7 +46,7 @@ export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
   );
 };
 
-const Row: FunctionComponent<TeacherSchema> = ({ _id, image, name, schoolMail }) => {
+const Row: FunctionComponent<RowProps> = ({ _id, image, name, remove, schoolMail }) => {
   return (
     <div
       className="grid w-full gap-x-28 py-5"
@@ -71,6 +83,7 @@ const Row: FunctionComponent<TeacherSchema> = ({ _id, image, name, schoolMail })
       </Link>
       <button
         type="button"
+        onClick={() => void remove(String(_id))}
         className="text-sm tracking-wide text-red-600"
       >
         Remove
@@ -101,3 +114,7 @@ const Skeleton: FunctionComponent = () => {
     </div>
   );
 };
+
+interface RowProps extends TeacherSchema {
+  remove(id: string): Promise<void>;
+}
