@@ -1,15 +1,35 @@
 import { XIcon } from "@heroicons/react/solid";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, FunctionComponent, useState } from "react";
+import { FormEvent, Fragment, FunctionComponent, useState } from "react";
 
+import { fetchAPIEndpoint } from "utils";
 import Email, { Value } from "components/Form/Email";
 
-const AddTeacher: FunctionComponent<AddTeacherProps> = ({ show, onClose }) => {
+import type { KeyedMutator } from "swr";
+import type { AddClassTeachersData as AddData, AddClassTeachersRequestBody as AddBody } from "types/api/classes";
+
+const AddTeacher: FunctionComponent<AddTeacherProps> = ({ id, mutate, show, onClose }) => {
   const [teachers, setTeachers] = useState<Value[]>([]);
 
   function close() {
     onClose(false);
     setTeachers([]);
+  }
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (teachers.length === 0) return;
+
+    try {
+      await fetchAPIEndpoint<AddData, AddBody>(`api/classes/${id}/teachers`, {
+        method: "PUT",
+        body: { teachers: teachers.map((t) => t.mail) },
+      });
+      await mutate().then(close);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -42,7 +62,10 @@ const AddTeacher: FunctionComponent<AddTeacherProps> = ({ show, onClose }) => {
           leaveFrom="scale-100 opacity-100"
           leaveTo="scale-95 opacity-0"
         >
-          <form className="relative flex w-full max-w-lg flex-col items-center justify-start gap-y-10 rounded-3xl bg-white p-6">
+          <form
+            onSubmit={(e) => void handleSubmit(e)}
+            className="relative flex w-full max-w-lg flex-col items-center justify-start gap-y-10 rounded-3xl bg-white p-6"
+          >
             <Dialog.Title className="text-3xl font-medium tracking-wide text-slate-500">Add Teachers</Dialog.Title>
             <Email className="w-full space-y-2">
               <Email.Label className="text-sm tracking-wide text-slate-600 ">
@@ -76,7 +99,9 @@ const AddTeacher: FunctionComponent<AddTeacherProps> = ({ show, onClose }) => {
 };
 
 interface AddTeacherProps {
+  id: string;
   show: boolean;
+  mutate: KeyedMutator<any>;
   onClose(v: boolean): void;
 }
 

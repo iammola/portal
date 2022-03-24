@@ -14,7 +14,11 @@ import type { GetClassTeachersData as Data, DeleteClassTeacherData as DeleteData
 
 export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
   const [showAdd, setShowAdd] = useState(false);
-  const { data: { data } = {}, error } = useSWR<ApiResponse<Data>, ApiError>(
+  const {
+    data: { data } = {},
+    error,
+    mutate,
+  } = useSWR<ApiResponse<Data>, ApiError>(
     `/api/classes/${id}/teachers?projection=schoolMail,name.full,name.initials,name.title,image.portrait`
   );
 
@@ -47,6 +51,7 @@ export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
       </List>
       <AddTeacher
         show={showAdd}
+        {...{ id, mutate }}
         onClose={setShowAdd}
       />
     </div>
