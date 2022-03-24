@@ -22,9 +22,9 @@ async function getTeachers(classID: string, proj: any): MethodResponse<GetData> 
     {
       data,
       success: true,
-      message: ReasonPhrases.CREATED,
+      message: ReasonPhrases.OK,
     },
-    StatusCodes.CREATED,
+    StatusCodes.OK,
   ];
 }
 
@@ -51,7 +51,7 @@ async function addTeachers(_id: string, body: AddBody): MethodResponse<AddData> 
 }
 
 const handler: ApiHandler<D> = async ({ body, query, method }) => {
-  if (method === "GET") return await getTeachers(query.id as string, (query.projection as string).replaceAll(",", ""));
+  if (method === "GET") return await getTeachers(query.id as string, (query.projection as string).replaceAll(",", " "));
 
   if (method === "PUT" && typeof body === "string")
     return await addTeachers(query.id as string, JSON.parse(body) as AddBody);

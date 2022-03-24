@@ -45,7 +45,7 @@ type D = CreateClassData | GetClassesData;
 const handler: ApiHandler<D> = async ({ body, method, query }) => {
   if (method === "POST" && typeof body === "string") return await createClass(JSON.parse(body) as CreateBody);
 
-  if (method === "GET") return await getClasses((query.projection as string).replaceAll(",", ""));
+  if (method === "GET") return await getClasses((query.projection as string).replaceAll(",", " "));
 
   return null;
 };
