@@ -34,7 +34,10 @@ export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
 
   return (
     <div className="flex flex-col items-end justify-center gap-y-4 py-5">
-      <button className="rounded bg-blue-500 px-4 py-2 text-sm tracking-wide text-white shadow hover:bg-blue-600">
+      <button
+        onClick={() => setShowAdd(true)}
+        className="rounded bg-blue-500 px-4 py-2 text-sm tracking-wide text-white shadow hover:bg-blue-600"
+      >
         Invite Teacher
       </button>
       <List className="w-full divide-y divide-slate-300">
