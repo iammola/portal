@@ -24,7 +24,7 @@ export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
 
   async function deleteTeacher(teacher: string) {
     try {
-      await fetchAPIEndpoint<DeleteData>(`api/classes/${id}/teachers/${teacher}`, {
+      await fetchAPIEndpoint<DeleteData>(`/api/classes/${id}/teachers/${teacher}`, {
         method: "DELETE",
       });
     } catch (error) {
