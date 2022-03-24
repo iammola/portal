@@ -39,7 +39,6 @@ export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: De
       unique: true,
       lowercase: true,
       immutable: true,
-      required: [true, "School mail required"],
       validate: {
         validator: emailValidator,
         msg: "Invalid email address",
