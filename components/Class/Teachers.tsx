@@ -1,16 +1,19 @@
 import useSWR from "swr";
 import Link from "next/link";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { ExternalLinkIcon, MailIcon } from "@heroicons/react/solid";
 
 import { fetchAPIEndpoint } from "utils";
 import { List, UserImage } from "components";
+
+import AddTeacher from "./AddTeacher";
 
 import type { TeacherSchema } from "types/schema";
 import type { ApiError, ApiResponse } from "types/api";
 import type { GetClassTeachersData as Data, DeleteClassTeacherData as DeleteData } from "types/api/classes";
 
 export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
+  const [showAdd, setShowAdd] = useState(false);
   const { data: { data } = {}, error } = useSWR<ApiResponse<Data>, ApiError>(
     `/api/classes/${id}/teachers?projection=schoolMail,name.full,name.initials,name.title,image.portrait`
   );
@@ -42,6 +45,10 @@ export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
           />
         ))}
       </List>
+      <AddTeacher
+        show={showAdd}
+        onClose={setShowAdd}
+      />
     </div>
   );
 };
