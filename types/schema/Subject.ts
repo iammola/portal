@@ -9,9 +9,7 @@ interface SubjectSchema {
   sessions?: ObjectId[];
 }
 
-interface Subject<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT>
-  extends DocumentId,
-    SubjectSchema {
+interface Subject<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT> extends DocumentId, SubjectSchema {
   __type: T;
   name: ThingName;
 }

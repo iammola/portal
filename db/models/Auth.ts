@@ -36,8 +36,7 @@ function requireHashSalt(this: AuthSchema) {
 }
 
 function updateHook(this: PreUpdateThis, next: (err?: Error) => void) {
-  if (this._update.hash || this._update.salt)
-    return next(new Error("Cannot change password hash or salt directly"));
+  if (this._update.hash || this._update.salt) return next(new Error("Cannot change password hash or salt directly"));
 
   if (!this._update.password) return next(new Error("Password is falsy?"));
 

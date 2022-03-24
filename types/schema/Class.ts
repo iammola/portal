@@ -12,11 +12,7 @@ export interface ClassVirtuals {
   subjectsCount: number;
 }
 
-export type ClassRecord<V extends boolean | keyof ClassVirtuals = false> = ModelRecord<
-  ClassSchema,
-  ClassVirtuals,
-  V
->;
+export type ClassRecord<V extends boolean | keyof ClassVirtuals = false> = ModelRecord<ClassSchema, ClassVirtuals, V>;
 
 type PopulatedTeachers = Record<"teachers", TeacherSchema[]>;
 

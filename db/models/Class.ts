@@ -30,17 +30,13 @@ ClassSchema.virtual("subjectsCount", {
   foreignField: "class",
 });
 
-ClassSchema.static(
-  "findByName",
-  function (name: string, type: keyof Name, ...args: [any?, QueryOptions?]) {
-    const regex = new RegExp(name.replaceAll(/[-_]/g, " "), "i");
-    return this.findOne({ [`name.${type}`]: regex }, ...args);
-  }
-);
+ClassSchema.static("findByName", function (name: string, type: keyof Name, ...args: [any?, QueryOptions?]) {
+  const regex = new RegExp(name.replaceAll(/[-_]/g, " "), "i");
+  return this.findOne({ [`name.${type}`]: regex }, ...args);
+});
 
 ClassSchema.static("getTeachers", function (classId: string, proj?: any, options?: QueryOptions) {
   return this.findById(classId, "teachers", options).populate("teachers", proj);
 });
 
-export const ClassModel = (models[ModelNames.CLASS] ??
-  model(ModelNames.CLASS, ClassSchema)) as Model;
+export const ClassModel = (models[ModelNames.CLASS] ?? model(ModelNames.CLASS, ClassSchema)) as Model;

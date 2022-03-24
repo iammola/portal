@@ -24,7 +24,10 @@ export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
         {data && !data.teachers.length && "Empty state component soon"}
         {data === error && new Array(3).fill(null).map((_, idx) => <Skeleton key={idx} />)}
         {data?.teachers.map((item) => (
-          <Row key={String(item._id)} {...item} />
+          <Row
+            {...item}
+            key={String(item._id)}
+          />
         ))}
       </List>
     </div>
@@ -66,7 +69,10 @@ const Row: FunctionComponent<TeacherSchema> = ({ _id, image, name, schoolMail })
           <ExternalLinkIcon className="h-4 w-4 fill-blue-600" />
         </a>
       </Link>
-      <button type="button" className="text-sm tracking-wide text-red-600">
+      <button
+        type="button"
+        className="text-sm tracking-wide text-red-600"
+      >
         Remove
       </button>
     </div>

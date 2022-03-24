@@ -69,21 +69,15 @@ export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: De
     foreignField: "userId",
   });
 
-  schema.static(
-    "findByUsername",
-    function (username: string | string[], ...args: [any?, QueryOptions?]) {
-      if (Array.isArray(username)) return this.find({ username }, ...args);
-      return this.findOne({ username }, ...args);
-    }
-  );
+  schema.static("findByUsername", function (username: string | string[], ...args: [any?, QueryOptions?]) {
+    if (Array.isArray(username)) return this.find({ username }, ...args);
+    return this.findOne({ username }, ...args);
+  });
 
-  schema.static(
-    "findBySchoolMail",
-    function (schoolMail: string | string[], ...args: [any?, QueryOptions?]) {
-      if (Array.isArray(schoolMail)) return this.find({ schoolMail }, ...args);
-      return this.findOne({ schoolMail }, ...args);
-    }
-  );
+  schema.static("findBySchoolMail", function (schoolMail: string | string[], ...args: [any?, QueryOptions?]) {
+    if (Array.isArray(schoolMail)) return this.find({ schoolMail }, ...args);
+    return this.findOne({ schoolMail }, ...args);
+  });
 
   return schema as unknown as Schema<D, M>;
 };
@@ -161,10 +155,7 @@ function userSubName(required?: string) {
   };
 }
 
-function userSubContact(
-  required: string,
-  opts: Pick<SchemaTypeOptions<string>, "lowercase" | "validate"> = {}
-) {
+function userSubContact(required: string, opts: Pick<SchemaTypeOptions<string>, "lowercase" | "validate"> = {}) {
   return new Schema<SubContact>(
     {
       other: {

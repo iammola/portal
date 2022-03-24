@@ -7,16 +7,7 @@ import { classNames } from "utils";
 const XIcon = dynamic(() => import("@heroicons/react/solid/XIcon"));
 const CheckIcon = dynamic(() => import("@heroicons/react/solid/CheckIcon"));
 
-const Input: Input = ({
-  className,
-  hideOptionalLabel,
-  label,
-  showIcons,
-  onChange,
-  value,
-  setTyping,
-  ...props
-}) => {
+const Input: Input = ({ className, hideOptionalLabel, label, showIcons, onChange, value, setTyping, ...props }) => {
   const [valid, setValid] = useState<boolean>();
   const ref = useRef<HTMLInputElement>(null);
 
@@ -56,20 +47,14 @@ const Input: Input = ({
       {showIcons && (
         <>
           <CheckIcon
-            className={classNames(
-              "col-start-2 row-start-1 h-5 w-5 fill-emerald-500 peer-placeholder-shown:opacity-0",
-              {
-                "opacity-0": !valid,
-              }
-            )}
+            className={classNames("col-start-2 row-start-1 h-5 w-5 fill-emerald-500 peer-placeholder-shown:opacity-0", {
+              "opacity-0": !valid,
+            })}
           />
           <XIcon
-            className={classNames(
-              "col-start-2 row-start-1 h-5 w-5 fill-red-500 peer-placeholder-shown:opacity-0",
-              {
-                "opacity-0": valid !== false,
-              }
-            )}
+            className={classNames("col-start-2 row-start-1 h-5 w-5 fill-red-500 peer-placeholder-shown:opacity-0", {
+              "opacity-0": valid !== false,
+            })}
           />
         </>
       )}
@@ -77,10 +62,7 @@ const Input: Input = ({
   );
 };
 
-export type InputProps = Omit<
-  ComponentProps<"input">,
-  "id" | "className" | "onChange" | "ref" | "value"
-> & {
+export type InputProps = Omit<ComponentProps<"input">, "id" | "className" | "onChange" | "ref" | "value"> & {
   value?: string;
   showIcons?: boolean;
   onChange(v: string): void;

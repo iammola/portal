@@ -25,10 +25,7 @@ export type UserSubContact = {
   other?: string;
 };
 
-export type UserContact = Record<
-  "email" | "phone" | "address",
-  FlattenIntersection<UserSubContact>
->;
+export type UserContact = Record<"email" | "phone" | "address", FlattenIntersection<UserSubContact>>;
 
 export type UserGender = "M" | "F";
 
@@ -47,27 +44,11 @@ export interface UserVirtuals {
 
 export interface UserStaticMethods<S> {
   /** Find a user by username */
-  findByUsername(
-    username: string,
-    projection?: any,
-    options?: QueryOptions
-  ): SQuery<S, S, unknown, UserVirtuals>;
+  findByUsername(username: string, projection?: any, options?: QueryOptions): SQuery<S, S, unknown, UserVirtuals>;
   /** Find all users by username */
-  findByUsername(
-    username: string[],
-    projection?: any,
-    options?: QueryOptions
-  ): SQuery<S[], S, unknown, UserVirtuals>;
+  findByUsername(username: string[], projection?: any, options?: QueryOptions): SQuery<S[], S, unknown, UserVirtuals>;
   /** Find a user by school mail */
-  findBySchoolMail(
-    mail: string,
-    projection?: any,
-    options?: QueryOptions
-  ): SQuery<S, S, unknown, UserVirtuals>;
+  findBySchoolMail(mail: string, projection?: any, options?: QueryOptions): SQuery<S, S, unknown, UserVirtuals>;
   /** Find all users by schoolMail */
-  findBySchoolMail(
-    mail: string[],
-    projection?: any,
-    options?: QueryOptions
-  ): SQuery<S[], S, unknown, UserVirtuals>;
+  findBySchoolMail(mail: string[], projection?: any, options?: QueryOptions): SQuery<S[], S, unknown, UserVirtuals>;
 }

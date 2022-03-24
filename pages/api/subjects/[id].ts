@@ -62,8 +62,7 @@ const handler: ApiHandler<D> = async ({ body, method, query }) => {
 
   if (method === "DELETE") return await deleteSubject(id);
 
-  if (method === "PUT" && typeof body === "string")
-    return await updateSubject(id, JSON.parse(body) as UpdateBody);
+  if (method === "PUT" && typeof body === "string") return await updateSubject(id, JSON.parse(body) as UpdateBody);
 
   return null;
 };

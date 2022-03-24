@@ -15,9 +15,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const selectedColor = useMemo(
     () =>
-      ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"][
-        Math.floor(Math.random() * 5)
-      ],
+      ["bg-slate-500", "bg-emerald-500", "bg-red-500", "bg-blue-500", "bg-amber-500"][Math.floor(Math.random() * 5)],
     []
   );
 
@@ -44,8 +42,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
     }
   }, [data, item, setItem]);
 
-  const handleFocus = (e: FocusEvent<HTMLElement>) =>
-    setShowDrawer(e.target.contains(document.activeElement));
+  const handleFocus = (e: FocusEvent<HTMLElement>) => setShowDrawer(e.target.contains(document.activeElement));
 
   return (
     <div
@@ -71,9 +68,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
       >
         {(item.name?.initials ?? item.mail)[0]}
       </span>
-      <span className="text-sm tracking-wide text-gray-600">
-        {item.name?.username ?? item.mail}
-      </span>
+      <span className="text-sm tracking-wide text-gray-600">{item.name?.username ?? item.mail}</span>
       <Popover
         {...{ selectedColor, item, edit, remove, valid }}
         className={classNames(

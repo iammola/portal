@@ -3,13 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import { format, formatDistance } from "date-fns";
-import {
-  CheckCircleIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  MailIcon,
-  XCircleIcon,
-} from "@heroicons/react/solid";
+import { CheckCircleIcon, ChevronLeftIcon, ChevronRightIcon, MailIcon, XCircleIcon } from "@heroicons/react/solid";
 
 import { connect } from "db";
 import { classNames } from "utils";
@@ -147,7 +141,10 @@ const Class: NextPage<GetClassData> = (props) => {
                     1
                   </span>
                   {new Array(5).fill(null).map((_, i) => (
-                    <span key={i} className="cursor-pointer py-4 px-2 font-light text-slate-600">
+                    <span
+                      key={i}
+                      className="cursor-pointer py-4 px-2 font-light text-slate-600"
+                    >
                       {i + 2}
                     </span>
                   ))}
@@ -168,11 +165,9 @@ const Class: NextPage<GetClassData> = (props) => {
 
 export const getServerSideProps: GetServerSideProps<GetClassData> = async ({ params }) => {
   await connect();
-  const data = await ClassModel.findByName(
-    params?.name as string,
-    "long",
-    "-teachers"
-  ).lean<GetClassData>({ virtuals: true });
+  const data = await ClassModel.findByName(params?.name as string, "long", "-teachers").lean<GetClassData>({
+    virtuals: true,
+  });
 
   if (data === null) return { notFound: true };
 

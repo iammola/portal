@@ -12,9 +12,7 @@ const MyDetails: FunctionComponent = () => {
           <div className="flex flex-col items-start justify-start gap-y-6 px-6 pt-8 pb-5">
             <div className="flex w-full items-center justify-between gap-4">
               <div className="flex w-full grow flex-col gap-2.5">
-                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">
-                  First name
-                </label>
+                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">First name</label>
                 <input
                   required
                   type="text"
@@ -22,9 +20,7 @@ const MyDetails: FunctionComponent = () => {
                 />
               </div>
               <div className="flex w-full grow flex-col gap-2.5">
-                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">
-                  Last name
-                </label>
+                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">Last name</label>
                 <input
                   required
                   type="text"
@@ -34,9 +30,7 @@ const MyDetails: FunctionComponent = () => {
             </div>
             <div className="flex w-full items-center justify-between gap-4">
               <div className="flex w-full grow flex-col gap-2.5">
-                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">
-                  Other name(s)
-                </label>
+                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">Other name(s)</label>
                 <input
                   required
                   type="text"
@@ -44,9 +38,7 @@ const MyDetails: FunctionComponent = () => {
                 />
               </div>
               <div className="flex grow flex-col gap-2.5">
-                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">
-                  Initials
-                </label>
+                <label className="min-w-max text-[0.8rem] font-medium text-slate-500">Initials</label>
                 <input
                   required
                   type="text"
@@ -55,9 +47,7 @@ const MyDetails: FunctionComponent = () => {
               </div>
             </div>
             <div className="flex w-full grow flex-col gap-2.5">
-              <label className="min-w-max text-[0.8rem] font-medium text-slate-500">
-                Full name
-              </label>
+              <label className="min-w-max text-[0.8rem] font-medium text-slate-500">Full name</label>
               <input
                 required
                 type="text"
@@ -76,9 +66,7 @@ const MyDetails: FunctionComponent = () => {
               </div>
               {/* // TODO: Use custom Date input for DOB field */}
               <div className="flex grow flex-col gap-2.5">
-                <label className="text-[0.8rem] font-medium text-slate-500 xl:min-w-[20rem]">
-                  DOB
-                </label>
+                <label className="text-[0.8rem] font-medium text-slate-500 xl:min-w-[20rem]">DOB</label>
                 <label className="relative flex w-full items-center justify-start overflow-hidden rounded-md border bg-white pl-3 shadow shadow-slate-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-purple-400">
                   <span className="inline-block p-2">
                     <svg
@@ -123,9 +111,7 @@ const MyDetails: FunctionComponent = () => {
       <div className="flex w-full flex-col items-start justify-between gap-y-4 pt-8 first:pt-0 first:pb-5 md:flex-row">
         <div>
           <h5 className="font-medium text-slate-700">Contacts</h5>
-          <p className="text-sm text-slate-500">
-            Lorem ipsum dolor sit amet, consectetur adipisicing.
-          </p>
+          <p className="text-sm text-slate-500">Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
         </div>
         <div className="flex w-full flex-col gap-y-8 md:w-[65%] lg:w-[55%]">
           <form className="flex w-full flex-col items-start justify-start gap-y-4 divide-y divide-slate-200 rounded-lg bg-white pt-8 pb-5 shadow-lg">
@@ -178,17 +164,13 @@ const MyDetails: FunctionComponent = () => {
                 <h4 className="col-start-1 col-end-2 flex w-max min-w-max items-center text-sm font-medium text-slate-700">
                   Primary
                 </h4>
-                <div className="col-start-2 col-end-5 w-full">
-                  {/* // TODO: Add Custom Phone Number Picker */}
-                </div>
+                <div className="col-start-2 col-end-5 w-full">{/* // TODO: Add Custom Phone Number Picker */}</div>
               </div>
               <div className="grid w-full grid-cols-4 gap-x-4 py-4">
                 <h4 className="col-start-1 col-end-2 flex w-max min-w-max items-center text-sm font-medium text-slate-700">
                   Secondary
                 </h4>
-                <div className="col-start-2 col-end-5 w-full">
-                  {/* // TODO: Add Custom Phone Number Picker */}
-                </div>
+                <div className="col-start-2 col-end-5 w-full">{/* // TODO: Add Custom Phone Number Picker */}</div>
               </div>
             </div>
             <div className="flex w-full items-center justify-end gap-x-5 px-6 pt-5">

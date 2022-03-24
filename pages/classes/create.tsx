@@ -40,7 +40,10 @@ const CreateClass: NextPage = () => {
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-200 font-poppins">
       <Head>
         <title>Create Class | GRIS Portal</title>
-        <meta name="description" content="Create class" />
+        <meta
+          name="description"
+          content="Create class"
+        />
       </Head>
       <section className="flex w-full grow flex-col items-center justify-center">
         <form

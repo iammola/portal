@@ -12,7 +12,10 @@ const Me: NextPage = () => {
     <main className="flex h-full min-h-screen w-screen items-stretch justify-center">
       <Head>
         <title>My Profile | GRIS Portal</title>
-        <meta name="description" content="My Profile" />
+        <meta
+          name="description"
+          content="My Profile"
+        />
       </Head>
       <section className="flex w-full grow flex-col items-center justify-start">
         <div className="relative h-52 w-full bg-gradient-to-r from-purple-300 to-slate-100" />

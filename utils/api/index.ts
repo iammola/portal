@@ -34,11 +34,9 @@ export async function routeWrapper<T extends object>(
   } catch (error) {
     let [message, code] = [ReasonPhrases.BAD_REQUEST, StatusCodes.BAD_REQUEST];
 
-    if (error instanceof NotFoundError)
-      [message, code] = [ReasonPhrases.NOT_FOUND, StatusCodes.NOT_FOUND];
+    if (error instanceof NotFoundError) [message, code] = [ReasonPhrases.NOT_FOUND, StatusCodes.NOT_FOUND];
 
-    if (error instanceof UnauthorizedError)
-      [message, code] = [ReasonPhrases.UNAUTHORIZED, StatusCodes.UNAUTHORIZED];
+    if (error instanceof UnauthorizedError) [message, code] = [ReasonPhrases.UNAUTHORIZED, StatusCodes.UNAUTHORIZED];
 
     data = [
       {

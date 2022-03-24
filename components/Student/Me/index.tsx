@@ -19,18 +19,11 @@ const StudentMe: FunctionComponent = () => {
   useEffect(() => {
     if (router.isReady) {
       const initialTab = (router.query.tab as Tab) ?? "My details";
-      const [pathname, query, ...args] = [
-        "/me",
-        { tab: activeTab },
-        undefined,
-        { shallow: true },
-      ] as const;
+      const [pathname, query, ...args] = ["/me", { tab: activeTab }, undefined, { shallow: true }] as const;
 
       if (activeTab === undefined && tabs.includes(initialTab)) setActiveTab(initialTab);
-      else if (activeTab === "My details" && router.query.tab !== undefined)
-        void router.push({ pathname }, ...args);
-      else if (!["My details", router.query.tab].includes(activeTab))
-        void router.push({ query, pathname }, ...args);
+      else if (activeTab === "My details" && router.query.tab !== undefined) void router.push({ pathname }, ...args);
+      else if (!["My details", router.query.tab].includes(activeTab)) void router.push({ query, pathname }, ...args);
     }
   }, [activeTab, router, tabs]);
 

@@ -8,9 +8,7 @@ import type { GetClassesData } from "types/api/classes";
 
 export const Class: Class = ({ onChange, value }) => {
   const [options, setOptions] = useState<Value[]>([]);
-  const { data: classes } = useSWR<ApiResult<GetClassesData<"name">>>(
-    "/api/classes/?projection=name"
-  );
+  const { data: classes } = useSWR<ApiResult<GetClassesData<"name">>>("/api/classes/?projection=name");
 
   useEffect(() => {
     if (classes?.success) setOptions(classes.data.map((d) => ({ id: d._id, value: d.name.long })));
@@ -34,24 +32,22 @@ export const Subjects: Subjects = ({ onChange, selectedClass, values }) => {
   );
 
   useEffect(() => {
-    if (subjects?.success)
-      setOptions(subjects.data.map((d) => ({ id: d._id, value: d.name.long })));
+    if (subjects?.success) setOptions(subjects.data.map((d) => ({ id: d._id, value: d.name.long })));
   }, [subjects]);
 
   return (
     <ul>
       {options.map(({ id, value }) => (
-        <li key={id as string} className="flex flex-row items-center justify-start gap-x-2">
+        <li
+          key={id as string}
+          className="flex flex-row items-center justify-start gap-x-2"
+        >
           <label htmlFor={`subjectID${id as string}`}>
             <input
               type="checkbox"
               id={`subjectID${id as string}`}
               checked={values.includes(id as string)}
-              onChange={(e) =>
-                onChange(
-                  e.target.checked ? [...values, id as string] : values.filter((i) => i !== id)
-                )
-              }
+              onChange={(e) => onChange(e.target.checked ? [...values, id as string] : values.filter((i) => i !== id))}
             />
             {value}
           </label>

@@ -3,14 +3,7 @@ import { FunctionComponent, useState } from "react";
 import Conditions from "./Conditions";
 import Field, { FieldProps } from "./Field";
 
-const Password: Password = ({
-  confirmProps,
-  hideConditions,
-  validators,
-  value,
-  withConfirm,
-  ...props
-}) => {
+const Password: Password = ({ confirmProps, hideConditions, validators, value, withConfirm, ...props }) => {
   const [confirmValue, setConfirmValue] = useState("");
 
   return (

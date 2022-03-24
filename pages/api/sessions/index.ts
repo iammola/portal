@@ -43,8 +43,7 @@ async function createSession(body: CreateBody): MethodResponse<CreateData> {
 type D = CreateData | GetData;
 
 const handler: ApiHandler<D> = async ({ body, method }) => {
-  if (method === "POST" && typeof body === "string")
-    return await createSession(JSON.parse(body) as CreateBody);
+  if (method === "POST" && typeof body === "string") return await createSession(JSON.parse(body) as CreateBody);
 
   if (method === "GET") return await getSessions();
 
@@ -52,5 +51,4 @@ const handler: ApiHandler<D> = async ({ body, method }) => {
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async (req: NextApiRequest, res: NextApiResponse) =>
-  routeWrapper<D>(req, res, handler, ["GET", "POST"]);
+export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper<D>(req, res, handler, ["GET", "POST"]);

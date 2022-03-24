@@ -19,19 +19,12 @@ export interface AttendanceModel extends Model<AttendanceSchema> {
   /** Find one user's attendance records by userId */
   findUser(userId: string, projection?: any, options?: QueryOptions): SQuery<AttendanceSchema>;
   /** Find multiple users attendance records by userId */
-  findUser(
-    userId: string[],
-    projection?: any,
-    options?: QueryOptions
-  ): SQuery<AttendanceSchema[], AttendanceSchema>;
+  findUser(userId: string[], projection?: any, options?: QueryOptions): SQuery<AttendanceSchema[], AttendanceSchema>;
   /**
    * Filter a range of dates for specific users
    *
    * @param userId User to find attendance record for
    * @param query The conditions to filter the attendance with
    */
-  findUserRange(
-    userId: string | string[],
-    query: QuerySelector<Date>
-  ): AQuery<Pick<AttendanceSchema, "dates">>;
+  findUserRange(userId: string | string[], query: QuerySelector<Date>): AQuery<Pick<AttendanceSchema, "dates">>;
 }

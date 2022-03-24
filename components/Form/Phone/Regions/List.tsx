@@ -6,14 +6,7 @@ import { byIso } from "country-code-lookup";
 import { useCountryFlag } from "hooks";
 import { classNames } from "utils";
 
-const List: List = ({
-  className,
-  handleBlur,
-  handleRegionChange,
-  search,
-  selectedRegion,
-  visible,
-}) => {
+const List: List = ({ className, handleBlur, handleRegionChange, search, selectedRegion, visible }) => {
   const otherRegions = useMemo<{ [k: string]: string | undefined }>(
     () => ({
       AC: "Ascension Island",
@@ -65,16 +58,7 @@ const List: List = ({
   );
 };
 
-List.Item = function Item({
-  country,
-  countryCode,
-  regionCode,
-  className,
-  handleBlur,
-  onClick,
-  selected,
-  visible,
-}) {
+List.Item = function Item({ country, countryCode, regionCode, className, handleBlur, onClick, selected, visible }) {
   const ref = useRef<
     HTMLLIElement & {
       scrollIntoViewIfNeeded?: (centerIfNeeded?: boolean) => void;
@@ -85,10 +69,7 @@ List.Item = function Item({
   useEffect(() => {
     if (selected && visible) {
       ref.current?.scrollIntoViewIfNeeded?.() ??
-        ref.current?.parentElement?.scroll(
-          0,
-          ref.current?.offsetTop - ref.current?.parentElement?.offsetHeight / 2.6
-        );
+        ref.current?.parentElement?.scroll(0, ref.current?.offsetTop - ref.current?.parentElement?.offsetHeight / 2.6);
       ref.current?.addEventListener("blur", handleBlur, { once: true });
     }
   }, [handleBlur, selected, visible]);
@@ -98,7 +79,12 @@ List.Item = function Item({
   }, [country, regionCode]);
 
   return (
-    <li ref={ref} tabIndex={0} onClick={onClick} className={className(selected)}>
+    <li
+      ref={ref}
+      tabIndex={0}
+      onClick={onClick}
+      className={className(selected)}
+    >
       {countryFlag}
       <span className="text-sm font-medium text-slate-700">
         {country} (+{countryCode})

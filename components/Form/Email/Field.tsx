@@ -1,11 +1,4 @@
-import {
-  useRef,
-  useEffect,
-  MouseEvent,
-  useCallback,
-  KeyboardEvent,
-  FunctionComponent,
-} from "react";
+import { useRef, useEffect, MouseEvent, useCallback, KeyboardEvent, FunctionComponent } from "react";
 
 import Badge, { Value } from "./Badge";
 
@@ -14,8 +7,7 @@ import type { UserType } from "types/schema";
 const Field: Field = ({ className, onChange, userType, values }) => {
   const ref = useRef<HTMLDivElement>(null);
   const setValueName = useCallback(
-    (item: Required<Value>) =>
-      onChange(values.map((value) => (value.mail === item.mail ? item : value))),
+    (item: Required<Value>) => onChange(values.map((value) => (value.mail === item.mail ? item : value))),
     [onChange, values]
   );
   const resetField = useCallback(() => {
@@ -38,8 +30,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
     const { childNodes = [] } = ref.current ?? {};
     [...childNodes].forEach(
       (node) =>
-        ((node.nodeType === 3 && node.textContent?.trim() === "") ||
-          (node as Element).tagName === "BR") &&
+        ((node.nodeType === 3 && node.textContent?.trim() === "") || (node as Element).tagName === "BR") &&
         node.remove()
     );
   }
@@ -88,10 +79,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
       const range = document.createRange();
       const selection = getSelection();
 
-      range.setStart(
-        lastChild,
-        +(lastChild.textContent !== " ") * (lastChild.textContent?.length ?? 0)
-      );
+      range.setStart(lastChild, +(lastChild.textContent !== " ") * (lastChild.textContent?.length ?? 0));
       range.collapse(false);
 
       selection?.removeAllRanges();

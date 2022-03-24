@@ -89,14 +89,15 @@ const CreateParent: NextPage = () => {
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-50 font-poppins dark:bg-slate-900">
       <Head>
         <title>Create Parent | GRIS Portal</title>
-        <meta name="description" content="Create parent" />
+        <meta
+          name="description"
+          content="Create parent"
+        />
       </Head>
       <section className="flex w-full grow flex-col items-start justify-start py-10">
         <h1 className="p-10 pt-0 text-5xl font-semibold text-slate-600 dark:text-slate-300">
           <span>Create</span>{" "}
-          <span className="bg-gradient-to-br from-indigo-300 to-indigo-600 bg-clip-text text-transparent">
-            Parent
-          </span>
+          <span className="bg-gradient-to-br from-indigo-300 to-indigo-600 bg-clip-text text-transparent">Parent</span>
         </h1>
         <Form onSubmit={(e) => void handleSubmit(e)}>
           <Section
@@ -422,9 +423,7 @@ const CreateParent: NextPage = () => {
                 onChange={setPassword}
               />
             </div>
-            <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
-              Photos
-            </span>
+            <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">Photos</span>
             <FormComponents.Avatar
               returnAs="base64"
               value={image.portrait}

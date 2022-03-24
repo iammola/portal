@@ -4,11 +4,7 @@ import { connect } from "db";
 import { ClassModel } from "db/models";
 import { routeWrapper } from "utils/api";
 
-import type {
-  GetClassesData,
-  CreateClassData,
-  CreateClassRequestBody as CreateBody,
-} from "types/api/classes";
+import type { GetClassesData, CreateClassData, CreateClassRequestBody as CreateBody } from "types/api/classes";
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -43,8 +39,7 @@ async function getClasses(field: string): MethodResponse<GetClassesData> {
 type D = CreateClassData | GetClassesData;
 
 const handler: ApiHandler<D> = async ({ body, method, query }) => {
-  if (method === "POST" && typeof body === "string")
-    return await createClass(JSON.parse(body) as CreateBody);
+  if (method === "POST" && typeof body === "string") return await createClass(JSON.parse(body) as CreateBody);
 
   if (method === "GET") return await getClasses((query.projection as string).replaceAll(",", ""));
 
@@ -52,5 +47,4 @@ const handler: ApiHandler<D> = async ({ body, method, query }) => {
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async (req: NextApiRequest, res: NextApiResponse) =>
-  routeWrapper<D>(req, res, handler, ["POST", "GET"]);
+export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper<D>(req, res, handler, ["POST", "GET"]);

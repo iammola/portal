@@ -5,10 +5,7 @@ import { createUser } from "utils/user";
 import { routeWrapper } from "utils/api";
 import { ClassModel, ParentModel, TermModel } from "db/models";
 
-import type {
-  CreateStudentData as CreateData,
-  CreateStudentRequestBody as CreateBody,
-} from "types/api/students";
+import type { CreateStudentData as CreateData, CreateStudentRequestBody as CreateBody } from "types/api/students";
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -46,8 +43,7 @@ async function createStudent(body: CreateBody): MethodResponse<CreateData> {
 }
 
 const handler: ApiHandler<CreateData> = async ({ body, method }) => {
-  if (method === "POST" && typeof body === "string")
-    return await createStudent(JSON.parse(body) as CreateBody);
+  if (method === "POST" && typeof body === "string") return await createStudent(JSON.parse(body) as CreateBody);
 
   return null;
 };

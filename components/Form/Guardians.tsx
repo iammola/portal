@@ -41,7 +41,10 @@ const Guardians: Guardians = ({ values = [], onChange }) => {
     <div className="space-y-4 rounded-lg bg-white p-8">
       <ul className="space-y-3">
         {values.map(({ mail, relation }, i) => (
-          <li key={i} className="flex flex-row items-end justify-start gap-x-3">
+          <li
+            key={i}
+            className="flex flex-row items-end justify-start gap-x-3"
+          >
             <div className="w-40 space-y-2">
               <Select
                 label="Relationship"

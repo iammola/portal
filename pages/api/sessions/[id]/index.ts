@@ -28,5 +28,4 @@ const handler: ApiHandler<GetData> = async ({ method, query }) => {
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async (req: NextApiRequest, res: NextApiResponse) =>
-  routeWrapper<GetData>(req, res, handler, ["GET"]);
+export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper<GetData>(req, res, handler, ["GET"]);

@@ -34,10 +34,7 @@
     "eol-last": ["error", "always"],
     "no-console": [2, { "allow": ["warn", "error"] }],
     "no-multiple-empty-lines": ["error", { "max": 1 }],
-    "no-unused-expressions": [
-      "error",
-      { "allowShortCircuit": true, "allowTernary": true, "enforceForJSX": true }
-    ],
+    "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true, "enforceForJSX": true }],
 
     "import/named": 0,
     "import/order": [
@@ -45,15 +42,7 @@
       {
         "warnOnUnassignedImports": true,
         "newlines-between": "always",
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          "parent",
-          ["sibling", "index"],
-          "object",
-          "type"
-        ]
+        "groups": ["builtin", "external", "internal", "parent", ["sibling", "index"], "object", "type"]
       }
     ],
 

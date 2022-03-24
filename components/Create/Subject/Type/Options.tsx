@@ -62,9 +62,7 @@ const Option: Option = ({ description, id, label, onChange, selected, uniqueId }
           onChange={(e) => e.target.checked && onChange(id)}
           className="col-start-5 col-end-6 row-start-1 h-3.5 w-3.5 justify-self-end"
         />
-        <h4 className="col-start-1 col-end-5 row-start-1 text-lg font-medium text-slate-700">
-          {label}
-        </h4>
+        <h4 className="col-start-1 col-end-5 row-start-1 text-lg font-medium text-slate-700">{label}</h4>
         <p className="col-start-1 col-end-6 text-[0.85rem] text-slate-500">{description}</p>
       </label>
     </li>
@@ -77,9 +75,7 @@ export type OptionValue = {
   id: SubjectRecord["__type"];
 };
 
-type Option = FunctionComponent<
-  OptionValue & Pick<OptionsProps, "onChange"> & { selected: boolean; uniqueId: string }
->;
+type Option = FunctionComponent<OptionValue & Pick<OptionsProps, "onChange"> & { selected: boolean; uniqueId: string }>;
 
 type OptionsProps = {
   id: string;

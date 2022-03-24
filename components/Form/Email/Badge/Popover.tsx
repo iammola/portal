@@ -44,10 +44,11 @@ const Popover: Popover = ({ className, edit, item, remove, selectedColor, valid 
           {(item.name?.initials ?? item.mail)[0]}
         </span>
         <span
-          className={classNames(
-            "col-start-2 col-end-5 truncate text-lg font-medium tracking-wide",
-            [item.name === undefined, "hidden", "row-start-1 row-end-4"]
-          )}
+          className={classNames("col-start-2 col-end-5 truncate text-lg font-medium tracking-wide", [
+            item.name === undefined,
+            "hidden",
+            "row-start-1 row-end-4",
+          ])}
         >
           {item.name?.username}
         </span>
@@ -62,8 +63,16 @@ const Popover: Popover = ({ className, edit, item, remove, selectedColor, valid 
         </span>
       </div>
       <div className="flex flex-col gap-y-3 pt-2 pb-3">
-        <Action action={edit} Icon={PencilIcon} type="Edit" />
-        <Action action={remove} Icon={TrashIcon} type="Remove" />
+        <Action
+          action={edit}
+          Icon={PencilIcon}
+          type="Edit"
+        />
+        <Action
+          action={remove}
+          Icon={TrashIcon}
+          type="Remove"
+        />
       </div>
     </div>
   );

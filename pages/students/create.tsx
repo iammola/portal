@@ -71,14 +71,15 @@ const CreateStudent: NextPage = () => {
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-50 font-poppins dark:bg-slate-900">
       <Head>
         <title>Create Student | GRIS Portal</title>
-        <meta name="description" content="Create student" />
+        <meta
+          name="description"
+          content="Create student"
+        />
       </Head>
       <section className="flex w-full grow flex-col items-start justify-start py-10">
         <h1 className="p-10 pt-0 text-5xl font-semibold text-slate-600 dark:text-slate-300">
           <span>Create</span>{" "}
-          <span className="bg-gradient-to-br from-amber-300 to-amber-600 bg-clip-text text-transparent">
-            Student
-          </span>
+          <span className="bg-gradient-to-br from-amber-300 to-amber-600 bg-clip-text text-transparent">Student</span>
         </h1>
         <Form onSubmit={(e) => void handleSubmit(e)}>
           <Section
@@ -342,7 +343,10 @@ const CreateStudent: NextPage = () => {
             title="Guardians"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, fugit!"
           >
-            <FormComponents.Guardians values={guardians} onChange={setGuardians} />
+            <FormComponents.Guardians
+              values={guardians}
+              onChange={setGuardians}
+            />
           </Section>
           <Section
             title="Profile"
@@ -392,9 +396,7 @@ const CreateStudent: NextPage = () => {
                 onChange={setPassword}
               />
             </div>
-            <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">
-              Photos
-            </span>
+            <span className="text-semibold w-full border-b border-slate-400 pb-0.5 text-sm text-slate-800">Photos</span>
             <FormComponents.Avatar
               returnAs="base64"
               value={image.portrait}

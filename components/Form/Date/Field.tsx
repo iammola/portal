@@ -49,8 +49,7 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
     }
   }, [max, min, typing, value]);
 
-  const handleChange = (val: number, func: (val?: number) => void) =>
-    func(val === 0 ? undefined : val);
+  const handleChange = (val: number, func: (val?: number) => void) => func(val === 0 ? undefined : val);
 
   return (
     <div
@@ -127,9 +126,7 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
           }
         />
       </div>
-      {!required && (
-        <span className="absolute right-0.5 -top-8 text-xs text-slate-500">Optional</span>
-      )}
+      {!required && <span className="absolute right-0.5 -top-8 text-xs text-slate-500">Optional</span>}
     </div>
   );
 };
