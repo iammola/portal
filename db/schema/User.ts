@@ -1,5 +1,4 @@
 import PhoneNumber from "awesome-phonenumber";
-import mongooseLeanVirtuals from "mongoose-lean-virtuals";
 import { Model, QueryOptions, Schema, SchemaDefinitionProperty, SchemaTypeOptions } from "mongoose";
 
 import { ModelNames } from "db";
@@ -53,8 +52,6 @@ export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: De
       default: undefined,
     },
   });
-
-  schema.plugin(mongooseLeanVirtuals);
 
   schema.pre("save", function (next) {
     this.set("schoolMail", generateSchoolMail(this.name.username));

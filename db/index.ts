@@ -1,9 +1,13 @@
 import mongoose from "mongoose";
+import mongooseLeanGetters from "mongoose-lean-getters";
+import mongooseLeanVirtuals from "mongoose-lean-virtuals";
 
 const MONGODB_URI = process.env.MONGODB_URI ?? "";
 // Global is used here to maintain a cached connection across hot reloads in development. This prevents connections growing exponentially during API Route usage.
 const cached = global.mongoose ?? {};
 
+mongoose.plugin(mongooseLeanGetters);
+mongoose.plugin(mongooseLeanVirtuals);
 export async function connect(): Promise<typeof mongoose> {
   if (!MONGODB_URI) throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
 
