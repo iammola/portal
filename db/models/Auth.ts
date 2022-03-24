@@ -36,8 +36,7 @@ function requireHashSalt(this: AuthSchema) {
 }
 
 function updateHook(this: PreUpdateThis, next: (err?: Error) => void) {
-  if (this._update.hash || this._update.salt)
-    return next(new Error("Cannot change password hash or salt directly"));
+  if (this._update.hash || this._update.salt) return next(new Error("Cannot change password hash or salt directly"));
 
   if (!this._update.password) return next(new Error("Password is falsy?"));
 
@@ -47,7 +46,7 @@ function updateHook(this: PreUpdateThis, next: (err?: Error) => void) {
 
 AuthSchema.pre("updateOne", updateHook);
 AuthSchema.pre("findOneAndUpdate" as "save", updateHook);
-AuthSchema.pre("save", function (this: PreSaveThis, next) {
+AuthSchema.pre("save", function (next) {
   if (this.isModified("password")) {
     if (!this.password) return next(new Error("Password is falsy?"));
 
@@ -75,10 +74,6 @@ export const UserAuthVirtual: [string, VirtualTypeOptions] = [
 interface AuthSchema extends UserPassword {
   userId: ObjectId;
   password?: string;
-}
-
-interface PreSaveThis extends AuthSchema {
-  isModified(k: keyof AuthSchema): boolean;
 }
 
 interface PreUpdateThis {

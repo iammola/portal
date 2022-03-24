@@ -14,10 +14,10 @@ async function getCurrentTerm(): MethodResponse<GetData> {
   return [
     {
       success: true,
-      message: ReasonPhrases.CREATED,
+      message: ReasonPhrases.OK,
       data: await TermModel.findCurrent().populate("session").lean(),
     },
-    StatusCodes.CREATED,
+    StatusCodes.OK,
   ];
 }
 
@@ -28,5 +28,4 @@ const handler: ApiHandler<GetData> = async ({ method }) => {
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async (req: NextApiRequest, res: NextApiResponse) =>
-  routeWrapper<GetData>(req, res, handler, ["GET"]);
+export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper<GetData>(req, res, handler, ["GET"]);

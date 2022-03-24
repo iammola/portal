@@ -3,17 +3,12 @@ import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import { format, formatDistance } from "date-fns";
-import {
-  CheckCircleIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  MailIcon,
-  XCircleIcon,
-} from "@heroicons/react/solid";
+import { CheckCircleIcon, ChevronLeftIcon, ChevronRightIcon, MailIcon, XCircleIcon } from "@heroicons/react/solid";
 
 import { connect } from "db";
 import { classNames } from "utils";
 import { ClassModel } from "db/models";
+import { Teachers } from "components/Class";
 import { Breadcrumbs, UserImage } from "components";
 
 import type { ApiResponse } from "types/api";
@@ -62,7 +57,7 @@ const Class: NextPage<GetClassData> = (props) => {
         </header>
         <section className="w-full px-20 pt-10 pb-6">
           <div className="relative flex w-full items-center justify-start gap-x-12 border-b-2 border-slate-300">
-            {["Feed", "Students", "Subjects"].map((tab) => (
+            {["Feed", "Students", "Subjects", "Teachers"].map((tab) => (
               <span
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -75,87 +70,93 @@ const Class: NextPage<GetClassData> = (props) => {
               </span>
             ))}
           </div>
-          <div className="divide-y divide-slate-300">
-            {students.map(({ online, ...item }, idx) => (
-              <div
-                key={idx}
-                className="grid w-full grid-cols-[1fr_max-content_25%_max-content] gap-x-28 py-5"
-              >
-                <div className="flex w-full items-center justify-start gap-4">
-                  <div
-                    style={{ shapeOutside: "circle(50% at 50% 50%)" }}
-                    className="aspect-square h-16 w-16 shrink-0 overflow-hidden rounded-full"
-                  >
-                    <UserImage
-                      alt={`${item.name}'s Portrait Image`}
-                      src={`/Users/${String(idx + 3).padStart(3, "0")}.jpg`}
-                      fallbackText={item.name.split(" ", 2).reduce((a, b) => a + b[0], "")}
-                    />
-                  </div>
-                  <div className="space-y-1 text-sm">
-                    <span className="tracking-wide text-blue-800">{item.name}</span>
-                    <div className="flex gap-x-2">
-                      <MailIcon className="h-5 w-5 fill-slate-500" />
-                      <a
-                        href={`mailto:${item.email}`}
-                        className="flex gap-x-2 text-sm lowercase tracking-wide text-gray-500"
-                      >
-                        {item.email}
-                      </a>
+          {activeTab === "Students" && (
+            <div className="divide-y divide-slate-300">
+              {students.map(({ online, ...item }, idx) => (
+                <div
+                  key={idx}
+                  className="grid w-full grid-cols-[1fr_max-content_25%_max-content] gap-x-28 py-5"
+                >
+                  <div className="flex w-full items-center justify-start gap-4">
+                    <div
+                      style={{ shapeOutside: "circle(50% at 50% 50%)" }}
+                      className="aspect-square h-16 w-16 shrink-0 overflow-hidden rounded-full"
+                    >
+                      <UserImage
+                        alt={`${item.name}'s Portrait Image`}
+                        src={`/Users/${String(idx + 3).padStart(3, "0")}.jpg`}
+                        fallbackText={item.name.split(" ", 2).reduce((a, b) => a + b[0], "")}
+                      />
+                    </div>
+                    <div className="space-y-1 text-sm">
+                      <span className="tracking-wide text-blue-800">{item.name}</span>
+                      <div className="flex gap-x-2">
+                        <MailIcon className="h-5 w-5 fill-slate-500" />
+                        <a
+                          href={`mailto:${item.email}`}
+                          className="flex gap-x-2 text-sm lowercase tracking-wide text-gray-500"
+                        >
+                          {item.email}
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex items-center text-sm tracking-wide text-slate-500">
-                  {item.age} year{item.age > 1 && "s"} old
-                </div>
-                <div className="flex flex-col items-start justify-center gap-y-1">
-                  <div className="flex items-center gap-x-1 text-sm text-slate-700">
-                    {online.state ? (
-                      <>
-                        <CheckCircleIcon className="h-5 w-5 fill-emerald-500" />
-                        Online
-                      </>
-                    ) : (
-                      <>
-                        <XCircleIcon className="h-5 w-5 fill-red-400" />
-                        Offline
-                      </>
-                    )}
+                  <div className="flex items-center text-sm tracking-wide text-slate-500">
+                    {item.age} year{item.age > 1 && "s"} old
                   </div>
-                  <div className="text-sm text-slate-500">
-                    {online.state ? "Since" : "Last seen"}{" "}
-                    {formatDistance(new Date(online.since), new Date(), {
-                      addSuffix: true,
-                      includeSeconds: true,
-                    })}
+                  <div className="flex flex-col items-start justify-center gap-y-1">
+                    <div className="flex items-center gap-x-1 text-sm text-slate-700">
+                      {online.state ? (
+                        <>
+                          <CheckCircleIcon className="h-5 w-5 fill-emerald-500" />
+                          Online
+                        </>
+                      ) : (
+                        <>
+                          <XCircleIcon className="h-5 w-5 fill-red-400" />
+                          Offline
+                        </>
+                      )}
+                    </div>
+                    <div className="text-sm text-slate-500">
+                      {online.state ? "Since" : "Last seen"}{" "}
+                      {formatDistance(new Date(online.since), new Date(), {
+                        addSuffix: true,
+                        includeSeconds: true,
+                      })}
+                    </div>
                   </div>
+                  <Link href={`/students/${idx}`}>
+                    <a className="flex items-center text-sm tracking-wide text-blue-600">View</a>
+                  </Link>
                 </div>
-                <Link href={`/students/${idx}`}>
-                  <a className="flex items-center text-sm tracking-wide text-blue-600">View</a>
-                </Link>
-              </div>
-            ))}
-            <div className="flex items-center justify-between text-xs">
-              <div className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600">
-                <ChevronLeftIcon className="h-5 w-5 fill-slate-500" />
-                Previous
-              </div>
-              <div className="flex items-center justify-center gap-x-6">
-                <span className="relative cursor-pointer py-4 px-2 text-blue-600 after:absolute after:-top-1 after:left-0 after:h-0.5 after:w-full after:bg-blue-600">
-                  1
-                </span>
-                {new Array(5).fill(null).map((_, i) => (
-                  <span key={i} className="cursor-pointer py-4 px-2 font-light text-slate-600">
-                    {i + 2}
+              ))}
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600">
+                  <ChevronLeftIcon className="h-5 w-5 fill-slate-500" />
+                  Previous
+                </div>
+                <div className="flex items-center justify-center gap-x-6">
+                  <span className="relative cursor-pointer py-4 px-2 text-blue-600 after:absolute after:-top-1 after:left-0 after:h-0.5 after:w-full after:bg-blue-600">
+                    1
                   </span>
-                ))}
-              </div>
-              <div className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600">
-                Next
-                <ChevronRightIcon className="h-5 w-5 fill-slate-500" />
+                  {new Array(5).fill(null).map((_, i) => (
+                    <span
+                      key={i}
+                      className="cursor-pointer py-4 px-2 font-light text-slate-600"
+                    >
+                      {i + 2}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600">
+                  Next
+                  <ChevronRightIcon className="h-5 w-5 fill-slate-500" />
+                </div>
               </div>
             </div>
-          </div>
+          )}
+          {activeTab === "Teachers" && <Teachers id={String(props._id)} />}
         </section>
       </section>
     </main>
@@ -164,11 +165,9 @@ const Class: NextPage<GetClassData> = (props) => {
 
 export const getServerSideProps: GetServerSideProps<GetClassData> = async ({ params }) => {
   await connect();
-  const data = await ClassModel.findByName(
-    params?.name as string,
-    "long",
-    "-teachers"
-  ).lean<GetClassData>({ virtuals: true });
+  const data = await ClassModel.findByName(params?.name as string, "long", "-teachers").lean<GetClassData>({
+    virtuals: true,
+  });
 
   if (data === null) return { notFound: true };
 

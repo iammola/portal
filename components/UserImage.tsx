@@ -3,18 +3,17 @@ import { FunctionComponent, useState } from "react";
 
 import { classNames } from "utils";
 
-export const UserImage: FunctionComponent<Props> = ({
-  fallbackClassName,
-  fallbackMax,
-  fallbackText,
-  ...props
-}) => {
+export const UserImage: FunctionComponent<Props> = ({ fallbackClassName, fallbackMax, fallbackText, ...props }) => {
   const [error, setError] = useState(!props.src);
 
   return (
     <figure className="relative h-full w-full">
       {error ? (
-        <Fallback className={fallbackClassName} max={fallbackMax ?? 2} text={fallbackText} />
+        <Fallback
+          className={fallbackClassName}
+          max={fallbackMax ?? 2}
+          text={fallbackText}
+        />
       ) : (
         <Image
           {...props}
@@ -33,10 +32,7 @@ export const UserImage: FunctionComponent<Props> = ({
 const Fallback: FunctionComponent<FallbackProps> = ({ className, max, text }) => {
   return (
     <figcaption
-      className={classNames(
-        className,
-        "absolute inset-0 z-[100000] flex h-full w-full items-center justify-center"
-      )}
+      className={classNames(className, "absolute inset-0 z-[100000] flex h-full w-full items-center justify-center")}
     >
       {text.slice(0, max === undefined ? 2 : max || text.length)}
     </figcaption>

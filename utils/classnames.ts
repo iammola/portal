@@ -26,10 +26,7 @@ export const classNames = (...args: C[]) => {
 
         if (typeof cur === "string") classes = cur;
         else if (Array.isArray(cur)) classes = cur[0] ? cur[1] : cur[2];
-        else
-          classes = Object.keys(
-            Object.fromEntries(Object.entries(cur ?? {}).filter((i) => i[1]))
-          ).join(" ");
+        else classes = Object.keys(Object.fromEntries(Object.entries(cur ?? {}).filter((i) => i[1]))).join(" ");
 
         return [...acc, classes];
       }, [])

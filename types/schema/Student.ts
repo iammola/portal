@@ -19,11 +19,7 @@ export interface StudentSchema extends UserBase {
   guardians: StudentGuardianSchema[];
 }
 
-export type StudentRecord<V extends boolean | keyof UserVirtuals = false> = ModelRecord<
-  StudentSchema,
-  UserVirtuals,
-  V
->;
+export type StudentRecord<V extends boolean | keyof UserVirtuals = false> = ModelRecord<StudentSchema, UserVirtuals, V>;
 
 export interface StudentModel
   extends Model<StudentSchema, unknown, unknown, UserVirtuals>,

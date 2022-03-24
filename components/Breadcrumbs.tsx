@@ -19,9 +19,7 @@ export const Breadcrumbs: FunctionComponent<Props> = ({ className }) => {
         <Fragment key={page}>
           <ChevronRightIcon className="h-5 w-5 fill-slate-400" />
           <Link href={"/" + array.slice(0, index + 1).join("/")}>
-            <a className="font-urbane text-xs capitalize tracking-wide text-slate-400">
-              {page.replaceAll("-", " ")}
-            </a>
+            <a className="font-urbane text-xs capitalize tracking-wide text-slate-400">{page.replaceAll("-", " ")}</a>
           </Link>
         </Fragment>
       ))}

@@ -19,14 +19,13 @@ const CreateClass: NextPage = () => {
     e.preventDefault();
 
     try {
-      const result = await fetchAPIEndpoint<CreateClassData, CreateClassRequestBody>(
-        "/api/classes",
-        { method: "POST" },
-        {
+      const result = await fetchAPIEndpoint<CreateClassData, CreateClassRequestBody>("/api/classes", {
+        method: "POST",
+        body: {
           name: { long, short, special },
-          teachers: teachers.map(({ _id }) => _id as NonNullable<typeof _id>).filter(Boolean),
-        }
-      );
+          teachers: teachers.map((t) => t.mail),
+        },
+      });
 
       if (result.success) {
         console.warn(result.message, result.data);
@@ -40,7 +39,10 @@ const CreateClass: NextPage = () => {
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-200 font-poppins">
       <Head>
         <title>Create Class | GRIS Portal</title>
-        <meta name="description" content="Create class" />
+        <meta
+          name="description"
+          content="Create class"
+        />
       </Head>
       <section className="flex w-full grow flex-col items-center justify-center">
         <form

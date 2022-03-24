@@ -10,8 +10,7 @@ import { JWT_COOKIE } from "utils/constants";
  */
 export async function fetchAPIEndpoint<ResponseData, Body = undefined>(
   endpoint: RequestInfo,
-  init?: Omit<RequestInit, "body">,
-  body?: Body
+  { body, ...init }: Omit<RequestInit, "body"> & { body?: Body } = {}
 ) {
   const JWT = parse(document.cookie)[JWT_COOKIE];
 

@@ -30,8 +30,7 @@ const SubjectSchema = new Schema<SubjectRecord>(
   { discriminatorKey: "__type" }
 );
 
-export const SubjectModel = (models[ModelNames.SUBJECT] ??
-  model(ModelNames.SUBJECT, SubjectSchema)) as Model;
+export const SubjectModel = (models[ModelNames.SUBJECT] ?? model(ModelNames.SUBJECT, SubjectSchema)) as Model;
 
 export const BaseSubjectModel =
   (SubjectModel.discriminators?.[ModelNames.B_SUBJECT] as Base) ??

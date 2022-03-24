@@ -14,13 +14,9 @@ const PASSWORD_DIGEST = "sha512";
  */
 export function hashPassword(password: string) {
   const salt = randomBytes(128).toString("base64");
-  const hash = pbkdf2Sync(
-    password,
-    salt,
-    PASSWORD_ITERATIONS,
-    PASSWORD_LENGTH,
-    PASSWORD_DIGEST
-  ).toString(PASSWORD_ENCODING);
+  const hash = pbkdf2Sync(password, salt, PASSWORD_ITERATIONS, PASSWORD_LENGTH, PASSWORD_DIGEST).toString(
+    PASSWORD_ENCODING
+  );
 
   return { salt, hash };
 }
@@ -34,13 +30,9 @@ export function hashPassword(password: string) {
  * @returns boolean. true if the attempt matches the password
  */
 export function comparePassword(attempt: string, { salt, hash }: UserPassword) {
-  const attemptHash = pbkdf2Sync(
-    attempt,
-    salt,
-    PASSWORD_ITERATIONS,
-    PASSWORD_LENGTH,
-    PASSWORD_DIGEST
-  ).toString(PASSWORD_ENCODING);
+  const attemptHash = pbkdf2Sync(attempt, salt, PASSWORD_ITERATIONS, PASSWORD_LENGTH, PASSWORD_DIGEST).toString(
+    PASSWORD_ENCODING
+  );
 
   return hash === attemptHash;
 }

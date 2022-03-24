@@ -7,7 +7,10 @@ const Home: NextPage = () => {
     <main className="flex h-screen w-screen items-center justify-center bg-[url(/BG.jpg)] bg-cover bg-center">
       <Head>
         <title>Login Page | Portal | GRS™</title>
-        <meta name="description" content="Login Page" />
+        <meta
+          name="description"
+          content="Login Page"
+        />
       </Head>
     </main>
   );

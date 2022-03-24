@@ -13,11 +13,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 async function createAttendance(userId: string, body: CreateBody): MethodResponse<any> {
   await connect();
-  const res = await AttendanceModel.updateOne(
-    { userId },
-    { $push: { dates: body } },
-    { upsert: true, fields: "_id" }
-  );
+  const res = await AttendanceModel.updateOne({ userId }, { $push: { dates: body } }, { upsert: true, fields: "_id" });
 
   return [
     {
@@ -33,11 +29,7 @@ async function createAttendance(userId: string, body: CreateBody): MethodRespons
 }
 
 const handler: ApiHandler<CreateData> = async ({ body, method, query }) => {
-  if (
-    ["POST", "PUT"].includes(method ?? "") &&
-    typeof query.userId === "string" &&
-    typeof body === "string"
-  )
+  if (["POST", "PUT"].includes(method ?? "") && typeof query.userId === "string" && typeof body === "string")
     return await createAttendance(query.userId, JSON.parse(body) as CreateBody);
 
   return null;

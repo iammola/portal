@@ -5,10 +5,7 @@ import { createUser } from "utils/user";
 import { routeWrapper } from "utils/api";
 import { ClassModel, ParentModel, TermModel } from "db/models";
 
-import type {
-  CreateStudentData as CreateData,
-  CreateStudentRequestBody as CreateBody,
-} from "types/api/students";
+import type { CreateStudentData as CreateData, CreateStudentRequestBody as CreateBody } from "types/api/students";
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -25,29 +22,29 @@ async function createStudent(body: CreateBody): MethodResponse<CreateData> {
   ]);
 
   if (term === null) throw new Error("Current term is not defined");
-
   if (classExists === null) throw new Error("Class does not exist");
+
+  const { _id, schoolMail } = await createUser("student", {
+    ...body,
+    academic: [{ term: term?._id, ...body.academic }],
+    guardians: parents.map((p) => ({
+      guardian: p._id,
+      relation: body.guardians.find((g) => g.mail === p.schoolMail)?.relation,
+    })),
+  });
 
   return [
     {
       success: true,
       message: ReasonPhrases.CREATED,
-      data: await createUser("student", {
-        ...body,
-        academic: [{ term: term?._id, ...body.academic }],
-        guardians: parents.map((p) => ({
-          guardian: p._id,
-          relation: body.guardians.find((g) => g.mail === p.schoolMail)?.relation,
-        })),
-      }),
+      data: { _id, schoolMail },
     },
     StatusCodes.CREATED,
   ];
 }
 
 const handler: ApiHandler<CreateData> = async ({ body, method }) => {
-  if (method === "POST" && typeof body === "string")
-    return await createStudent(JSON.parse(body) as CreateBody);
+  if (method === "POST" && typeof body === "string") return await createStudent(JSON.parse(body) as CreateBody);
 
   return null;
 };

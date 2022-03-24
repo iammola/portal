@@ -12,5 +12,4 @@ const ParentSchema = createUserSchema<ParentRecord, Model>({
   },
 });
 
-export const ParentModel = (models[ModelNames.PARENT] ??
-  model(ModelNames.PARENT, ParentSchema)) as Model;
+export const ParentModel = (models[ModelNames.PARENT] ?? model(ModelNames.PARENT, ParentSchema)) as Model;

@@ -1,5 +1,4 @@
 import PhoneNumber from "awesome-phonenumber";
-import mongooseLeanVirtuals from "mongoose-lean-virtuals";
 import { Model, QueryOptions, Schema, SchemaDefinitionProperty, SchemaTypeOptions } from "mongoose";
 
 import { ModelNames } from "db";
@@ -39,7 +38,6 @@ export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: De
       unique: true,
       lowercase: true,
       immutable: true,
-      required: [true, "School mail required"],
       validate: {
         validator: emailValidator,
         msg: "Invalid email address",
@@ -55,8 +53,6 @@ export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: De
     },
   });
 
-  schema.plugin(mongooseLeanVirtuals);
-
   schema.pre("save", function (next) {
     this.set("schoolMail", generateSchoolMail(this.name.username));
     next();
@@ -69,21 +65,15 @@ export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: De
     foreignField: "userId",
   });
 
-  schema.static(
-    "findByUsername",
-    function (username: string | string[], ...args: [any?, QueryOptions?]) {
-      if (Array.isArray(username)) return this.find({ username }, ...args);
-      return this.findOne({ username }, ...args);
-    }
-  );
+  schema.static("findByUsername", function (username: string | string[], ...args: [any?, QueryOptions?]) {
+    if (Array.isArray(username)) return this.find({ username }, ...args);
+    return this.findOne({ username }, ...args);
+  });
 
-  schema.static(
-    "findBySchoolMail",
-    function (schoolMail: string | string[], ...args: [any?, QueryOptions?]) {
-      if (Array.isArray(schoolMail)) return this.find({ schoolMail }, ...args);
-      return this.findOne({ schoolMail }, ...args);
-    }
-  );
+  schema.static("findBySchoolMail", function (schoolMail: string | string[], ...args: [any?, QueryOptions?]) {
+    if (Array.isArray(schoolMail)) return this.find({ schoolMail }, ...args);
+    return this.findOne({ schoolMail }, ...args);
+  });
 
   return schema as unknown as Schema<D, M>;
 };
@@ -144,7 +134,7 @@ const UserImage = new Schema<Image>(
   { _id: false }
 );
 
-UserImage.pre("save", async function (this: Image) {
+UserImage.pre("save", async function () {
   const [cover, portrait] = await Promise.all(
     [this.cover, this.portrait].map((url) => (url ? uploadImage(url) : undefined))
   );
@@ -161,10 +151,7 @@ function userSubName(required?: string) {
   };
 }
 
-function userSubContact(
-  required: string,
-  opts: Pick<SchemaTypeOptions<string>, "lowercase" | "validate"> = {}
-) {
+function userSubContact(required: string, opts: Pick<SchemaTypeOptions<string>, "lowercase" | "validate"> = {}) {
   return new Schema<SubContact>(
     {
       other: {

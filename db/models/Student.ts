@@ -17,5 +17,4 @@ const StudentSchema = createUserSchema<StudentRecord, Model>({
   },
 });
 
-export const StudentModel = (models[ModelNames.STUDENT] ??
-  model(ModelNames.STUDENT, StudentSchema)) as Model;
+export const StudentModel = (models[ModelNames.STUDENT] ?? model(ModelNames.STUDENT, StudentSchema)) as Model;

@@ -6,9 +6,16 @@ const Academic: Academic = ({ handleClassChange, handleSubjectsChange, subjects,
   return (
     <div className="space-y-3">
       <div className="w-1/4">
-        <Class value={props.class} onChange={handleClassChange} />
+        <Class
+          value={props.class}
+          onChange={handleClassChange}
+        />
       </div>
-      <Subjects values={subjects} selectedClass={props.class} onChange={handleSubjectsChange} />
+      <Subjects
+        values={subjects}
+        selectedClass={props.class}
+        onChange={handleSubjectsChange}
+      />
     </div>
   );
 };

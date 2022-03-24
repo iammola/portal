@@ -4,10 +4,7 @@ import { connect } from "db";
 import { SessionModel, TermModel } from "db/models";
 import { routeWrapper, NotFoundError } from "utils/api";
 
-import type {
-  CreateTermData as CreateData,
-  CreateTermRequestBody as CreateBody,
-} from "types/api/terms";
+import type { CreateTermData as CreateData, CreateTermRequestBody as CreateBody } from "types/api/terms";
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -30,8 +27,7 @@ async function createTerm(body: CreateBody): MethodResponse<CreateData> {
 }
 
 const handler: ApiHandler<CreateData> = async ({ body, method }) => {
-  if (method === "POST" && typeof body === "string")
-    return await createTerm(JSON.parse(body) as CreateBody);
+  if (method === "POST" && typeof body === "string") return await createTerm(JSON.parse(body) as CreateBody);
 
   return null;
 };

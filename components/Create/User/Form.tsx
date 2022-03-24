@@ -2,7 +2,10 @@ import { ComponentProps, FunctionComponent } from "react";
 
 const Form: Form = ({ children, ...props }) => {
   return (
-    <form {...props} className="h-full w-full grow space-y-10 self-center px-10">
+    <form
+      {...props}
+      className="h-full w-full grow space-y-10 self-center px-10"
+    >
       {children}
       <div className="!m-0 flex w-full flex-row items-center justify-end pt-6 pr-10">
         <button

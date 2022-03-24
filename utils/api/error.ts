@@ -10,9 +10,7 @@ export function formatError(error: any) {
     return Object.fromEntries(
       Object.entries(error.errors).map(([path, error]) => [
         path,
-        error instanceof Error.ValidatorError
-          ? error.properties.type
-          : `Invalid ${error.path} type`,
+        error instanceof Error.ValidatorError ? error.properties.type : `Invalid ${error.path} type`,
       ])
     );
 

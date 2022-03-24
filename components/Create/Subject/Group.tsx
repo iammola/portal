@@ -92,7 +92,10 @@ const Division: Division = ({ alias, id, name, handleChange, remove, teachers })
             }
           />
         </div>
-        <Teachers values={teachers} onChange={(teachers) => handleChange({ teachers })} />
+        <Teachers
+          values={teachers}
+          onChange={(teachers) => handleChange({ teachers })}
+        />
       </div>
     </details>
   );

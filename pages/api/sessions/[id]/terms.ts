@@ -18,9 +18,9 @@ async function getSessionTerms(id: string): MethodResponse<GetData> {
     {
       data,
       success: true,
-      message: ReasonPhrases.CREATED,
+      message: ReasonPhrases.OK,
     },
-    StatusCodes.CREATED,
+    StatusCodes.OK,
   ];
 }
 
@@ -31,5 +31,4 @@ const handler: ApiHandler<GetData> = async ({ method, query }) => {
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async (req: NextApiRequest, res: NextApiResponse) =>
-  routeWrapper<GetData>(req, res, handler, ["GET"]);
+export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper<GetData>(req, res, handler, ["GET"]);

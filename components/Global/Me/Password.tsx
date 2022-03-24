@@ -5,14 +5,10 @@ const Password: FunctionComponent = () => {
     <div className="flex w-full flex-col gap-y-4 divide-y-2 border-slate-200">
       <div>
         <h5 className="text-2xl font-semibold tracking-wide text-slate-800">Password</h5>
-        <p className="text-sm text-slate-500">
-          Please enter your current password to change your password.
-        </p>
+        <p className="text-sm text-slate-500">Please enter your current password to change your password.</p>
       </div>
       <div className="grid w-full grid-cols-4 gap-x-20 py-7">
-        <h4 className="col-start-1 col-end-2 w-max min-w-max text-sm font-medium text-slate-700">
-          Current password
-        </h4>
+        <h4 className="col-start-1 col-end-2 w-max min-w-max text-sm font-medium text-slate-700">Current password</h4>
         <div className="col-start-2 col-end-4 w-[30rem]">
           <input
             required
@@ -22,9 +18,7 @@ const Password: FunctionComponent = () => {
         </div>
       </div>
       <div className="grid w-full grid-cols-4 gap-x-20 py-7">
-        <h4 className="col-start-1 col-end-2 w-max min-w-max text-sm font-medium text-slate-700">
-          New password
-        </h4>
+        <h4 className="col-start-1 col-end-2 w-max min-w-max text-sm font-medium text-slate-700">New password</h4>
         <div className="col-start-2 col-end-4 flex w-[30rem] flex-col items-start justify-start gap-y-2">
           <input
             required

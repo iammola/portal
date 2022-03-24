@@ -4,10 +4,7 @@ import { connect } from "db";
 import { routeWrapper } from "utils/api";
 import { TeacherModel, BaseSubjectModel, GroupSubjectModel } from "db/models";
 
-import type {
-  CreateSubjectData as CreateData,
-  CreateSubjectRequestBody as CreateBody,
-} from "types/api/subjects";
+import type { CreateSubjectData as CreateData, CreateSubjectRequestBody as CreateBody } from "types/api/subjects";
 import type { MethodResponse, ApiHandler } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -31,9 +28,7 @@ async function createSubject(data: CreateBody, classID: string): MethodResponse<
           class: classID,
           divisions: data.divisions.map((div) => ({
             ...div,
-            teachers: div.teachers
-              .map((t) => teachers.find((d) => d.schoolMail === t)?._id)
-              .filter(Boolean),
+            teachers: div.teachers.map((t) => teachers.find((d) => d.schoolMail === t)?._id).filter(Boolean),
           })),
         });
 

@@ -34,38 +34,33 @@ const CreateSubject: NextPage = () => {
   useIsomorphicLayoutEffect(() => {
     if (__type !== undefined) {
       setTeachers(undefined);
-      setGroupSubjects(
-        __type === "group" ? [{ ...divisionTemplate }, { ...divisionTemplate }] : undefined
-      );
+      setGroupSubjects(__type === "group" ? [{ ...divisionTemplate }, { ...divisionTemplate }] : undefined);
     }
   }, [__type, divisionTemplate]);
 
   const addSubjectDivision = () => setGroupSubjects((p) => [...(p ?? []), { ...divisionTemplate }]);
 
-  const removeSubjectDivision = (idx: number) =>
-    setGroupSubjects((p) => p?.filter((_, i) => i !== idx));
+  const removeSubjectDivision = (idx: number) => setGroupSubjects((p) => p?.filter((_, i) => i !== idx));
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (selectedClass?.id && __type) {
+      const body = {
+        __type,
+        mandatory: mandatory ? true : undefined,
+        name: { long, short },
+        class: selectedClass.id,
+        teachers: teachers?.map((t) => t.mail),
+        divisions: groupSubjects?.map((g) => ({
+          ...g,
+          teachers: g.teachers.map((t) => t.mail),
+        })),
+      } as unknown as CreateSubjectRequestBody;
       try {
         await fetchAPIEndpoint<CreateSubjectData, CreateSubjectRequestBody>(
           "/api/classes/${selectedClass.id}/subjects",
-          {
-            method: "POST",
-          },
-          {
-            name: { long, short },
-            __type,
-            mandatory,
-            class: selectedClass.id,
-            teachers: teachers?.map((t) => t.mail),
-            divisions: groupSubjects?.map((g) => ({
-              ...g,
-              teachers: g.teachers.map((t) => t.mail),
-            })),
-          } as unknown as CreateSubjectRequestBody
+          { body, method: "POST" }
         );
       } catch (error: any) {
         console.error(error);
@@ -77,7 +72,10 @@ const CreateSubject: NextPage = () => {
     <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-200 font-poppins">
       <Head>
         <title>Create Subject | Portal | GRS™</title>
-        <meta name="description" content="Page for Subject Creation" />
+        <meta
+          name="description"
+          content="Page for Subject Creation"
+        />
       </Head>
       <section className="flex w-full grow flex-col items-center justify-center py-12">
         <form
@@ -86,9 +84,7 @@ const CreateSubject: NextPage = () => {
         >
           <h1 className="text-center text-4xl font-bold text-slate-600">
             <span>Create</span>{" "}
-            <span className="bg-gradient-to-br from-blue-400 to-blue-600 bg-clip-text text-transparent">
-              Subject
-            </span>
+            <span className="bg-gradient-to-br from-blue-400 to-blue-600 bg-clip-text text-transparent">Subject</span>
           </h1>
           <div className="space-y-8">
             <Select
@@ -143,14 +139,15 @@ const CreateSubject: NextPage = () => {
                 id="requiredSubject"
                 onChange={(e) => setMandatory(e.target.checked)}
               />
-              <label htmlFor="requiredSubject" className="text-sm font-medium text-slate-700">
+              <label
+                htmlFor="requiredSubject"
+                className="text-sm font-medium text-slate-700"
+              >
                 Is this subject mandatory?
               </label>
             </div>
             <SubjectType className="w-full space-y-5">
-              <SubjectType.Label className="font-medium text-slate-800">
-                Choose a subject type
-              </SubjectType.Label>
+              <SubjectType.Label className="font-medium text-slate-800">Choose a subject type</SubjectType.Label>
               <SubjectType.Options
                 value={__type}
                 id="subjectType"
@@ -158,9 +155,7 @@ const CreateSubject: NextPage = () => {
                 className="flex w-full flex-row items-stretch justify-start md:gap-x-3 lg:gap-x-5"
               />
             </SubjectType>
-            {__type === "base" && (
-              <BaseSubject teachers={{ values: teachers, onChange: setTeachers }} />
-            )}
+            {__type === "base" && <BaseSubject teachers={{ values: teachers, onChange: setTeachers }} />}
             {__type === "group" && (
               <GroupSubject
                 values={groupSubjects}

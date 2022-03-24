@@ -33,5 +33,4 @@ SessionSchema.static("findCurrent", function (...args: [any?, QueryOptions?]) {
   return this.findOne({ current: true }, ...args);
 });
 
-export const SessionModel = (models[ModelNames.SESSION] ??
-  model(ModelNames.SESSION, SessionSchema)) as Model;
+export const SessionModel = (models[ModelNames.SESSION] ?? model(ModelNames.SESSION, SessionSchema)) as Model;

@@ -28,11 +28,10 @@ const Login: NextPage = () => {
     if (!level) return;
 
     try {
-      const result = await fetchAPIEndpoint<AuthData, AuthUser>(
-        "/api/auth",
-        { method: "POST" },
-        { username, password, remember, level: level.value }
-      );
+      const result = await fetchAPIEndpoint<AuthData, AuthUser>("/api/auth", {
+        method: "POST",
+        body: { username, password, remember, level: level.value },
+      });
 
       if (result.success) {
         const { token, expiresIn } = result.data;
@@ -83,9 +82,7 @@ const Login: NextPage = () => {
               onChange={setLevel}
               className="relative flex w-full flex-col items-start justify-center gap-y-1"
             >
-              <Listbox.Label className="text-sm font-light tracking-wider text-slate-600">
-                Account type
-              </Listbox.Label>
+              <Listbox.Label className="text-sm font-light tracking-wider text-slate-600">Account type</Listbox.Label>
               <Listbox.Button className="flex h-14 w-full items-center justify-between rounded-lg bg-slate-50 py-2 px-4">
                 {level && (
                   <span className="grid grid-cols-[max-content_1fr] items-center gap-x-6 text-sm text-slate-700">
@@ -152,7 +149,10 @@ const Login: NextPage = () => {
                 onChange={(e) => setRemember(e.target.checked)}
                 className="h-[1.15rem] w-[1.15rem] rounded border-slate-300 text-blue-500 focus:border-transparent focus:ring focus:ring-blue-200 focus:ring-offset-0"
               />
-              <label htmlFor="remember" className="text-sm font-light tracking-wide text-slate-700">
+              <label
+                htmlFor="remember"
+                className="text-sm font-light tracking-wide text-slate-700"
+              >
                 Remember me?
               </label>
             </div>

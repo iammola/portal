@@ -56,11 +56,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
 
   useIsomorphicLayoutEffect(
     () =>
-      setValid(
-        removeCountryCode(value) === "" || typing
-          ? undefined
-          : PhoneNumber(removeFormatting(value)).isValid()
-      ),
+      setValid(removeCountryCode(value) === "" || typing ? undefined : PhoneNumber(removeFormatting(value)).isValid()),
     [removeCountryCode, removeFormatting, typing, value]
   );
 

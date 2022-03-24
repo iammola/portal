@@ -2,10 +2,7 @@ import { Schema } from "mongoose";
 
 import { ModelNames } from "db";
 
-import type {
-  StudentGuardianSchema as Guardian,
-  StudentAcademicSchema as Academic,
-} from "types/schema";
+import type { StudentGuardianSchema as Guardian, StudentAcademicSchema as Academic } from "types/schema";
 
 export const GuardianSchema = new Schema<Guardian>(
   {

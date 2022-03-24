@@ -27,13 +27,9 @@ const Field: Field = ({ className, id, max, onChange, parentClassName, required,
         onChange={(e) => onChange(e.target.value)}
         className={typeof className === "string" ? className : className(!limitPassed && valid)}
       />
-      {!required && (
-        <span className="absolute right-0.5 -top-5 text-xs text-slate-500">Optional</span>
-      )}
+      {!required && <span className="absolute right-0.5 -top-5 text-xs text-slate-500">Optional</span>}
       {max !== undefined && (
-        <span
-          className={classNames("pl-0.5 text-xs", [limitPassed, "text-red-500", "text-slate-500"])}
-        >
+        <span className={classNames("pl-0.5 text-xs", [limitPassed, "text-red-500", "text-slate-500"])}>
           {value?.length ?? 0} / {max}
         </span>
       )}

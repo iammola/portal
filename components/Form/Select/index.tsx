@@ -12,9 +12,7 @@ const Select: Select = ({ label, onChange, options, value }) => {
     if (open)
       (document.activeElement as HTMLElement)?.addEventListener(
         "blur",
-        (e) =>
-          !(e.target as HTMLElement)?.parentElement?.contains(e.relatedTarget as Node) &&
-          setOpen(false),
+        (e) => !(e.target as HTMLElement)?.parentElement?.contains(e.relatedTarget as Node) && setOpen(false),
         { once: true }
       );
   }, [open]);
@@ -26,7 +24,10 @@ const Select: Select = ({ label, onChange, options, value }) => {
 
   return (
     <div className="relative w-full">
-      <Button {...{ label, open, setOpen }} valueSelected={value != undefined}>
+      <Button
+        {...{ label, open, setOpen }}
+        valueSelected={value != undefined}
+      >
         {value?.value ?? label}
       </Button>
       <List
