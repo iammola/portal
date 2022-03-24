@@ -18,9 +18,9 @@ async function getSessionTerms(id: string): MethodResponse<GetData> {
     {
       data,
       success: true,
-      message: ReasonPhrases.CREATED,
+      message: ReasonPhrases.OK,
     },
-    StatusCodes.CREATED,
+    StatusCodes.OK,
   ];
 }
 

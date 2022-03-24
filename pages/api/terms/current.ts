@@ -14,10 +14,10 @@ async function getCurrentTerm(): MethodResponse<GetData> {
   return [
     {
       success: true,
-      message: ReasonPhrases.CREATED,
+      message: ReasonPhrases.OK,
       data: await TermModel.findCurrent().populate("session").lean(),
     },
-    StatusCodes.CREATED,
+    StatusCodes.OK,
   ];
 }
 

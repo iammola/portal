@@ -14,10 +14,10 @@ async function getTerm(id: string): MethodResponse<GetData> {
   return [
     {
       success: true,
-      message: ReasonPhrases.CREATED,
+      message: ReasonPhrases.OK,
       data: await TermModel.findById(id).populate("session").lean(),
     },
-    StatusCodes.CREATED,
+    StatusCodes.OK,
   ];
 }
 

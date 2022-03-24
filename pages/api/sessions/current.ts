@@ -14,10 +14,10 @@ async function getCurrentSession(): MethodResponse<GetData> {
   return [
     {
       success: true,
-      message: ReasonPhrases.CREATED,
+      message: ReasonPhrases.OK,
       data: await SessionModel.findCurrent().lean(),
     },
-    StatusCodes.CREATED,
+    StatusCodes.OK,
   ];
 }
 
