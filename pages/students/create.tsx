@@ -43,10 +43,9 @@ const CreateStudent: NextPage = () => {
 
     if (dob && guardians && academic.class && academic.subjects.length) {
       try {
-        await fetchAPIEndpoint<CreateStudentData, CreateStudentRequestBody>(
-          "/api/parents",
-          { method: "POST" },
-          {
+        await fetchAPIEndpoint<CreateStudentData, CreateStudentRequestBody>("/api/parents", {
+          method: "POST",
+          body: {
             dob,
             image,
             password,
@@ -59,8 +58,8 @@ const CreateStudent: NextPage = () => {
             },
             gender: gender as UserGender,
             name: name as Required<typeof name>,
-          }
-        );
+          },
+        });
       } catch (error: any) {
         console.error(error);
       }

@@ -19,14 +19,13 @@ const CreateClass: NextPage = () => {
     e.preventDefault();
 
     try {
-      const result = await fetchAPIEndpoint<CreateClassData, CreateClassRequestBody>(
-        "/api/classes",
-        { method: "POST" },
-        {
+      const result = await fetchAPIEndpoint<CreateClassData, CreateClassRequestBody>("/api/classes", {
+        method: "POST",
+        body: {
           name: { long, short, special },
           teachers: teachers.map((t) => t.mail),
-        }
-      );
+        },
+      });
 
       if (result.success) {
         console.warn(result.message, result.data);

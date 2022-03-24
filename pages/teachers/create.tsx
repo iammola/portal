@@ -62,10 +62,9 @@ const CreateTeacher: NextPage = () => {
     e.preventDefault();
 
     try {
-      await fetchAPIEndpoint<CreateTeacherData, CreateTeacherRequestBody>(
-        "/api/teachers",
-        { method: "POST" },
-        {
+      await fetchAPIEndpoint<CreateTeacherData, CreateTeacherRequestBody>("/api/teachers", {
+        method: "POST",
+        body: {
           dob,
           image,
           password,
@@ -76,8 +75,8 @@ const CreateTeacher: NextPage = () => {
           },
           gender: gender as UserGender,
           name: name as Required<typeof name>,
-        }
-      );
+        },
+      });
     } catch (error: any) {
       console.error(error);
     }

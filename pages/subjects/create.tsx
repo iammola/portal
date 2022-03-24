@@ -46,23 +46,21 @@ const CreateSubject: NextPage = () => {
     e.preventDefault();
 
     if (selectedClass?.id && __type) {
+      const body = {
+        __type,
+        mandatory: mandatory ? true : undefined,
+        name: { long, short },
+        class: selectedClass.id,
+        teachers: teachers?.map((t) => t.mail),
+        divisions: groupSubjects?.map((g) => ({
+          ...g,
+          teachers: g.teachers.map((t) => t.mail),
+        })),
+      } as unknown as CreateSubjectRequestBody;
       try {
         await fetchAPIEndpoint<CreateSubjectData, CreateSubjectRequestBody>(
           "/api/classes/${selectedClass.id}/subjects",
-          {
-            method: "POST",
-          },
-          {
-            name: { long, short },
-            __type,
-            mandatory,
-            class: selectedClass.id,
-            teachers: teachers?.map((t) => t.mail),
-            divisions: groupSubjects?.map((g) => ({
-              ...g,
-              teachers: g.teachers.map((t) => t.mail),
-            })),
-          } as unknown as CreateSubjectRequestBody
+          { body, method: "POST" }
         );
       } catch (error: any) {
         console.error(error);

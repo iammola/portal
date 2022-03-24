@@ -20,15 +20,14 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
   );
 
   const { data } = useSWRImmutable("/api/users/email", async (url) =>
-    fetchAPIEndpoint<UsersEmailData, UsersEmailRequestBody>(
-      url,
-      { method: "SEARCH" },
-      {
+    fetchAPIEndpoint<UsersEmailData, UsersEmailRequestBody>(url, {
+      method: "SEARCH",
+      body: {
         userType,
         mail: item.mail,
         select: "name.username name.initials",
-      }
-    )
+      },
+    })
   );
 
   useIsomorphicLayoutEffect(() => {

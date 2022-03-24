@@ -28,11 +28,10 @@ const Login: NextPage = () => {
     if (!level) return;
 
     try {
-      const result = await fetchAPIEndpoint<AuthData, AuthUser>(
-        "/api/auth",
-        { method: "POST" },
-        { username, password, remember, level: level.value }
-      );
+      const result = await fetchAPIEndpoint<AuthData, AuthUser>("/api/auth", {
+        method: "POST",
+        body: { username, password, remember, level: level.value },
+      });
 
       if (result.success) {
         const { token, expiresIn } = result.data;

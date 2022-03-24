@@ -63,10 +63,9 @@ const CreateParent: NextPage = () => {
     e.preventDefault();
 
     try {
-      await fetchAPIEndpoint<CreateParentData, CreateParentRequestBody>(
-        "/api/parents",
-        { method: "POST" },
-        {
+      await fetchAPIEndpoint<CreateParentData, CreateParentRequestBody>("/api/parents", {
+        method: "POST",
+        body: {
           dob,
           image,
           password,
@@ -78,8 +77,8 @@ const CreateParent: NextPage = () => {
           },
           gender: gender as UserGender,
           name: name as Required<typeof name>,
-        }
-      );
+        },
+      });
     } catch (error: any) {
       console.error(error);
     }
