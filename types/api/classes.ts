@@ -1,5 +1,5 @@
-import { CreateResult } from "types/api";
 import { FlattenIntersection } from "types/utils";
+import { CreateResult, UpdateResult } from "types/api";
 import { ClassRecord, TeacherSchema } from "types/schema";
 
 export type CreateClassData = CreateResult<Pick<ClassRecord, "createdAt">>;
@@ -14,3 +14,5 @@ export type GetClassData = Omit<ClassRecord<true>, "teachers">;
 export type GetClassTeachersData = {
   teachers: TeacherSchema[];
 };
+
+export type DeleteClassTeacherData = UpdateResult & { message: string };
