@@ -14,7 +14,7 @@ import type {
 
 async function getTeachers(classID: string, proj: any): MethodResponse<GetData> {
   await connect();
-  const data = await ClassModel.getTeachers(classID, proj).lean();
+  const data = await ClassModel.getTeachers(classID, proj).lean({ getters: true });
 
   if (data === null) throw new NotFoundError("Class not found");
 
