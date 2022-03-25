@@ -4,9 +4,42 @@ import { connect } from "db";
 import { SessionModel, TermModel } from "db/models";
 import { routeWrapper, NotFoundError } from "utils/api";
 
-import type { CreateTermData as CreateData, CreateTermRequestBody as CreateBody } from "types/api/terms";
+import type {
+  GetTermsData as GetData,
+  CreateTermData as CreateData,
+  CreateTermRequestBody as CreateBody,
+} from "types/api/terms";
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
+
+async function getTerms(): MethodResponse<GetData> {
+  await connect();
+  const terms = await TermModel.find({}).populate("session", "name").lean();
+
+  const data = terms.map(({ session, ...term }) => ({
+    ...term,
+    name: {
+      short: `${session.name.short} ${term.name.short} Term`,
+      long: `${session.name.long} Session - ${term.name.long} Term`,
+    },
+  }));
+
+  data.sort((a, b) => {
+    const nameA = a.name.short.toUpperCase() ?? 0;
+    const nameB = b.name.short.toUpperCase() ?? 0;
+
+    return nameA > nameB ? 1 : nameA < nameB ? -1 : 0;
+  });
+
+  return [
+    {
+      data,
+      success: true,
+      message: ReasonPhrases.OK,
+    },
+    StatusCodes.OK,
+  ];
+}
 
 async function createTerm(body: CreateBody): MethodResponse<CreateData> {
   await connect();
@@ -26,12 +59,15 @@ async function createTerm(body: CreateBody): MethodResponse<CreateData> {
   ];
 }
 
-const handler: ApiHandler<CreateData> = async ({ body, method }) => {
+type D = GetData | CreateData;
+
+const handler: ApiHandler<D> = async ({ body, method }) => {
   if (method === "POST" && typeof body === "string") return await createTerm(JSON.parse(body) as CreateBody);
+
+  if (method === "GET") return await getTerms();
 
   return null;
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async (req: NextApiRequest, res: NextApiResponse) =>
-  routeWrapper<CreateData>(req, res, handler, ["POST"]);
+export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper<D>(req, res, handler, ["POST", "GET"]);
