@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "type-check": "tsc",
     "build": "next build",
     "start": "next start",
     "format": "prettier --write .",
-    "type-check": "tsc --pretty --noEmit",
     "lint": "eslint . --ext .ts,.js,.jsx,.tsx",
     "postinstall": "git config core.hooksPath ./.github/hooks"
   },
