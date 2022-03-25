@@ -5,6 +5,6 @@ export type CreateTermData = CreateResult;
 
 export type CreateTermRequestBody = TermRecord;
 
-export type GetTermData = Omit<TermRecord, "session"> & {
+export interface GetTermData extends Omit<TermRecord, "session"> {
   session: Omit<SessionRecord<true>, "terms">;
 };
