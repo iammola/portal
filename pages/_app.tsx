@@ -6,7 +6,7 @@ import { Layout } from "components";
 import { fetchAPIEndpoint } from "utils";
 
 import type { AppProps } from "next/app";
-
+ 
 const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
   return (
     <SWRConfig value={{ fetcher: fetchAPIEndpoint }}>
@@ -42,7 +42,7 @@ const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
           href="/apple-touch-icon.png"
         />
       </Head>
-      <Layout hideSidebar={router.asPath === "/login"}>
+      <Layout hideSidebar={["/_error", "/login"].includes(router.route)}>
         <Component {...pageProps} />
       </Layout>
     </SWRConfig>
