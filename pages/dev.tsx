@@ -1,12 +1,11 @@
 import Head from "next/head";
-
-import { Layout } from "components";
+import { Fragment } from "react";
 
 import type { NextPage } from "next";
 
 const Dev: NextPage = () => {
   return (
-    <Layout>
+    <Fragment>
       <Head>
         <title>Development Page</title>
         <meta
@@ -14,7 +13,7 @@ const Dev: NextPage = () => {
           content="Test Components"
         />
       </Head>
-    </Layout>
+    </Fragment>
   );
 };
 
