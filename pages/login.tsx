@@ -49,7 +49,7 @@ const Login: NextPage = () => {
   }
 
   return (
-    <main className="flex h-screen w-screen items-stretch justify-center overflow-hidden bg-black font-urbane">
+    <div className="flex h-full w-full items-stretch justify-center">
       <Head>
         <title>Login | GRS Portal</title>
       </Head>
@@ -174,7 +174,7 @@ const Login: NextPage = () => {
           <span className="block">All Rights Reserved</span>
         </span>
       </section>
-    </main>
+    </div>
   );
 };
 

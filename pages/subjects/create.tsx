@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, Fragment, useState, useMemo } from "react";
 
 import { classNames } from "utils";
 import { fetchAPIEndpoint } from "utils/api";
@@ -69,7 +69,7 @@ const CreateSubject: NextPage = () => {
   }
 
   return (
-    <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-200 font-poppins">
+    <Fragment>
       <Head>
         <title>Create Subject | Portal | GRS™</title>
         <meta
@@ -173,7 +173,7 @@ const CreateSubject: NextPage = () => {
           </button>
         </form>
       </section>
-    </main>
+    </Fragment>
   );
 };
 
