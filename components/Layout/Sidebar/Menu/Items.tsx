@@ -9,7 +9,7 @@ export const Item: FunctionComponent<ItemProps> = ({ children, className, href }
     <Link href={href}>
       <a
         className={classNames(
-          "flex h-11 w-full cursor-pointer items-center justify-start gap-x-4 rounded-lg px-4 hover:bg-slate-100",
+          "flex h-11 w-full cursor-pointer items-center justify-start gap-x-4 rounded-lg px-4 hover:bg-slate-50",
           className
         )}
       >
@@ -23,7 +23,7 @@ export const Item: FunctionComponent<ItemProps> = ({ children, className, href }
 export const List: FunctionComponent<ListProps> = ({ children, items }) => {
   return (
     <details className="group">
-      <summary className="flex h-11 w-full cursor-pointer items-center justify-start gap-x-4 rounded-lg px-4 hover:bg-slate-100 group-open:mb-1 group-open:bg-slate-50">
+      <summary className="flex h-11 w-full cursor-pointer items-center justify-start gap-x-4 rounded-lg px-4 hover:bg-slate-50 group-open:mb-1 group-open:bg-slate-50">
         <ChevronRightIcon className="h-5 w-5 shrink-0 fill-gray-700 group-open:rotate-90" />
         <div className="grow truncate text-sm font-light tracking-wide text-gray-700">{children}</div>
       </summary>
