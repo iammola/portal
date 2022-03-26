@@ -1,6 +1,6 @@
 import { model, models, QueryOptions, QuerySelector, Schema, Types } from "mongoose";
 
-import { ModelNames } from "db";
+import { ModelNames } from "db/constants";
 import { DateSchema } from "db/schema/Attendance";
 
 import type { AttendanceModel as Model, AttendanceRecord } from "types/schema";

@@ -1,7 +1,7 @@
 import { Schema, Model, model, models, VirtualTypeOptions } from "mongoose";
 
-import { ModelNames } from "db";
 import { hashPassword } from "utils";
+import { ModelNames } from "db/constants";
 
 import type { ObjectId, UserPassword } from "types/schema";
 

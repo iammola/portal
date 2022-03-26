@@ -1,6 +1,6 @@
 import { model, models } from "mongoose";
 
-import { ModelNames } from "db";
+import { ModelNames } from "db/constants";
 import { createUserSchema } from "db/schema/User";
 
 import type { TeacherRecord, TeacherModel as Model } from "types/schema";

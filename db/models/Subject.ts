@@ -1,6 +1,6 @@
 import { Schema, model, models } from "mongoose";
 
-import { ModelNames } from "db";
+import { ModelNames } from "db/constants";
 import { BaseSubjectSchema, GroupSubjectSchema } from "db/schema/Subject";
 
 import type {
