@@ -20,19 +20,7 @@ const CreateStudent: NextPage = () => {
   const [email, setEmail] = useState<Partial<StudentSchema["contact"]["email"]>>({});
   const [phone, setPhone] = useState<Partial<StudentSchema["contact"]["phone"]>>({});
   const [address, setAddress] = useState<Partial<StudentSchema["contact"]["address"]>>({});
-  const genderOptions = useMemo(
-    () => [
-      {
-        id: "M",
-        value: "Male",
-      },
-      {
-        id: "F",
-        value: "Female",
-      },
-    ],
-    []
-  );
+  const genderOptions = useMemo(() => ["Male", "Female"].map((value) => ({ id: value[0], value })), []);
   const [academic, setAcademic] = useState({
     class: "",
     subjects: [] as string[],

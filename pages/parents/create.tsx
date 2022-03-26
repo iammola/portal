@@ -20,44 +20,8 @@ const CreateParent: NextPage = () => {
   const [email, setEmail] = useState<Partial<ParentSchema["contact"]["email"]>>({});
   const [phone, setPhone] = useState<Partial<ParentSchema["contact"]["phone"]>>({});
   const [address, setAddress] = useState<Partial<ParentSchema["contact"]["address"]>>({});
-  const titleOptions = useMemo(
-    () => [
-      {
-        id: "Mr,",
-        value: "Mr.",
-      },
-      {
-        id: "Ms.",
-        value: "Ms.",
-      },
-      {
-        id: "Mrs.",
-        value: "Mrs.",
-      },
-      {
-        id: "Dr.",
-        value: "Dr.",
-      },
-      {
-        id: "Barr.",
-        value: "Barr.",
-      },
-    ],
-    []
-  );
-  const genderOptions = useMemo(
-    () => [
-      {
-        id: "M",
-        value: "Male",
-      },
-      {
-        id: "F",
-        value: "Female",
-      },
-    ],
-    []
-  );
+  const genderOptions = useMemo(() => ["Male", "Female"].map((value) => ({ id: value[0], value })), []);
+  const titleOptions = useMemo(() => ["Mr.", "Ms.", "Mrs.", "Dr.", "Barr."].map((id) => ({ id, value: id })), []);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
