@@ -22,8 +22,12 @@
     -webkit-appearance: none;
   }
 
+  details > summary {
+    @apply block;
+  }
+
   details > summary::-webkit-details-marker {
-    display: none;
+    @apply hidden;
   }
 
   @font-face {
