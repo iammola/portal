@@ -6,7 +6,7 @@ import { Online } from "./Online";
 
 export const Footer: FunctionComponent = () => {
   return (
-    <div className="flex items-center gap-x-2 p-4">
+    <div className="flex w-full items-center gap-x-2 p-4">
       <div className="relative aspect-square h-12 w-12">
         <div className="h-full w-full overflow-hidden rounded-full shadow">
           <UserImage

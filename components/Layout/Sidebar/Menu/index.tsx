@@ -10,7 +10,7 @@ export const Menu: FunctionComponent = () => {
   ];
 
   return (
-    <div className="space-y-2 p-4">
+    <div className="w-full grow space-y-2 p-4">
       <Item href="">Attendance Report</Item>
       <List items={items}>People</List>
     </div>
