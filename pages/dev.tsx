@@ -6,7 +6,7 @@ import type { NextPage } from "next";
 
 const Dev: NextPage = () => {
   return (
-    <Layout bodyClassName="bg-slate-100">
+    <Layout>
       <Head>
         <title>Development Page</title>
         <meta
