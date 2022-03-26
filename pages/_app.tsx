@@ -2,14 +2,14 @@ import Head from "next/head";
 import { SWRConfig } from "swr";
 
 import "style/index.css";
+import { Layout } from "components";
 import { fetchAPIEndpoint } from "utils";
 
 import type { AppProps } from "next/app";
 
-const App = ({ Component, pageProps }: AppProps): JSX.Element => {
+const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
   return (
     <SWRConfig value={{ fetcher: fetchAPIEndpoint }}>
-      <Component {...pageProps} />
       <Head>
         <link
           rel="icon"
@@ -42,6 +42,9 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
           href="/apple-touch-icon.png"
         />
       </Head>
+      <Layout hideSidebar={router.asPath === "/login"}>
+        <Component {...pageProps} />
+      </Layout>
     </SWRConfig>
   );
 };
