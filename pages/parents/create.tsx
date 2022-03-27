@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { FormEvent, useMemo, useState } from "react";
+import { Fragment, FormEvent, useState, useMemo } from "react";
 
 import { classNames } from "utils";
 import { fetchAPIEndpoint } from "utils/api";
@@ -20,44 +20,8 @@ const CreateParent: NextPage = () => {
   const [email, setEmail] = useState<Partial<ParentSchema["contact"]["email"]>>({});
   const [phone, setPhone] = useState<Partial<ParentSchema["contact"]["phone"]>>({});
   const [address, setAddress] = useState<Partial<ParentSchema["contact"]["address"]>>({});
-  const titleOptions = useMemo(
-    () => [
-      {
-        id: "Mr,",
-        value: "Mr.",
-      },
-      {
-        id: "Ms.",
-        value: "Ms.",
-      },
-      {
-        id: "Mrs.",
-        value: "Mrs.",
-      },
-      {
-        id: "Dr.",
-        value: "Dr.",
-      },
-      {
-        id: "Barr.",
-        value: "Barr.",
-      },
-    ],
-    []
-  );
-  const genderOptions = useMemo(
-    () => [
-      {
-        id: "M",
-        value: "Male",
-      },
-      {
-        id: "F",
-        value: "Female",
-      },
-    ],
-    []
-  );
+  const genderOptions = useMemo(() => ["Male", "Female"].map((value) => ({ id: value[0], value })), []);
+  const titleOptions = useMemo(() => ["Mr.", "Ms.", "Mrs.", "Dr.", "Barr."].map((id) => ({ id, value: id })), []);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -85,7 +49,7 @@ const CreateParent: NextPage = () => {
   }
 
   return (
-    <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-50 font-poppins dark:bg-slate-900">
+    <Fragment>
       <Head>
         <title>Create Parent | GRIS Portal</title>
         <meta
@@ -93,7 +57,7 @@ const CreateParent: NextPage = () => {
           content="Create parent"
         />
       </Head>
-      <section className="flex w-full grow flex-col items-start justify-start py-10">
+      <section className="flex w-full flex-col items-start justify-start py-10 dark:bg-slate-900">
         <h1 className="p-10 pt-0 text-5xl font-semibold text-slate-600 dark:text-slate-300">
           <span>Create</span>{" "}
           <span className="bg-gradient-to-br from-indigo-300 to-indigo-600 bg-clip-text text-transparent">Parent</span>
@@ -431,7 +395,7 @@ const CreateParent: NextPage = () => {
           </Section>
         </Form>
       </section>
-    </main>
+    </Fragment>
   );
 };
 

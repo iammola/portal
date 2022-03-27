@@ -1,7 +1,7 @@
 import PhoneNumber from "awesome-phonenumber";
 import { Model, QueryOptions, Schema, SchemaDefinitionProperty, SchemaTypeOptions } from "mongoose";
 
-import { ModelNames } from "db";
+import { ModelNames } from "db/constants";
 import { generateSchoolMail } from "utils/user";
 import { getImage, uploadImage } from "utils/file";
 

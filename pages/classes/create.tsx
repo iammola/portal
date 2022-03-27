@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, Fragment, useState } from "react";
 import Head from "next/head";
 
 import { Input, Email } from "components/Form";
@@ -36,7 +36,7 @@ const CreateClass: NextPage = () => {
   }
 
   return (
-    <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-200 font-poppins">
+    <Fragment>
       <Head>
         <title>Create Class | GRIS Portal</title>
         <meta
@@ -133,7 +133,7 @@ const CreateClass: NextPage = () => {
           </button>
         </form>
       </section>
-    </main>
+    </Fragment>
   );
 };
 

@@ -1,7 +1,7 @@
 import { FunctionComponent, useMemo } from "react";
 
-import { ModelNames } from "db";
 import { classNames } from "utils";
+import { ModelNames } from "db/constants";
 import { useIsomorphicLayoutEffect } from "hooks";
 
 import type { SubjectRecord } from "types/schema";

@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { format, formatDistance } from "date-fns";
 import { CheckCircleIcon, ChevronLeftIcon, ChevronRightIcon, MailIcon, XCircleIcon } from "@heroicons/react/solid";
 
@@ -37,7 +37,7 @@ const Class: NextPage<GetClassData> = (props) => {
   );
 
   return (
-    <main className="flex h-screen w-screen items-stretch justify-center overflow-hidden font-urbane">
+    <Fragment>
       <Head>
         <title>{data.name.long} | GRS Portal</title>
       </Head>
@@ -159,7 +159,7 @@ const Class: NextPage<GetClassData> = (props) => {
           {activeTab === "Teachers" && <Teachers id={String(props._id)} />}
         </section>
       </section>
-    </main>
+    </Fragment>
   );
 };
 

@@ -8,6 +8,7 @@ const cached = global.mongoose ?? {};
 
 mongoose.plugin(mongooseLeanGetters);
 mongoose.plugin(mongooseLeanVirtuals);
+
 export async function connect(): Promise<typeof mongoose> {
   if (!MONGODB_URI) throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
 
@@ -18,20 +19,6 @@ export async function connect(): Promise<typeof mongoose> {
   } as ConnectOptionsExt);
 
   return (cached.conn ??= await cached.promise);
-}
-
-export enum ModelNames {
-  AUTH = "Auth",
-  TERM = "Term",
-  CLASS = "Class",
-  PARENT = "Parent",
-  B_SUBJECT = "base",
-  STUDENT = "Student",
-  TEACHER = "Teacher",
-  SUBJECT = "Subject",
-  G_SUBJECT = "group",
-  SESSION = "Session",
-  ATTENDANCE = "Attendance",
 }
 
 interface ConnectOptionsExt extends mongoose.ConnectOptions {

@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState, useMemo, FormEvent } from "react";
+import { FormEvent, Fragment, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import { fetchAPIEndpoint } from "utils/api";
@@ -20,19 +20,7 @@ const CreateStudent: NextPage = () => {
   const [email, setEmail] = useState<Partial<StudentSchema["contact"]["email"]>>({});
   const [phone, setPhone] = useState<Partial<StudentSchema["contact"]["phone"]>>({});
   const [address, setAddress] = useState<Partial<StudentSchema["contact"]["address"]>>({});
-  const genderOptions = useMemo(
-    () => [
-      {
-        id: "M",
-        value: "Male",
-      },
-      {
-        id: "F",
-        value: "Female",
-      },
-    ],
-    []
-  );
+  const genderOptions = useMemo(() => ["Male", "Female"].map((value) => ({ id: value[0], value })), []);
   const [academic, setAcademic] = useState({
     class: "",
     subjects: [] as string[],
@@ -67,7 +55,7 @@ const CreateStudent: NextPage = () => {
   }
 
   return (
-    <main className="flex h-full min-h-screen w-screen flex-row items-stretch justify-center bg-slate-50 font-poppins dark:bg-slate-900">
+    <Fragment>
       <Head>
         <title>Create Student | GRIS Portal</title>
         <meta
@@ -75,7 +63,7 @@ const CreateStudent: NextPage = () => {
           content="Create student"
         />
       </Head>
-      <section className="flex w-full grow flex-col items-start justify-start py-10">
+      <section className="flex w-full flex-col items-start justify-start py-10 dark:bg-slate-900">
         <h1 className="p-10 pt-0 text-5xl font-semibold text-slate-600 dark:text-slate-300">
           <span>Create</span>{" "}
           <span className="bg-gradient-to-br from-amber-300 to-amber-600 bg-clip-text text-transparent">Student</span>
@@ -404,7 +392,7 @@ const CreateStudent: NextPage = () => {
           </Section>
         </Form>
       </section>
-    </main>
+    </Fragment>
   );
 };
 

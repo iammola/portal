@@ -1,6 +1,6 @@
 import { Schema, model, models, QueryOptions } from "mongoose";
 
-import { ModelNames } from "db";
+import { ModelNames } from "db/constants";
 import { ThingName } from "db/schema/Thing";
 
 import type { TermModel as Model, TermRecord } from "types/schema";

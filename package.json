@@ -3,10 +3,10 @@
   "version": "0.0.2",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "type-check": "tsc",
     "build": "next build",
-    "start": "next start",
+    "dev": "next dev -p 4256",
+    "start": "next start -p 4256",
     "format": "prettier --write .",
     "lint": "eslint . --ext .ts,.js,.jsx,.tsx",
     "postinstall": "git config core.hooksPath ./.github/hooks"
