@@ -1,14 +1,19 @@
 import { parse } from "cookie";
-import { Fragment, FunctionComponent, useMemo } from "react";
+import { Fragment, FunctionComponent, useState } from "react";
 
 import { USER_COOKIE } from "utils";
+import { useIsomorphicLayoutEffect } from "hooks";
 
 import { Item, List } from "./Items";
 import navigation from "./navigation.json";
 
 export const Menu: FunctionComponent = () => {
-  const user = parse(document.cookie)[USER_COOKIE] as "student" | "teacher" | "parent";
-  const items = useMemo(() => navigation[user] as unknown as Navigation[], [user]);
+  const [items, setItems] = useState<Navigation[]>([]);
+
+  useIsomorphicLayoutEffect(() => {
+    const user = parse(document.cookie)[USER_COOKIE] as "student" | "teacher" | "parent";
+    setItems(navigation[user] as unknown as Navigation[]);
+  }, []);
 
   return (
     <div className="w-full grow space-y-2 p-4">
