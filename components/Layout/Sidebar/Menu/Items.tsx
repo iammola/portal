@@ -46,5 +46,8 @@ interface ItemProps {
 }
 
 interface ListProps {
-  items: Array<ItemProps & Record<"title", string>>;
+  items: Array<{
+    title: string;
+    href: LinkProps["href"];
+  }>;
 }
