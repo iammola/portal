@@ -6,7 +6,7 @@ import { SelectorIcon } from "@heroicons/react/solid";
 import { Listbox, Transition } from "@headlessui/react";
 
 import { Input, Password } from "components/Form";
-import { classNames, JWT_COOKIE, fetchAPIEndpoint } from "utils";
+import { classNames, JWT_COOKIE, USER_COOKIE, fetchAPIEndpoint } from "utils";
 
 import type { NextPage } from "next";
 import type { AuthData, AuthUser } from "types/api/auth";
@@ -35,13 +35,15 @@ const Login: NextPage = () => {
 
       if (result.success) {
         const { token, expiresIn } = result.data;
-
-        document.cookie = serialize(JWT_COOKIE, token, {
+        const opts = {
           path: "/",
           secure: true,
           sameSite: true,
           maxAge: expiresIn,
-        });
+        };
+
+        document.cookie = serialize(JWT_COOKIE, token, opts);
+        document.cookie = serialize(USER_COOKIE, level.value, opts);
       } else console.error(result.error);
     } catch (error) {
       console.error(error);
