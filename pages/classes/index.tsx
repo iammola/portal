@@ -8,8 +8,8 @@ import { classNames } from "utils";
 import type { NextPage } from "next";
 
 const Classes: NextPage = () => {
-  const tabs = ["Table", "Create"] as const;
-  const [activeTab, setActiveTab] = useTabs<typeof tabs[number]>(tabs[0]);
+  const tabs = ["Table", "Create"];
+  const [activeTab, setActiveTab] = useTabs(tabs, 0);
 
   return (
     <Fragment>
@@ -22,8 +22,8 @@ const Classes: NextPage = () => {
       <div className="w-full pt-5">
         <Tab.Group
           manual
-          selectedIndex={tabs.indexOf(activeTab ?? tabs[0])}
-          onChange={(idx) => setActiveTab(tabs[idx] ?? tabs[0])}
+          selectedIndex={activeTab}
+          onChange={setActiveTab}
         >
           <Tab.List className="group mx-auto flex items-center justify-center border-b-2">
             {tabs.map((t, i) => (
