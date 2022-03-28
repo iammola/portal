@@ -7,16 +7,20 @@ export function useTabs<T extends string>(defaultTab: T) {
 
   useEffect(() => {
     if (!router.isReady) return;
+
     const {
       pathname,
       query: { tab: current, ...query },
     } = router;
+
+    if (active === undefined) return setActive((current as T) ?? defaultTab);
+
     const args = [undefined, { shallow: true }] as const;
 
-    if (active === undefined && current === undefined) setActive(defaultTab);
-    else if (![defaultTab, current].includes(active))
+    if (![defaultTab, current].includes(active))
       void router.push({ pathname, query: { ...query, tab: active } }, ...args);
-    else if (active === defaultTab && current !== undefined) void router.push({ pathname, query }, ...args);
+    else if (current !== undefined && [active, current].includes(defaultTab))
+      void router.replace({ pathname, query }, ...args);
   }, [active, defaultTab, router]);
 
   return [active, setActive] as const;
