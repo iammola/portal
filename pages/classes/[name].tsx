@@ -47,9 +47,9 @@ const Class: NextPage<GetClassData> = (props) => {
           <h3 className="text-4xl font-semibold capitalize text-slate-700">{data.name.long}</h3>
           <p className="flex gap-x-1 pt-2 text-xs font-light tracking-wide text-slate-500">
             <span>Since {format(new Date(data.createdAt), "do MMMM yyyy")}</span>
-            {"•"}
+            &middot;
             <span>5 students</span>
-            {"•"}
+            &middot;
             <span>
               {data.subjectsCount} subject{data.subjectsCount !== 1 && "s"}
             </span>
