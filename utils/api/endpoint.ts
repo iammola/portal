@@ -1,7 +1,7 @@
 import { parse } from "cookie";
 
 import { ApiResult } from "types/api";
-import { JWT_COOKIE } from "utils/constants";
+import { JWT_COOKIE_TOKEN } from "utils/constants";
 
 /**
  * @param endpoint The API endpoint to fetch
@@ -12,7 +12,7 @@ export async function fetchAPIEndpoint<ResponseData, Body = undefined>(
   endpoint: RequestInfo,
   { body, ...init }: Omit<RequestInit, "body"> & { body?: Body } = {}
 ) {
-  const JWT = parse(document.cookie)[JWT_COOKIE];
+  const JWT = parse(document.cookie)[JWT_COOKIE_TOKEN];
 
   const response = await fetch(endpoint, {
     ...init,
