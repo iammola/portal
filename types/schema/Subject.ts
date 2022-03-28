@@ -1,6 +1,6 @@
 import { Model } from "mongoose";
 
-import { ModelNames } from "db/constants";
+import { ModelNames } from "db";
 import { DocumentId, ModelRecord, ObjectId, ThingName } from "types/schema";
 
 interface SubjectSchema {

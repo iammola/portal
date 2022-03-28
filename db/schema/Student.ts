@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-import { ModelNames } from "db/constants";
+import { ModelNames } from "db";
 
 import type { StudentGuardianSchema as Guardian, StudentAcademicSchema as Academic } from "types/schema";
 

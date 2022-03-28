@@ -11,8 +11,8 @@ const Options: Options = ({ className, id, onChange, value }) => {
     () => [
       {
         id: ModelNames.B_SUBJECT,
-        description: "This subject doesn't have divisions. It is a standalone subject.",
         label: "Base",
+        description: "This subject doesn't have divisions. It is a standalone subject.",
       },
       {
         id: ModelNames.G_SUBJECT,

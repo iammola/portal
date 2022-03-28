@@ -1,6 +1,6 @@
 import { Schema, model, models, QueryOptions } from "mongoose";
 
-import { ModelNames } from "db/constants";
+import { ModelNames } from "db";
 import { ThingName } from "db/schema/Thing";
 
 import type { SessionModel as Model, SessionRecord } from "types/schema";

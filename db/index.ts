@@ -36,3 +36,5 @@ declare const global: {
     promise: Promise<typeof mongoose>;
   };
 };
+
+export { ModelNames } from "./constants";
