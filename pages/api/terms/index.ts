@@ -20,8 +20,8 @@ async function getTerms(): MethodResponse<GetData> {
   const data = terms.map(({ session, ...term }) => ({
     ...term,
     name: {
-      short: `${(session as unknown as SessionSchema).name.short} ${term.name.short} Term`,
-      long: `${(session as unknown as SessionSchema).name.long} Session - ${term.name.long} Term`,
+      short: `${session.name.short} ${term.name.short} Term`,
+      long: `${session.name.long} Session - ${term.name.long} Term`,
     },
   }));
 
