@@ -1,15 +1,19 @@
 import Head from "next/head";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Tab, Transition } from "@headlessui/react";
 
 import { useTabs } from "hooks";
 import { classNames } from "utils";
+import { ClassesList } from "components/Class";
 
 import type { NextPage } from "next";
 
 const Classes: NextPage = () => {
-  const tabs = ["Table", "Create"];
-  const [activeTab, setActiveTab] = useTabs(tabs, 0);
+  const [tabs] = useState({
+    Table: <ClassesList />,
+    Create: "",
+  });
+  const [activeTab, setActiveTab] = useTabs(Object.keys(tabs), 0);
 
   return (
     <Fragment>
@@ -26,7 +30,7 @@ const Classes: NextPage = () => {
           onChange={setActiveTab}
         >
           <Tab.List className="group mx-auto flex items-center justify-center border-b-2">
-            {tabs.map((t, i) => (
+            {Object.keys(tabs).map((t, i) => (
               <Tab
                 key={t}
                 className="relative cursor-pointer px-6 pb-2 text-sm tracking-wider text-slate-500"
@@ -50,6 +54,11 @@ const Classes: NextPage = () => {
               </Tab>
             ))}
           </Tab.List>
+          <Tab.Panels>
+            {Object.values(tabs).map((t, i) => (
+              <Fragment key={i}>{t}</Fragment>
+            ))}
+          </Tab.Panels>
         </Tab.Group>
       </div>
     </Fragment>
