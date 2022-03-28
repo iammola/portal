@@ -84,7 +84,7 @@ const CreateParent: NextPage = () => {
                 label="Full name"
                 className={(valid) =>
                   classNames(
-                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent valid:border-transparent focus:border-transparent focus:outline-none focus:ring-blue-400",
                     {
                       "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                       "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
@@ -104,7 +104,7 @@ const CreateParent: NextPage = () => {
                   label="First name"
                   className={(valid) =>
                     classNames(
-                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent valid:border-transparent focus:border-transparent focus:outline-none focus:ring-blue-400",
                       {
                         "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                         "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
@@ -123,7 +123,7 @@ const CreateParent: NextPage = () => {
                   label="Last name"
                   className={(valid) =>
                     classNames(
-                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent valid:border-transparent focus:border-transparent focus:outline-none focus:ring-blue-400",
                       {
                         "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                         "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
@@ -143,7 +143,7 @@ const CreateParent: NextPage = () => {
                   label="Other name"
                   className={(valid) =>
                     classNames(
-                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400",
                       {
                         "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                         "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
@@ -162,7 +162,7 @@ const CreateParent: NextPage = () => {
                   label="Initials"
                   className={(valid) =>
                     classNames(
-                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                      "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent valid:border-transparent focus:border-transparent focus:outline-none focus:ring-blue-400",
                       {
                         "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                         "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
@@ -201,7 +201,7 @@ const CreateParent: NextPage = () => {
                 onChange={setOccupation}
                 className={(valid) =>
                   classNames(
-                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent valid:border-transparent focus:border-transparent focus:outline-none focus:ring-blue-400",
                     {
                       "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                       "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
@@ -228,7 +228,7 @@ const CreateParent: NextPage = () => {
                     value={email.primary}
                     className={(valid) =>
                       classNames(
-                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent valid:border-transparent focus:border-transparent focus:outline-none focus:ring-blue-400",
                         {
                           "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                           "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
@@ -249,7 +249,7 @@ const CreateParent: NextPage = () => {
                     value={email.other}
                     className={(valid) =>
                       classNames(
-                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                        "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent valid:border-transparent focus:border-transparent focus:outline-none focus:ring-blue-400",
                         {
                           "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                           "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
@@ -354,7 +354,7 @@ const CreateParent: NextPage = () => {
                 value={name.username}
                 className={(valid) =>
                   classNames(
-                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent valid:border-transparent focus:border-transparent focus:outline-none focus:ring-blue-400",
                     {
                       "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                       "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
@@ -376,7 +376,7 @@ const CreateParent: NextPage = () => {
                 value={password}
                 className={(valid) =>
                   classNames(
-                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent focus:border-transparent focus:outline-none focus:ring-blue-400 focus:valid:border-transparent focus:invalid:border-transparent",
+                    "h-[3.75rem] w-full overflow-hidden rounded-lg border placeholder-transparent ring-2 placeholder-shown:border-slate-300 placeholder-shown:ring-transparent valid:border-transparent focus:border-transparent focus:outline-none focus:ring-blue-400",
                     {
                       "valid:ring-emerald-400 focus:valid:ring-emerald-400": valid,
                       "invalid:ring-red-400 focus:invalid:ring-red-400": valid === false,
