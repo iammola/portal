@@ -1,12 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
 import { serialize } from "cookie";
+import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import { SelectorIcon } from "@heroicons/react/solid";
 import { Listbox, Transition } from "@headlessui/react";
 
 import { Input, Password } from "components/Form";
-import { classNames, JWT_COOKIE, USER_COOKIE, fetchAPIEndpoint } from "utils";
+import { classNames, JWT_COOKIE_TOKEN, USER_COOKIE, fetchAPIEndpoint } from "utils";
 
 import type { NextPage } from "next";
 import type { AuthData, AuthUser } from "types/api/auth";
@@ -18,6 +19,8 @@ const levels = [
 ];
 
 const Login: NextPage = () => {
+  const router = useRouter();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
@@ -42,8 +45,9 @@ const Login: NextPage = () => {
           maxAge: expiresIn,
         };
 
-        document.cookie = serialize(JWT_COOKIE, token, opts);
+        document.cookie = serialize(JWT_COOKIE_TOKEN, token, opts);
         document.cookie = serialize(USER_COOKIE, level.value, opts);
+        void router.push("/");
       } else console.error(result.error);
     } catch (error) {
       console.error(error);

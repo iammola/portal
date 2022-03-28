@@ -5,7 +5,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { routeWrapper } from "utils/api";
-import { comparePassword, JWT_ALG, JWT_COOKIE } from "utils";
+import { comparePassword, JWT_ALG, JWT_COOKIE_KEY } from "utils";
 import { ParentModel, StudentModel, TeacherModel } from "db/models";
 
 import type { ApiHandler } from "types/api";
@@ -57,8 +57,10 @@ const handler: ApiHandler<AuthData> = async (req, res) => {
 
   const { expiresIn, publicKey, token } = await getUser(JSON.parse(req.body) as AuthUser);
 
-  res.cookie(JWT_COOKIE, await exportSPKI(publicKey), {
+  res.cookie(JWT_COOKIE_KEY, await exportSPKI(publicKey), {
+    secure: true,
     httpOnly: true,
+    sameSite: true,
     maxAge: expiresIn,
   });
 
