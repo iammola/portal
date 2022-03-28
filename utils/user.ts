@@ -3,11 +3,14 @@ import { startSession } from "mongoose";
 import { connect } from "db";
 import { AuthModel, ParentModel, StudentModel, TeacherModel } from "db/models";
 
+import type { CreateResult } from "types/api";
+
 export async function createUser<T extends User, B extends { password: string }>(type: T, body: B) {
   await connect();
   const session = await startSession();
+  let res: Partial<CreateResult<Record<"schoolMail", string>>> = {};
 
-  const res = await session.withTransaction(async () => {
+  await session.withTransaction(async () => {
     let doc;
     const opts = { session };
     const { password, ...obj } = body;
@@ -19,11 +22,11 @@ export async function createUser<T extends User, B extends { password: string }>
     const { _id, schoolMail } = doc ?? {};
     await AuthModel.create([{ password, userId: _id }], opts);
 
-    return { _id, schoolMail };
+    res = { _id, schoolMail };
   });
 
   await session.endSession();
-  return res as NonNullableObject<typeof res>;
+  return res as Required<typeof res>;
 }
 
 /**
@@ -35,7 +38,5 @@ export function generateSchoolMail(username: string) {
   const DOMAIN = "fake.io";
   return `${username}@${DOMAIN}`;
 }
-
-type NonNullableObject<J> = { [K in keyof J]: NonNullable<J[K]> };
 
 type User = "parent" | "student" | "teacher";
