@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+
+import { useIsomorphicLayoutEffect } from "hooks";
 
 export function useTabs<T extends string>(defaultTab: T) {
   const router = useRouter();
   const [active, setActive] = useState<T>();
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!router.isReady) return;
 
     const {
