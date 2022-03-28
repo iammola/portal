@@ -4,8 +4,9 @@ import { JWT_COOKIE_TOKEN } from "utils/constants";
 
 export const middleware: NextMiddleware = (req) => {
   const key = req.cookies[JWT_COOKIE_TOKEN];
+  const authRoutes = ["/login", "/api/auth"];
 
-  if (req.nextUrl.pathname !== "/login" && !key) {
+  if (!authRoutes.includes(req.nextUrl.pathname) && !key) {
     const url = req.nextUrl.clone();
     url.pathname = "/login";
 
