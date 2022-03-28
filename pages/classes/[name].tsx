@@ -75,9 +75,10 @@ const Class: NextPage<GetClassData> = (props) => {
               {students.map(({ online, ...item }, idx) => (
                 <div
                   key={idx}
-                  className="grid w-full grid-cols-[1fr_max-content_25%_max-content] gap-x-28 py-5"
+                  style={{ gridTemplateColumns: "1fr max-content 25% max-content" }}
+                  className="grid w-full gap-x-28 py-5"
                 >
-                  <div className="flex w-full items-center justify-start gap-4">
+                  <div className="flex w-full min-w-0 items-center justify-start gap-4">
                     <div
                       style={{ shapeOutside: "circle(50% at 50% 50%)" }}
                       className="aspect-square h-16 w-16 shrink-0 overflow-hidden rounded-full"
@@ -101,10 +102,10 @@ const Class: NextPage<GetClassData> = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center text-sm tracking-wide text-slate-500">
+                  <div className="flex min-w-0 items-center text-sm tracking-wide text-slate-500">
                     {item.age} year{item.age > 1 && "s"} old
                   </div>
-                  <div className="flex flex-col items-start justify-center gap-y-1">
+                  <div className="flex min-w-0 flex-col items-start justify-center gap-y-1">
                     <div className="flex items-center gap-x-1 text-sm text-slate-700">
                       {online.state ? (
                         <>
@@ -127,7 +128,7 @@ const Class: NextPage<GetClassData> = (props) => {
                     </div>
                   </div>
                   <Link href={`/students/${idx}`}>
-                    <a className="flex items-center text-sm tracking-wide text-blue-600">View</a>
+                    <a className="flex min-w-0 items-center text-sm tracking-wide text-blue-600">View</a>
                   </Link>
                 </div>
               ))}

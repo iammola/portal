@@ -66,9 +66,9 @@ const Row: FunctionComponent<RowProps> = ({ _id, image, name, remove, schoolMail
   return (
     <div
       className="grid w-full gap-x-28 py-5"
-      style={{ gridTemplateColumns: "1fr repeat(2, max-content)" }}
+      style={{ gridTemplateColumns: "minmax(0, 1fr) repeat(2, max-content)" }}
     >
-      <div className="flex w-full items-center justify-start gap-4">
+      <div className="flex w-full min-w-0 items-center justify-start gap-4">
         <div className="aspect-square h-16 w-16 shrink-0 overflow-hidden rounded-full">
           <UserImage
             src={image.portrait ?? ""}
@@ -92,7 +92,7 @@ const Row: FunctionComponent<RowProps> = ({ _id, image, name, remove, schoolMail
         </div>
       </div>
       <Link href={`/teachers/${String(_id)}`}>
-        <a className="flex items-center text-sm tracking-wide text-blue-600">
+        <a className="flex min-w-0 items-center text-sm tracking-wide text-blue-600">
           Go to Profile
           <ExternalLinkIcon className="h-4 w-4 fill-blue-600" />
         </a>
@@ -100,7 +100,7 @@ const Row: FunctionComponent<RowProps> = ({ _id, image, name, remove, schoolMail
       <button
         type="button"
         onClick={() => void remove(String(_id))}
-        className="text-sm tracking-wide text-red-600"
+        className="min-w-0 text-sm tracking-wide text-red-600"
       >
         Remove
       </button>
@@ -112,19 +112,19 @@ const Skeleton: FunctionComponent = () => {
   return (
     <div
       className="grid w-full gap-x-28 py-5"
-      style={{ gridTemplateColumns: "1fr repeat(2, max-content)" }}
+      style={{ gridTemplateColumns: "minmax(0, 1fr) repeat(2, max-content)" }}
     >
-      <div className="flex w-full items-center justify-start gap-4">
+      <div className="flex w-full min-w-0 items-center justify-start gap-4">
         <div className="aspect-square h-16 w-16 shrink-0 animate-pulse overflow-hidden rounded-full bg-slate-300" />
         <div className="space-y-2">
           <div className="h-3 w-24 animate-pulse rounded-full bg-slate-300" />
           <div className="h-3 w-40 animate-pulse rounded-full bg-slate-300" />
         </div>
       </div>
-      <div className="flex items-center">
+      <div className="flex min-w-0 items-center">
         <div className="h-3 w-20 animate-pulse rounded-full bg-slate-300" />
       </div>
-      <div className="flex items-center">
+      <div className="flex min-w-0 items-center">
         <div className="h-3 w-20 animate-pulse rounded-full bg-slate-300" />
       </div>
     </div>
