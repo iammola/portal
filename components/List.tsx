@@ -6,9 +6,9 @@ import { classNames } from "utils";
 export const List: FunctionComponent<Props> = ({ children, className, pagination }) => {
   function changePage(direction: "prev" | "next") {
     if (!pagination) return;
-    const { active, pages } = pagination;
-    if (direction === "prev" && active > 1) pagination.changePage(active - 1);
-    if (direction === "next" && active < pages) pagination.changePage(active + 1);
+    const { page = 1, pages = 1 } = pagination;
+    if (direction === "prev" && page > 1) pagination.changePage(page - 1);
+    if (direction === "next" && page < pages) pagination.changePage(page + 1);
   }
 
   return (
@@ -28,7 +28,7 @@ export const List: FunctionComponent<Props> = ({ children, className, pagination
             <span
               key={idx}
               className={classNames("relative cursor-pointer py-4 px-2 font-light", [
-                idx + 1 !== (pagination?.active ?? 1),
+                idx + 1 !== (pagination?.page ?? 1),
                 "text-slate-600",
                 "text-blue-600 after:absolute after:-top-1 after:left-0 after:h-0.5 after:w-full after:bg-blue-600",
               ])}
@@ -53,8 +53,8 @@ export const List: FunctionComponent<Props> = ({ children, className, pagination
 interface Props {
   className: string;
   pagination?: {
-    active: number;
-    pages: number;
+    page?: number;
+    pages?: number;
     changePage(page: number): void;
   };
 }
