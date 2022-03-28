@@ -1,14 +1,13 @@
-import { FlattenIntersection } from "types/utils";
 import { CreateResult, UpdateResult } from "types/api";
 import { ClassRecord, TeacherSchema } from "types/schema";
 
 export type CreateClassData = CreateResult<Pick<ClassRecord, "createdAt">>;
 export type CreateClassRequestBody = Pick<ClassRecord, "name"> & Record<"teachers", string[]>;
 
-export type GetClassesData<S extends keyof ClassRecord = keyof ClassRecord> = {
+export type GetClassesData<S extends keyof ClassRecord<true> = keyof ClassRecord<true>> = {
   page?: number;
   pages: number;
-  classes: Array<FlattenIntersection<Pick<ClassRecord, "_id" | S>>>;
+  classes: Array<Pick<ClassRecord<true>, "_id" | S>>;
 };
 
 export type GetClassData = Omit<ClassRecord<true>, "teachers">;

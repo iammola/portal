@@ -10,7 +10,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 async function getClass(id: string): MethodResponse<GetClassData> {
   await connect();
-  const data = await ClassModel.findById(id).lean<GetClassData>({ virtuals: true });
+  const data = await ClassModel.findById(id).populate<{ subjectsCount: number }>("subjectsCount").lean();
 
   if (data === null) throw new NotFoundError("Class not found");
 

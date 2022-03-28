@@ -40,7 +40,10 @@ async function getClasses({ page, projection }: GetQuery): MethodResponse<GetCla
 
   const [count, classes] = await Promise.all([
     ClassModel.estimatedDocumentCount(),
-    ClassModel.find({}, projection?.replaceAll(",", " "), opts).sort({ order: "asc" }).lean(),
+    ClassModel.find({}, projection?.replaceAll(",", " "), opts)
+      .populate<{ subjectsCount: number }>("subjectsCount")
+      .sort({ order: "asc" })
+      .lean(),
   ]);
 
   return [
