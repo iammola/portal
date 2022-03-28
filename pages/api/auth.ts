@@ -58,7 +58,9 @@ const handler: ApiHandler<AuthData> = async (req, res) => {
   const { expiresIn, publicKey, token } = await getUser(JSON.parse(req.body) as AuthUser);
 
   res.cookie(JWT_COOKIE_KEY, await exportSPKI(publicKey), {
+    secure: true,
     httpOnly: true,
+    sameSite: true,
     maxAge: expiresIn,
   });
 
