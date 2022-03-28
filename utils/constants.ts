@@ -5,3 +5,5 @@ export const JWT_COOKIE_KEY = "grs-jwt-k";
 export const JWT_COOKIE_TOKEN = "grs-jwt-t";
 
 export const USER_COOKIE = "grs-user";
+
+export const PaginationLimit = 20;
