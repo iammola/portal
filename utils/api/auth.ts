@@ -8,7 +8,7 @@ import type { NextApiRequest } from "next";
 
 export async function verifyAuth(request: NextApiRequest) {
   const key = request.cookies[JWT_COOKIE_KEY];
-  const auth = (request.headers.authentication as string)?.split(" ");
+  const auth = (request.headers.authorization as string)?.split(" ");
 
   if (!key || !auth) throw new UnauthorizedError("Missing Authentication Token");
 
