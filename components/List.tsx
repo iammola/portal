@@ -30,7 +30,7 @@ export const List: FunctionComponent<Props> = ({ children, className, pagination
             <span
               key={idx}
               className={classNames("relative cursor-pointer py-4 px-2 font-light", [
-                idx + 1 !== (pagination?.page ?? 1),
+                idx !== pagination?.page,
                 "text-slate-600",
                 "text-blue-600 after:absolute after:-top-1 after:left-0 after:h-0.5 after:w-full after:bg-blue-600",
               ])}
