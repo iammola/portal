@@ -1,9 +1,10 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, FormEvent, useState } from "react";
 
-import { classNames } from "utils";
+import { classNames, fetchAPIEndpoint } from "utils";
 import { Input, Email } from "components/Form";
 
 import type { Value as EmailValue } from "components/Form/Email";
+import type { CreateClassData, CreateClassRequestBody } from "types/api/classes";
 
 export const Create: FunctionComponent = () => {
   const [long, setLong] = useState("");
@@ -11,9 +12,36 @@ export const Create: FunctionComponent = () => {
   const [special, setSpecial] = useState("");
   const [teachers, setTeachers] = useState<EmailValue[]>([]);
 
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    try {
+      const result = await fetchAPIEndpoint<CreateClassData, CreateClassRequestBody>("/api/classes", {
+        method: "POST",
+        body: {
+          name: { long, short, special },
+          teachers: teachers.map((t) => t.mail),
+        },
+      });
+
+      if (result.success) {
+        setLong("");
+        setShort("");
+        setSpecial("");
+        setTeachers([]);
+        console.warn(result.message, result.data);
+      }
+    } catch (error: any) {
+      console.error(error);
+    }
+  }
+
   return (
     <div className="flex min-h-full items-start justify-center px-6 py-10">
-      <form className="w-[35rem] space-y-10 rounded-2xl bg-white px-10 py-8 shadow-lg">
+      <form
+        onSubmit={(e) => void handleSubmit(e)}
+        className="w-[35rem] space-y-10 rounded-2xl bg-white px-10 py-8 shadow-lg"
+      >
         <div className="space-y-8">
           <Input
             required
