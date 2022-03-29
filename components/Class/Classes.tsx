@@ -8,13 +8,13 @@ import { fetchAPIEndpoint } from "utils";
 
 import { Delete } from "./Delete";
 
-import type { ApiResponse } from "types/api";
+import type { ApiError, ApiResponse } from "types/api";
 import type { GetClassData, GetClassesData } from "types/api/classes";
 
 export const Classes: FunctionComponent = () => {
   const [deleteId, setDeleteId] = useState("");
   const [activePage, setActivePage] = useState(0);
-  const { data, mutate } = useSWR<ApiResponse<GetClassesData>>(`/api/classes?page=${activePage}`);
+  const { data, error, mutate } = useSWR<ApiResponse<GetClassesData>, ApiError>(`/api/classes?page=${activePage}`);
 
   async function deleteClass(id: string) {
     try {
@@ -34,6 +34,7 @@ export const Classes: FunctionComponent = () => {
           changePage: setActivePage,
         }}
       >
+        {data === error && new Array(3).fill(null).map((_, idx) => <Skeleton key={idx} />)}
         {data?.data.classes.map((c) => (
           <Row
             {...c}
@@ -109,6 +110,29 @@ const Action: FunctionComponent<ActionProps> = ({ children, onClick, title }) =>
       <span className="absolute -top-10 -left-4 hidden min-w-max rounded-md bg-white p-2.5 text-xs font-light tracking-wide text-slate-600 shadow group-hover:block">
         {title}
       </span>
+    </div>
+  );
+};
+
+const Skeleton: FunctionComponent = () => {
+  return (
+    <div
+      className="grid w-full items-center gap-x-28 py-5"
+      style={{ gridTemplateColumns: "max-content minmax(0, 1fr) max-content" }}
+    >
+      <div className="aspect-square h-3 w-3 animate-pulse rounded-full bg-slate-300" />
+      <div className="w-full min-w-0 space-y-2">
+        <div className="h-3 w-24 animate-pulse rounded-full bg-slate-300" />
+        <div className="h-3 w-40 animate-pulse rounded-full bg-slate-300" />
+      </div>
+      <div className="flex min-w-0 items-center gap-x-4">
+        {new Array(4).fill(null).map((_, idx) => (
+          <div
+            key={idx}
+            className="h-4 w-4 animate-pulse rounded-full bg-slate-300"
+          />
+        ))}
+      </div>
     </div>
   );
 };
