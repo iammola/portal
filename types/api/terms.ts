@@ -9,4 +9,4 @@ export type CreateTermRequestBody = TermRecord;
 
 export interface GetTermData extends Omit<TermRecord, "session"> {
   session: Omit<SessionRecord<true>, "terms">;
-};
+}

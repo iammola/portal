@@ -6,7 +6,7 @@ import { Layout } from "components";
 import { fetchAPIEndpoint } from "utils";
 
 import type { AppProps } from "next/app";
- 
+
 const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
   return (
     <SWRConfig value={{ fetcher: fetchAPIEndpoint }}>
