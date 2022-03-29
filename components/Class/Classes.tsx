@@ -34,6 +34,8 @@ export const Classes: FunctionComponent = () => {
           changePage: setActivePage,
         }}
       >
+        {error && "Error State component soon"}
+        {data && !data.data.classes.length && "Empty state component soon"}
         {data === error && new Array(3).fill(null).map((_, idx) => <Skeleton key={idx} />)}
         {data?.data.classes.map((c) => (
           <Row
