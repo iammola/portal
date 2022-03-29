@@ -3,6 +3,8 @@ import { Model, QueryOptions } from "mongoose";
 import { DocumentId, ModelRecord, ObjectId, SQuery, TeacherSchema, ThingName } from "types/schema";
 
 export interface ClassSchema extends DocumentId {
+  /** The class order. How it'll be sorted when fetched from DB */
+  order: number;
   name: ThingName;
   createdAt: Date;
   teachers: ObjectId[];

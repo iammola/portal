@@ -91,7 +91,10 @@ const Login: NextPage = () => {
               <Listbox.Label className="text-sm font-light tracking-wider text-slate-600">Account type</Listbox.Label>
               <Listbox.Button className="flex h-14 w-full items-center justify-between rounded-lg bg-slate-50 py-2 px-4">
                 {level && (
-                  <span className="grid grid-cols-[max-content_1fr] items-center gap-x-6 text-sm text-slate-700">
+                  <span
+                    style={{ gridTemplateColumns: "max-content 1fr" }}
+                    className="grid items-center gap-x-6 text-sm text-slate-700"
+                  >
                     <span className="text-xl">{level.emoji}</span>
                     <span className="capitalize tracking-wide text-slate-700">{level.value}</span>
                   </span>
@@ -112,9 +115,10 @@ const Login: NextPage = () => {
                     <Listbox.Option
                       value={level}
                       key={level.value}
+                      style={{ gridTemplateColumns: "max-content 1fr" }}
                       className={({ active, selected }) =>
                         classNames(
-                          "grid cursor-pointer select-none grid-cols-[max-content_1fr] items-center gap-x-6 py-3 px-4",
+                          "grid cursor-pointer select-none items-center gap-x-6 py-3 px-4",
                           [selected, "bg-blue-600 text-white", "bg-white text-slate-700"],
                           {
                             "bg-blue-500": active && selected,
@@ -123,8 +127,8 @@ const Login: NextPage = () => {
                         )
                       }
                     >
-                      <span className="text-xl">{level.emoji}</span>
-                      <span className="capitalize tracking-wider">{level.value}</span>
+                      <span className="min-w-0 text-xl">{level.emoji}</span>
+                      <span className="min-w-0 capitalize tracking-wider">{level.value}</span>
                     </Listbox.Option>
                   ))}
                 </Listbox.Options>

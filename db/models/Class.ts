@@ -15,8 +15,15 @@ const ClassSchema = new Schema<ClassRecord, Model>({
     default: new Date(),
   },
   teachers: {
+    default: undefined,
     ref: ModelNames.TEACHER,
     type: [Schema.Types.ObjectId],
+  },
+  order: {
+    type: Number,
+    unique: true,
+    required: true,
+    min: [1, "Order cannot be less than 1"],
   },
 });
 
@@ -34,6 +41,10 @@ ClassSchema.static("findByName", function (name: string, type: keyof Name, ...ar
 
 ClassSchema.static("getTeachers", function (classId: string, proj?: any, options?: QueryOptions) {
   return this.findById(classId, "teachers", options).populate("teachers", proj);
+});
+
+ClassSchema.pre("validate", async function () {
+  if (this.isNew) this.order = 1 + (await this.collection.countDocuments({}));
 });
 
 export const ClassModel = (models[ModelNames.CLASS] ?? model(ModelNames.CLASS, ClassSchema)) as Model;

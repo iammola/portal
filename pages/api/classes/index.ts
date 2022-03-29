@@ -1,12 +1,17 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { routeWrapper } from "utils/api";
 import { ClassModel, TeacherModel } from "db/models";
+import { PaginationLimit, routeWrapper } from "utils";
 
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { GetClassesData, CreateClassData, CreateClassRequestBody as CreateBody } from "types/api/classes";
+
+interface GetQuery {
+  page?: number;
+  projection?: string;
+}
 
 async function createClass({ teachers, ...data }: CreateBody): MethodResponse<CreateClassData> {
   await connect();
@@ -26,13 +31,28 @@ async function createClass({ teachers, ...data }: CreateBody): MethodResponse<Cr
   ];
 }
 
-async function getClasses(field: string): MethodResponse<GetClassesData> {
+async function getClasses({ page, projection = "" }: GetQuery): MethodResponse<GetClassesData> {
   await connect();
-  const data = await ClassModel.find({}, field);
+  const opts = {
+    skip: +(page ?? 0) * PaginationLimit,
+    limit: page === undefined ? undefined : PaginationLimit,
+  };
+
+  const [count, classes] = await Promise.all([
+    ClassModel.estimatedDocumentCount(),
+    ClassModel.find({}, [...projection.replace(/\+?teachers/g, "").split(","), "-teachers"].join(" "), opts)
+      .populate<{ subjectsCount: number }>("subjectsCount")
+      .sort({ order: "asc" })
+      .lean(),
+  ]);
 
   return [
     {
-      data,
+      data: {
+        classes,
+        page: opts.skip / PaginationLimit,
+        pages: Math.ceil(count / (opts.limit ?? 1)),
+      },
       success: true,
       message: ReasonPhrases.OK,
     },
@@ -45,7 +65,7 @@ type D = CreateClassData | GetClassesData;
 const handler: ApiHandler<D> = async ({ body, method, query }) => {
   if (method === "POST" && typeof body === "string") return await createClass(JSON.parse(body) as CreateBody);
 
-  if (method === "GET") return await getClasses((query.projection as string).replaceAll(",", " "));
+  if (method === "GET") return await getClasses(query as unknown as GetQuery);
 
   return null;
 };
