@@ -31,7 +31,7 @@ async function createClass({ teachers, ...data }: CreateBody): MethodResponse<Cr
   ];
 }
 
-async function getClasses({ page, projection }: GetQuery): MethodResponse<GetClassesData> {
+async function getClasses({ page, projection = "" }: GetQuery): MethodResponse<GetClassesData> {
   await connect();
   const opts = {
     skip: +(page ?? 0) * PaginationLimit,
@@ -40,7 +40,7 @@ async function getClasses({ page, projection }: GetQuery): MethodResponse<GetCla
 
   const [count, classes] = await Promise.all([
     ClassModel.estimatedDocumentCount(),
-    ClassModel.find({}, projection?.replaceAll(",", " "), opts)
+    ClassModel.find({}, [...projection.replace(/\+?teachers/g, "").split(","), "-teachers"].join(" "), opts)
       .populate<{ subjectsCount: number }>("subjectsCount")
       .sort({ order: "asc" })
       .lean(),
