@@ -1,49 +1,57 @@
 import useSWR from "swr";
 import Link from "next/link";
-import { FunctionComponent, useState } from "react";
+import { Fragment, FunctionComponent, useState } from "react";
 import { ArrowSmDownIcon, ArrowSmUpIcon, ExternalLinkIcon, TrashIcon } from "@heroicons/react/solid";
 
 import { List } from "components";
 import { fetchAPIEndpoint } from "utils";
 
+import { Delete } from "./Delete";
+
 import type { ApiResponse } from "types/api";
 import type { GetClassData, GetClassesData } from "types/api/classes";
 
 export const Classes: FunctionComponent = () => {
+  const [deleteId, setDeleteId] = useState("");
   const [activePage, setActivePage] = useState(0);
   const { data, mutate } = useSWR<ApiResponse<GetClassesData>>(`/api/classes?page=${activePage}`);
 
   async function deleteClass(id: string) {
-    // NOTE: After Confirm From Modal
-
     try {
       await fetchAPIEndpoint(`/api/classes/${id}`, { method: "DELETE" });
-      void mutate();
+      void mutate().then(() => setDeleteId(""));
     } catch (error) {
       console.error("error");
     }
   }
 
   return (
-    <List
-      className="w-full"
-      pagination={{
-        ...data?.data,
-        changePage: setActivePage,
-      }}
-    >
-      {data?.data.classes.map((c) => (
-        <Row
-          {...c}
-          key={c.order}
-          deleteClass={deleteClass}
-        />
-      ))}
-    </List>
+    <Fragment>
+      <List
+        className="w-full"
+        pagination={{
+          ...data?.data,
+          changePage: setActivePage,
+        }}
+      >
+        {data?.data.classes.map((c) => (
+          <Row
+            {...c}
+            key={c.order}
+            triggerDelete={() => setDeleteId(String(c._id))}
+          />
+        ))}
+      </List>
+      <Delete
+        show={!!deleteId}
+        close={() => setDeleteId("")}
+        delete={() => void deleteClass(deleteId)}
+      />
+    </Fragment>
   );
 };
 
-const Row: FunctionComponent<RowProps> = ({ _id, deleteClass, name, order, subjectsCount }) => {
+const Row: FunctionComponent<RowProps> = ({ _id, triggerDelete, name, order, subjectsCount }) => {
   return (
     <div
       className="grid w-full gap-x-10 py-5"
@@ -82,7 +90,7 @@ const Row: FunctionComponent<RowProps> = ({ _id, deleteClass, name, order, subje
         </Action>
         <Action
           title="Delete"
-          onClick={() => void deleteClass(String(_id))}
+          onClick={triggerDelete}
         >
           <TrashIcon className="h-5 w-5 fill-gray-500" />
         </Action>
@@ -111,5 +119,5 @@ interface ActionProps {
 }
 
 interface RowProps extends GetClassData {
-  deleteClass(id: string): Promise<void>;
+  triggerDelete(): void;
 }
