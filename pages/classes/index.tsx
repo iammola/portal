@@ -4,14 +4,14 @@ import { Tab, Transition } from "@headlessui/react";
 
 import { useTabs } from "hooks";
 import { classNames } from "utils";
-import { ClassesList } from "components/Class";
+import { ClassesList, Create } from "components/Class";
 
 import type { NextPage } from "next";
 
 const Classes: NextPage = () => {
   const [tabs] = useState({
     Table: <ClassesList />,
-    Create: "",
+    Create: <Create />,
   });
   const [activeTab, setActiveTab] = useTabs(Object.keys(tabs), 0);
 
