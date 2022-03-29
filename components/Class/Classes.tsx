@@ -28,7 +28,7 @@ export const Classes: FunctionComponent = () => {
   return (
     <Fragment>
       <List
-        className="w-full"
+        className="w-full divide-y divide-slate-300"
         pagination={{
           ...data?.data,
           changePage: setActivePage,
