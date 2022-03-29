@@ -34,7 +34,7 @@ async function createClass({ teachers, ...data }: CreateBody): MethodResponse<Cr
 async function getClasses({ page, projection }: GetQuery): MethodResponse<GetClassesData> {
   await connect();
   const opts = {
-    skip: (page ?? 0) * PaginationLimit,
+    skip: +(page ?? 0) * PaginationLimit,
     limit: page === undefined ? undefined : PaginationLimit,
   };
 
@@ -49,8 +49,8 @@ async function getClasses({ page, projection }: GetQuery): MethodResponse<GetCla
   return [
     {
       data: {
-        page,
         classes,
+        page: opts.skip / PaginationLimit,
         pages: Math.ceil(count / (opts.limit ?? 1)),
       },
       success: true,
