@@ -14,16 +14,18 @@ export const List: FunctionComponent<Props> = ({ children, className, pagination
   return (
     <div className={className}>
       {children}
-      <div className="flex items-center justify-between text-xs">
-        <button
-          type="button"
-          onClick={() => changePage("prev")}
-          className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600"
-        >
-          <ChevronLeftIcon className="h-5 w-5 fill-slate-500" />
-          Previous
-        </button>
-        <div className="flex items-center justify-center gap-x-6">
+      <div className="flex w-full items-center justify-between text-xs">
+        {(pagination?.pages ?? 1) > 1 && (
+          <button
+            type="button"
+            onClick={() => changePage("prev")}
+            className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600"
+          >
+            <ChevronLeftIcon className="h-5 w-5 fill-slate-500" />
+            Previous
+          </button>
+        )}
+        <div className="flex grow items-center justify-center gap-x-6">
           {new Array(pagination?.pages ?? 1).fill(null).map((_, idx) => (
             <span
               key={idx}
@@ -37,14 +39,16 @@ export const List: FunctionComponent<Props> = ({ children, className, pagination
             </span>
           ))}
         </div>
-        <button
-          type="button"
-          onClick={() => changePage("next")}
-          className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600"
-        >
-          Next
-          <ChevronRightIcon className="h-5 w-5 fill-slate-500" />
-        </button>
+        {(pagination?.pages ?? 1) > 1 && (
+          <button
+            type="button"
+            onClick={() => changePage("next")}
+            className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600"
+          >
+            Next
+            <ChevronRightIcon className="h-5 w-5 fill-slate-500" />
+          </button>
+        )}
       </div>
     </div>
   );
