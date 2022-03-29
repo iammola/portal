@@ -15,6 +15,7 @@ const ClassSchema = new Schema<ClassRecord, Model>({
     default: new Date(),
   },
   teachers: {
+    default: undefined,
     ref: ModelNames.TEACHER,
     type: [Schema.Types.ObjectId],
   },
