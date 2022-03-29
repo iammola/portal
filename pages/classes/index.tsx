@@ -56,7 +56,12 @@ const Classes: NextPage = () => {
           </Tab.List>
           <Tab.Panels className="mt-4 px-6">
             {Object.values(tabs).map((t, i) => (
-              <Fragment key={i}>{t}</Fragment>
+              <Tab.Panel
+                key={i}
+                className="h-full w-full"
+              >
+                {t}
+              </Tab.Panel>
             ))}
           </Tab.Panels>
         </Tab.Group>
