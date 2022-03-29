@@ -4,13 +4,25 @@ import { FunctionComponent, useState } from "react";
 import { ArrowSmDownIcon, ArrowSmUpIcon, ExternalLinkIcon, TrashIcon } from "@heroicons/react/solid";
 
 import { List } from "components";
+import { fetchAPIEndpoint } from "utils";
 
 import type { ApiResponse } from "types/api";
-import type { GetClassesData } from "types/api/classes";
+import type { GetClassData, GetClassesData } from "types/api/classes";
 
 export const Classes: FunctionComponent = () => {
   const [activePage, setActivePage] = useState(0);
-  const { data } = useSWR<ApiResponse<GetClassesData>>(`/api/classes?page=${activePage}`);
+  const { data, mutate } = useSWR<ApiResponse<GetClassesData>>(`/api/classes?page=${activePage}`);
+
+  async function deleteClass(id: string) {
+    // NOTE: After Confirm From Modal
+
+    try {
+      await fetchAPIEndpoint(`/api/classes/${id}`, { method: "DELETE" });
+      void mutate();
+    } catch (error) {
+      console.error("error");
+    }
+  }
 
   return (
     <List
@@ -24,13 +36,14 @@ export const Classes: FunctionComponent = () => {
         <Row
           {...c}
           key={c.order}
+          deleteClass={deleteClass}
         />
       ))}
     </List>
   );
 };
 
-const Row: FunctionComponent<GetClassesData["classes"][number]> = ({ _id, name, order, subjectsCount }) => {
+const Row: FunctionComponent<RowProps> = ({ _id, deleteClass, name, order, subjectsCount }) => {
   return (
     <div
       className="grid w-full gap-x-10 py-5"
@@ -67,7 +80,10 @@ const Row: FunctionComponent<GetClassesData["classes"][number]> = ({ _id, name, 
             </a>
           </Link>
         </Action>
-        <Action title="Delete">
+        <Action
+          title="Delete"
+          onClick={() => void deleteClass(String(_id))}
+        >
           <TrashIcon className="h-5 w-5 fill-gray-500" />
         </Action>
       </div>
@@ -75,9 +91,12 @@ const Row: FunctionComponent<GetClassesData["classes"][number]> = ({ _id, name, 
   );
 };
 
-const Action: FunctionComponent<{ title: string }> = ({ children, title }) => {
+const Action: FunctionComponent<ActionProps> = ({ children, onClick, title }) => {
   return (
-    <div className="group relative aspect-square cursor-pointer rounded-full p-2 hover:bg-slate-200">
+    <div
+      onClick={onClick}
+      className="group relative aspect-square cursor-pointer rounded-full p-2 hover:bg-slate-200"
+    >
       {children}
       <span className="absolute -top-10 -left-4 hidden min-w-max rounded-md bg-white p-2.5 text-xs font-light tracking-wide text-slate-600 shadow group-hover:block">
         {title}
@@ -85,3 +104,12 @@ const Action: FunctionComponent<{ title: string }> = ({ children, title }) => {
     </div>
   );
 };
+
+interface ActionProps {
+  title: string;
+  onClick?: () => void;
+}
+
+interface RowProps extends GetClassData {
+  deleteClass(id: string): Promise<void>;
+}
