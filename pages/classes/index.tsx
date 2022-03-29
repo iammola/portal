@@ -20,16 +20,14 @@ const Classes: NextPage = () => {
       <Head>
         <title>Classes | GRS Portal</title>
       </Head>
-      <h1 className="flex items-center justify-center pt-6 pb-8 text-6xl font-light uppercase tracking-wide text-slate-700">
-        Classes
-      </h1>
-      <div className="w-full pt-5">
+      <h1 className="self-center pt-6 pb-8 text-6xl font-light uppercase tracking-wide text-slate-700">Classes</h1>
+      <div className="flex w-full grow flex-col gap-x-4 pt-5">
         <Tab.Group
           manual
           selectedIndex={activeTab}
           onChange={setActiveTab}
         >
-          <Tab.List className="group mx-auto flex items-center justify-center border-b-2">
+          <Tab.List className="group flex w-full items-center justify-center border-b-2">
             {Object.keys(tabs).map((t, i) => (
               <Tab
                 key={t}
@@ -54,7 +52,7 @@ const Classes: NextPage = () => {
               </Tab>
             ))}
           </Tab.List>
-          <Tab.Panels className="mt-4 px-6">
+          <Tab.Panels className="grow px-6">
             {Object.values(tabs).map((t, i) => (
               <Tab.Panel
                 key={i}
