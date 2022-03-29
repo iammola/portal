@@ -1,9 +1,11 @@
 import { Tab } from "@headlessui/react";
-import { FunctionComponent } from "react";
+import { useRouter } from "next/router";
 import Link, { LinkProps } from "next/link";
+import { FunctionComponent, useState } from "react";
 import { ChevronRightIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
+import { useIsomorphicLayoutEffect } from "hooks";
 
 export const Item: FunctionComponent<ItemProps> = ({ children, className, href }) => {
   return (
@@ -23,6 +25,15 @@ export const Item: FunctionComponent<ItemProps> = ({ children, className, href }
 };
 
 export const List: FunctionComponent<ListProps> = ({ children, items }) => {
+  const router = useRouter();
+  const [active, setActive] = useState(-1);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!router.isReady) return;
+
+    setActive(items.findIndex((i) => i.href === router.pathname));
+  }, [items, router]);
+
   return (
     <Tab.List
       as="details"
@@ -40,11 +51,11 @@ export const List: FunctionComponent<ListProps> = ({ children, items }) => {
         <ChevronRightIcon className="h-5 w-5 shrink-0 fill-gray-700 group-open:rotate-90" />
         <div className="grow truncate text-sm font-light tracking-wide text-gray-700">{children}</div>
       </Tab>
-      {items.map((item) => (
+      {items.map((item, itemIdx) => (
         <Item
           key={item.title}
           href={item.href}
-          className="pl-8"
+          className={classNames("pl-8", { "bg-slate-50": itemIdx === active })}
         >
           {item.title}
         </Item>
