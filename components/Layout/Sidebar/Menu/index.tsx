@@ -37,6 +37,7 @@ export const Menu: FunctionComponent = () => {
       {...{ onChange, selectedIndex }}
     >
       <Tab.List className="w-full grow space-y-2 p-4">
+        <Item href="/">Home</Item>
         {items.map(({ href, items, title }) => (
           <Fragment key={title}>
             {href !== undefined && <Item href={href}>{title}</Item>}
