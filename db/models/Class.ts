@@ -44,7 +44,7 @@ ClassSchema.static("getTeachers", function (classId: string, proj?: any, options
 });
 
 ClassSchema.pre("validate", async function () {
-  if (this.isNew) this.order = await this.collection.countDocuments({});
+  if (this.isNew) this.order = 1 + (await this.collection.countDocuments({}));
 });
 
 export const ClassModel = (models[ModelNames.CLASS] ?? model(ModelNames.CLASS, ClassSchema)) as Model;
