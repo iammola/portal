@@ -16,10 +16,10 @@ export const Loading: VoidFunctionComponent<{ isAnimating: boolean }> = (props) 
           marginLeft: `${(-1 + progress) * 100}%`,
           transitionDuration: `${animationDuration}ms`,
         }}
-        className="fixed left-0 top-0 z-50 h-[4px] w-full rounded-r-full bg-[#29d]  transition-[margin-left]"
+        className="fixed left-0 top-0 z-50 h-[4px] w-full rounded-r-full bg-[#de1738]  transition-[margin-left]"
       >
         <div
-          style={{ boxShadow: "0 0 10px #29d, 0 0 5px #29d" }}
+          style={{ boxShadow: "0 0 10px #de1738, 0 0 5px #de1738" }}
           className="absolute right-0 block h-full w-[100px] translate-x-0 translate-y-[-4px] rotate-3"
         />
       </div>
