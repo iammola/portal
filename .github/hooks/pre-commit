@@ -24,4 +24,6 @@ fi
 # add back the modified/prettified files to staging
 git add "$FULLY_STAGED";
 
-exit 0;
+npx tsc;
+
+exit $?;
