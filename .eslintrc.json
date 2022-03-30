@@ -40,27 +40,23 @@
     "import/order": [
       "error",
       {
-        "warnOnUnassignedImports": true,
         "newlines-between": "always",
+        "warnOnUnassignedImports": true,
         "groups": ["builtin", "external", "internal", "parent", ["sibling", "index"], "object", "type"]
       }
     ],
 
-    "react/display-name": 0,
     "react/prop-types": 0,
+    "react/display-name": 0,
     "react/react-in-jsx-scope": 0,
     "react/self-closing-comp": ["error", { "component": true }],
 
     "react-hooks/exhaustive-deps": ["warn", { "additionalHooks": "useIsomorphicLayoutEffect" }],
 
-    "@typescript-eslint/indent": 0,
-    "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-var-requires": 0,
-    "@typescript-eslint/no-use-before-define": 0,
-    "@typescript-eslint/member-delimiter-style": 0,
-    "@typescript-eslint/explicit-function-return-type": 0,
-    "@typescript-eslint/explicit-member-accessibility": 0,
+    "@typescript-eslint/member-delimiter-style": "warn",
     "@typescript-eslint/no-unused-vars": [2, { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-explicit-any": ["error", { "fixToUnknown": true }],
     "@typescript-eslint/array-type": ["error", { "default": "array-simple" }],
     "@typescript-eslint/no-unnecessary-boolean-literal-compare": [
       "error",
