@@ -27,7 +27,7 @@ const AddTeacher: FunctionComponent<AddTeacherProps> = ({ id, mutate, show, onCl
         body: { teachers: teachers.map((t) => t.mail) },
       });
       await mutate().then(close);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
     }
   }
@@ -101,6 +101,7 @@ const AddTeacher: FunctionComponent<AddTeacherProps> = ({ id, mutate, show, onCl
 interface AddTeacherProps {
   id: string;
   show: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mutate: KeyedMutator<any>;
   onClose(v: boolean): void;
 }

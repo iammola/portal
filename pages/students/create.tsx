@@ -48,7 +48,7 @@ const CreateStudent: NextPage = () => {
             name: name as Required<typeof name>,
           },
         });
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error(error);
       }
     }

@@ -11,7 +11,7 @@ import type {
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function createAttendance(userId: string, body: CreateBody): MethodResponse<any> {
+async function createAttendance(userId: string, body: CreateBody): MethodResponse<CreateData> {
   await connect();
   const res = await AttendanceModel.updateOne({ userId }, { $push: { dates: body } }, { upsert: true, fields: "_id" });
 
@@ -19,7 +19,7 @@ async function createAttendance(userId: string, body: CreateBody): MethodRespons
     {
       success: true,
       data: {
-        _id: res.upsertedId,
+        _id: res.upsertedId as CreateData["_id"],
         success: res.acknowledged,
       },
       message: ReasonPhrases.OK,

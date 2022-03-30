@@ -16,7 +16,7 @@ export async function verifyAuth(request: NextApiRequest) {
 
   try {
     await jwtVerify(auth[1], await importSPKI(key, JWT_ALG));
-  } catch (error) {
+  } catch (error: unknown) {
     throw new UnauthorizedError("Invalid Authorization Token");
   }
 }

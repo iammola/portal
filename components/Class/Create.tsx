@@ -31,7 +31,7 @@ export const Create: FunctionComponent = () => {
         setTeachers([]);
         console.warn(result.message, result.data);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
     }
   }

@@ -5,7 +5,7 @@ import { Error } from "mongoose";
  * @param {*} error
  * @return {*} the formatted error object
  */
-export function formatError(error: any) {
+export function formatError(error: unknown) {
   if (error instanceof Error.ValidationError)
     return Object.fromEntries(
       Object.entries(error.errors).map(([path, error]) => [

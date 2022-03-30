@@ -65,12 +65,12 @@ export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: De
     foreignField: "userId",
   });
 
-  schema.static("findByUsername", function (username: string | string[], ...args: [any?, QueryOptions?]) {
+  schema.static("findByUsername", function (username: string | string[], ...args: [unknown?, QueryOptions?]) {
     if (Array.isArray(username)) return this.find({ username }, ...args);
     return this.findOne({ username }, ...args);
   });
 
-  schema.static("findBySchoolMail", function (schoolMail: string | string[], ...args: [any?, QueryOptions?]) {
+  schema.static("findBySchoolMail", function (schoolMail: string | string[], ...args: [unknown?, QueryOptions?]) {
     if (Array.isArray(schoolMail)) return this.find({ schoolMail }, ...args);
     return this.findOne({ schoolMail }, ...args);
   });

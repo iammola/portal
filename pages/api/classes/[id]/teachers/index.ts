@@ -12,7 +12,7 @@ import type {
   AddClassTeachersRequestBody as AddBody,
 } from "types/api/classes";
 
-async function getTeachers(classID: string, proj: any): MethodResponse<GetData> {
+async function getTeachers(classID: string, proj: unknown): MethodResponse<GetData> {
   await connect();
   const data = await ClassModel.getTeachers(classID, proj).lean({ getters: true });
 

@@ -19,11 +19,11 @@ export type ClassRecord<V extends boolean | keyof ClassVirtuals = false> = Model
 type PopulatedTeachers = Record<"teachers", TeacherSchema[]>;
 
 export interface ClassModel extends Model<ClassSchema, unknown, unknown, ClassVirtuals> {
-  /** Find a class by any it's long, short or special names */
+  /** Find a class by any of it's long, short or special names */
   findByName(
     name: string,
     type: keyof ThingName,
-    projection?: any,
+    projection?: unknown,
     options?: QueryOptions
   ): SQuery<ClassSchema, ClassSchema, unknown, ClassVirtuals>;
   /**
@@ -35,7 +35,7 @@ export interface ClassModel extends Model<ClassSchema, unknown, unknown, ClassVi
    */
   getTeachers(
     classId: string,
-    teacherProjection?: any,
+    teacherProjection?: unknown,
     options?: QueryOptions
   ): SQuery<PopulatedTeachers, PopulatedTeachers, unknown, ClassVirtuals>;
 }

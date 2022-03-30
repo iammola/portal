@@ -20,7 +20,7 @@ export type ModelRecord<S, V = unknown, K extends boolean | keyof V = false> = S
 export type AQuery<R> = Aggregate<R[]>;
 
 export type SQuery<S, R = S, M = unknown, V = unknown> = Query<
-  S extends any[] ? Array<HydratedDocument<S[number], M, V>> : HydratedDocument<S, M, V> | null,
+  S extends Array<infer A> ? Array<HydratedDocument<A, M, V>> : HydratedDocument<S, M, V> | null,
   HydratedDocument<S, M, V>,
   unknown,
   R

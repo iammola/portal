@@ -16,7 +16,7 @@ const AttendanceSchema = new Schema<AttendanceRecord, Model>({
   },
 });
 
-AttendanceSchema.static("findUser", function (userId: string | string[], ...args: [any?, QueryOptions?]) {
+AttendanceSchema.static("findUser", function (userId: string | string[], ...args: [unknown?, QueryOptions?]) {
   if (Array.isArray(userId)) return this.find({ userId }, ...args);
   return this.findOne({ userId }, ...args);
 });
@@ -38,7 +38,7 @@ AttendanceSchema.static("findUserRange", function (userId: string | string[], qu
             cond: {
               $and: Object.entries(query).reduce(
                 (acc, [key, val]) => [...acc, { [key]: ["$$this.in", val] }],
-                [] as Array<Record<string, any>>
+                [] as Array<Record<string, unknown>>
               ),
             },
           },

@@ -17,9 +17,13 @@ export type AttendanceRecord = ModelRecord<AttendanceSchema>;
 
 export interface AttendanceModel extends Model<AttendanceSchema> {
   /** Find one user's attendance records by userId */
-  findUser(userId: string, projection?: any, options?: QueryOptions): SQuery<AttendanceSchema>;
+  findUser(userId: string, projection?: unknown, options?: QueryOptions): SQuery<AttendanceSchema>;
   /** Find multiple users attendance records by userId */
-  findUser(userId: string[], projection?: any, options?: QueryOptions): SQuery<AttendanceSchema[], AttendanceSchema>;
+  findUser(
+    userId: string[],
+    projection?: unknown,
+    options?: QueryOptions
+  ): SQuery<AttendanceSchema[], AttendanceSchema>;
   /**
    * Filter a range of dates for specific users
    *

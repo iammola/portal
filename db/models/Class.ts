@@ -34,12 +34,12 @@ ClassSchema.virtual("subjectsCount", {
   foreignField: "class",
 });
 
-ClassSchema.static("findByName", function (name: string, type: keyof Name, ...args: [any?, QueryOptions?]) {
+ClassSchema.static("findByName", function (name: string, type: keyof Name, ...args: [unknown?, QueryOptions?]) {
   const regex = new RegExp(name.replaceAll(/[-_]/g, " "), "i");
   return this.findOne({ [`name.${type}`]: regex }, ...args);
 });
 
-ClassSchema.static("getTeachers", function (classId: string, proj?: any, options?: QueryOptions) {
+ClassSchema.static("getTeachers", function (classId: string, proj?: unknown, options?: QueryOptions) {
   return this.findById(classId, "teachers", options).populate("teachers", proj);
 });
 

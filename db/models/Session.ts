@@ -29,7 +29,7 @@ SessionSchema.virtual("termsCount", {
   foreignField: "session",
 });
 
-SessionSchema.static("findCurrent", function (...args: [any?, QueryOptions?]) {
+SessionSchema.static("findCurrent", function (...args: [unknown?, QueryOptions?]) {
   return this.findOne({ current: true }, ...args);
 });
 

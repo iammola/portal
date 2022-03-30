@@ -12,5 +12,5 @@ export type TermRecord = ModelRecord<TermSchema>;
 
 export interface TermModel extends Model<TermSchema> {
   /** Find the term record where `{ current: true }` */
-  findCurrent(projection?: any, options?: QueryOptions): SQuery<TermSchema>;
+  findCurrent(projection?: unknown, options?: QueryOptions): SQuery<TermSchema>;
 }

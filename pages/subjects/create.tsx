@@ -62,7 +62,7 @@ const CreateSubject: NextPage = () => {
           "/api/classes/${selectedClass.id}/subjects",
           { body, method: "POST" }
         );
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error(error);
       }
     }

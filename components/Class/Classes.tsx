@@ -20,7 +20,7 @@ export const Classes: FunctionComponent = () => {
     try {
       await fetchAPIEndpoint(`/api/classes/${id}`, { method: "DELETE" });
       void mutate().then(() => setDeleteId(""));
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("error");
     }
   }

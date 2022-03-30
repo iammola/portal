@@ -49,7 +49,7 @@ const Login: NextPage = () => {
         document.cookie = serialize(USER_COOKIE, level.value, opts);
         void router.push("/");
       } else console.error(result.error);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
     }
   }

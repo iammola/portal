@@ -21,7 +21,7 @@ const TermSchema = new Schema<TermRecord, Model>({
   },
 });
 
-TermSchema.static("findCurrent", function (...args: [any?, QueryOptions?]) {
+TermSchema.static("findCurrent", function (...args: [unknown?, QueryOptions?]) {
   return this.findOne({ current: true }, ...args);
 });
 

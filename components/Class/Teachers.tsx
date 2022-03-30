@@ -28,7 +28,7 @@ export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
         method: "DELETE",
       });
       await mutate();
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
     }
   }
