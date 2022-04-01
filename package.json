@@ -15,7 +15,7 @@
     "@googleapis/drive": "^2.3.0",
     "@headlessui/react": "^1.5.0",
     "@heroicons/react": "^1.0.6",
-    "@tanem/react-nprogress": "^4.0.12",
+    "@tanem/react-nprogress": "^4.0.13",
     "awesome-phonenumber": "^2.70.0",
     "cookie": "^0.4.2",
     "country-code-lookup": "^0.0.20",
