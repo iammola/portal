@@ -23,6 +23,10 @@ export type GetClassStudentsData = {
   students: StudentSchema[];
 };
 
+export type GetClassStudentsCount = {
+  count: number;
+};
+
 export type GetClassTeachersData = {
   teachers: TeacherSchema[];
 };

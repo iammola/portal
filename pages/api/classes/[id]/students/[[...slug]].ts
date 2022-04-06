@@ -4,19 +4,21 @@ import { connect } from "db";
 import { ClassModel, StudentModel } from "db/models";
 import { NotFoundError, PaginationLimit, routeWrapper } from "utils";
 
-import type { GetClassStudentsData as Data } from "types/api/classes";
 import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { GetClassStudentsData, GetClassStudentsCount } from "types/api/classes";
 
 interface GetQuery {
   id: string;
   term: string;
   page?: number;
+  slug: string[];
   projection?: string;
 }
 
-async function getStudents({ id, page, projection = "", term }: GetQuery): MethodResponse<Data> {
+async function getStudents({ id, page, projection = "", slug, term }: GetQuery): MethodResponse<Data> {
   await connect();
+  const countOnly = slug[0] === "count";
   const query = { academic: { $elemMatch: { term, class: id } } };
   const opts = {
     skip: +(page ?? 0) * PaginationLimit,
@@ -28,16 +30,18 @@ async function getStudents({ id, page, projection = "", term }: GetQuery): Metho
 
   const [count, students] = await Promise.all([
     StudentModel.countDocuments(query),
-    StudentModel.find(query, projection.replace(/,/g, " "), opts).lean(),
+    countOnly ? [] : StudentModel.find(query, projection.replace(/,/g, " "), opts).lean(),
   ]);
 
   return [
     {
-      data: {
-        students,
-        page: opts.skip / PaginationLimit,
-        pages: Math.ceil(count / (opts.limit ?? 1)),
-      },
+      data: countOnly
+        ? { count }
+        : {
+            students,
+            page: opts.skip / PaginationLimit,
+            pages: Math.ceil(count / (opts.limit ?? 1)),
+          },
       success: true,
       message: ReasonPhrases.OK,
     },
@@ -51,5 +55,6 @@ const handler: ApiHandler<Data> = async ({ method, query }) => {
   return null;
 };
 
+type Data = GetClassStudentsCount | GetClassStudentsData;
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper<Data>(req, res, handler, ["GET"]);
