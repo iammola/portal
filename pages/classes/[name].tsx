@@ -8,7 +8,7 @@ import { connect } from "db";
 import { useTabs } from "hooks";
 import { ClassModel } from "db/models";
 import { Breadcrumbs } from "components";
-import { Teachers } from "components/Class";
+import { Students, Teachers } from "components/Class";
 
 import type { ApiResponse } from "types/api";
 import type { GetClassData } from "types/api/classes";
@@ -20,7 +20,7 @@ const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
   );
   const [tabs] = useState({
     Feed: "",
-    Students: "",
+    Students: <Students />,
     Subjects: "",
     Teachers: <Teachers id={String(props._id)} />,
   });
