@@ -8,7 +8,7 @@ import { connect } from "db";
 import { useTabs } from "hooks";
 import { ClassModel } from "db/models";
 import { Breadcrumbs } from "components";
-import { Students, Teachers } from "components/Class";
+import { Students, Subjects, Teachers } from "components/Class";
 
 import type { ApiResponse } from "types/api";
 import type { NextPage, GetServerSideProps } from "next";
@@ -24,7 +24,7 @@ const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
   const [tabs] = useState({
     Feed: "",
     Students: <Students id={String(props._id)} />,
-    Subjects: "",
+    Subjects: <Subjects />,
     Teachers: <Teachers id={String(props._id)} />,
   });
   const [tabEmoji] = useState<Record<keyof typeof tabs, string>>({
