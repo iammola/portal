@@ -1,3 +1,4 @@
+import useSWR from "swr";
 import Link from "next/link";
 import { FunctionComponent, useState } from "react";
 import { formatDistance, formatDuration, intervalToDuration } from "date-fns";
@@ -6,9 +7,14 @@ import { CheckCircleIcon, MailIcon, XCircleIcon } from "@heroicons/react/solid";
 import { List, UserImage } from "components";
 
 import type { StudentRecord } from "types/schema";
+import type { ApiResponse, ApiError } from "types/api";
+import type { GetClassStudentsData } from "types/api/classes";
 
-export const Students: FunctionComponent<{ id: string }> = () => {
+export const Students: FunctionComponent<{ id: string }> = ({ id }) => {
   const [activePage, setActivePage] = useState(0);
+  const { data: { data } = {}, error } = useSWR<ApiResponse<GetClassStudentsData>, ApiError>(
+    `/api/classes/${id}/students?page=${activePage}&projection=dob,schoolMail,name.full,name.initials,image.portrait`
+  );
 
   return (
     <List
@@ -17,7 +23,17 @@ export const Students: FunctionComponent<{ id: string }> = () => {
         page: activePage,
         changePage: setActivePage,
       }}
-    />
+    >
+      {error && "Error State component soon"}
+      {data && !data.students.length && "Empty state component soon"}
+      {data?.students.map((s) => (
+        <Row
+          {...s}
+          key={String(s._id)}
+          online={{ state: true, since: new Date() }}
+        />
+      ))}
+    </List>
   );
 };
 
