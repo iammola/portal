@@ -41,10 +41,12 @@ const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
         <title>{data.name.long} | GRS Portal</title>
       </Head>
       <section className="flex w-full grow flex-col items-start justify-start">
-        <header className="flex w-full flex-col bg-slate-100 px-8 pt-4 pb-6">
-          <Breadcrumbs />
-          <h3 className="text-4xl font-semibold capitalize text-slate-700">{data.name.long}</h3>
-          <p className="flex gap-x-1 pt-2 text-xs font-light tracking-wide text-slate-500">
+        <header className="grid w-full grid-cols-[minmax(0,_1fr)_max-content] grid-rows-3 bg-slate-100 px-8 pt-4 pb-6">
+          <Breadcrumbs className="row-start-1 row-end-2 min-w-0" />
+          <h3 className="row-start-2 row-end-3 min-w-0 text-4xl font-semibold capitalize text-slate-700">
+            {data.name.long}
+          </h3>
+          <p className="row-start-3 row-end-4 flex min-w-0 gap-x-1 pt-2 text-xs font-light tracking-wide text-slate-500">
             <span>Since {format(new Date(data.createdAt), "do MMMM yyyy")}</span>
             &middot;
             {!studentsCount ? (
@@ -59,6 +61,7 @@ const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
               {data.subjectsCount} subject{data.subjectsCount !== 1 && "s"}
             </span>
           </p>
+          <div className="col-start-2 col-end-3 row-start-1 row-end-4 min-w-0" />
         </header>
         <section className="flex w-full grow items-stretch justify-start">
           <Tab.Group
@@ -96,6 +99,19 @@ const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
 };
 
 export const getServerSideProps: GetServerSideProps<GetClassData> = async ({ params }) => {
+  return {
+    props: {
+      order: 1,
+      subjectsCount: 10,
+      createdAt: Date.now() as unknown as Date,
+      _id: "_id" as unknown as GetClassData["_id"],
+      name: {
+        long: "Key Stage 1",
+        short: "KS1",
+        special: "Gold",
+      },
+    },
+  };
   await connect();
   const data = await ClassModel.findByName(params?.name as string, "long", "-teachers")
     .populate<{ subjectsCount: number }>("subjectsCount")
