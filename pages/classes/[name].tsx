@@ -11,10 +11,13 @@ import { Breadcrumbs } from "components";
 import { Students, Teachers } from "components/Class";
 
 import type { ApiResponse } from "types/api";
-import type { GetClassData } from "types/api/classes";
 import type { NextPage, GetServerSideProps } from "next";
+import type { GetClassData, GetClassStudentsCount } from "types/api/classes";
 
 const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
+  const { data: studentsCount } = useSWR<ApiResponse<GetClassStudentsCount>>(
+    `/api/classes/${String(props._id)}/students/count`
+  );
   const { data: { data } = { data: props } } = useSWR<ApiResponse<GetClassData>>(
     `/api/classes/${props._id.toString()}`
   );
@@ -44,7 +47,13 @@ const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
           <p className="flex gap-x-1 pt-2 text-xs font-light tracking-wide text-slate-500">
             <span>Since {format(new Date(data.createdAt), "do MMMM yyyy")}</span>
             &middot;
-            <span>5 students</span>
+            {!studentsCount ? (
+              "Loading students count"
+            ) : (
+              <span>
+                {studentsCount.data.count} student{studentsCount.data.count !== 1 && "s"}
+              </span>
+            )}
             &middot;
             <span>
               {data.subjectsCount} subject{data.subjectsCount !== 1 && "s"}
