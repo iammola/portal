@@ -24,6 +24,12 @@ const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
     Subjects: "",
     Teachers: <Teachers id={String(props._id)} />,
   });
+  const [tabEmoji] = useState<Record<keyof typeof tabs, string>>({
+    Feed: "🌐",
+    Students: "👨‍🎓",
+    Subjects: "📚",
+    Teachers: "👨‍🏫",
+  });
   const [activeTab, setActiveTab] = useTabs(Object.keys(tabs), 0);
 
   return (
@@ -45,9 +51,35 @@ const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
             </span>
           </p>
         </header>
-        <section className="w-full px-20 pt-10 pb-6">
+        <section className="flex w-full grow items-stretch justify-start">
+          <Tab.Group
+            manual
+            vertical
+            onChange={setActiveTab}
+            selectedIndex={activeTab}
+          >
+            <Tab.List className="shrink-0 space-y-2 overflow-y-auto">
+              {Object.keys(tabs).map((t) => (
+                <Tab
+                  key={t}
+                  className="flex w-full cursor-pointer items-center justify-start gap-x-3 rounded-md p-2 hover:bg-slate-50"
                 >
+                  <span>{tabEmoji[t as unknown as keyof typeof tabEmoji]}</span>
+                  <span className="text-sm text-slate-700">{t}</span>
+                </Tab>
               ))}
+            </Tab.List>
+            <Tab.Panels className="grow px-4">
+              {Object.values(tabs).map((t, i) => (
+                <Tab.Panel
+                  key={i}
+                  className="h-full w-full"
+                >
+                  {t}
+                </Tab.Panel>
+              ))}
+            </Tab.Panels>
+          </Tab.Group>
         </section>
       </section>
     </Fragment>
