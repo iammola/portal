@@ -166,9 +166,9 @@ const Class: NextPage<GetClassData> = (props) => {
 
 export const getServerSideProps: GetServerSideProps<GetClassData> = async ({ params }) => {
   await connect();
-  const data = await ClassModel.findByName(params?.name as string, "long", "-teachers").lean<GetClassData>({
-    virtuals: true,
-  });
+  const data = await ClassModel.findByName(params?.name as string, "long", "-teachers")
+    .populate<{ subjectsCount: number }>("subjectsCount")
+    .lean();
 
   if (data === null) return { notFound: true };
 
