@@ -20,7 +20,7 @@ const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
   );
   const [tabs] = useState({
     Feed: "",
-    Students: <Students />,
+    Students: <Students id={String(props._id)} />,
     Subjects: "",
     Teachers: <Teachers id={String(props._id)} />,
   });

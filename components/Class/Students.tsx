@@ -7,7 +7,7 @@ import { List, UserImage } from "components";
 
 import type { StudentRecord } from "types/schema";
 
-export const Students: FunctionComponent = () => {
+export const Students: FunctionComponent<{ id: string }> = () => {
   return <List className="w-full divide-y divide-slate-300" />;
 };
 
