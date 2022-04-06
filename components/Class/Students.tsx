@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { formatDistance, formatDuration, intervalToDuration } from "date-fns";
 import { CheckCircleIcon, MailIcon, XCircleIcon } from "@heroicons/react/solid";
 
@@ -8,7 +8,17 @@ import { List, UserImage } from "components";
 import type { StudentRecord } from "types/schema";
 
 export const Students: FunctionComponent<{ id: string }> = () => {
-  return <List className="w-full divide-y divide-slate-300" />;
+  const [activePage, setActivePage] = useState(0);
+
+  return (
+    <List
+      className="w-full divide-y divide-slate-300"
+      pagination={{
+        page: activePage,
+        changePage: setActivePage,
+      }}
+    />
+  );
 };
 
 const Row: FunctionComponent<RowProps> = ({ _id, dob, image, name, online, schoolMail }) => {
