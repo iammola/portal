@@ -30,7 +30,6 @@ export const Students: FunctionComponent<{ id: string }> = ({ id }) => {
         <Row
           {...s}
           key={String(s._id)}
-          online={{ state: true, since: new Date() }}
         />
       ))}
     </List>
@@ -74,26 +73,32 @@ const Row: FunctionComponent<RowProps> = ({ _id, dob, image, name, online, schoo
         {dob ? <>{age} old</> : "No birthday"}
       </div>
       <div className="flex min-w-0 flex-col items-start justify-center gap-y-1">
-        <div className="flex items-center gap-x-1 text-sm text-slate-700">
-          {online.state ? (
-            <>
-              <CheckCircleIcon className="h-5 w-5 fill-emerald-500" />
-              Online
-            </>
-          ) : (
-            <>
-              <XCircleIcon className="h-5 w-5 fill-red-400" />
-              Offline
-            </>
-          )}
-        </div>
-        <div className="text-sm text-slate-500">
-          {online.state ? "Since" : "Last seen"}{" "}
-          {formatDistance(new Date(online.since), new Date(), {
-            addSuffix: true,
-            includeSeconds: true,
-          })}
-        </div>
+        {!online ? (
+          "No online data"
+        ) : (
+          <>
+            <div className="flex items-center gap-x-1 text-sm text-slate-700">
+              {online.state ? (
+                <>
+                  <CheckCircleIcon className="h-5 w-5 fill-emerald-500" />
+                  <span>Online</span>
+                </>
+              ) : (
+                <>
+                  <XCircleIcon className="h-5 w-5 fill-red-400" />
+                  <span>Offline</span>
+                </>
+              )}
+            </div>
+            <div className="text-sm text-slate-500">
+              {online.state ? "Since" : "Last seen"}{" "}
+              {formatDistance(new Date(online.since), new Date(), {
+                addSuffix: true,
+                includeSeconds: true,
+              })}
+            </div>
+          </>
+        )}
       </div>
       <Link href={`/students/${String(_id)}`}>
         <a className="flex min-w-0 items-center text-sm tracking-wide text-blue-600">View</a>
@@ -105,8 +110,8 @@ const Row: FunctionComponent<RowProps> = ({ _id, dob, image, name, online, schoo
 interface RowProps extends Pick<StudentRecord, "_id" | "dob" | "schoolMail"> {
   image: Pick<StudentRecord["image"], "portrait">;
   name: Pick<StudentRecord["name"], "full" | "initials">;
-  online: {
+  online?: {
     since: Date;
     state: boolean;
-  };
+  } | null;
 }
