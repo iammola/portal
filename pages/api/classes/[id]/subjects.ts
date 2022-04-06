@@ -2,11 +2,17 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { routeWrapper } from "utils/api";
-import { TeacherModel, BaseSubjectModel, GroupSubjectModel } from "db/models";
+import { TeacherModel, SubjectModel, BaseSubjectModel, GroupSubjectModel } from "db/models";
 
-import type { CreateSubjectData as CreateData, CreateSubjectRequestBody as CreateBody } from "types/api/subjects";
 import type { MethodResponse, ApiHandler } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { GetClassSubjectsData as GetData } from "types/api/classes";
+import type { CreateSubjectData as CreateData, CreateSubjectRequestBody as CreateBody } from "types/api/subjects";
+
+interface GetQuery {
+  id: string;
+  projection?: string;
+}
 
 async function createSubject(data: CreateBody, classID: string): MethodResponse<CreateData> {
   await connect();
@@ -42,13 +48,30 @@ async function createSubject(data: CreateBody, classID: string): MethodResponse<
   ];
 }
 
-const handler: ApiHandler<CreateData> = async ({ body, query, method }) => {
+async function getSubjects({ id, projection = "" }: GetQuery): MethodResponse<GetData> {
+  await connect();
+  const subjects = await SubjectModel.find({ class: id }, projection.replace(/,/g, " ")).lean();
+
+  return [
+    {
+      success: true,
+      data: { subjects },
+      message: ReasonPhrases.OK,
+    },
+    StatusCodes.OK,
+  ];
+}
+
+const handler: ApiHandler<Data> = async ({ body, query, method }) => {
   if (method === "POST" && typeof body === "string")
     return await createSubject(JSON.parse(body) as CreateBody, query.id as string);
+
+  if (method === "GET") return await getSubjects(query as unknown as GetQuery);
 
   return null;
 };
 
+type Data = CreateData | GetData;
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) =>
-  routeWrapper<CreateData>(req, res, handler, ["POST"]);
+  routeWrapper<Data>(req, res, handler, ["POST", "GET"]);

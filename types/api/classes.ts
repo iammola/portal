@@ -1,5 +1,5 @@
 import { CreateResult, UpdateResult } from "types/api";
-import { ClassRecord, StudentSchema, TeacherSchema } from "types/schema";
+import { ClassRecord, StudentSchema, SubjectRecord, TeacherSchema } from "types/schema";
 
 export type CreateClassData = CreateResult<Pick<ClassRecord, "createdAt">>;
 export type CreateClassRequestBody = Pick<ClassRecord, "name"> & Record<"teachers", string[]>;
@@ -25,6 +25,10 @@ export type GetClassStudentsData = {
 
 export type GetClassStudentsCount = {
   count: number;
+};
+
+export type GetClassSubjectsData = {
+  subjects: SubjectRecord[];
 };
 
 export type GetClassTeachersData = {
