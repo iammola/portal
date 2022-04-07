@@ -3,13 +3,15 @@ import { useRouter } from "next/router";
 import { Fragment, FunctionComponent, useMemo } from "react";
 import { ChevronRightIcon, HomeIcon } from "@heroicons/react/solid";
 
+import { classNames } from "utils";
+
 export const Breadcrumbs: FunctionComponent<Props> = ({ className }) => {
   const { asPath, isReady } = useRouter();
   const length = isReady && asPath.indexOf("?") > 0 ? asPath.indexOf("?") : undefined;
   const paths = useMemo(() => asPath.slice(1, length).split("/"), [asPath, length]);
 
   return (
-    <nav className={className ?? "flex w-full items-center gap-x-2 py-2"}>
+    <nav className={classNames(className, "flex w-full items-center gap-x-2 py-2")}>
       <Link href="/">
         <a>
           <HomeIcon className="h-5 w-5 fill-slate-400" />

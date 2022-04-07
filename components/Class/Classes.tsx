@@ -6,6 +6,7 @@ import { ArrowSmDownIcon, ArrowSmUpIcon, ExternalLinkIcon, TrashIcon } from "@he
 import { List } from "components";
 import { fetchAPIEndpoint } from "utils";
 
+import { Action } from "./Action";
 import { Delete } from "./Delete";
 
 import type { ApiError, ApiResponse } from "types/api";
@@ -102,20 +103,6 @@ const Row: FunctionComponent<RowProps> = ({ _id, triggerDelete, name, order, sub
   );
 };
 
-const Action: FunctionComponent<ActionProps> = ({ children, onClick, title }) => {
-  return (
-    <div
-      onClick={onClick}
-      className="group relative aspect-square cursor-pointer rounded-full p-2 hover:bg-slate-200"
-    >
-      {children}
-      <span className="absolute -top-10 -left-4 hidden min-w-max rounded-md bg-white p-2.5 text-xs font-light tracking-wide text-slate-600 shadow group-hover:block">
-        {title}
-      </span>
-    </div>
-  );
-};
-
 const Skeleton: FunctionComponent = () => {
   return (
     <div
@@ -138,11 +125,6 @@ const Skeleton: FunctionComponent = () => {
     </div>
   );
 };
-
-interface ActionProps {
-  title: string;
-  onClick?: () => void;
-}
 
 interface RowProps extends GetClassData {
   triggerDelete(): void;

@@ -26,6 +26,10 @@ const SubjectSchema = new Schema<SubjectRecord>(
       default: undefined,
       type: [Schema.Types.ObjectId],
     },
+    order: {
+      type: Number,
+      min: [1, "Order cannot be less than 1"],
+    },
   },
   { discriminatorKey: "__type" }
 );

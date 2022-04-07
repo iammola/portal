@@ -1,40 +1,39 @@
 import useSWR from "swr";
 import Head from "next/head";
-import Link from "next/link";
+import { format } from "date-fns";
+import { Tab } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { format, formatDistance } from "date-fns";
-import { CheckCircleIcon, ChevronLeftIcon, ChevronRightIcon, MailIcon, XCircleIcon } from "@heroicons/react/solid";
 
 import { connect } from "db";
-import { classNames } from "utils";
+import { useTabs } from "hooks";
 import { ClassModel } from "db/models";
-import { Teachers } from "components/Class";
-import { Breadcrumbs, UserImage } from "components";
+import { Breadcrumbs } from "components";
+import { Students, Subjects, Teachers } from "components/Class";
 
 import type { ApiResponse } from "types/api";
-import type { GetClassData } from "types/api/classes";
 import type { NextPage, GetServerSideProps } from "next";
+import type { GetClassData, GetClassStudentsCount } from "types/api/classes";
 
-const students = [
-  {
-    name: "John Doe",
-    age: 14,
-    email: "john.doe@fake.io",
-    online: { state: 0, since: new Date(Date.now() - 1800000) },
-  },
-  {
-    name: "Maria Davidson",
-    age: 15,
-    email: "maria.davidson@fake.io",
-    online: { state: 1, since: new Date(Date.now() - 720000) },
-  },
-];
-
-const Class: NextPage<GetClassData> = (props) => {
-  const [activeTab, setActiveTab] = useState("Feed");
+const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
+  const { data: studentsCount } = useSWR<ApiResponse<GetClassStudentsCount>>(
+    `/api/classes/${String(props._id)}/students/count`
+  );
   const { data: { data } = { data: props } } = useSWR<ApiResponse<GetClassData>>(
     `/api/classes/${props._id.toString()}`
   );
+  const [tabs] = useState({
+    Feed: "",
+    Students: <Students id={String(props._id)} />,
+    Subjects: <Subjects id={String(props._id)} />,
+    Teachers: <Teachers id={String(props._id)} />,
+  });
+  const [tabEmoji] = useState<Record<keyof typeof tabs, string>>({
+    Feed: "🌐",
+    Students: "👨‍🎓",
+    Subjects: "📚",
+    Teachers: "👨‍🏫",
+  });
+  const [activeTab, setActiveTab] = useTabs(Object.keys(tabs), 0);
 
   return (
     <Fragment>
@@ -42,122 +41,57 @@ const Class: NextPage<GetClassData> = (props) => {
         <title>{data.name.long} | GRS Portal</title>
       </Head>
       <section className="flex w-full grow flex-col items-start justify-start">
-        <header className="flex w-full flex-col bg-slate-100 px-8 pt-4 pb-6">
-          <Breadcrumbs />
-          <h3 className="text-4xl font-semibold capitalize text-slate-700">{data.name.long}</h3>
-          <p className="flex gap-x-1 pt-2 text-xs font-light tracking-wide text-slate-500">
+        <header className="grid w-full grid-cols-[minmax(0,_1fr)_max-content] grid-rows-3 bg-slate-100 px-8 pt-4 pb-6">
+          <Breadcrumbs className="row-start-1 row-end-2 min-w-0" />
+          <h3 className="row-start-2 row-end-3 min-w-0 text-4xl font-semibold capitalize text-slate-700">
+            {data.name.long}
+          </h3>
+          <p className="row-start-3 row-end-4 flex min-w-0 gap-x-1 pt-2 text-xs font-light tracking-wide text-slate-500">
             <span>Since {format(new Date(data.createdAt), "do MMMM yyyy")}</span>
             &middot;
-            <span>5 students</span>
+            {!studentsCount ? (
+              "Loading students count"
+            ) : (
+              <span>
+                {studentsCount.data.count} student{studentsCount.data.count !== 1 && "s"}
+              </span>
+            )}
             &middot;
             <span>
               {data.subjectsCount} subject{data.subjectsCount !== 1 && "s"}
             </span>
           </p>
+          <div className="col-start-2 col-end-3 row-start-1 row-end-4 min-w-0" />
         </header>
-        <section className="w-full px-20 pt-10 pb-6">
-          <div className="relative flex w-full items-center justify-start gap-x-12 border-b-2 border-slate-300">
-            {["Feed", "Students", "Subjects", "Teachers"].map((tab) => (
-              <span
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={classNames(
-                  "relative cursor-pointer px-2 pb-3 tracking-wide text-slate-500 after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full",
-                  { "after:bg-gray-500": tab === activeTab }
-                )}
-              >
-                {tab}
-              </span>
-            ))}
-          </div>
-          {activeTab === "Students" && (
-            <div className="divide-y divide-slate-300">
-              {students.map(({ online, ...item }, idx) => (
-                <div
-                  key={idx}
-                  style={{ gridTemplateColumns: "1fr max-content 25% max-content" }}
-                  className="grid w-full gap-x-28 py-5"
+        <section className="flex w-full grow items-stretch justify-start">
+          <Tab.Group
+            manual
+            vertical
+            onChange={setActiveTab}
+            selectedIndex={activeTab}
+          >
+            <Tab.List className="shrink-0 space-y-2 overflow-y-auto">
+              {Object.keys(tabs).map((t) => (
+                <Tab
+                  key={t}
+                  className="flex w-full cursor-pointer items-center justify-start gap-x-3 rounded-md p-2 hover:bg-slate-50"
                 >
-                  <div className="flex w-full min-w-0 items-center justify-start gap-4">
-                    <div
-                      style={{ shapeOutside: "circle(50% at 50% 50%)" }}
-                      className="aspect-square h-16 w-16 shrink-0 overflow-hidden rounded-full"
-                    >
-                      <UserImage
-                        alt={`${item.name}'s Portrait Image`}
-                        src={`/Users/${String(idx + 3).padStart(3, "0")}.jpg`}
-                        fallbackText={item.name.split(" ", 2).reduce((a, b) => a + b[0], "")}
-                      />
-                    </div>
-                    <div className="space-y-1 text-sm">
-                      <span className="tracking-wide text-blue-800">{item.name}</span>
-                      <div className="flex gap-x-2">
-                        <MailIcon className="h-5 w-5 fill-slate-500" />
-                        <a
-                          href={`mailto:${item.email}`}
-                          className="flex gap-x-2 text-sm lowercase tracking-wide text-gray-500"
-                        >
-                          {item.email}
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex min-w-0 items-center text-sm tracking-wide text-slate-500">
-                    {item.age} year{item.age > 1 && "s"} old
-                  </div>
-                  <div className="flex min-w-0 flex-col items-start justify-center gap-y-1">
-                    <div className="flex items-center gap-x-1 text-sm text-slate-700">
-                      {online.state ? (
-                        <>
-                          <CheckCircleIcon className="h-5 w-5 fill-emerald-500" />
-                          Online
-                        </>
-                      ) : (
-                        <>
-                          <XCircleIcon className="h-5 w-5 fill-red-400" />
-                          Offline
-                        </>
-                      )}
-                    </div>
-                    <div className="text-sm text-slate-500">
-                      {online.state ? "Since" : "Last seen"}{" "}
-                      {formatDistance(new Date(online.since), new Date(), {
-                        addSuffix: true,
-                        includeSeconds: true,
-                      })}
-                    </div>
-                  </div>
-                  <Link href={`/students/${idx}`}>
-                    <a className="flex min-w-0 items-center text-sm tracking-wide text-blue-600">View</a>
-                  </Link>
-                </div>
+                  <span>{tabEmoji[t as unknown as keyof typeof tabEmoji]}</span>
+                  <span className="text-sm text-slate-700">{t}</span>
+                </Tab>
               ))}
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600">
-                  <ChevronLeftIcon className="h-5 w-5 fill-slate-500" />
-                  Previous
-                </div>
-                <div className="flex items-center justify-center gap-x-6">
-                  <span className="relative cursor-pointer py-4 px-2 text-blue-600 after:absolute after:-top-1 after:left-0 after:h-0.5 after:w-full after:bg-blue-600">
-                    1
-                  </span>
-                  {new Array(5).fill(null).map((_, i) => (
-                    <span
-                      key={i}
-                      className="cursor-pointer py-4 px-2 font-light text-slate-600"
-                    >
-                      {i + 2}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex cursor-pointer items-center gap-x-3 py-4 text-slate-600">
-                  Next
-                  <ChevronRightIcon className="h-5 w-5 fill-slate-500" />
-                </div>
-              </div>
-            </div>
-          )}
-          {activeTab === "Teachers" && <Teachers id={String(props._id)} />}
+            </Tab.List>
+            <Tab.Panels className="grow px-4">
+              {Object.values(tabs).map((t, i) => (
+                <Tab.Panel
+                  key={i}
+                  className="h-full w-full"
+                >
+                  {t}
+                </Tab.Panel>
+              ))}
+            </Tab.Panels>
+          </Tab.Group>
         </section>
       </section>
     </Fragment>
@@ -165,10 +99,23 @@ const Class: NextPage<GetClassData> = (props) => {
 };
 
 export const getServerSideProps: GetServerSideProps<GetClassData> = async ({ params }) => {
+  return {
+    props: {
+      order: 1,
+      subjectsCount: 10,
+      createdAt: Date.now() as unknown as Date,
+      _id: "_id" as unknown as GetClassData["_id"],
+      name: {
+        long: "Key Stage 1",
+        short: "KS1",
+        special: "Gold",
+      },
+    },
+  };
   await connect();
-  const data = await ClassModel.findByName(params?.name as string, "long", "-teachers").lean<GetClassData>({
-    virtuals: true,
-  });
+  const data = await ClassModel.findByName(params?.name as string, "long", "-teachers")
+    .populate<{ subjectsCount: number }>("subjectsCount")
+    .lean();
 
   if (data === null) return { notFound: true };
 

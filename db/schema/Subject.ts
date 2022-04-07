@@ -33,6 +33,10 @@ export const BaseSubjectSchema = new Schema<BaseSubjectRecord>({
   },
 });
 
+BaseSubjectSchema.virtual("teachersCount").get(function (this: BaseSubjectRecord) {
+  return this.teachers.length;
+});
+
 export const GroupSubjectSchema = new Schema<GroupSubjectRecord>({
   name: {
     type: ThingName(),
@@ -42,4 +46,8 @@ export const GroupSubjectSchema = new Schema<GroupSubjectRecord>({
     default: undefined,
     type: [BaseSubjectSchema],
   },
+});
+
+GroupSubjectSchema.virtual("divisionsCount").get(function (this: GroupSubjectRecord) {
+  return this.divisions.length;
 });
