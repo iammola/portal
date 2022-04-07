@@ -28,7 +28,7 @@ export type GetClassStudentsCount = {
 };
 
 export type GetClassSubjectsData = {
-  subjects: SubjectRecord[];
+  subjects: Array<SubjectRecord<true>>;
 };
 
 export type GetClassTeachersData = {
