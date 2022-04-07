@@ -1,7 +1,10 @@
 import useSWR from "swr";
 import { FunctionComponent } from "react";
+import { ArrowSmUpIcon, ArrowSmDownIcon, TrashIcon } from "@heroicons/react/solid";
 
 import { List } from "components";
+
+import { Action } from "./Action";
 
 import type { SubjectRecord } from "types/schema";
 import type { ApiResponse, ApiError } from "types/api";
@@ -31,7 +34,7 @@ const Row: FunctionComponent<RowProps> = ({ __type, divisionsCount, name, order,
   return (
     <div
       className="grid w-full gap-x-28 py-5"
-      style={{ gridTemplateColumns: "max-content minmax(0, 1fr) max-content" }}
+      style={{ gridTemplateColumns: "max-content minmax(0, 1fr) repeat(2, max-content)" }}
     >
       <div className="flex w-10 min-w-0 items-center justify-center text-sm text-gray-600">{order}.</div>
       <div className="flex grow items-center justify-start gap-x-3 tracking-wide text-gray-700">
@@ -42,6 +45,17 @@ const Row: FunctionComponent<RowProps> = ({ __type, divisionsCount, name, order,
         {__type === "base" && `${teachersCount ?? 0} teacher${teachersCount === 1 ? "" : "s"}`}
         {__type === "group" && `${divisionsCount ?? 0} division${divisionsCount === 1 ? "" : "s"}`}
       </div>
+      <div className="flex min-w-0 flex-wrap items-center justify-center gap-x-3">
+        <Action title="Move Up">
+          <ArrowSmUpIcon className="h-5 w-5 fill-gray-500" />
+        </Action>
+        <Action title="Move Down">
+          <ArrowSmDownIcon className="h-5 w-5 fill-gray-500" />
+        </Action>
+        <Action title="Delete">
+          <TrashIcon className="h-5 w-5 fill-gray-500" />
+        </Action>
+      </div>
     </div>
   );
 };
@@ -50,7 +64,7 @@ const Skeleton: FunctionComponent = () => {
   return (
     <div
       className="grid w-full gap-x-28 py-5"
-      style={{ gridTemplateColumns: "max-content minmax(0, 1fr) max-content" }}
+      style={{ gridTemplateColumns: "max-content minmax(0, 1fr) repeat(2, max-content)" }}
     >
       <div className="aspect-square h-3 w-3 animate-pulse rounded-full bg-slate-300" />
       <div className="w-full min-w-0 space-y-2">
@@ -60,6 +74,12 @@ const Skeleton: FunctionComponent = () => {
       <div className="flex min-w-0 items-center">
         <div className="h-3 w-20 animate-pulse rounded-full bg-slate-300" />
       </div>
+      {new Array(3).fill(null).map((_, idx) => (
+        <div
+          key={idx}
+          className="h-4 w-4 animate-pulse rounded-full bg-slate-300"
+        />
+      ))}
     </div>
   );
 };
