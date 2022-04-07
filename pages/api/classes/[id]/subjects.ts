@@ -50,7 +50,7 @@ async function createSubject(data: CreateBody, classID: string): MethodResponse<
 
 async function getSubjects({ id, projection = "" }: GetQuery): MethodResponse<GetData> {
   await connect();
-  const subjects = await SubjectModel.find({ class: id }, projection.replace(/,/g, " ")).lean();
+  const subjects = await SubjectModel.find({ class: id }, projection.replace(/,/g, " ")).sort({ order: "asc" }).lean();
 
   return [
     {

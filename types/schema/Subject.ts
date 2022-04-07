@@ -5,6 +5,7 @@ import { DocumentId, ModelRecord, ObjectId, ThingName } from "types/schema";
 
 interface SubjectSchema {
   class: ObjectId;
+  order: number;
   mandatory?: true;
   sessions?: ObjectId[];
 }
