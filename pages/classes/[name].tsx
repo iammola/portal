@@ -24,7 +24,7 @@ const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
   const [tabs] = useState({
     Feed: "",
     Students: <Students id={String(props._id)} />,
-    Subjects: <Subjects />,
+    Subjects: <Subjects id={String(props._id)} />,
     Teachers: <Teachers id={String(props._id)} />,
   });
   const [tabEmoji] = useState<Record<keyof typeof tabs, string>>({
