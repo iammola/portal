@@ -26,6 +26,7 @@ export const Students: FunctionComponent<{ id: string }> = ({ id }) => {
     >
       {error && "Error State component soon"}
       {data && !data.students.length && "Empty state component soon"}
+      {data === error && new Array(3).fill(null).map((_, idx) => <Skeleton key={idx} />)}
       {data?.students.map((s) => (
         <Row
           {...s}
@@ -103,6 +104,33 @@ const Row: FunctionComponent<RowProps> = ({ _id, dob, image, name, online, schoo
       <Link href={`/students/${String(_id)}`}>
         <a className="flex min-w-0 items-center text-sm tracking-wide text-blue-600">View</a>
       </Link>
+    </div>
+  );
+};
+
+const Skeleton: FunctionComponent = () => {
+  return (
+    <div
+      className="grid w-full gap-x-28 py-5"
+      style={{ gridTemplateColumns: "minmax(0, 1fr) max-content 25% max-content" }}
+    >
+      <div className="flex w-full min-w-0 items-center justify-start gap-4">
+        <div className="aspect-square h-16 w-16 shrink-0 animate-pulse overflow-hidden rounded-full bg-slate-300" />
+        <div className="space-y-2">
+          <div className="h-3 w-24 animate-pulse rounded-full bg-slate-300" />
+          <div className="h-3 w-40 animate-pulse rounded-full bg-slate-300" />
+        </div>
+      </div>
+      <div className="flex min-w-0 items-center">
+        <div className="h-3 w-20 animate-pulse rounded-full bg-slate-300" />
+      </div>
+      <div className="flex min-w-0 items-center space-y-2">
+        <div className="h-3 w-24 animate-pulse rounded-full bg-slate-300" />
+        <div className="h-3 w-40 animate-pulse rounded-full bg-slate-300" />
+      </div>
+      <div className="flex min-w-0 items-center">
+        <div className="h-3 w-20 animate-pulse rounded-full bg-slate-300" />
+      </div>
     </div>
   );
 };

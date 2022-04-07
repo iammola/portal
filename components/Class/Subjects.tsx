@@ -16,6 +16,7 @@ export const Subjects: FunctionComponent<{ id: string }> = ({ id }) => {
     <List className="w-full divide-y divide-slate-300">
       {error && "Error State component soon"}
       {data && !data.subjects.length && "Empty state component soon"}
+      {data === error && new Array(3).fill(null).map((_, idx) => <Skeleton key={idx} />)}
       {data?.subjects.map((s) => (
         <Row
           {...s}
@@ -40,6 +41,24 @@ const Row: FunctionComponent<RowProps> = ({ __type, divisionsCount, name, order,
       <div className="flex items-center justify-center p-2.5">
         {__type === "base" && `${teachersCount ?? 0} teacher${teachersCount === 1 ? "" : "s"}`}
         {__type === "group" && `${divisionsCount ?? 0} division${divisionsCount === 1 ? "" : "s"}`}
+      </div>
+    </div>
+  );
+};
+
+const Skeleton: FunctionComponent = () => {
+  return (
+    <div
+      className="grid w-full gap-x-28 py-5"
+      style={{ gridTemplateColumns: "max-content minmax(0, 1fr) max-content" }}
+    >
+      <div className="aspect-square h-3 w-3 animate-pulse rounded-full bg-slate-300" />
+      <div className="w-full min-w-0 space-y-2">
+        <div className="h-3 w-24 animate-pulse rounded-full bg-slate-300" />
+        <div className="h-3 w-40 animate-pulse rounded-full bg-slate-300" />
+      </div>
+      <div className="flex min-w-0 items-center">
+        <div className="h-3 w-20 animate-pulse rounded-full bg-slate-300" />
       </div>
     </div>
   );
