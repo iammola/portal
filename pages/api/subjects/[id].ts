@@ -5,11 +5,12 @@ import { routeWrapper } from "utils/api";
 import { BaseSubjectModel, GroupSubjectModel, SubjectModel } from "db/models";
 
 import type {
+  ApiHandler,
   DeleteSubjectData as DeleteData,
+  MethodResponse,
   UpdateSubjectData as UpdateData,
   UpdateSubjectRequestBody as UpdateBody,
-} from "types/api/subjects";
-import type { ApiHandler, MethodResponse } from "types/api";
+} from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type D = DeleteData | UpdateData;

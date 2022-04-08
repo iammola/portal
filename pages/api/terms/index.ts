@@ -5,12 +5,13 @@ import { SessionModel, TermModel } from "db/models";
 import { routeWrapper, NotFoundError } from "utils/api";
 
 import type {
+  ApiHandler,
   GetTermsData as GetData,
   CreateTermData as CreateData,
   CreateTermRequestBody as CreateBody,
-} from "types/api/terms";
+  MethodResponse,
+} from "types/api";
 import type { SessionSchema } from "types/schema";
-import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 async function getTerms(): MethodResponse<GetData> {

@@ -6,7 +6,7 @@ import { fetchAPIEndpoint } from "utils";
 import Email, { Value } from "components/Form/Email";
 
 import type { KeyedMutator } from "swr";
-import type { AddClassTeachersData as AddData, AddClassTeachersRequestBody as AddBody } from "types/api/classes";
+import type { AddClassTeachersData as AddData, AddClassTeachersRequestBody as AddBody } from "types/api";
 
 const AddTeacher: FunctionComponent<AddTeacherProps> = ({ id, mutate, show, onClose }) => {
   const [teachers, setTeachers] = useState<Value[]>([]);

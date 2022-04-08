@@ -4,9 +4,8 @@ import { connect } from "db";
 import { ClassModel } from "db/models";
 import { routeWrapper, NotFoundError } from "utils/api";
 
-import type { GetClassData } from "types/api/classes";
-import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { ApiHandler, GetClassData, MethodResponse } from "types/api";
 
 async function getClass(id: string): MethodResponse<GetClassData> {
   await connect();

@@ -5,8 +5,12 @@ import { createUser } from "utils/user";
 import { routeWrapper } from "utils/api";
 import { ClassModel, ParentModel, TermModel } from "db/models";
 
-import type { CreateStudentData as CreateData, CreateStudentRequestBody as CreateBody } from "types/api/students";
-import type { ApiHandler, MethodResponse } from "types/api";
+import type {
+  ApiHandler,
+  CreateStudentData as CreateData,
+  CreateStudentRequestBody as CreateBody,
+  MethodResponse,
+} from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 async function createStudent(body: CreateBody): MethodResponse<CreateData> {

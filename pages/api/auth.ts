@@ -8,9 +8,8 @@ import { routeWrapper } from "utils/api";
 import { comparePassword, JWT_ALG, JWT_COOKIE_KEY } from "utils";
 import { ParentModel, StudentModel, TeacherModel } from "db/models";
 
-import type { ApiHandler } from "types/api";
-import type { AuthData, AuthUser } from "types/api/auth";
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { ApiHandler, AuthData, AuthUser } from "types/api";
 
 async function getUser({ level, password, remember, username }: AuthUser) {
   await connect();

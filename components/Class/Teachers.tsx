@@ -8,9 +8,13 @@ import { List, UserImage } from "components";
 
 import AddTeacher from "./AddTeacher";
 
+import type {
+  ApiError,
+  ApiResponse,
+  GetClassTeachersData as Data,
+  DeleteClassTeacherData as DeleteData,
+} from "types/api";
 import type { TeacherSchema } from "types/schema";
-import type { ApiError, ApiResponse } from "types/api";
-import type { GetClassTeachersData as Data, DeleteClassTeacherData as DeleteData } from "types/api/classes";
 
 export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
   const [showAdd, setShowAdd] = useState(false);

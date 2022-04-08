@@ -4,9 +4,14 @@ import { connect } from "db";
 import { ClassModel, TeacherModel } from "db/models";
 import { PaginationLimit, routeWrapper } from "utils";
 
-import type { ApiHandler, MethodResponse } from "types/api";
+import type {
+  ApiHandler,
+  GetClassesData,
+  CreateClassData,
+  CreateClassRequestBody as CreateBody,
+  MethodResponse,
+} from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { GetClassesData, CreateClassData, CreateClassRequestBody as CreateBody } from "types/api/classes";
 
 interface GetQuery {
   page?: number;

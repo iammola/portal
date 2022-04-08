@@ -3,8 +3,12 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { createUser } from "utils/user";
 import { routeWrapper } from "utils/api";
 
-import type { CreateTeacherData as CreateData, CreateTeacherRequestBody as CreateBody } from "types/api/teachers";
-import type { ApiHandler, MethodResponse } from "types/api";
+import type {
+  ApiHandler,
+  CreateTeacherData as CreateData,
+  CreateTeacherRequestBody as CreateBody,
+  MethodResponse,
+} from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 async function createTeacher(body: CreateBody): MethodResponse<CreateData> {

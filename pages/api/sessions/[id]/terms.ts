@@ -4,9 +4,8 @@ import { connect } from "db";
 import { SessionModel } from "db/models";
 import { routeWrapper, NotFoundError } from "utils/api";
 
-import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { GetSessionTermsData as GetData } from "types/api/sessions";
+import type { ApiHandler, GetSessionTermsData as GetData, MethodResponse } from "types/api";
 
 async function getSessionTerms(id: string): MethodResponse<GetData> {
   await connect();

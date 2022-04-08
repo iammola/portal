@@ -4,9 +4,8 @@ import { connect } from "db";
 import { ClassModel, StudentModel } from "db/models";
 import { NotFoundError, PaginationLimit, routeWrapper } from "utils";
 
-import type { ApiHandler, MethodResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { GetClassStudentsData, GetClassStudentsCount } from "types/api/classes";
+import type { ApiHandler, GetClassStudentsData, GetClassStudentsCount, MethodResponse } from "types/api";
 
 interface GetQuery {
   id: string;

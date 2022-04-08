@@ -7,8 +7,7 @@ import { List } from "components";
 import { Action } from "./Action";
 
 import type { SubjectRecord } from "types/schema";
-import type { ApiResponse, ApiError } from "types/api";
-import type { GetClassSubjectsData } from "types/api/classes";
+import type { ApiResponse, ApiError, GetClassSubjectsData } from "types/api";
 
 export const Subjects: FunctionComponent<{ id: string }> = ({ id }) => {
   const { data: { data } = {}, error } = useSWR<ApiResponse<GetClassSubjectsData>, ApiError>(

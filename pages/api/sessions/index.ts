@@ -5,11 +5,12 @@ import { SessionModel } from "db/models";
 import { routeWrapper } from "utils/api";
 
 import type {
+  ApiHandler,
   GetSessionsData as GetData,
   CreateSessionData as CreateData,
   CreateSessionRequestBody as CreateBody,
-} from "types/api/sessions";
-import type { ApiHandler, MethodResponse } from "types/api";
+  MethodResponse,
+} from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 async function getSessions(): MethodResponse<GetData> {

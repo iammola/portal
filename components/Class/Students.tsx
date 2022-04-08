@@ -7,8 +7,7 @@ import { CheckCircleIcon, MailIcon, XCircleIcon } from "@heroicons/react/solid";
 import { List, UserImage } from "components";
 
 import type { StudentRecord } from "types/schema";
-import type { ApiResponse, ApiError } from "types/api";
-import type { GetClassStudentsData } from "types/api/classes";
+import type { ApiResponse, ApiError, GetClassStudentsData } from "types/api";
 
 export const Students: FunctionComponent<{ id: string }> = ({ id }) => {
   const [activePage, setActivePage] = useState(0);

@@ -10,9 +10,8 @@ import { ClassModel } from "db/models";
 import { Breadcrumbs } from "components";
 import { Students, Subjects, Teachers } from "components/Class";
 
-import type { ApiResponse } from "types/api";
 import type { NextPage, GetServerSideProps } from "next";
-import type { GetClassData, GetClassStudentsCount } from "types/api/classes";
+import type { ApiResponse, GetClassData, GetClassStudentsCount } from "types/api";
 
 const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
   const { data: studentsCount } = useSWR<ApiResponse<GetClassStudentsCount>>(

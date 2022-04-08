@@ -4,7 +4,7 @@ import { classNames, fetchAPIEndpoint } from "utils";
 import { Input, Email } from "components/Form";
 
 import type { Value as EmailValue } from "components/Form/Email";
-import type { CreateClassData, CreateClassRequestBody } from "types/api/classes";
+import type { CreateClassData, CreateClassRequestBody } from "types/api";
 
 export const Create: FunctionComponent = () => {
   const [long, setLong] = useState("");

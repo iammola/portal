@@ -4,10 +4,14 @@ import { connect } from "db";
 import { routeWrapper } from "utils/api";
 import { TeacherModel, SubjectModel, BaseSubjectModel, GroupSubjectModel } from "db/models";
 
-import type { MethodResponse, ApiHandler } from "types/api";
+import type {
+  ApiHandler,
+  CreateSubjectData as CreateData,
+  CreateSubjectRequestBody as CreateBody,
+  GetClassSubjectsData as GetData,
+  MethodResponse,
+} from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { GetClassSubjectsData as GetData } from "types/api/classes";
-import type { CreateSubjectData as CreateData, CreateSubjectRequestBody as CreateBody } from "types/api/subjects";
 
 interface GetQuery {
   id: string;
