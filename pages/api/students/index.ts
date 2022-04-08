@@ -9,11 +9,11 @@ import type {
   ApiHandler,
   CreateStudentData as CreateData,
   CreateStudentRequestBody as CreateBody,
-  MethodResponse,
+  HandlerResponse,
 } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function createStudent(body: CreateBody): MethodResponse<CreateData> {
+async function createStudent(body: CreateBody): HandlerResponse<CreateData> {
   await connect();
 
   const [parents, term, classExists] = await Promise.all([

@@ -5,9 +5,9 @@ import { ClassModel } from "db/models";
 import { routeWrapper, NotFoundError } from "utils/api";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiHandler, GetClassData, MethodResponse } from "types/api";
+import type { ApiHandler, GetClassData, HandlerResponse } from "types/api";
 
-async function getClass(id: string): MethodResponse<GetClassData> {
+async function getClass(id: string): HandlerResponse<GetClassData> {
   await connect();
   const data = await ClassModel.findById(id).populate<{ subjectsCount: number }>("subjectsCount").lean();
 

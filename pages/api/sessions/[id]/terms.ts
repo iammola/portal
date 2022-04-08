@@ -5,9 +5,9 @@ import { SessionModel } from "db/models";
 import { routeWrapper, NotFoundError } from "utils/api";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiHandler, GetSessionTermsData as GetData, MethodResponse } from "types/api";
+import type { ApiHandler, GetSessionTermsData as GetData, HandlerResponse } from "types/api";
 
-async function getSessionTerms(id: string): MethodResponse<GetData> {
+async function getSessionTerms(id: string): HandlerResponse<GetData> {
   await connect();
   const data = await SessionModel.findById(id, "terms").populate("terms").lean<GetData>();
 

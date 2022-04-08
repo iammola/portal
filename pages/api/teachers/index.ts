@@ -7,11 +7,11 @@ import type {
   ApiHandler,
   CreateTeacherData as CreateData,
   CreateTeacherRequestBody as CreateBody,
-  MethodResponse,
+  HandlerResponse,
 } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function createTeacher(body: CreateBody): MethodResponse<CreateData> {
+async function createTeacher(body: CreateBody): HandlerResponse<CreateData> {
   const { _id, schoolMail } = await createUser("teacher", body);
 
   return [

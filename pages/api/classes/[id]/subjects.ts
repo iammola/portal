@@ -9,7 +9,7 @@ import type {
   CreateSubjectData as CreateData,
   CreateSubjectRequestBody as CreateBody,
   GetClassSubjectsData as GetData,
-  MethodResponse,
+  HandlerResponse,
 } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -18,7 +18,7 @@ interface GetQuery {
   projection?: string;
 }
 
-async function createSubject(data: CreateBody, classID: string): MethodResponse<CreateData> {
+async function createSubject(data: CreateBody, classID: string): HandlerResponse<CreateData> {
   await connect();
 
   const teachers = await TeacherModel.findBySchoolMail(
@@ -52,7 +52,7 @@ async function createSubject(data: CreateBody, classID: string): MethodResponse<
   ];
 }
 
-async function getSubjects({ id, projection = "" }: GetQuery): MethodResponse<GetData> {
+async function getSubjects({ id, projection = "" }: GetQuery): HandlerResponse<GetData> {
   await connect();
   const subjects = await SubjectModel.find({ class: id }, projection.replace(/,/g, " "))
     .sort({ order: "asc" })

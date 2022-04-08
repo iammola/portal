@@ -7,7 +7,7 @@ import { BaseSubjectModel, GroupSubjectModel, SubjectModel } from "db/models";
 import type {
   ApiHandler,
   DeleteSubjectData as DeleteData,
-  MethodResponse,
+  HandlerResponse,
   UpdateSubjectData as UpdateData,
   UpdateSubjectRequestBody as UpdateBody,
 } from "types/api";
@@ -15,7 +15,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 type D = DeleteData | UpdateData;
 
-async function deleteSubject(_id: string): MethodResponse<DeleteData> {
+async function deleteSubject(_id: string): HandlerResponse<DeleteData> {
   await connect();
   const res = await SubjectModel.deleteOne({ _id });
 
@@ -31,7 +31,7 @@ async function deleteSubject(_id: string): MethodResponse<DeleteData> {
   ];
 }
 
-async function updateSubject(_id: string, data: UpdateBody): MethodResponse<UpdateData> {
+async function updateSubject(_id: string, data: UpdateBody): HandlerResponse<UpdateData> {
   await connect();
   const args = [
     _id,

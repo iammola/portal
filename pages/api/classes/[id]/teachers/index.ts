@@ -9,11 +9,11 @@ import type {
   AddClassTeachersData as AddData,
   AddClassTeachersRequestBody as AddBody,
   GetClassTeachersData as GetData,
-  MethodResponse,
+  HandlerResponse,
 } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function getTeachers(classID: string, proj: unknown): MethodResponse<GetData> {
+async function getTeachers(classID: string, proj: unknown): HandlerResponse<GetData> {
   await connect();
   const data = await ClassModel.getTeachers(classID, proj).lean({ getters: true });
 
@@ -29,7 +29,7 @@ async function getTeachers(classID: string, proj: unknown): MethodResponse<GetDa
   ];
 }
 
-async function addTeachers(_id: string, body: AddBody): MethodResponse<AddData> {
+async function addTeachers(_id: string, body: AddBody): HandlerResponse<AddData> {
   await connect();
   const teachers = await TeacherModel.findBySchoolMail(body.teachers, "_id").lean();
   const upd = await ClassModel.updateOne(

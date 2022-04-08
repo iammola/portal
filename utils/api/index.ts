@@ -5,7 +5,7 @@ import { verifyAuth } from "./auth";
 import { formatError, NotFoundError, UnauthorizedError } from "./error";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiHandler, HandlerResponse, NextAPIResponse } from "types/api";
+import type { ApiHandler, RouteResponse, NextAPIResponse } from "types/api";
 
 /**
  * Used to catch errors in a route and properly format response object
@@ -21,7 +21,7 @@ export async function routeWrapper<T extends object>(
   routeHandler: ApiHandler<T>,
   methods: string[]
 ) {
-  let data: HandlerResponse<T> | null = null;
+  let data: RouteResponse<T> | null = null;
 
   try {
     if (req.url !== "/api/auth") await verifyAuth(req);

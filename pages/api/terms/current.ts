@@ -5,9 +5,9 @@ import { TermModel } from "db/models";
 import { routeWrapper } from "utils/api";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiHandler, GetTermData as GetData, MethodResponse } from "types/api";
+import type { ApiHandler, GetTermData as GetData, HandlerResponse } from "types/api";
 
-async function getCurrentTerm(): MethodResponse<GetData> {
+async function getCurrentTerm(): HandlerResponse<GetData> {
   await connect();
 
   return [

@@ -9,12 +9,12 @@ import type {
   GetTermsData as GetData,
   CreateTermData as CreateData,
   CreateTermRequestBody as CreateBody,
-  MethodResponse,
+  HandlerResponse,
 } from "types/api";
 import type { SessionSchema } from "types/schema";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function getTerms(): MethodResponse<GetData> {
+async function getTerms(): HandlerResponse<GetData> {
   await connect();
   const terms = await TermModel.find({}).populate<{ session: SessionSchema }>("session", "name").lean();
 
@@ -43,7 +43,7 @@ async function getTerms(): MethodResponse<GetData> {
   ];
 }
 
-async function createTerm(body: CreateBody): MethodResponse<CreateData> {
+async function createTerm(body: CreateBody): HandlerResponse<CreateData> {
   await connect();
 
   const session = await SessionModel.exists({ _id: body.session }).lean();

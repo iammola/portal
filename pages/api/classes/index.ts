@@ -9,7 +9,7 @@ import type {
   GetClassesData,
   CreateClassData,
   CreateClassRequestBody as CreateBody,
-  MethodResponse,
+  HandlerResponse,
 } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -18,7 +18,7 @@ interface GetQuery {
   projection?: string;
 }
 
-async function createClass({ teachers, ...data }: CreateBody): MethodResponse<CreateClassData> {
+async function createClass({ teachers, ...data }: CreateBody): HandlerResponse<CreateClassData> {
   await connect();
   const teacherIDs = await TeacherModel.findBySchoolMail(teachers, "_id").lean();
   const { _id, createdAt } = await ClassModel.create({
@@ -36,7 +36,7 @@ async function createClass({ teachers, ...data }: CreateBody): MethodResponse<Cr
   ];
 }
 
-async function getClasses({ page, projection = "" }: GetQuery): MethodResponse<GetClassesData> {
+async function getClasses({ page, projection = "" }: GetQuery): HandlerResponse<GetClassesData> {
   await connect();
   const opts = {
     skip: +(page ?? 0) * PaginationLimit,

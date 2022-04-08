@@ -4,11 +4,11 @@ import { connect } from "db";
 import { routeWrapper } from "utils/api";
 import { ParentModel, StudentModel, TeacherModel } from "db/models";
 
-import type { ApiHandler, MethodResponse } from "types/api";
+import type { ApiHandler, HandlerResponse } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { UsersEmailData as UsersData, UsersEmailRequestBody as UsersBody } from "types/api/users/email";
 
-async function searchByEmail({ mail: schoolMail, select, userType }: UsersBody): MethodResponse<UsersData> {
+async function searchByEmail({ mail: schoolMail, select, userType }: UsersBody): HandlerResponse<UsersData> {
   await connect();
   const args = [{ schoolMail }, select] as const;
   const data = await (userType === "student"
