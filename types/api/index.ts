@@ -11,14 +11,14 @@ export type UpdateResult = Record<"success", boolean>;
 
 type ResponseCodes = FilterNumber<`${StatusCodes}`>;
 
-export type MethodResponse<D> = Promise<[ApiResponse<D>, ResponseCodes]>;
+export type HandlerResponse<D> = Promise<[Omit<ApiResponse<D>, "success">, ResponseCodes]>;
 
-export type HandlerResponse<D> = [ApiError, ResponseCodes] | Awaited<MethodResponse<D>>;
+export type RouteResponse<D> = [ApiError, ResponseCodes] | [ApiResponse<D>, ResponseCodes];
 
 export type ApiHandler<R extends object> = (
   req: NextApiRequest,
   res: NextAPIResponse<ApiError | ApiResponse<R>>
-) => Promise<HandlerResponse<R> | null>;
+) => Promise<Awaited<HandlerResponse<R>> | null>;
 
 interface ApiData<S> {
   success: S;

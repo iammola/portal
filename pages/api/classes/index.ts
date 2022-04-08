@@ -9,7 +9,7 @@ import type {
   GetClassesData,
   CreateClassData,
   CreateClassRequestBody as CreateBody,
-  MethodResponse,
+  HandlerResponse,
 } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -18,7 +18,7 @@ interface GetQuery {
   projection?: string;
 }
 
-async function createClass({ teachers, ...data }: CreateBody): MethodResponse<CreateClassData> {
+async function createClass({ teachers, ...data }: CreateBody): HandlerResponse<CreateClassData> {
   await connect();
   const teacherIDs = await TeacherModel.findBySchoolMail(teachers, "_id").lean();
   const { _id, createdAt } = await ClassModel.create({
@@ -26,17 +26,10 @@ async function createClass({ teachers, ...data }: CreateBody): MethodResponse<Cr
     teachers: teacherIDs.map((t) => t._id),
   });
 
-  return [
-    {
-      success: true,
-      data: { _id, createdAt },
-      message: ReasonPhrases.CREATED,
-    },
-    StatusCodes.CREATED,
-  ];
+  return [{ data: { _id, createdAt }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
-async function getClasses({ page, projection = "" }: GetQuery): MethodResponse<GetClassesData> {
+async function getClasses({ page, projection = "" }: GetQuery): HandlerResponse<GetClassesData> {
   await connect();
   const opts = {
     skip: +(page ?? 0) * PaginationLimit,
@@ -58,7 +51,6 @@ async function getClasses({ page, projection = "" }: GetQuery): MethodResponse<G
         page: opts.skip / PaginationLimit,
         pages: Math.ceil(count / (opts.limit ?? 1)),
       },
-      success: true,
       message: ReasonPhrases.OK,
     },
     StatusCodes.OK,

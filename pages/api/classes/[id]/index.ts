@@ -5,22 +5,15 @@ import { ClassModel } from "db/models";
 import { routeWrapper, NotFoundError } from "utils/api";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiHandler, GetClassData, MethodResponse } from "types/api";
+import type { ApiHandler, GetClassData, HandlerResponse } from "types/api";
 
-async function getClass(id: string): MethodResponse<GetClassData> {
+async function getClass(id: string): HandlerResponse<GetClassData> {
   await connect();
   const data = await ClassModel.findById(id).populate<{ subjectsCount: number }>("subjectsCount").lean();
 
   if (data === null) throw new NotFoundError("Class not found");
 
-  return [
-    {
-      data,
-      success: true,
-      message: ReasonPhrases.OK,
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 const handler: ApiHandler<GetClassData> = async ({ method, query }) => {

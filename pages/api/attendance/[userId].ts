@@ -8,17 +8,16 @@ import type {
   ApiHandler,
   CreateAttendanceData as CreateData,
   CreateAttendanceRequestBody as CreateBody,
-  MethodResponse,
+  HandlerResponse,
 } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function createAttendance(userId: string, body: CreateBody): MethodResponse<CreateData> {
+async function createAttendance(userId: string, body: CreateBody): HandlerResponse<CreateData> {
   await connect();
   const res = await AttendanceModel.updateOne({ userId }, { $push: { dates: body } }, { upsert: true, fields: "_id" });
 
   return [
     {
-      success: true,
       data: {
         _id: res.upsertedId as CreateData["_id"],
         success: res.acknowledged,

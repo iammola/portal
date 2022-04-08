@@ -63,14 +63,7 @@ const handler: ApiHandler<AuthData> = async (req, res) => {
     maxAge: expiresIn,
   });
 
-  return [
-    {
-      success: true,
-      data: { token, expiresIn },
-      message: ReasonPhrases.OK,
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data: { token, expiresIn }, message: ReasonPhrases.OK }, StatusCodes.OK];
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

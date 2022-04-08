@@ -2,22 +2,18 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { TermModel } from "db/models";
-import { routeWrapper } from "utils/api";
+import { NotFoundError, routeWrapper } from "utils/api";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiHandler, GetTermData as GetData, MethodResponse } from "types/api";
+import type { ApiHandler, GetTermData as GetData, HandlerResponse } from "types/api";
 
-async function getTerm(id: string): MethodResponse<GetData> {
+async function getTerm(id: string): HandlerResponse<GetData> {
   await connect();
 
-  return [
-    {
-      success: true,
-      message: ReasonPhrases.OK,
-      data: await TermModel.findById(id).populate("session").lean(),
-    },
-    StatusCodes.OK,
-  ];
+  const data = await TermModel.findById(id).populate<{ session: GetData["session"] }>("session").lean();
+  if (!data) throw new NotFoundError("Term not found");
+
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 const handler: ApiHandler<GetData> = async ({ method, query }) => {

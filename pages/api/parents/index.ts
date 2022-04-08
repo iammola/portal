@@ -7,21 +7,14 @@ import type {
   ApiHandler,
   CreateParentData as CreateData,
   CreateParentRequestBody as CreateBody,
-  MethodResponse,
+  HandlerResponse,
 } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function createParent(body: CreateBody): MethodResponse<CreateData> {
+async function createParent(body: CreateBody): HandlerResponse<CreateData> {
   const { _id, schoolMail } = await createUser("parent", body);
 
-  return [
-    {
-      success: true,
-      message: ReasonPhrases.CREATED,
-      data: { _id, schoolMail },
-    },
-    StatusCodes.CREATED,
-  ];
+  return [{ data: { _id, schoolMail }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
 const handler: ApiHandler<CreateData> = async ({ body, method }) => {

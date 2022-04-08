@@ -5,14 +5,14 @@ import { ClassModel } from "db/models";
 import { routeWrapper } from "utils/api";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiHandler, DeleteClassTeacherData as DeleteData, MethodResponse } from "types/api";
+import type { ApiHandler, DeleteClassTeacherData as DeleteData, HandlerResponse } from "types/api";
 
 type DeleteQuery = {
   id: string;
   teacher: string;
 };
 
-async function deleteTeacher(query: DeleteQuery): MethodResponse<DeleteData> {
+async function deleteTeacher(query: DeleteQuery): HandlerResponse<DeleteData> {
   await connect();
   const upd = await ClassModel.updateOne({ _id: query.id }, { $pull: { teachers: query.teacher } });
 
@@ -23,14 +23,7 @@ async function deleteTeacher(query: DeleteQuery): MethodResponse<DeleteData> {
     : "Failed";
   const success = upd.acknowledged && upd.modifiedCount === 1;
 
-  return [
-    {
-      success: true,
-      data: { success, message },
-      message: ReasonPhrases.OK,
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data: { success, message }, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 const handler: ApiHandler<DeleteData> = async ({ query, method }) => {

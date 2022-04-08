@@ -9,36 +9,22 @@ import type {
   GetSessionsData as GetData,
   CreateSessionData as CreateData,
   CreateSessionRequestBody as CreateBody,
-  MethodResponse,
+  HandlerResponse,
 } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function getSessions(): MethodResponse<GetData> {
+async function getSessions(): HandlerResponse<GetData> {
   await connect();
   const data = await SessionModel.find({}).populate("termsCount").lean();
 
-  return [
-    {
-      data,
-      success: true,
-      message: ReasonPhrases.OK,
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
-async function createSession(body: CreateBody): MethodResponse<CreateData> {
+async function createSession(body: CreateBody): HandlerResponse<CreateData> {
   await connect();
   const { _id } = await SessionModel.create(body);
 
-  return [
-    {
-      data: { _id },
-      success: true,
-      message: ReasonPhrases.CREATED,
-    },
-    StatusCodes.CREATED,
-  ];
+  return [{ data: { _id }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
 type D = CreateData | GetData;

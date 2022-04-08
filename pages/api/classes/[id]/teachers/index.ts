@@ -9,27 +9,20 @@ import type {
   AddClassTeachersData as AddData,
   AddClassTeachersRequestBody as AddBody,
   GetClassTeachersData as GetData,
-  MethodResponse,
+  HandlerResponse,
 } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function getTeachers(classID: string, proj: unknown): MethodResponse<GetData> {
+async function getTeachers(classID: string, proj: unknown): HandlerResponse<GetData> {
   await connect();
   const data = await ClassModel.getTeachers(classID, proj).lean({ getters: true });
 
   if (data === null) throw new NotFoundError("Class not found");
 
-  return [
-    {
-      data,
-      success: true,
-      message: ReasonPhrases.OK,
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
-async function addTeachers(_id: string, body: AddBody): MethodResponse<AddData> {
+async function addTeachers(_id: string, body: AddBody): HandlerResponse<AddData> {
   await connect();
   const teachers = await TeacherModel.findBySchoolMail(body.teachers, "_id").lean();
   const upd = await ClassModel.updateOne(
@@ -43,7 +36,6 @@ async function addTeachers(_id: string, body: AddBody): MethodResponse<AddData> 
 
   return [
     {
-      success: true,
       message: ReasonPhrases.OK,
       data: { success: upd.acknowledged && upd.modifiedCount === 1 },
     },

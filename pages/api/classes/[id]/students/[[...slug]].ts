@@ -5,7 +5,7 @@ import { ClassModel, StudentModel } from "db/models";
 import { NotFoundError, PaginationLimit, routeWrapper } from "utils";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiHandler, GetClassStudentsData, GetClassStudentsCount, MethodResponse } from "types/api";
+import type { ApiHandler, GetClassStudentsData, GetClassStudentsCount, HandlerResponse } from "types/api";
 
 interface GetQuery {
   id: string;
@@ -15,7 +15,7 @@ interface GetQuery {
   projection?: string;
 }
 
-async function getStudents({ id, page, projection = "", slug, term }: GetQuery): MethodResponse<Data> {
+async function getStudents({ id, page, projection = "", slug, term }: GetQuery): HandlerResponse<Data> {
   await connect();
   const countOnly = slug[0] === "count";
   const query = { academic: { $elemMatch: { term, class: id } } };
@@ -41,7 +41,6 @@ async function getStudents({ id, page, projection = "", slug, term }: GetQuery):
             page: opts.skip / PaginationLimit,
             pages: Math.ceil(count / (opts.limit ?? 1)),
           },
-      success: true,
       message: ReasonPhrases.OK,
     },
     StatusCodes.OK,
