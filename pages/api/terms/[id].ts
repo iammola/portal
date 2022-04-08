@@ -10,7 +10,9 @@ import type { ApiHandler, GetTermData as GetData, HandlerResponse } from "types/
 async function getTerm(id: string): HandlerResponse<GetData> {
   await connect();
 
-  const data = await TermModel.findById(id).populate<{ session: GetData["session"] }>("session").lean();
+  const data = await (id === "current" ? TermModel.findCurrent() : TermModel.findById(id))
+    .populate<{ session: GetData["session"] }>("session")
+    .lean();
   if (!data) throw new NotFoundError("Term not found");
 
   return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];

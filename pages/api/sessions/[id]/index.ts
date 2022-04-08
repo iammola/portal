@@ -10,7 +10,7 @@ import type { ApiHandler, GetSessionData as GetData, HandlerResponse } from "typ
 async function getSession(id: string): HandlerResponse<GetData> {
   await connect();
 
-  const data = await SessionModel.findById(id).lean();
+  const data = await (id === "current" ? SessionModel.findCurrent() : SessionModel.findById(id)).lean();
   if (!data) throw new NotFoundError("Session not found");
 
   return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
