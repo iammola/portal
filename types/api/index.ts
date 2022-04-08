@@ -45,3 +45,13 @@ export interface NextAPIResponse<T = unknown> extends NextApiResponse<T> {
    */
   cookie(name: string, value: unknown, opts?: CookieSerializeOptions): void;
 }
+
+export * from "./auth";
+export * from "./terms";
+export * from "./classes";
+export * from "./parents";
+export * from "./sessions";
+export * from "./students";
+export * from "./subjects";
+export * from "./teachers";
+export * from "./attendance";
