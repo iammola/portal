@@ -18,7 +18,6 @@ async function createAttendance(userId: string, body: CreateBody): HandlerRespon
 
   return [
     {
-      success: true,
       data: {
         _id: res.upsertedId as CreateData["_id"],
         success: res.acknowledged,

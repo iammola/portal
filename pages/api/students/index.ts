@@ -37,14 +37,7 @@ async function createStudent(body: CreateBody): HandlerResponse<CreateData> {
     })),
   });
 
-  return [
-    {
-      success: true,
-      message: ReasonPhrases.CREATED,
-      data: { _id, schoolMail },
-    },
-    StatusCodes.CREATED,
-  ];
+  return [{ data: { _id, schoolMail }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
 const handler: ApiHandler<CreateData> = async ({ body, method }) => {

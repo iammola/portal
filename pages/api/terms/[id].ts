@@ -9,15 +9,9 @@ import type { ApiHandler, GetTermData as GetData, HandlerResponse } from "types/
 
 async function getTerm(id: string): HandlerResponse<GetData> {
   await connect();
+  const data = await TermModel.findById(id).populate("session").lean();
 
-  return [
-    {
-      success: true,
-      message: ReasonPhrases.OK,
-      data: await TermModel.findById(id).populate("session").lean(),
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 const handler: ApiHandler<GetData> = async ({ method, query }) => {

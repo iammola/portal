@@ -23,14 +23,7 @@ async function deleteTeacher(query: DeleteQuery): HandlerResponse<DeleteData> {
     : "Failed";
   const success = upd.acknowledged && upd.modifiedCount === 1;
 
-  return [
-    {
-      success: true,
-      data: { success, message },
-      message: ReasonPhrases.OK,
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data: { success, message }, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 const handler: ApiHandler<DeleteData> = async ({ query, method }) => {

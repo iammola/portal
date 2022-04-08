@@ -9,15 +9,9 @@ import type { ApiHandler, GetSessionData as GetData, HandlerResponse } from "typ
 
 async function getSession(id: string): HandlerResponse<GetData> {
   await connect();
+  const data = await SessionModel.findById(id).lean();
 
-  return [
-    {
-      success: true,
-      message: ReasonPhrases.OK,
-      data: await SessionModel.findById(id).lean(),
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 const handler: ApiHandler<GetData> = async ({ method, query }) => {

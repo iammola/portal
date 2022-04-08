@@ -33,14 +33,7 @@ async function getTerms(): HandlerResponse<GetData> {
     return nameA > nameB ? 1 : nameA < nameB ? -1 : 0;
   });
 
-  return [
-    {
-      data,
-      success: true,
-      message: ReasonPhrases.OK,
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 async function createTerm(body: CreateBody): HandlerResponse<CreateData> {
@@ -51,14 +44,7 @@ async function createTerm(body: CreateBody): HandlerResponse<CreateData> {
 
   const { _id } = await TermModel.create(body);
 
-  return [
-    {
-      data: { _id },
-      success: true,
-      message: ReasonPhrases.CREATED,
-    },
-    StatusCodes.CREATED,
-  ];
+  return [{ data: { _id }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
 type D = GetData | CreateData;

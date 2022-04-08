@@ -19,16 +19,7 @@ async function deleteSubject(_id: string): HandlerResponse<DeleteData> {
   await connect();
   const res = await SubjectModel.deleteOne({ _id });
 
-  return [
-    {
-      success: true,
-      data: {
-        success: res.acknowledged,
-      },
-      message: ReasonPhrases.OK,
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data: { success: res.acknowledged }, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 async function updateSubject(_id: string, data: UpdateBody): HandlerResponse<UpdateData> {
@@ -46,16 +37,7 @@ async function updateSubject(_id: string, data: UpdateBody): HandlerResponse<Upd
     ? BaseSubjectModel.findByIdAndUpdate(...args).lean()
     : GroupSubjectModel.findByIdAndUpdate(...args).lean());
 
-  return [
-    {
-      success: true,
-      data: {
-        success: !!res?._id,
-      },
-      message: ReasonPhrases.OK,
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data: { success: !!res?._id }, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 const handler: ApiHandler<D> = async ({ body, method, query }) => {

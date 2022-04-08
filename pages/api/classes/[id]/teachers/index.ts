@@ -19,14 +19,7 @@ async function getTeachers(classID: string, proj: unknown): HandlerResponse<GetD
 
   if (data === null) throw new NotFoundError("Class not found");
 
-  return [
-    {
-      data,
-      success: true,
-      message: ReasonPhrases.OK,
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 async function addTeachers(_id: string, body: AddBody): HandlerResponse<AddData> {
@@ -43,7 +36,6 @@ async function addTeachers(_id: string, body: AddBody): HandlerResponse<AddData>
 
   return [
     {
-      success: true,
       message: ReasonPhrases.OK,
       data: { success: upd.acknowledged && upd.modifiedCount === 1 },
     },

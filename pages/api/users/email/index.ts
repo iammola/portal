@@ -19,14 +19,7 @@ async function searchByEmail({ mail: schoolMail, select, userType }: UsersBody):
 
   if (data === null) throw new Error("User does not exist");
 
-  return [
-    {
-      data,
-      success: true,
-      message: ReasonPhrases.OK,
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 const handler: ApiHandler<UsersData> = async ({ body, method }) => {

@@ -41,7 +41,6 @@ async function getStudents({ id, page, projection = "", slug, term }: GetQuery):
             page: opts.skip / PaginationLimit,
             pages: Math.ceil(count / (opts.limit ?? 1)),
           },
-      success: true,
       message: ReasonPhrases.OK,
     },
     StatusCodes.OK,

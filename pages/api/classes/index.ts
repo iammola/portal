@@ -26,14 +26,7 @@ async function createClass({ teachers, ...data }: CreateBody): HandlerResponse<C
     teachers: teacherIDs.map((t) => t._id),
   });
 
-  return [
-    {
-      success: true,
-      data: { _id, createdAt },
-      message: ReasonPhrases.CREATED,
-    },
-    StatusCodes.CREATED,
-  ];
+  return [{ data: { _id, createdAt }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
 async function getClasses({ page, projection = "" }: GetQuery): HandlerResponse<GetClassesData> {
@@ -58,7 +51,6 @@ async function getClasses({ page, projection = "" }: GetQuery): HandlerResponse<
         page: opts.skip / PaginationLimit,
         pages: Math.ceil(count / (opts.limit ?? 1)),
       },
-      success: true,
       message: ReasonPhrases.OK,
     },
     StatusCodes.OK,

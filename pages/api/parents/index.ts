@@ -14,14 +14,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 async function createParent(body: CreateBody): HandlerResponse<CreateData> {
   const { _id, schoolMail } = await createUser("parent", body);
 
-  return [
-    {
-      success: true,
-      message: ReasonPhrases.CREATED,
-      data: { _id, schoolMail },
-    },
-    StatusCodes.CREATED,
-  ];
+  return [{ data: { _id, schoolMail }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
 const handler: ApiHandler<CreateData> = async ({ body, method }) => {

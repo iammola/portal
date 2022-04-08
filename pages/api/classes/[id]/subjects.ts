@@ -42,14 +42,7 @@ async function createSubject(data: CreateBody, classID: string): HandlerResponse
           })),
         });
 
-  return [
-    {
-      success: true,
-      data: { _id },
-      message: ReasonPhrases.CREATED,
-    },
-    StatusCodes.CREATED,
-  ];
+  return [{ data: { _id }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
 async function getSubjects({ id, projection = "" }: GetQuery): HandlerResponse<GetData> {
@@ -58,14 +51,7 @@ async function getSubjects({ id, projection = "" }: GetQuery): HandlerResponse<G
     .sort({ order: "asc" })
     .lean<GetData["subjects"]>({ getters: true });
 
-  return [
-    {
-      success: true,
-      data: { subjects },
-      message: ReasonPhrases.OK,
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data: { subjects }, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 const handler: ApiHandler<Data> = async ({ body, query, method }) => {

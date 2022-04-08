@@ -13,14 +13,7 @@ async function getClass(id: string): HandlerResponse<GetClassData> {
 
   if (data === null) throw new NotFoundError("Class not found");
 
-  return [
-    {
-      data,
-      success: true,
-      message: ReasonPhrases.OK,
-    },
-    StatusCodes.OK,
-  ];
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 const handler: ApiHandler<GetClassData> = async ({ method, query }) => {
