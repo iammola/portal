@@ -2,14 +2,16 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { SessionModel } from "db/models";
-import { routeWrapper } from "utils/api";
+import { NotFoundError, routeWrapper } from "utils/api";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { ApiHandler, GetSessionData as GetData, HandlerResponse } from "types/api";
 
 async function getSession(id: string): HandlerResponse<GetData> {
   await connect();
+
   const data = await SessionModel.findById(id).lean();
+  if (!data) throw new NotFoundError("Session not found");
 
   return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
