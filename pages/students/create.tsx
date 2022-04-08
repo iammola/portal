@@ -8,7 +8,7 @@ import { Form, Section } from "components/Create/User";
 
 import type { NextPage } from "next";
 import type { StudentSchema, UserGender } from "types/schema";
-import type { CreateStudentData, CreateStudentRequestBody } from "types/api/students";
+import type { CreateStudentData, CreateStudentRequestBody } from "types/api";
 
 const CreateStudent: NextPage = () => {
   const [password, setPassword] = useState("");

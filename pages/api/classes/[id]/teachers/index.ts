@@ -4,13 +4,14 @@ import { connect } from "db";
 import { ClassModel, TeacherModel } from "db/models";
 import { NotFoundError, routeWrapper } from "utils/api";
 
-import type { MethodResponse, ApiHandler } from "types/api";
-import type { NextApiRequest, NextApiResponse } from "next";
 import type {
-  GetClassTeachersData as GetData,
+  ApiHandler,
   AddClassTeachersData as AddData,
   AddClassTeachersRequestBody as AddBody,
-} from "types/api/classes";
+  GetClassTeachersData as GetData,
+  MethodResponse,
+} from "types/api";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 async function getTeachers(classID: string, proj: unknown): MethodResponse<GetData> {
   await connect();

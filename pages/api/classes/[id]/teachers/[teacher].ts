@@ -4,9 +4,8 @@ import { connect } from "db";
 import { ClassModel } from "db/models";
 import { routeWrapper } from "utils/api";
 
-import type { MethodResponse, ApiHandler } from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { DeleteClassTeacherData as DeleteData } from "types/api/classes";
+import type { ApiHandler, DeleteClassTeacherData as DeleteData, MethodResponse } from "types/api";
 
 type DeleteQuery = {
   id: string;

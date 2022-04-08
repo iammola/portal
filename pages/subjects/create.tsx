@@ -12,7 +12,7 @@ import type { SubjectRecord } from "types/schema";
 import type { Value as EmailValue } from "components/Form/Email";
 import type { Value as SelectValue } from "components/Form/Select";
 import type { DivisionValue } from "components/Create/Subject/Group";
-import type { CreateSubjectData, CreateSubjectRequestBody } from "types/api/subjects";
+import type { CreateSubjectData, CreateSubjectRequestBody } from "types/api";
 
 const CreateSubject: NextPage = () => {
   const [long, setLong] = useState("");

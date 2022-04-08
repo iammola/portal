@@ -9,8 +9,7 @@ import { fetchAPIEndpoint } from "utils";
 import { Action } from "./Action";
 import { Delete } from "./Delete";
 
-import type { ApiError, ApiResponse } from "types/api";
-import type { GetClassData, GetClassesData } from "types/api/classes";
+import type { ApiError, ApiResponse, GetClassData, GetClassesData } from "types/api";
 
 export const Classes: FunctionComponent = () => {
   const [deleteId, setDeleteId] = useState("");

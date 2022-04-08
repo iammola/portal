@@ -3,8 +3,7 @@ import { FunctionComponent, useEffect, useState } from "react";
 
 import Select, { Value } from "../Select";
 
-import type { ApiResult } from "types/api";
-import type { GetClassesData } from "types/api/classes";
+import type { ApiResult, GetClassesData } from "types/api";
 
 export const Class: Class = ({ onChange, value }) => {
   const [options, setOptions] = useState<Value[]>([]);

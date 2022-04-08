@@ -3,8 +3,12 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { createUser } from "utils/user";
 import { routeWrapper } from "utils/api";
 
-import type { CreateParentData as CreateData, CreateParentRequestBody as CreateBody } from "types/api/parents";
-import type { ApiHandler, MethodResponse } from "types/api";
+import type {
+  ApiHandler,
+  CreateParentData as CreateData,
+  CreateParentRequestBody as CreateBody,
+  MethodResponse,
+} from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 async function createParent(body: CreateBody): MethodResponse<CreateData> {

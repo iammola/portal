@@ -5,10 +5,11 @@ import { routeWrapper } from "utils";
 import { AttendanceModel } from "db/models";
 
 import type {
+  ApiHandler,
   CreateAttendanceData as CreateData,
   CreateAttendanceRequestBody as CreateBody,
-} from "types/api/attendance";
-import type { ApiHandler, MethodResponse } from "types/api";
+  MethodResponse,
+} from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 async function createAttendance(userId: string, body: CreateBody): MethodResponse<CreateData> {
