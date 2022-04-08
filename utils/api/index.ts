@@ -30,7 +30,10 @@ export async function routeWrapper<T extends object>(
       res.setHeader("Set-Cookie", serialize(name, value, opts));
     };
 
-    if (methods.includes(req.method ?? "")) data = await routeHandler(req, res as NextAPIResponse);
+    if (methods.includes(req.method ?? "")) {
+      data = (await routeHandler(req, res as NextAPIResponse)) as RouteResponse<T>;
+      if (data) data[0] = { ...data[0], success: true } as RouteResponse<T>[0];
+    }
   } catch (error: unknown) {
     let [message, code] = [ReasonPhrases.BAD_REQUEST, StatusCodes.BAD_REQUEST];
 
