@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { SWRConfig } from "swr";
 
-import "style/index.css";
+import "style.css";
 import { Layout } from "components";
 import { fetchAPIEndpoint } from "utils";
 
