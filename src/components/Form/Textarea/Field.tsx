@@ -1,7 +1,6 @@
 import { FunctionComponent, useState } from "react";
 
-import { useIsChanging, useIsomorphicLayoutEffect } from "hooks";
-import { classNames } from "utils";
+import { classNames, useIsChanging, useIsomorphicLayoutEffect } from "utils";
 
 const Field: Field = ({ className, id, max, onChange, parentClassName, required, value }) => {
   const typing = useIsChanging(value);

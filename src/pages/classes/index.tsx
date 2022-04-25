@@ -2,8 +2,7 @@ import Head from "next/head";
 import { Fragment, useState } from "react";
 import { Tab, Transition } from "@headlessui/react";
 
-import { useTabs } from "hooks";
-import { classNames } from "utils";
+import { classNames, useTabs } from "utils";
 import { ClassesList, Create } from "components/Class";
 
 import type { NextPage } from "next";

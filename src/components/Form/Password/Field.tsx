@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from "react";
 
+import { useIsomorphicLayoutEffect } from "utils";
 import Input, { InputProps } from "components/Form/Input";
-import { useIsomorphicLayoutEffect } from "hooks";
 
 const Field: Field = ({ id, className, label, onChange, validators, ...props }) => {
   const [typing, setTyping] = useState(false);

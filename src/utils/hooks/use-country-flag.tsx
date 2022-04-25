@@ -3,7 +3,7 @@ import { useState } from "react";
 import Flags from "country-flag-icons/react/3x2";
 import getCountryFlag from "country-flag-icons/unicode";
 
-import { useIsomorphicLayoutEffect } from "hooks";
+import { useIsomorphicLayoutEffect } from "utils";
 
 export function useCountryFlag(regionCode: string) {
   const [countryFlag, setCountryFlag] = useState<JSX.Element>();

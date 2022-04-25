@@ -2,8 +2,7 @@ import { addMilliseconds, getDaysInMonth, isAfter, isBefore, isEqual } from "dat
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 
 import NumberInput from "components/Form/Number";
-import { useIsomorphicLayoutEffect } from "hooks";
-import { classNames } from "utils";
+import { classNames, useIsomorphicLayoutEffect } from "utils";
 
 const Field: Field = ({ className, max, min, onChange, required, value }) => {
   const prevDate = useRef<Date | null>(null);

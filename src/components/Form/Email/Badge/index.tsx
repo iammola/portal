@@ -1,9 +1,8 @@
 import { FocusEvent, FunctionComponent, useMemo, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 
-import { classNames } from "utils";
 import { fetchAPIEndpoint } from "utils/api";
-import { useIsomorphicLayoutEffect } from "hooks";
+import { classNames, useIsomorphicLayoutEffect } from "utils";
 
 import Popover from "./Popover";
 

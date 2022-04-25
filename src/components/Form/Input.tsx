@@ -1,8 +1,7 @@
 import { ComponentProps, FunctionComponent, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 
-import { useIsChanging, useIsomorphicLayoutEffect } from "hooks";
-import { classNames } from "utils";
+import { classNames, useIsChanging, useIsomorphicLayoutEffect } from "utils";
 
 const XIcon = dynamic(() => import("@heroicons/react/solid/XIcon"));
 const CheckIcon = dynamic(() => import("@heroicons/react/solid/CheckIcon"));

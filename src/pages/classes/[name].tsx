@@ -5,7 +5,7 @@ import { Tab } from "@headlessui/react";
 import { Fragment, useState } from "react";
 
 import { connect } from "db";
-import { useTabs } from "hooks";
+import { useTabs } from "utils";
 import { ClassModel } from "db/models";
 import { Breadcrumbs } from "components";
 import { Students, Subjects, Teachers } from "components/Class";

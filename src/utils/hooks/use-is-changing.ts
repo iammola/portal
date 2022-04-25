@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useIsomorphicLayoutEffect } from "hooks";
+import { useIsomorphicLayoutEffect } from "utils";
 
 export function useIsChanging<V>(value: V, delay = 5e2) {
   const [changing, setChanging] = useState(false);
