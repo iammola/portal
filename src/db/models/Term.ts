@@ -1,11 +1,9 @@
-import { Schema, model, models, QueryOptions } from "mongoose";
+import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
 import { ThingName } from "db/schema/Thing";
 
-import type { TermModel as Model, TermRecord } from "types/schema";
-
-const TermSchema = new Schema<TermRecord, Model>({
+const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>({
   current: {
     type: Boolean,
     default: undefined,
@@ -16,13 +14,14 @@ const TermSchema = new Schema<TermRecord, Model>({
   },
   session: {
     ref: ModelNames.SESSION,
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: [true, "Term session required"],
   },
 });
 
-TermSchema.static("findCurrent", function (...args: [unknown?, QueryOptions?]) {
+TermSchema.static("findCurrent", function (...args: [unknown?, mongoose.QueryOptions?]) {
   return this.findOne({ current: true }, ...args);
 });
 
-export const TermModel = (models[ModelNames.TERM] ?? model(ModelNames.TERM, TermSchema)) as Model;
+export const TermModel = (mongoose.models[ModelNames.TERM] ??
+  mongoose.model(ModelNames.TERM, TermSchema)) as Schemas.Term.Model;

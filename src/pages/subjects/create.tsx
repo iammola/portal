@@ -7,7 +7,6 @@ import { classNames, useIsomorphicLayoutEffect } from "utils";
 import { BaseSubject, GroupSubject, SubjectType } from "components/Create/Subject";
 
 import type { NextPage } from "next";
-import type { SubjectRecord } from "types/schema";
 import type { Value as EmailValue } from "components/Form/Email";
 import type { Value as SelectValue } from "components/Form/Select";
 import type { DivisionValue } from "components/Create/Subject/Group";
@@ -18,7 +17,7 @@ const CreateSubject: NextPage = () => {
   const [short, setShort] = useState("");
   const [mandatory, setMandatory] = useState(false);
   const [teachers, setTeachers] = useState<EmailValue[]>();
-  const [__type, setType] = useState<SubjectRecord["__type"]>();
+  const [__type, setType] = useState<Schemas.Subject.Record["__type"]>();
   const [selectedClass, setSelectedClass] = useState<SelectValue>();
   const [groupSubjects, setGroupSubjects] = useState<DivisionValue[]>();
   const divisionTemplate = useMemo<DivisionValue>(

@@ -1,13 +1,12 @@
 import { CreateResult, DeleteResult, UpdateResult } from "types/api";
-import { BaseSubjectSchema, GroupSubjectSchema } from "types/schema";
 
-interface BaseRequestBody extends Omit<BaseSubjectSchema, "_id" | "teachers"> {
+interface BaseRequestBody extends Omit<Schemas.Subject.BaseSchema, "_id" | "teachers"> {
   teachers: string[];
 }
 
-interface GroupRequestBody extends Omit<GroupSubjectSchema, "_id" | "divisions"> {
+interface GroupRequestBody extends Omit<Schemas.Subject.GroupSchema, "_id" | "divisions"> {
   divisions: Array<
-    Pick<BaseSubjectSchema, "_id" | "name"> & {
+    Pick<Schemas.Subject.BaseSchema, "_id" | "name"> & {
       teachers: string[];
     }
   >;

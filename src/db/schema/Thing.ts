@@ -1,9 +1,7 @@
-import { Schema } from "mongoose";
-
-import type { ThingName as Name } from "types/schema";
+import * as mongoose from "mongoose";
 
 export const ThingName = (withSpecial?: true) => {
-  return new Schema<Name>(
+  return new mongoose.Schema<Schemas.ThingName>(
     {
       long: {
         trim: true,

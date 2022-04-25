@@ -1,7 +1,7 @@
 import { CreateResult } from "types/api";
-import { ParentSchema } from "types/schema";
 
-export type CreateParentData = CreateResult<Pick<ParentSchema, "schoolMail">>;
-export interface CreateParentRequestBody extends Omit<ParentSchema, "_id" | "schoolMail" | "password"> {
+export type CreateParentData = CreateResult<Pick<Schemas.Parent.Schema, "schoolMail">>;
+
+export interface CreateParentRequestBody extends Omit<Schemas.Parent.Schema, "_id" | "schoolMail" | "password"> {
   password: string;
 }

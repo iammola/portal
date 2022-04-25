@@ -7,18 +7,17 @@ import * as FormComponents from "components/Form";
 import { Form, Section } from "components/Create/User";
 
 import type { NextPage } from "next";
-import type { TeacherSchema, UserGender } from "types/schema";
 import type { CreateTeacherData, CreateTeacherRequestBody } from "types/api";
 
 const CreateTeacher: NextPage = () => {
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState<string>();
-  const [dob, setDOB] = useState<TeacherSchema["dob"]>();
-  const [name, setName] = useState<Partial<TeacherSchema["name"]>>({});
+  const [dob, setDOB] = useState<Schemas.Teacher.Schema["dob"]>();
+  const [name, setName] = useState<Partial<Schemas.Teacher.Schema["name"]>>({});
   const [image, setImage] = useState<Partial<{ [K in "cover" | "portrait"]: string }>>({});
-  const [email, setEmail] = useState<Partial<TeacherSchema["contact"]["email"]>>({});
-  const [phone, setPhone] = useState<Partial<TeacherSchema["contact"]["phone"]>>({});
-  const [address, setAddress] = useState<Partial<TeacherSchema["contact"]["address"]>>({});
+  const [email, setEmail] = useState<Partial<Schemas.Teacher.Schema["contact"]["email"]>>({});
+  const [phone, setPhone] = useState<Partial<Schemas.Teacher.Schema["contact"]["phone"]>>({});
+  const [address, setAddress] = useState<Partial<Schemas.Teacher.Schema["contact"]["address"]>>({});
   const genderOptions = useMemo(() => ["Male", "Female"].map((value) => ({ id: value[0], value })), []);
   const titleOptions = useMemo(() => ["Mr.", "Ms.", "Mrs.", "Dr.", "Barr."].map((id) => ({ id, value: id })), []);
 
@@ -37,7 +36,7 @@ const CreateTeacher: NextPage = () => {
             phone: phone as Required<typeof phone>,
             address: address as Required<typeof address>,
           },
-          gender: gender as UserGender,
+          gender: gender as Schemas.User.Gender,
           name: name as Required<typeof name>,
         },
       });

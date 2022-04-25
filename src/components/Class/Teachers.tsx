@@ -14,7 +14,6 @@ import type {
   GetClassTeachersData as Data,
   DeleteClassTeacherData as DeleteData,
 } from "types/api";
-import type { TeacherSchema } from "types/schema";
 
 export const Teachers: React.FC<{ id: string }> = ({ id }) => {
   const [showAdd, setShowAdd] = useState(false);
@@ -135,6 +134,6 @@ const Skeleton: React.FC = () => {
   );
 };
 
-interface RowProps extends TeacherSchema {
+interface RowProps extends Schemas.Teacher.Schema {
   remove(id: string): Promise<void>;
 }

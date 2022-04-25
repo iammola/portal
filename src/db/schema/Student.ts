@@ -1,14 +1,12 @@
-import { Schema } from "mongoose";
+import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
 
-import type { StudentGuardianSchema as Guardian, StudentAcademicSchema as Academic } from "types/schema";
-
-export const GuardianSchema = new Schema<Guardian>(
+export const GuardianSchema = new mongoose.Schema<Schemas.Student.Guardian>(
   {
     guardian: {
       ref: ModelNames.PARENT,
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: [true, "Guardian ID required"],
     },
     relation: {
@@ -20,21 +18,21 @@ export const GuardianSchema = new Schema<Guardian>(
   { _id: false }
 );
 
-export const AcademicSchema = new Schema<Academic>(
+export const AcademicSchema = new mongoose.Schema<Schemas.Student.Academic>(
   {
     term: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: [true, "Term ID required"],
     },
     class: {
       ref: ModelNames.CLASS,
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: [true, "Term Class required"],
     },
     subjects: {
       default: undefined,
       ref: ModelNames.SUBJECT,
-      type: [Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
     },
   },
   { _id: false }

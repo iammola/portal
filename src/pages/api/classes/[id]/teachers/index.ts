@@ -25,14 +25,7 @@ async function getTeachers(classID: string, proj: unknown): HandlerResponse<GetD
 async function addTeachers(_id: string, body: AddBody): HandlerResponse<AddData> {
   await connect();
   const teachers = await TeacherModel.findBySchoolMail(body.teachers, "_id").lean();
-  const upd = await ClassModel.updateOne(
-    { _id },
-    {
-      $addToSet: {
-        teachers: { $each: teachers.map((t) => t._id) },
-      },
-    }
-  );
+  const upd = await ClassModel.updateOne({ _id }, { $addToSet: { teachers: { $each: teachers.map((t) => t._id) } } });
 
   return [
     {

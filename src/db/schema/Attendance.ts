@@ -1,8 +1,6 @@
-import { Schema } from "mongoose";
+import * as mongoose from "mongoose";
 
-import type { AttendanceDate } from "types/schema";
-
-export const DateSchema = new Schema<AttendanceDate>({
+export const DateSchema = new mongoose.Schema<Schemas.Attendance.Date>({
   in: {
     type: Date,
     immutable: true,
@@ -13,6 +11,7 @@ export const DateSchema = new Schema<AttendanceDate>({
     validate: {
       message: "Out time cannot be before In time",
       validator() {
+        // TODO: Look at this
         return true;
       },
     },

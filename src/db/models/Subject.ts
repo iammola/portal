@@ -1,20 +1,13 @@
-import { Schema, model, models } from "mongoose";
+import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
 import { BaseSubjectSchema, GroupSubjectSchema } from "db/schema/Subject";
 
-import type {
-  SubjectRecord,
-  SubjectModel as Model,
-  BaseSubjectModel as Base,
-  GroupSubjectModel as Group,
-} from "types/schema";
-
-const SubjectSchema = new Schema<SubjectRecord>(
+const SubjectSchema = new mongoose.Schema<Schemas.Subject.Record>(
   {
     class: {
       ref: ModelNames.CLASS,
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: [true, "Subject class required"],
     },
     mandatory: {
@@ -24,7 +17,7 @@ const SubjectSchema = new Schema<SubjectRecord>(
     sessions: {
       // TODO: Sort out ref Model
       default: undefined,
-      type: [Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
     },
     order: {
       type: Number,
@@ -34,12 +27,13 @@ const SubjectSchema = new Schema<SubjectRecord>(
   { discriminatorKey: "__type" }
 );
 
-export const SubjectModel = (models[ModelNames.SUBJECT] ?? model(ModelNames.SUBJECT, SubjectSchema)) as Model;
+export const SubjectModel = (mongoose.models[ModelNames.SUBJECT] ??
+  mongoose.model(ModelNames.SUBJECT, SubjectSchema)) as Schemas.Subject.Model;
 
 export const BaseSubjectModel =
-  (SubjectModel.discriminators?.[ModelNames.B_SUBJECT] as Base) ??
+  (SubjectModel.discriminators?.[ModelNames.B_SUBJECT] as Schemas.Subject.BaseModel) ??
   SubjectModel.discriminator(ModelNames.B_SUBJECT, BaseSubjectSchema);
 
 export const GroupSubjectModel =
-  (SubjectModel.discriminators?.[ModelNames.G_SUBJECT] as Group) ??
+  (SubjectModel.discriminators?.[ModelNames.G_SUBJECT] as Schemas.Subject.GroupModel) ??
   SubjectModel.discriminator(ModelNames.G_SUBJECT, GroupSubjectSchema);

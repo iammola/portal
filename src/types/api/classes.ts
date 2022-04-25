@@ -1,10 +1,10 @@
 import { CreateResult, UpdateResult } from "types/api";
-import { ClassRecord, StudentSchema, SubjectRecord, TeacherSchema } from "types/schema";
 
-export type CreateClassData = CreateResult<Pick<ClassRecord, "createdAt">>;
-export type CreateClassRequestBody = Pick<ClassRecord, "name"> & Record<"teachers", string[]>;
+export type CreateClassData = CreateResult<Pick<Schemas.Class.Record, "createdAt">>;
 
-type ClassDataNoTeacher = Omit<ClassRecord<true>, "teachers">;
+export type CreateClassRequestBody = Pick<Schemas.Class.Record, "name"> & Record<"teachers", string[]>;
+
+type ClassDataNoTeacher = Omit<Schemas.Class.Record<true>, "teachers">;
 
 export type GetClassesData<S extends keyof ClassDataNoTeacher = keyof ClassDataNoTeacher> = {
   page?: number;
@@ -20,7 +20,7 @@ export type GetClassData<S extends keyof ClassDataNoTeacher = keyof ClassDataNoT
 export type GetClassStudentsData = {
   page?: number;
   pages: number;
-  students: StudentSchema[];
+  students: Schemas.Student.Schema[];
 };
 
 export type GetClassStudentsCount = {
@@ -28,11 +28,11 @@ export type GetClassStudentsCount = {
 };
 
 export type GetClassSubjectsData = {
-  subjects: Array<SubjectRecord<true>>;
+  subjects: Array<Schemas.Subject.Record<true>>;
 };
 
 export type GetClassTeachersData = {
-  teachers: TeacherSchema[];
+  teachers: Schemas.Teacher.Schema[];
 };
 
 export type AddClassTeachersData = Record<"success", boolean>;

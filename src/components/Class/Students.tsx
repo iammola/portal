@@ -6,7 +6,6 @@ import { CheckCircleIcon, MailIcon, XCircleIcon } from "@heroicons/react/solid";
 
 import { List, UserImage } from "components";
 
-import type { StudentRecord } from "types/schema";
 import type { ApiResponse, ApiError, GetClassStudentsData } from "types/api";
 
 export const Students: React.FC<{ id: string }> = ({ id }) => {
@@ -134,9 +133,9 @@ const Skeleton: React.FC = () => {
   );
 };
 
-interface RowProps extends Pick<StudentRecord, "_id" | "dob" | "schoolMail"> {
-  image: Pick<StudentRecord["image"], "portrait">;
-  name: Pick<StudentRecord["name"], "full" | "initials">;
+interface RowProps extends Pick<Schemas.Student.Record, "_id" | "dob" | "schoolMail"> {
+  image: Pick<Schemas.Student.Record["image"], "portrait">;
+  name: Pick<Schemas.Student.Record["name"], "full" | "initials">;
   online?: {
     since: Date;
     state: boolean;

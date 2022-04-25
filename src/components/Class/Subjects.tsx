@@ -5,7 +5,6 @@ import { List } from "components";
 
 import { Action } from "./Action";
 
-import type { SubjectRecord } from "types/schema";
 import type { ApiResponse, ApiError, GetClassSubjectsData } from "types/api";
 
 export const Subjects: React.FC<{ id: string }> = ({ id }) => {
@@ -82,4 +81,4 @@ const Skeleton: React.FC = () => {
   );
 };
 
-type RowProps = Pick<SubjectRecord<true>, "order" | "name" | "__type" | "teachersCount" | "divisionsCount">;
+type RowProps = Pick<Schemas.Subject.Record<true>, "order" | "name" | "__type" | "teachersCount" | "divisionsCount">;

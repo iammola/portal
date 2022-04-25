@@ -11,12 +11,11 @@ import type {
   CreateTermRequestBody as CreateBody,
   HandlerResponse,
 } from "types/api";
-import type { SessionSchema } from "types/schema";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 async function getTerms(): HandlerResponse<GetData> {
   await connect();
-  const terms = await TermModel.find({}).populate<{ session: SessionSchema }>("session", "name").lean();
+  const terms = await TermModel.find({}).populate<{ session: Schemas.Session.Schema }>("session", "name").lean();
 
   const data = terms.map(({ session, ...term }) => ({
     ...term,

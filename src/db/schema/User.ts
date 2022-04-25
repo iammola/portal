@@ -1,24 +1,16 @@
 import PhoneNumber from "awesome-phonenumber";
-import { Model, QueryOptions, Schema, SchemaDefinitionProperty, SchemaTypeOptions } from "mongoose";
+import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
 import { generateSchoolMail } from "utils/user";
 import { getImage, uploadImage } from "utils/file";
 
-import type {
-  UserBase,
-  UserName as Name,
-  UserImage as Image,
-  UserContact as Contact,
-  UserSubContact as SubContact,
-} from "types/schema/User";
-
 const emailValidator = (v?: string) => {
   return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");
 };
 
-export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: Def<D>) => {
-  const schema = new Schema<UserBase, M>({
+export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose.Model<D>>(obj: Def<D>) => {
+  const schema = new mongoose.Schema<Schemas.User.Base, M>({
     ...obj,
     name: {
       type: UserName,
@@ -65,20 +57,23 @@ export const createUserSchema = <D extends UserBase, M extends Model<D>>(obj: De
     foreignField: "userId",
   });
 
-  schema.static("findByUsername", function (username: string | string[], ...args: [unknown?, QueryOptions?]) {
+  schema.static("findByUsername", function (username: string | string[], ...args: [unknown?, mongoose.QueryOptions?]) {
     if (Array.isArray(username)) return this.find({ username }, ...args);
     return this.findOne({ username }, ...args);
   });
 
-  schema.static("findBySchoolMail", function (schoolMail: string | string[], ...args: [unknown?, QueryOptions?]) {
-    if (Array.isArray(schoolMail)) return this.find({ schoolMail }, ...args);
-    return this.findOne({ schoolMail }, ...args);
-  });
+  schema.static(
+    "findBySchoolMail",
+    function (schoolMail: string | string[], ...args: [unknown?, mongoose.QueryOptions?]) {
+      if (Array.isArray(schoolMail)) return this.find({ schoolMail }, ...args);
+      return this.findOne({ schoolMail }, ...args);
+    }
+  );
 
-  return schema as unknown as Schema<D, M>;
+  return schema as unknown as mongoose.Schema<D, M>;
 };
 
-const UserName = new Schema<Name>(
+const UserName = new mongoose.Schema<Schemas.User.Name>(
   {
     other: userSubName(),
     title: userSubName("Title required"),
@@ -95,7 +90,7 @@ const UserName = new Schema<Name>(
   { _id: false }
 );
 
-const UserContact = new Schema<Contact>(
+const UserContact = new mongoose.Schema<Schemas.User.Contact>(
   {
     email: {
       required: [true, "Email required"],
@@ -118,7 +113,7 @@ const UserContact = new Schema<Contact>(
   { _id: false }
 );
 
-const UserImage = new Schema<Image>(
+const UserImage = new mongoose.Schema<Schemas.User.Image>(
   {
     cover: {
       type: String,
@@ -151,8 +146,11 @@ function userSubName(required?: string) {
   };
 }
 
-function userSubContact(required: string, opts: Pick<SchemaTypeOptions<string>, "lowercase" | "validate"> = {}) {
-  return new Schema<SubContact>(
+function userSubContact(
+  required: string,
+  opts: Pick<mongoose.SchemaTypeOptions<string>, "lowercase" | "validate"> = {}
+) {
+  return new mongoose.Schema<Schemas.User.SubContact>(
     {
       other: {
         ...opts,
@@ -171,6 +169,6 @@ function userSubContact(required: string, opts: Pick<SchemaTypeOptions<string>, 
   );
 }
 
-type Def<D extends UserBase> = {
-  [K in keyof Omit<D, keyof UserBase>]: SchemaDefinitionProperty<D[K]>;
+type Def<D extends Schemas.User.Base> = {
+  [K in keyof Omit<D, keyof Schemas.User.Base>]: mongoose.SchemaDefinitionProperty<D[K]>;
 };

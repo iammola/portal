@@ -2,9 +2,7 @@ import { CookieSerializeOptions } from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import { StatusCodes, ReasonPhrases } from "http-status-codes";
 
-import { DocumentId } from "types/schema";
-
-export type CreateResult<O = unknown> = DocumentId & O;
+export type CreateResult<O = unknown> = Schemas.DocumentId & O;
 export type DeleteResult = Record<"success", boolean>;
 export type UpdateResult = Record<"success", boolean>;
 

@@ -7,19 +7,18 @@ import * as FormComponents from "components/Form";
 import { Form, Section } from "components/Create/User";
 
 import type { NextPage } from "next";
-import type { StudentSchema, UserGender } from "types/schema";
 import type { CreateStudentData, CreateStudentRequestBody } from "types/api";
 
 const CreateStudent: NextPage = () => {
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState<string>();
-  const [dob, setDOB] = useState<StudentSchema["dob"]>();
-  const [name, setName] = useState<Partial<StudentSchema["name"]>>({});
+  const [dob, setDOB] = useState<Schemas.Student.Schema["dob"]>();
+  const [name, setName] = useState<Partial<Schemas.Student.Schema["name"]>>({});
   const [guardians, setGuardians] = useState<Array<{ mail: string; relation: string }>>();
-  const [image, setImage] = useState<Partial<{ [K in keyof StudentSchema["image"]]: string }>>({});
-  const [email, setEmail] = useState<Partial<StudentSchema["contact"]["email"]>>({});
-  const [phone, setPhone] = useState<Partial<StudentSchema["contact"]["phone"]>>({});
-  const [address, setAddress] = useState<Partial<StudentSchema["contact"]["address"]>>({});
+  const [image, setImage] = useState<Partial<{ [K in keyof Schemas.Student.Schema["image"]]: string }>>({});
+  const [email, setEmail] = useState<Partial<Schemas.Student.Schema["contact"]["email"]>>({});
+  const [phone, setPhone] = useState<Partial<Schemas.Student.Schema["contact"]["phone"]>>({});
+  const [address, setAddress] = useState<Partial<Schemas.Student.Schema["contact"]["address"]>>({});
   const genderOptions = useMemo(() => ["Male", "Female"].map((value) => ({ id: value[0], value })), []);
   const [academic, setAcademic] = useState({
     class: "",
@@ -44,7 +43,7 @@ const CreateStudent: NextPage = () => {
               phone: phone as Required<typeof phone>,
               address: address as Required<typeof address>,
             },
-            gender: gender as UserGender,
+            gender: gender as Schemas.User.Gender,
             name: name as Required<typeof name>,
           },
         });
