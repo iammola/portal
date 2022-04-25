@@ -3,11 +3,9 @@ import { useEffect, useState } from "react";
 
 import Select, { Value } from "../Select";
 
-import type { ApiResult, GetClassesData } from "types/api";
-
 export const Class: Class = ({ onChange, value }) => {
   const [options, setOptions] = useState<Value[]>([]);
-  const { data: classes } = useSWR<ApiResult<GetClassesData<"name">>>("/api/classes/?projection=name.long");
+  const { data: classes } = useSWR<API.Result<API.Class.GET.AllData<"name">>>("/api/classes/?projection=name.long");
 
   useEffect(() => {
     if (classes?.success) setOptions(classes.data.classes.map((d) => ({ id: d._id, value: d.name.long })));
@@ -26,7 +24,7 @@ export const Class: Class = ({ onChange, value }) => {
 export const Subjects: Subjects = ({ onChange, selectedClass, values }) => {
   const [options, setOptions] = useState<Value[]>([]);
   // NOTE: Type and API Route not yet implemented
-  const { data: subjects } = useSWR<ApiResult<unknown>>(`/api/classes/${selectedClass}/subjects/?projection=name`);
+  const { data: subjects } = useSWR<API.Result<unknown>>(`/api/classes/${selectedClass}/subjects/?projection=name`);
 
   useEffect(() => {
     if (subjects?.success) {

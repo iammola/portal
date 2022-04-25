@@ -10,7 +10,6 @@ import { Input, Password } from "components/Form";
 import { classNames, JWT_COOKIE_TOKEN, USER_COOKIE, fetchAPIEndpoint } from "utils";
 
 import type { NextPage } from "next";
-import type { AuthData, AuthUser } from "types/api";
 
 const levels = [
   { emoji: "👨‍🎓", value: "student" },
@@ -31,7 +30,7 @@ const Login: NextPage = () => {
     if (!level) return;
 
     try {
-      const result = await fetchAPIEndpoint<AuthData, AuthUser>("/api/auth", {
+      const result = await fetchAPIEndpoint<API.Auth.POST.Data, API.Auth.POST.Body>("/api/auth", {
         method: "POST",
         body: { username, password, remember, level: level.value },
       });

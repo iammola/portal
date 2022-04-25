@@ -3,12 +3,10 @@ import { startSession } from "mongoose";
 import { connect } from "db";
 import { AuthModel, ParentModel, StudentModel, TeacherModel } from "db/models";
 
-import type { CreateResult } from "types/api";
-
 export async function createUser<T extends User, B extends { password: string }>(type: T, body: B) {
   await connect();
   const session = await startSession();
-  let res: Partial<CreateResult<Record<"schoolMail", string>>> = {};
+  let res: Partial<API.CreateData<Record<"schoolMail", string>>> = {};
 
   await session.withTransaction(async () => {
     let doc;

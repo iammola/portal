@@ -5,11 +5,10 @@ import { Input } from "components/Form";
 
 import Teachers from "./Teachers";
 
-import type { OneKey } from "types/utils";
 import type { Value as EmailValue } from "components/Form/Email";
 
 const GroupSubject: GroupSubject = ({ addDivision, onChange, removeDivision, values = [] }) => {
-  const handleChange = ({ i, ...obj }: OneKey<DivisionValue> & { i: number }) =>
+  const handleChange = ({ i, ...obj }: Utils.OneKey<DivisionValue> & { i: number }) =>
     onChange(values.map((a, b) => Object.assign(a, b === i && obj)));
 
   return (
@@ -110,7 +109,7 @@ type Division = React.FC<
   DivisionValue & {
     id: number;
     remove?: () => void;
-    handleChange(v: OneKey<DivisionValue>): void;
+    handleChange(v: Utils.OneKey<DivisionValue>): void;
   }
 >;
 

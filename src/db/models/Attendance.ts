@@ -1,13 +1,11 @@
-import { model, models, QueryOptions, QuerySelector, Schema, Types } from "mongoose";
+import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
 import { DateSchema } from "db/schema/Attendance";
 
-import type { AttendanceModel as Model, AttendanceRecord } from "types/schema";
-
-const AttendanceSchema = new Schema<AttendanceRecord, Model>({
+const AttendanceSchema = new mongoose.Schema<Schemas.Attendance.Record, Schemas.Attendance.Model>({
   userId: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     immutable: true,
   },
   dates: {
@@ -16,17 +14,17 @@ const AttendanceSchema = new Schema<AttendanceRecord, Model>({
   },
 });
 
-AttendanceSchema.static("findUser", function (userId: string | string[], ...args: [unknown?, QueryOptions?]) {
+AttendanceSchema.static("findUser", function (userId: string | string[], ...args: [unknown?, mongoose.QueryOptions?]) {
   if (Array.isArray(userId)) return this.find({ userId }, ...args);
   return this.findOne({ userId }, ...args);
 });
 
-AttendanceSchema.static("findUserRange", function (userId: string | string[], query: QuerySelector<Date>) {
+AttendanceSchema.static("findUserRange", function (userId: string | string[], query: mongoose.QuerySelector<Date>) {
   return this.aggregate([
     {
       $match: {
         userId: {
-          $in: [userId].flat().map((id) => new Types.ObjectId(id)),
+          $in: [userId].flat().map((id) => new mongoose.Types.ObjectId(id)),
         },
       },
     },
@@ -48,5 +46,5 @@ AttendanceSchema.static("findUserRange", function (userId: string | string[], qu
   ]);
 });
 
-export const AttendanceModel = (models[ModelNames.ATTENDANCE] ??
-  model(ModelNames.ATTENDANCE, AttendanceSchema)) as Model;
+export const AttendanceModel = (mongoose.models[ModelNames.ATTENDANCE] ??
+  mongoose.model(ModelNames.ATTENDANCE, AttendanceSchema)) as Schemas.Attendance.Model;

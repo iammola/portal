@@ -7,18 +7,16 @@ import { classNames, useIsomorphicLayoutEffect } from "utils";
 import { BaseSubject, GroupSubject, SubjectType } from "components/Create/Subject";
 
 import type { NextPage } from "next";
-import type { SubjectRecord } from "types/schema";
 import type { Value as EmailValue } from "components/Form/Email";
 import type { Value as SelectValue } from "components/Form/Select";
 import type { DivisionValue } from "components/Create/Subject/Group";
-import type { CreateSubjectData, CreateSubjectRequestBody } from "types/api";
 
 const CreateSubject: NextPage = () => {
   const [long, setLong] = useState("");
   const [short, setShort] = useState("");
   const [mandatory, setMandatory] = useState(false);
   const [teachers, setTeachers] = useState<EmailValue[]>();
-  const [__type, setType] = useState<SubjectRecord["__type"]>();
+  const [__type, setType] = useState<Schemas.Subject.Record["__type"]>();
   const [selectedClass, setSelectedClass] = useState<SelectValue>();
   const [groupSubjects, setGroupSubjects] = useState<DivisionValue[]>();
   const divisionTemplate = useMemo<DivisionValue>(
@@ -55,10 +53,10 @@ const CreateSubject: NextPage = () => {
           ...g,
           teachers: g.teachers.map((t) => t.mail),
         })),
-      } as unknown as CreateSubjectRequestBody;
+      } as unknown as API.Subject.POST.Body;
       try {
-        await fetchAPIEndpoint<CreateSubjectData, CreateSubjectRequestBody>(
-          "/api/classes/${selectedClass.id}/subjects",
+        await fetchAPIEndpoint<API.Subject.POST.Data, API.Subject.POST.Body>(
+          `/api/classes/${selectedClass.id as string}/subjects`,
           { body, method: "POST" }
         );
       } catch (error: unknown) {

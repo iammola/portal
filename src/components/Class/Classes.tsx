@@ -9,12 +9,12 @@ import { fetchAPIEndpoint } from "utils";
 import { Action } from "./Action";
 import { Delete } from "./Delete";
 
-import type { ApiError, ApiResponse, GetClassData, GetClassesData } from "types/api";
-
 export const Classes: React.FC = () => {
   const [deleteId, setDeleteId] = useState("");
   const [activePage, setActivePage] = useState(0);
-  const { data, error, mutate } = useSWR<ApiResponse<GetClassesData>, ApiError>(`/api/classes?page=${activePage}`);
+  const { data, error, mutate } = useSWR<API.Response<API.Class.GET.AllData>, API.Error>(
+    `/api/classes?page=${activePage}`
+  );
 
   async function deleteClass(id: string) {
     try {
@@ -125,6 +125,7 @@ const Skeleton: React.FC = () => {
   );
 };
 
-interface RowProps extends GetClassData {
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+interface RowProps extends API.Class.GET.Data {
   triggerDelete(): void;
 }

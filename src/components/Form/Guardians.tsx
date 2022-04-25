@@ -3,8 +3,6 @@ import { useCallback, useEffect, useMemo } from "react";
 
 import { Select, Email } from "components/Form";
 
-import type { OneKey } from "types/utils";
-
 const Guardians: Guardians = ({ values = [], onChange }) => {
   const guardianTemplate = useMemo<Value>(() => ({ mail: "", relation: "" }), []);
   const guardianOptions = useMemo(
@@ -25,7 +23,7 @@ const Guardians: Guardians = ({ values = [], onChange }) => {
     []
   );
 
-  const handleChange = ({ i, ...obj }: OneKey<Value> & { i: number }) =>
+  const handleChange = ({ i, ...obj }: Utils.OneKey<Value> & { i: number }) =>
     onChange(values.map((a, b) => Object.assign(a, b === i && obj)));
 
   const addRow = useCallback(

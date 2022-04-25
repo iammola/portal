@@ -1,11 +1,9 @@
-import { Schema, model, models, QueryOptions } from "mongoose";
+import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
 import { ThingName } from "db/schema/Thing";
 
-import type { SessionModel as Model, SessionRecord } from "types/schema";
-
-const SessionSchema = new Schema<SessionRecord, Model>({
+const SessionSchema = new mongoose.Schema<Schemas.Session.Record, Schemas.Session.Model>({
   current: {
     type: Boolean,
     default: undefined,
@@ -29,8 +27,9 @@ SessionSchema.virtual("termsCount", {
   foreignField: "session",
 });
 
-SessionSchema.static("findCurrent", function (...args: [unknown?, QueryOptions?]) {
+SessionSchema.static("findCurrent", function (...args: [unknown?, mongoose.QueryOptions?]) {
   return this.findOne({ current: true }, ...args);
 });
 
-export const SessionModel = (models[ModelNames.SESSION] ?? model(ModelNames.SESSION, SessionSchema)) as Model;
+export const SessionModel = (mongoose.models[ModelNames.SESSION] ??
+  mongoose.model(ModelNames.SESSION, SessionSchema)) as Schemas.Session.Model;

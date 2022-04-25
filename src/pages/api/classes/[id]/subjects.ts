@@ -4,13 +4,6 @@ import { connect } from "db";
 import { routeWrapper } from "utils/api";
 import { TeacherModel, SubjectModel, BaseSubjectModel, GroupSubjectModel } from "db/models";
 
-import type {
-  ApiHandler,
-  CreateSubjectData as CreateData,
-  CreateSubjectRequestBody as CreateBody,
-  GetClassSubjectsData as GetData,
-  HandlerResponse,
-} from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 interface GetQuery {
@@ -18,7 +11,7 @@ interface GetQuery {
   projection?: string;
 }
 
-async function createSubject(data: CreateBody, classID: string): HandlerResponse<CreateData> {
+async function createSubject(data: API.Subject.POST.Body, classID: string): API.HandlerResponse<API.Subject.POST.Data> {
   await connect();
 
   const teachers = await TeacherModel.findBySchoolMail(
@@ -45,25 +38,24 @@ async function createSubject(data: CreateBody, classID: string): HandlerResponse
   return [{ data: { _id }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
-async function getSubjects({ id, projection = "" }: GetQuery): HandlerResponse<GetData> {
+async function getSubjects({ id, projection = "" }: GetQuery): API.HandlerResponse<API.Class.GET.Subjects> {
   await connect();
   const subjects = await SubjectModel.find({ class: id }, projection.replace(/,/g, " "))
     .sort({ order: "asc" })
-    .lean<GetData["subjects"]>({ getters: true });
+    .lean<API.Class.GET.Subjects["subjects"]>({ getters: true });
 
   return [{ data: { subjects }, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
-const handler: ApiHandler<Data> = async ({ body, query, method }) => {
+const handler: API.Handler<D> = async ({ body, query, method }) => {
   if (method === "POST" && typeof body === "string")
-    return await createSubject(JSON.parse(body) as CreateBody, query.id as string);
+    return await createSubject(JSON.parse(body) as API.Subject.POST.Body, query.id as string);
 
   if (method === "GET") return await getSubjects(query as unknown as GetQuery);
 
   return null;
 };
 
-type Data = CreateData | GetData;
+type D = API.Subject.POST.Data | API.Class.GET.Subjects;
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async (req: NextApiRequest, res: NextApiResponse) =>
-  routeWrapper<Data>(req, res, handler, ["POST", "GET"]);
+export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper<D>(req, res, handler, ["POST", "GET"]);

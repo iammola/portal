@@ -1,11 +1,9 @@
-import { Schema, model, models, QueryOptions } from "mongoose";
+import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
 import { ThingName } from "db/schema/Thing";
 
-import type { ClassModel as Model, ClassRecord, ThingName as Name } from "types/schema";
-
-const ClassSchema = new Schema<ClassRecord, Model>({
+const ClassSchema = new mongoose.Schema<Schemas.Class.Record, Schemas.Class.Model>({
   name: {
     type: ThingName(true),
     required: [true, "Class name required"],
@@ -17,7 +15,7 @@ const ClassSchema = new Schema<ClassRecord, Model>({
   teachers: {
     default: undefined,
     ref: ModelNames.TEACHER,
-    type: [Schema.Types.ObjectId],
+    type: [mongoose.Schema.Types.ObjectId],
   },
   order: {
     type: Number,
@@ -34,12 +32,15 @@ ClassSchema.virtual("subjectsCount", {
   foreignField: "class",
 });
 
-ClassSchema.static("findByName", function (name: string, type: keyof Name, ...args: [unknown?, QueryOptions?]) {
-  const regex = new RegExp(name.replaceAll(/[-_]/g, " "), "i");
-  return this.findOne({ [`name.${type}`]: regex }, ...args);
-});
+ClassSchema.static(
+  "findByName",
+  function (name: string, type: keyof Schemas.ThingName, ...args: [unknown?, mongoose.QueryOptions?]) {
+    const regex = new RegExp(name.replaceAll(/[-_]/g, " "), "i");
+    return this.findOne({ [`name.${type}`]: regex }, ...args);
+  }
+);
 
-ClassSchema.static("getTeachers", function (classId: string, proj?: unknown, options?: QueryOptions) {
+ClassSchema.static("getTeachers", function (classId: string, proj?: unknown, options?: mongoose.QueryOptions) {
   return this.findById(classId, "teachers", options).populate("teachers", proj);
 });
 
@@ -47,4 +48,5 @@ ClassSchema.pre("validate", async function () {
   if (this.isNew) this.order = 1 + (await this.collection.countDocuments({}));
 });
 
-export const ClassModel = (models[ModelNames.CLASS] ?? model(ModelNames.CLASS, ClassSchema)) as Model;
+export const ClassModel = (mongoose.models[ModelNames.CLASS] ??
+  mongoose.model(ModelNames.CLASS, ClassSchema)) as Schemas.Class.Model;

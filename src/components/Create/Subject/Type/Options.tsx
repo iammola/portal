@@ -3,8 +3,6 @@ import { useMemo } from "react";
 import { ModelNames } from "db/constants";
 import { classNames, useIsomorphicLayoutEffect } from "utils";
 
-import type { SubjectRecord } from "types/schema";
-
 const Options: Options = ({ className, id, onChange, value }) => {
   const options = useMemo<OptionValue[]>(
     () => [
@@ -71,7 +69,7 @@ const Option: Option = ({ description, id, label, onChange, selected, uniqueId }
 export type OptionValue = {
   label: string;
   description: string;
-  id: SubjectRecord["__type"];
+  id: Schemas.Subject.Record["__type"];
 };
 
 type Option = React.FC<OptionValue & Pick<OptionsProps, "onChange"> & { selected: boolean; uniqueId: string }>;

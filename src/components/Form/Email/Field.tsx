@@ -2,8 +2,6 @@ import { useRef, useEffect, useCallback } from "react";
 
 import Badge, { Value } from "./Badge";
 
-import type { UserType } from "types/schema";
-
 const Field: Field = ({ className, onChange, userType, values }) => {
   const ref = useRef<HTMLDivElement>(null);
   const setValueName = useCallback(
@@ -116,6 +114,6 @@ export default Field;
 type Field = React.FC<{
   values: Value[];
   className: string;
-  userType: UserType;
+  userType: Schemas.User.Type;
   onChange(values: Value[]): void;
 }>;

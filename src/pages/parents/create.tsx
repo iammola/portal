@@ -7,19 +7,17 @@ import * as FormComponents from "components/Form";
 import { Form, Section } from "components/Create/User";
 
 import type { NextPage } from "next";
-import type { ParentSchema, UserGender } from "types/schema";
-import type { CreateParentData, CreateParentRequestBody } from "types/api";
 
 const CreateParent: NextPage = () => {
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState<string>();
-  const [dob, setDOB] = useState<ParentSchema["dob"]>();
-  const [name, setName] = useState<Partial<ParentSchema["name"]>>({});
+  const [dob, setDOB] = useState<Schemas.Parent.Schema["dob"]>();
+  const [name, setName] = useState<Partial<Schemas.Parent.Schema["name"]>>({});
   const [image, setImage] = useState<Partial<{ [K in "cover" | "portrait"]: string }>>({});
-  const [occupation, setOccupation] = useState<ParentSchema["occupation"]>();
-  const [email, setEmail] = useState<Partial<ParentSchema["contact"]["email"]>>({});
-  const [phone, setPhone] = useState<Partial<ParentSchema["contact"]["phone"]>>({});
-  const [address, setAddress] = useState<Partial<ParentSchema["contact"]["address"]>>({});
+  const [occupation, setOccupation] = useState<Schemas.Parent.Schema["occupation"]>();
+  const [email, setEmail] = useState<Partial<Schemas.Parent.Schema["contact"]["email"]>>({});
+  const [phone, setPhone] = useState<Partial<Schemas.Parent.Schema["contact"]["phone"]>>({});
+  const [address, setAddress] = useState<Partial<Schemas.Parent.Schema["contact"]["address"]>>({});
   const genderOptions = useMemo(() => ["Male", "Female"].map((value) => ({ id: value[0], value })), []);
   const titleOptions = useMemo(() => ["Mr.", "Ms.", "Mrs.", "Dr.", "Barr."].map((id) => ({ id, value: id })), []);
 
@@ -27,7 +25,7 @@ const CreateParent: NextPage = () => {
     e.preventDefault();
 
     try {
-      await fetchAPIEndpoint<CreateParentData, CreateParentRequestBody>("/api/parents", {
+      await fetchAPIEndpoint<API.Parent.POST.Data, API.Parent.POST.Body>("/api/parents", {
         method: "POST",
         body: {
           dob,
@@ -39,7 +37,7 @@ const CreateParent: NextPage = () => {
             phone: phone as Required<typeof phone>,
             address: address as Required<typeof address>,
           },
-          gender: gender as UserGender,
+          gender: gender as Schemas.User.Gender,
           name: name as Required<typeof name>,
         },
       });

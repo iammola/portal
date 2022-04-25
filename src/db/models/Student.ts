@@ -1,12 +1,10 @@
-import { model, models } from "mongoose";
+import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
 import { createUserSchema } from "db/schema/User";
 import { AcademicSchema, GuardianSchema } from "db/schema/Student";
 
-import type { StudentRecord, StudentModel as Model } from "types/schema";
-
-const StudentSchema = createUserSchema<StudentRecord, Model>({
+const StudentSchema = createUserSchema<Schemas.Student.Record, Schemas.Student.Model>({
   guardians: {
     default: undefined,
     type: [GuardianSchema],
@@ -17,4 +15,5 @@ const StudentSchema = createUserSchema<StudentRecord, Model>({
   },
 });
 
-export const StudentModel = (models[ModelNames.STUDENT] ?? model(ModelNames.STUDENT, StudentSchema)) as Model;
+export const StudentModel = (mongoose.models[ModelNames.STUDENT] ??
+  mongoose.model(ModelNames.STUDENT, StudentSchema)) as Schemas.Student.Model;

@@ -4,13 +4,6 @@ import { connect } from "db";
 import { ClassModel, TeacherModel } from "db/models";
 import { PaginationLimit, routeWrapper } from "utils";
 
-import type {
-  ApiHandler,
-  GetClassesData,
-  CreateClassData,
-  CreateClassRequestBody as CreateBody,
-  HandlerResponse,
-} from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 interface GetQuery {
@@ -18,7 +11,7 @@ interface GetQuery {
   projection?: string;
 }
 
-async function createClass({ teachers, ...data }: CreateBody): HandlerResponse<CreateClassData> {
+async function createClass({ teachers, ...data }: API.Class.POST.Body): API.HandlerResponse<API.Class.POST.Data> {
   await connect();
   const teacherIDs = await TeacherModel.findBySchoolMail(teachers, "_id").lean();
   const { _id, createdAt } = await ClassModel.create({
@@ -29,7 +22,7 @@ async function createClass({ teachers, ...data }: CreateBody): HandlerResponse<C
   return [{ data: { _id, createdAt }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
-async function getClasses({ page, projection = "" }: GetQuery): HandlerResponse<GetClassesData> {
+async function getClasses({ page, projection = "" }: GetQuery): API.HandlerResponse<API.Class.GET.AllData> {
   await connect();
   const opts = {
     skip: +(page ?? 0) * PaginationLimit,
@@ -57,10 +50,10 @@ async function getClasses({ page, projection = "" }: GetQuery): HandlerResponse<
   ];
 }
 
-type D = CreateClassData | GetClassesData;
+type D = API.Class.POST.Data | API.Class.GET.AllData;
 
-const handler: ApiHandler<D> = async ({ body, method, query }) => {
-  if (method === "POST" && typeof body === "string") return await createClass(JSON.parse(body) as CreateBody);
+const handler: API.Handler<D> = async ({ body, method, query }) => {
+  if (method === "POST" && typeof body === "string") return await createClass(JSON.parse(body) as API.Class.POST.Body);
 
   if (method === "GET") return await getClasses(query as unknown as GetQuery);
 

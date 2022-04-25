@@ -4,19 +4,11 @@ import { connect } from "db";
 import { SessionModel, TermModel } from "db/models";
 import { routeWrapper, NotFoundError } from "utils/api";
 
-import type {
-  ApiHandler,
-  GetTermsData as GetData,
-  CreateTermData as CreateData,
-  CreateTermRequestBody as CreateBody,
-  HandlerResponse,
-} from "types/api";
-import type { SessionSchema } from "types/schema";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function getTerms(): HandlerResponse<GetData> {
+async function getTerms(): API.HandlerResponse<API.Term.GET.AllData> {
   await connect();
-  const terms = await TermModel.find({}).populate<{ session: SessionSchema }>("session", "name").lean();
+  const terms = await TermModel.find({}).populate<{ session: Schemas.Session.Schema }>("session", "name").lean();
 
   const data = terms.map(({ session, ...term }) => ({
     ...term,
@@ -36,7 +28,7 @@ async function getTerms(): HandlerResponse<GetData> {
   return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
-async function createTerm(body: CreateBody): HandlerResponse<CreateData> {
+async function createTerm(body: API.Term.POST.Body): API.HandlerResponse<API.Term.POST.Data> {
   await connect();
 
   const session = await SessionModel.exists({ _id: body.session }).lean();
@@ -47,10 +39,10 @@ async function createTerm(body: CreateBody): HandlerResponse<CreateData> {
   return [{ data: { _id }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
-type D = GetData | CreateData;
+type D = API.Term.GET.AllData | API.Term.POST.Data;
 
-const handler: ApiHandler<D> = async ({ body, method }) => {
-  if (method === "POST" && typeof body === "string") return await createTerm(JSON.parse(body) as CreateBody);
+const handler: API.Handler<D> = async ({ body, method }) => {
+  if (method === "POST" && typeof body === "string") return await createTerm(JSON.parse(body) as API.Term.POST.Body);
 
   if (method === "GET") return await getTerms();
 

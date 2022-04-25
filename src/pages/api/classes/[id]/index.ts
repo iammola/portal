@@ -5,9 +5,8 @@ import { ClassModel } from "db/models";
 import { routeWrapper, NotFoundError } from "utils/api";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiHandler, GetClassData, HandlerResponse } from "types/api";
 
-async function getClass(id: string): HandlerResponse<GetClassData> {
+async function getClass(id: string): API.HandlerResponse<API.Class.GET.Data> {
   await connect();
   const data = await ClassModel.findById(id).populate<{ subjectsCount: number }>("subjectsCount").lean();
 
@@ -16,7 +15,7 @@ async function getClass(id: string): HandlerResponse<GetClassData> {
   return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
-const handler: ApiHandler<GetClassData> = async ({ method, query }) => {
+const handler: API.Handler<API.Class.GET.Data> = async ({ method, query }) => {
   if (method === "GET") return await getClass(query.id as string);
 
   return null;
@@ -24,4 +23,4 @@ const handler: ApiHandler<GetClassData> = async ({ method, query }) => {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) =>
-  routeWrapper<GetClassData>(req, res, handler, ["GET"]);
+  routeWrapper<API.Class.GET.Data>(req, res, handler, ["GET"]);

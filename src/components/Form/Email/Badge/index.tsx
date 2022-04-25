@@ -6,7 +6,6 @@ import { classNames, useIsomorphicLayoutEffect } from "utils";
 
 import Popover from "./Popover";
 
-import type { UserBase, UserType } from "types/schema/User";
 import type { UsersEmailData, UsersEmailRequestBody } from "types/api/users/email";
 
 const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
@@ -81,16 +80,16 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
 };
 
 export interface Value {
-  _id?: UserBase["_id"];
+  _id?: Schemas.User.Base["_id"];
   mail: string;
-  name?: Pick<UserBase["name"], "username" | "initials">;
+  name?: Pick<Schemas.User.Base["name"], "username" | "initials">;
 }
 
 type Badge = React.FC<{
   item: Value;
   edit(): void;
   remove(): void;
-  userType: UserType;
+  userType: Schemas.User.Type;
   setItem(value: Required<Value>): void;
 }>;
 

@@ -1,10 +1,9 @@
-import { model, models } from "mongoose";
+import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
 import { createUserSchema } from "db/schema/User";
 
-import type { TeacherRecord, TeacherModel as Model } from "types/schema";
+const TeacherSchema = createUserSchema<Schemas.Teacher.Record, Schemas.Teacher.Model>({});
 
-const TeacherSchema = createUserSchema<TeacherRecord, Model>({});
-
-export const TeacherModel = (models[ModelNames.TEACHER] ?? model(ModelNames.TEACHER, TeacherSchema)) as Model;
+export const TeacherModel = (mongoose.models[ModelNames.TEACHER] ??
+  mongoose.model(ModelNames.TEACHER, TeacherSchema)) as Schemas.Teacher.Model;
