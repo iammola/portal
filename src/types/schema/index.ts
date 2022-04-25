@@ -1,8 +1,6 @@
 import { ObjectId as BsonId } from "bson";
 import { Aggregate, HydratedDocument, Query, Schema } from "mongoose";
 
-import { FlattenIntersection } from "types/utils";
-
 // Todo: Get a better name than "Thing" for this type. Meant to group classes or subjects or terms or sessions
 export interface ThingName extends Record<"long" | "short", string> {
   special?: string;
@@ -15,7 +13,7 @@ export interface DocumentId {
 }
 
 export type ModelRecord<S, V = unknown, K extends boolean | keyof V = false> = S &
-  (K extends true ? V : FlattenIntersection<K extends keyof V ? Pick<V, K> : unknown>);
+  (K extends true ? V : Types.Utils.FlattenIntersection<K extends keyof V ? Pick<V, K> : unknown>);
 
 export type AQuery<R> = Aggregate<R[]>;
 

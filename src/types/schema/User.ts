@@ -1,7 +1,6 @@
 import { QueryOptions } from "mongoose";
 
 import { DocumentId, SQuery } from "types/schema";
-import { FlattenIntersection } from "types/utils";
 
 export type UserType = "parent" | "teacher" | "student";
 
@@ -25,7 +24,7 @@ export type UserSubContact = {
   other?: string;
 };
 
-export type UserContact = Record<"email" | "phone" | "address", FlattenIntersection<UserSubContact>>;
+export type UserContact = Record<"email" | "phone" | "address", Types.Utils.FlattenIntersection<UserSubContact>>;
 
 export type UserGender = "M" | "F";
 

@@ -3,13 +3,12 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { StatusCodes, ReasonPhrases } from "http-status-codes";
 
 import { DocumentId } from "types/schema";
-import { FilterNumber } from "types/utils";
 
 export type CreateResult<O = unknown> = DocumentId & O;
 export type DeleteResult = Record<"success", boolean>;
 export type UpdateResult = Record<"success", boolean>;
 
-type ResponseCodes = FilterNumber<`${StatusCodes}`>;
+type ResponseCodes = Utils.FilterNumber<`${StatusCodes}`>;
 
 export type HandlerResponse<D> = Promise<[Omit<ApiResponse<D>, "success">, ResponseCodes]>;
 
