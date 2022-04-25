@@ -5,7 +5,6 @@ import { ClassModel, StudentModel } from "db/models";
 import { NotFoundError, PaginationLimit, routeWrapper } from "utils";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiHandler, GetClassStudentsData, GetClassStudentsCount, HandlerResponse } from "types/api";
 
 interface GetQuery {
   id: string;
@@ -15,9 +14,9 @@ interface GetQuery {
   projection?: string;
 }
 
-async function getStudents({ id, page, projection = "", slug, term }: GetQuery): HandlerResponse<Data> {
+async function getStudents({ id, page, projection = "", slug, term }: GetQuery): API.HandlerResponse<Data> {
   await connect();
-  const countOnly = slug[0] === "count";
+  const countOnly = slug.join() === "count";
   const query = { academic: { $elemMatch: { term, class: id } } };
   const opts = {
     skip: +(page ?? 0) * PaginationLimit,
@@ -47,12 +46,12 @@ async function getStudents({ id, page, projection = "", slug, term }: GetQuery):
   ];
 }
 
-const handler: ApiHandler<Data> = async ({ method, query }) => {
+const handler: API.Handler<Data> = async ({ method, query }) => {
   if (method === "GET") return await getStudents(query as unknown as GetQuery);
 
   return null;
 };
 
-type Data = GetClassStudentsCount | GetClassStudentsData;
+type Data = API.Class.GET.Students.Data | API.Class.GET.Students.Count;
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper<Data>(req, res, handler, ["GET"]);

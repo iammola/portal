@@ -5,14 +5,13 @@ import { ClassModel } from "db/models";
 import { routeWrapper } from "utils/api";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiHandler, DeleteClassTeacherData as DeleteData, HandlerResponse } from "types/api";
 
 type DeleteQuery = {
   id: string;
   teacher: string;
 };
 
-async function deleteTeacher(query: DeleteQuery): HandlerResponse<DeleteData> {
+async function deleteTeacher(query: DeleteQuery): API.HandlerResponse<API.Class.DELETE.Teachers> {
   await connect();
   const upd = await ClassModel.updateOne({ _id: query.id }, { $pull: { teachers: query.teacher } });
 
@@ -26,7 +25,7 @@ async function deleteTeacher(query: DeleteQuery): HandlerResponse<DeleteData> {
   return [{ data: { success, message }, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
-const handler: ApiHandler<DeleteData> = async ({ query, method }) => {
+const handler: API.Handler<API.Class.DELETE.Teachers> = async ({ query, method }) => {
   if (method === "DELETE") return await deleteTeacher(query as DeleteQuery);
 
   return null;
@@ -34,4 +33,4 @@ const handler: ApiHandler<DeleteData> = async ({ query, method }) => {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) =>
-  routeWrapper<DeleteData>(req, res, handler, ["DELETE"]);
+  routeWrapper<API.Class.DELETE.Teachers>(req, res, handler, ["DELETE"]);

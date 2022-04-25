@@ -9,9 +9,8 @@ import { comparePassword, JWT_ALG, JWT_COOKIE_KEY } from "utils";
 import { ParentModel, StudentModel, TeacherModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiHandler, AuthData, AuthUser } from "types/api";
 
-async function getUser({ level, password, remember, username }: AuthUser) {
+async function getUser({ level, password, remember, username }: API.Auth.POST.Body) {
   await connect();
 
   if (!username) throw new Error("Username required");
@@ -51,10 +50,10 @@ async function getUser({ level, password, remember, username }: AuthUser) {
   return { token, publicKey, expiresIn: days * 24 * 3600 };
 }
 
-const handler: ApiHandler<AuthData> = async (req, res) => {
+const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
   if (typeof req.body !== "string" || !req.body) throw new Error("Invalid Request Body");
 
-  const { expiresIn, publicKey, token } = await getUser(JSON.parse(req.body) as AuthUser);
+  const { expiresIn, publicKey, token } = await getUser(JSON.parse(req.body) as API.Auth.POST.Body);
 
   res.cookie(JWT_COOKIE_KEY, await exportSPKI(publicKey), {
     secure: true,
@@ -67,4 +66,5 @@ const handler: ApiHandler<AuthData> = async (req, res) => {
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper<AuthData>(req, res, handler, ["POST"]);
+export default async (req: NextApiRequest, res: NextApiResponse) =>
+  routeWrapper<API.Auth.POST.Data>(req, res, handler, ["POST"]);

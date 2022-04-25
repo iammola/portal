@@ -8,26 +8,19 @@ import { List, UserImage } from "components";
 
 import AddTeacher from "./AddTeacher";
 
-import type {
-  ApiError,
-  ApiResponse,
-  GetClassTeachersData as Data,
-  DeleteClassTeacherData as DeleteData,
-} from "types/api";
-
 export const Teachers: React.FC<{ id: string }> = ({ id }) => {
   const [showAdd, setShowAdd] = useState(false);
   const {
     data: { data } = {},
     error,
     mutate,
-  } = useSWR<ApiResponse<Data>, ApiError>(
+  } = useSWR<API.Response<API.Class.GET.Teachers>, API.Error>(
     `/api/classes/${id}/teachers?projection=schoolMail,name.full,name.initials,name.title,image.portrait`
   );
 
   async function deleteTeacher(teacher: string) {
     try {
-      await fetchAPIEndpoint<DeleteData>(`/api/classes/${id}/teachers/${teacher}`, {
+      await fetchAPIEndpoint<API.Class.DELETE.Teachers>(`/api/classes/${id}/teachers/${teacher}`, {
         method: "DELETE",
       });
       await mutate();
@@ -134,6 +127,7 @@ const Skeleton: React.FC = () => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 interface RowProps extends Schemas.Teacher.Schema {
   remove(id: string): Promise<void>;
 }

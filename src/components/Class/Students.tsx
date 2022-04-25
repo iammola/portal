@@ -6,11 +6,9 @@ import { CheckCircleIcon, MailIcon, XCircleIcon } from "@heroicons/react/solid";
 
 import { List, UserImage } from "components";
 
-import type { ApiResponse, ApiError, GetClassStudentsData } from "types/api";
-
 export const Students: React.FC<{ id: string }> = ({ id }) => {
   const [activePage, setActivePage] = useState(0);
-  const { data: { data } = {}, error } = useSWR<ApiResponse<GetClassStudentsData>, ApiError>(
+  const { data: { data } = {}, error } = useSWR<API.Response<API.Class.GET.Students.Data>, API.Error>(
     `/api/classes/${id}/students?page=${activePage}&projection=dob,schoolMail,name.full,name.initials,image.portrait`
   );
 

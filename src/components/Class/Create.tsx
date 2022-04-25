@@ -4,7 +4,6 @@ import { classNames, fetchAPIEndpoint } from "utils";
 import { Input, Email } from "components/Form";
 
 import type { Value as EmailValue } from "components/Form/Email";
-import type { CreateClassData, CreateClassRequestBody } from "types/api";
 
 export const Create: React.FC = () => {
   const [long, setLong] = useState("");
@@ -16,7 +15,7 @@ export const Create: React.FC = () => {
     e.preventDefault();
 
     try {
-      const result = await fetchAPIEndpoint<CreateClassData, CreateClassRequestBody>("/api/classes", {
+      const result = await fetchAPIEndpoint<API.Class.POST.Data, API.Class.POST.Body>("/api/classes", {
         method: "POST",
         body: {
           name: { long, short, special },

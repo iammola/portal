@@ -7,7 +7,6 @@ import * as FormComponents from "components/Form";
 import { Form, Section } from "components/Create/User";
 
 import type { NextPage } from "next";
-import type { CreateTeacherData, CreateTeacherRequestBody } from "types/api";
 
 const CreateTeacher: NextPage = () => {
   const [password, setPassword] = useState("");
@@ -25,7 +24,7 @@ const CreateTeacher: NextPage = () => {
     e.preventDefault();
 
     try {
-      await fetchAPIEndpoint<CreateTeacherData, CreateTeacherRequestBody>("/api/teachers", {
+      await fetchAPIEndpoint<API.Teacher.POST.Data, API.Teacher.POST.Body>("/api/teachers", {
         method: "POST",
         body: {
           dob,

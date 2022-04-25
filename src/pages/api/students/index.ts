@@ -5,15 +5,9 @@ import { createUser } from "utils/user";
 import { routeWrapper } from "utils/api";
 import { ClassModel, ParentModel, TermModel } from "db/models";
 
-import type {
-  ApiHandler,
-  CreateStudentData as CreateData,
-  CreateStudentRequestBody as CreateBody,
-  HandlerResponse,
-} from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function createStudent(body: CreateBody): HandlerResponse<CreateData> {
+async function createStudent(body: API.Student.POST.Body): API.HandlerResponse<API.Student.POST.Data> {
   await connect();
 
   const [parents, term, classExists] = await Promise.all([
@@ -40,12 +34,13 @@ async function createStudent(body: CreateBody): HandlerResponse<CreateData> {
   return [{ data: { _id, schoolMail }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
-const handler: ApiHandler<CreateData> = async ({ body, method }) => {
-  if (method === "POST" && typeof body === "string") return await createStudent(JSON.parse(body) as CreateBody);
+const handler: API.Handler<API.Student.POST.Data> = async ({ body, method }) => {
+  if (method === "POST" && typeof body === "string")
+    return await createStudent(JSON.parse(body) as API.Student.POST.Body);
 
   return null;
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) =>
-  routeWrapper<CreateData>(req, res, handler, ["POST"]);
+  routeWrapper<API.Student.POST.Data>(req, res, handler, ["POST"]);

@@ -4,33 +4,27 @@ import { connect } from "db";
 import { SessionModel } from "db/models";
 import { routeWrapper } from "utils/api";
 
-import type {
-  ApiHandler,
-  GetSessionsData as GetData,
-  CreateSessionData as CreateData,
-  CreateSessionRequestBody as CreateBody,
-  HandlerResponse,
-} from "types/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function getSessions(): HandlerResponse<GetData> {
+async function getSessions(): API.HandlerResponse<API.Session.GET.AllData> {
   await connect();
   const data = await SessionModel.find({}).populate("termsCount").lean();
 
   return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
-async function createSession(body: CreateBody): HandlerResponse<CreateData> {
+async function createSession(body: API.Session.POST.Body): API.HandlerResponse<API.Session.POST.Data> {
   await connect();
   const { _id } = await SessionModel.create(body);
 
   return [{ data: { _id }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
-type D = CreateData | GetData;
+type D = API.Session.POST.Data | API.Session.GET.AllData;
 
-const handler: ApiHandler<D> = async ({ body, method }) => {
-  if (method === "POST" && typeof body === "string") return await createSession(JSON.parse(body) as CreateBody);
+const handler: API.Handler<D> = async ({ body, method }) => {
+  if (method === "POST" && typeof body === "string")
+    return await createSession(JSON.parse(body) as API.Session.POST.Body);
 
   if (method === "GET") return await getSessions();
 

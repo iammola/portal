@@ -11,13 +11,12 @@ import { Breadcrumbs } from "components";
 import { Students, Subjects, Teachers } from "components/Class";
 
 import type { NextPage, GetServerSideProps } from "next";
-import type { ApiResponse, GetClassData, GetClassStudentsCount } from "types/api";
 
-const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
-  const { data: studentsCount } = useSWR<ApiResponse<GetClassStudentsCount>>(
+const Class: NextPage<API.Class.GET.Data> = ({ children: _, ...props }) => {
+  const { data: studentsCount } = useSWR<API.Response<API.Class.GET.Students.Count>>(
     `/api/classes/${String(props._id)}/students/count`
   );
-  const { data: { data } = { data: props } } = useSWR<ApiResponse<GetClassData>>(
+  const { data: { data } = { data: props } } = useSWR<API.Response<API.Class.GET.Data>>(
     `/api/classes/${props._id.toString()}`
   );
   const [tabs] = useState({
@@ -97,13 +96,13 @@ const Class: NextPage<GetClassData> = ({ children: _, ...props }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<GetClassData> = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps<API.Class.GET.Data> = async ({ params }) => {
   return {
     props: {
       order: 1,
       subjectsCount: 10,
       createdAt: Date.now() as unknown as Date,
-      _id: "_id" as unknown as GetClassData["_id"],
+      _id: "_id" as unknown as API.Class.GET.Data["_id"],
       name: {
         long: "Key Stage 1",
         short: "KS1",
@@ -118,7 +117,7 @@ export const getServerSideProps: GetServerSideProps<GetClassData> = async ({ par
 
   if (data === null) return { notFound: true };
 
-  return { props: JSON.parse(JSON.stringify(data)) as GetClassData };
+  return { props: JSON.parse(JSON.stringify(data)) as API.Class.GET.Data };
 };
 
 export default Class;

@@ -7,7 +7,6 @@ import * as FormComponents from "components/Form";
 import { Form, Section } from "components/Create/User";
 
 import type { NextPage } from "next";
-import type { CreateParentData, CreateParentRequestBody } from "types/api";
 
 const CreateParent: NextPage = () => {
   const [password, setPassword] = useState("");
@@ -26,7 +25,7 @@ const CreateParent: NextPage = () => {
     e.preventDefault();
 
     try {
-      await fetchAPIEndpoint<CreateParentData, CreateParentRequestBody>("/api/parents", {
+      await fetchAPIEndpoint<API.Parent.POST.Data, API.Parent.POST.Body>("/api/parents", {
         method: "POST",
         body: {
           dob,

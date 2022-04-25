@@ -7,7 +7,6 @@ import * as FormComponents from "components/Form";
 import { Form, Section } from "components/Create/User";
 
 import type { NextPage } from "next";
-import type { CreateStudentData, CreateStudentRequestBody } from "types/api";
 
 const CreateStudent: NextPage = () => {
   const [password, setPassword] = useState("");
@@ -30,7 +29,7 @@ const CreateStudent: NextPage = () => {
 
     if (dob && guardians && academic.class && academic.subjects.length) {
       try {
-        await fetchAPIEndpoint<CreateStudentData, CreateStudentRequestBody>("/api/parents", {
+        await fetchAPIEndpoint<API.Student.POST.Data, API.Student.POST.Body>("/api/students", {
           method: "POST",
           body: {
             dob,

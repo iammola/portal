@@ -6,7 +6,6 @@ import { fetchAPIEndpoint } from "utils";
 import Email, { Value } from "components/Form/Email";
 
 import type { KeyedMutator } from "swr";
-import type { AddClassTeachersData as AddData, AddClassTeachersRequestBody as AddBody } from "types/api";
 
 const AddTeacher: React.FC<AddTeacherProps> = ({ id, mutate, show, onClose }) => {
   const [teachers, setTeachers] = useState<Value[]>([]);
@@ -22,7 +21,7 @@ const AddTeacher: React.FC<AddTeacherProps> = ({ id, mutate, show, onClose }) =>
     if (teachers.length === 0) return;
 
     try {
-      await fetchAPIEndpoint<AddData, AddBody>(`api/classes/${id}/teachers`, {
+      await fetchAPIEndpoint<API.Class.PUT.Teachers.Data, API.Class.PUT.Teachers.Body>(`api/classes/${id}/teachers`, {
         method: "PUT",
         body: { teachers: teachers.map((t) => t.mail) },
       });

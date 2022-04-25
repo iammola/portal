@@ -1,6 +1,5 @@
 import { parse } from "cookie";
 
-import { ApiResult } from "types/api";
 import { JWT_COOKIE_TOKEN } from "utils/constants";
 
 /**
@@ -23,5 +22,6 @@ export async function fetchAPIEndpoint<ResponseData, Body = undefined>(
       Authorization: JWT && `Bearer ${JWT}`,
     },
   });
-  return (await response.json()) as ApiResult<ResponseData>;
+
+  return (await response.json()) as API.Result<ResponseData>;
 }
