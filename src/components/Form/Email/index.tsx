@@ -1,5 +1,3 @@
-import { FunctionComponent } from "react";
-
 import Field from "./Field";
 
 const Email: Email = ({ children, className }) => {
@@ -12,9 +10,9 @@ Email.Label = ({ children, className }) => {
   return <span className={className}>{children}</span>;
 };
 
-interface Email extends FunctionComponent<{ className?: string }> {
+interface Email extends React.FC<{ className?: string }> {
   Field: Field;
-  Label: FunctionComponent<{ className: string }>;
+  Label: React.FC<{ className: string }>;
 }
 
 export default Email;

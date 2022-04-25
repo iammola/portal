@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { useState } from "react";
 
 import Conditions from "./Conditions";
 import Field, { FieldProps } from "./Field";
@@ -33,7 +33,7 @@ const Password: Password = ({ confirmProps, hideConditions, validators, value, w
   );
 };
 
-type Password = FunctionComponent<
+type Password = React.FC<
   FieldProps & {
     hideConditions?: boolean;
     withConfirm?: boolean;

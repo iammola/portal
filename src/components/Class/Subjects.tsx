@@ -1,5 +1,4 @@
 import useSWR from "swr";
-import { FunctionComponent } from "react";
 import { ArrowSmUpIcon, ArrowSmDownIcon, TrashIcon } from "@heroicons/react/solid";
 
 import { List } from "components";
@@ -9,7 +8,7 @@ import { Action } from "./Action";
 import type { SubjectRecord } from "types/schema";
 import type { ApiResponse, ApiError, GetClassSubjectsData } from "types/api";
 
-export const Subjects: FunctionComponent<{ id: string }> = ({ id }) => {
+export const Subjects: React.FC<{ id: string }> = ({ id }) => {
   const { data: { data } = {}, error } = useSWR<ApiResponse<GetClassSubjectsData>, ApiError>(
     `/api/classes/${id}/subjects?projection=name,order`
   );
@@ -29,7 +28,7 @@ export const Subjects: FunctionComponent<{ id: string }> = ({ id }) => {
   );
 };
 
-const Row: FunctionComponent<RowProps> = ({ __type, divisionsCount, name, order, teachersCount }) => {
+const Row: React.FC<RowProps> = ({ __type, divisionsCount, name, order, teachersCount }) => {
   return (
     <div
       className="grid w-full gap-x-28 py-5"
@@ -59,7 +58,7 @@ const Row: FunctionComponent<RowProps> = ({ __type, divisionsCount, name, order,
   );
 };
 
-const Skeleton: FunctionComponent = () => {
+const Skeleton: React.FC = () => {
   return (
     <div
       className="grid w-full gap-x-28 py-5"

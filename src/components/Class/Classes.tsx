@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import Link from "next/link";
-import { Fragment, FunctionComponent, useState } from "react";
+import { Fragment, useState } from "react";
 import { ArrowSmDownIcon, ArrowSmUpIcon, ExternalLinkIcon, TrashIcon } from "@heroicons/react/solid";
 
 import { List } from "components";
@@ -11,7 +11,7 @@ import { Delete } from "./Delete";
 
 import type { ApiError, ApiResponse, GetClassData, GetClassesData } from "types/api";
 
-export const Classes: FunctionComponent = () => {
+export const Classes: React.FC = () => {
   const [deleteId, setDeleteId] = useState("");
   const [activePage, setActivePage] = useState(0);
   const { data, error, mutate } = useSWR<ApiResponse<GetClassesData>, ApiError>(`/api/classes?page=${activePage}`);
@@ -54,7 +54,7 @@ export const Classes: FunctionComponent = () => {
   );
 };
 
-const Row: FunctionComponent<RowProps> = ({ _id, triggerDelete, name, order, subjectsCount }) => {
+const Row: React.FC<RowProps> = ({ _id, triggerDelete, name, order, subjectsCount }) => {
   return (
     <div
       className="grid w-full gap-x-10 py-5"
@@ -102,7 +102,7 @@ const Row: FunctionComponent<RowProps> = ({ _id, triggerDelete, name, order, sub
   );
 };
 
-const Skeleton: FunctionComponent = () => {
+const Skeleton: React.FC = () => {
   return (
     <div
       className="grid w-full items-center gap-x-28 py-5"

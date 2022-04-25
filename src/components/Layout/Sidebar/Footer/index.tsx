@@ -1,10 +1,8 @@
-import { FunctionComponent } from "react";
-
 import { UserImage } from "components";
 
 import { Online } from "./Online";
 
-export const Footer: FunctionComponent = () => {
+export const Footer: React.FC = () => {
   return (
     <div className="flex w-full items-center gap-x-4 p-4">
       <div className="relative aspect-square h-12 w-12">

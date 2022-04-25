@@ -1,5 +1,3 @@
-import { FunctionComponent } from "react";
-
 import Email, { Value } from "components/Form/Email";
 
 const Teachers: Teachers = ({ onChange, values = [] }) => {
@@ -21,6 +19,6 @@ export type TeachersProps = {
   onChange(v: Value[]): void;
 };
 
-type Teachers = FunctionComponent<TeachersProps>;
+type Teachers = React.FC<TeachersProps>;
 
 export default Teachers;

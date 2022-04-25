@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { useState } from "react";
 
 import { classNames, useIsChanging, useIsomorphicLayoutEffect } from "utils";
 
@@ -36,7 +36,7 @@ const Field: Field = ({ className, id, max, onChange, parentClassName, required,
   );
 };
 
-type Field = FunctionComponent<{
+type Field = React.FC<{
   id?: string;
   max?: number;
   value?: string;

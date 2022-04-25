@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import Link from "next/link";
-import { FunctionComponent, useState } from "react";
+import { useState } from "react";
 import { ExternalLinkIcon, MailIcon } from "@heroicons/react/solid";
 
 import { fetchAPIEndpoint } from "utils";
@@ -16,7 +16,7 @@ import type {
 } from "types/api";
 import type { TeacherSchema } from "types/schema";
 
-export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
+export const Teachers: React.FC<{ id: string }> = ({ id }) => {
   const [showAdd, setShowAdd] = useState(false);
   const {
     data: { data } = {},
@@ -66,7 +66,7 @@ export const Teachers: FunctionComponent<{ id: string }> = ({ id }) => {
   );
 };
 
-const Row: FunctionComponent<RowProps> = ({ _id, image, name, remove, schoolMail }) => {
+const Row: React.FC<RowProps> = ({ _id, image, name, remove, schoolMail }) => {
   return (
     <div
       className="grid w-full gap-x-28 py-5"
@@ -112,7 +112,7 @@ const Row: FunctionComponent<RowProps> = ({ _id, image, name, remove, schoolMail
   );
 };
 
-const Skeleton: FunctionComponent = () => {
+const Skeleton: React.FC = () => {
   return (
     <div
       className="grid w-full gap-x-28 py-5"

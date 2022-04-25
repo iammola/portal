@@ -1,5 +1,5 @@
 import useSWR from "swr/immutable";
-import { FunctionComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Select, { Value } from "../Select";
 
@@ -57,12 +57,12 @@ export const Subjects: Subjects = ({ onChange, selectedClass, values }) => {
   );
 };
 
-type Class = FunctionComponent<{
+type Class = React.FC<{
   value: string;
   onChange(v: string): void;
 }>;
 
-type Subjects = FunctionComponent<{
+type Subjects = React.FC<{
   values: string[];
   selectedClass: string;
   onChange(v: string[]): void;

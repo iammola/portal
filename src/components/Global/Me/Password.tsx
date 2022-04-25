@@ -1,6 +1,4 @@
-import { FunctionComponent } from "react";
-
-const Password: FunctionComponent = () => {
+const Password: React.FC = () => {
   return (
     <div className="flex w-full flex-col gap-y-4 divide-y-2 border-slate-200">
       <div>

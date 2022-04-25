@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react";
 import { MinusSmIcon, PlusSmIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
@@ -107,7 +106,7 @@ export type DivisionValue = {
   teachers: EmailValue[];
 };
 
-type Division = FunctionComponent<
+type Division = React.FC<
   DivisionValue & {
     id: number;
     remove?: () => void;
@@ -115,7 +114,7 @@ type Division = FunctionComponent<
   }
 >;
 
-type GroupSubject = FunctionComponent<{
+type GroupSubject = React.FC<{
   addDivision(): void;
   values?: DivisionValue[];
   removeDivision(idx: number): void;

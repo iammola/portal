@@ -1,5 +1,5 @@
 import { addMilliseconds, getDaysInMonth, isAfter, isBefore, isEqual } from "date-fns";
-import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import NumberInput from "components/Form/Number";
 import { classNames, useIsomorphicLayoutEffect } from "utils";
@@ -130,7 +130,7 @@ const Field: Field = ({ className, max, min, onChange, required, value }) => {
   );
 };
 
-type Field = FunctionComponent<{
+type Field = React.FC<{
   min?: Date;
   max?: Date;
   value?: Date;

@@ -1,5 +1,3 @@
-import { FunctionComponent } from "react";
-
 import Teachers, { TeachersProps } from "./Teachers";
 
 const BaseSubject: BaseSubject = ({ teachers }) => {
@@ -10,6 +8,6 @@ const BaseSubject: BaseSubject = ({ teachers }) => {
   );
 };
 
-type BaseSubject = FunctionComponent<{ teachers: TeachersProps }>;
+type BaseSubject = React.FC<{ teachers: TeachersProps }>;
 
 export default BaseSubject;

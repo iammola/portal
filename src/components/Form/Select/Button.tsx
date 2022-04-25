@@ -1,10 +1,9 @@
-import { FunctionComponent, MouseEvent } from "react";
 import { SelectorIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
 const Button: Button = ({ children, label, open, setOpen, valueSelected }) => {
-  function handleClick(e: MouseEvent<HTMLDivElement>) {
+  function handleClick(e: React.MouseEvent<HTMLDivElement>) {
     setOpen(!open);
     open && (e.target as HTMLDivElement).blur();
   }
@@ -42,7 +41,7 @@ const Button: Button = ({ children, label, open, setOpen, valueSelected }) => {
   );
 };
 
-type Button = FunctionComponent<{
+type Button = React.FC<{
   open: boolean;
   label: string;
   valueSelected: boolean;

@@ -1,9 +1,7 @@
-import { FormEvent, FunctionComponent } from "react";
-
 import Input, { InputProps } from "./Input";
 
 const NumberInput: NumberInput = ({ onChange, value, ...props }) => {
-  const validateCharacter = (e: FormEvent<HTMLInputElement> & { data: string }) =>
+  const validateCharacter = (e: React.FormEvent<HTMLInputElement> & { data: string }) =>
     !/\d/.test(e.data) && e.preventDefault();
 
   const padValue = () => {
@@ -26,7 +24,7 @@ const NumberInput: NumberInput = ({ onChange, value, ...props }) => {
   );
 };
 
-type NumberInput = FunctionComponent<
+type NumberInput = React.FC<
   Omit<InputProps, "pattern" | "inputMode" | "onBeforeInput" | "value" | "onChange" | "type"> & {
     value?: number;
     onChange(value: number): void;

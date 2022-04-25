@@ -1,5 +1,3 @@
-import { FunctionComponent } from "react";
-
 import Field from "./Field";
 
 const Date: Date = ({ children, className }) => {
@@ -12,9 +10,9 @@ Date.Label = ({ children, className }) => {
   return <span className={className}>{children}</span>;
 };
 
-interface Date extends FunctionComponent<{ className: string }> {
+interface Date extends React.FC<{ className: string }> {
   Field: Field;
-  Label: FunctionComponent<{ className: string }>;
+  Label: React.FC<{ className: string }>;
 }
 
 export default Date;

@@ -1,4 +1,4 @@
-import { ComponentProps, FunctionComponent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import dynamic from "next/dynamic";
 
 import { classNames, useIsChanging, useIsomorphicLayoutEffect } from "utils";
@@ -61,7 +61,7 @@ const Input: Input = ({ className, hideOptionalLabel, label, showIcons, onChange
   );
 };
 
-export type InputProps = Omit<ComponentProps<"input">, "id" | "className" | "onChange" | "ref" | "value"> & {
+export type InputProps = Omit<React.ComponentProps<"input">, "id" | "className" | "onChange" | "ref" | "value"> & {
   value?: string;
   showIcons?: boolean;
   onChange(v: string): void;
@@ -79,6 +79,6 @@ export type InputProps = Omit<ComponentProps<"input">, "id" | "className" | "onC
       }
   );
 
-type Input = FunctionComponent<InputProps>;
+type Input = React.FC<InputProps>;
 
 export default Input;

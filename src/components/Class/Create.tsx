@@ -1,4 +1,4 @@
-import { FunctionComponent, FormEvent, useState } from "react";
+import { useState } from "react";
 
 import { classNames, fetchAPIEndpoint } from "utils";
 import { Input, Email } from "components/Form";
@@ -6,13 +6,13 @@ import { Input, Email } from "components/Form";
 import type { Value as EmailValue } from "components/Form/Email";
 import type { CreateClassData, CreateClassRequestBody } from "types/api";
 
-export const Create: FunctionComponent = () => {
+export const Create: React.FC = () => {
   const [long, setLong] = useState("");
   const [short, setShort] = useState("");
   const [special, setSpecial] = useState("");
   const [teachers, setTeachers] = useState<EmailValue[]>([]);
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     try {

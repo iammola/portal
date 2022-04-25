@@ -1,9 +1,8 @@
-import { VoidFunctionComponent } from "react";
 import { useNProgress } from "@tanem/react-nprogress";
 
 import { classNames } from "utils";
 
-export const Loading: VoidFunctionComponent<{ isAnimating: boolean }> = (props) => {
+export const Loading: React.FC<{ isAnimating: boolean }> = (props) => {
   const { animationDuration, isFinished, progress } = useNProgress(props);
 
   return (

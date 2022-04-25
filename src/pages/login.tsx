@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { serialize } from "cookie";
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { SelectorIcon } from "@heroicons/react/solid";
 import { Listbox, Transition } from "@headlessui/react";
 
@@ -26,7 +26,7 @@ const Login: NextPage = () => {
   const [remember, setRemember] = useState(false);
   const [level, setLevel] = useState<{ value: string; emoji: string }>();
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!level) return;
 

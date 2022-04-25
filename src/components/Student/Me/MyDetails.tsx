@@ -1,6 +1,4 @@
-import { FunctionComponent } from "react";
-
-const MyDetails: FunctionComponent = () => {
+const MyDetails: React.FC = () => {
   return (
     <div className="flex w-full flex-col gap-y-4 divide-y-2 border-slate-200">
       <div className="flex w-full flex-col items-start justify-between gap-y-4 pt-8 first:pt-0 first:pb-5 md:flex-row">

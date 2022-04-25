@@ -1,13 +1,13 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { FunctionComponent, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 
 const MyDetails = dynamic(() => import("./MyDetails"));
 const Password = dynamic(() => import("components/Global/Me/Password"));
 
-const StudentMe: FunctionComponent = () => {
+const StudentMe: React.FC = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>();
   const tabs = useMemo<Tab[]>(() => ["My details", "Profile", "Password", "Notifications"], []);

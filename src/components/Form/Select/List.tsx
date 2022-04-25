@@ -1,6 +1,4 @@
 import { CheckIcon } from "@heroicons/react/solid";
-import { FunctionComponent } from "react";
-
 export const List: List = ({ children, className }) => {
   return <ul className={className}>{children}</ul>;
 };
@@ -18,9 +16,9 @@ export const Option: Option = ({ children, className, handleChange, selected }) 
   );
 };
 
-export type Option = FunctionComponent<{
+export type Option = React.FC<{
   selected: boolean;
   handleChange(): void;
   className: (selected: boolean) => string;
 }>;
-export type List = FunctionComponent<{ className: string }>;
+export type List = React.FC<{ className: string }>;

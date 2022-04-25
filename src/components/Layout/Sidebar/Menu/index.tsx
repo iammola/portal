@@ -1,15 +1,14 @@
 import { parse } from "cookie";
 import { Tab } from "@headlessui/react";
 import { useRouter } from "next/router";
-import { Fragment, FunctionComponent, useCallback, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 
-import { USER_COOKIE } from "utils";
-import { useIsomorphicLayoutEffect } from "hooks";
+import { useIsomorphicLayoutEffect, USER_COOKIE } from "utils";
 
 import { Item, List } from "./Items";
 import navigation from "./navigation.json";
 
-export const Menu: FunctionComponent = () => {
+export const Menu: React.FC = () => {
   const router = useRouter();
   const [items, setItems] = useState<Navigation[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(-1);

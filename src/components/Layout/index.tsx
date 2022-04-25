@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
-import { FunctionComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Body } from "./Body";
 import { Loading } from "./Loading";
 import { Sidebar } from "./Sidebar";
 
-export const Layout: FunctionComponent<LayoutProps> = ({ children, hideSidebar }) => {
+export const Layout: React.FC<LayoutProps> = ({ children, hideSidebar }) => {
   const router = useRouter();
   const [key, setKey] = useState(0);
   const [routeChanging, setRouteChanging] = useState(false);

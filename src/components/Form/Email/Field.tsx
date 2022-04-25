@@ -1,4 +1,4 @@
-import { useRef, useEffect, MouseEvent, useCallback, KeyboardEvent, FunctionComponent } from "react";
+import { useRef, useEffect, useCallback } from "react";
 
 import Badge, { Value } from "./Badge";
 
@@ -35,7 +35,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
     );
   }
 
-  function handleKeyDown(e: KeyboardEvent<HTMLElement>) {
+  function handleKeyDown(e: React.KeyboardEvent<HTMLElement>) {
     if (["Enter", "Space"].includes(e.code)) {
       const textNode = getSelection()?.anchorNode as ChildNode | null;
       const mail = (textNode?.textContent?.trim() ?? "").toLowerCase();
@@ -61,7 +61,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
     if (lastChild?.nodeType === 3 && lastChild.previousSibling?.nodeType === 3) lastChild.remove();
   }
 
-  function addSpace(e?: MouseEvent<HTMLElement>) {
+  function addSpace(e?: React.MouseEvent<HTMLElement>) {
     const target = (e?.target as HTMLDivElement) ?? ref.current;
 
     if (target !== null && target === ref.current) {
@@ -113,7 +113,7 @@ const Field: Field = ({ className, onChange, userType, values }) => {
 
 export default Field;
 
-type Field = FunctionComponent<{
+type Field = React.FC<{
   values: Value[];
   className: string;
   userType: UserType;

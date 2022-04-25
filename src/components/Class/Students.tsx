@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import Link from "next/link";
-import { FunctionComponent, useState } from "react";
+import { useState } from "react";
 import { formatDistance, formatDuration, intervalToDuration } from "date-fns";
 import { CheckCircleIcon, MailIcon, XCircleIcon } from "@heroicons/react/solid";
 
@@ -9,7 +9,7 @@ import { List, UserImage } from "components";
 import type { StudentRecord } from "types/schema";
 import type { ApiResponse, ApiError, GetClassStudentsData } from "types/api";
 
-export const Students: FunctionComponent<{ id: string }> = ({ id }) => {
+export const Students: React.FC<{ id: string }> = ({ id }) => {
   const [activePage, setActivePage] = useState(0);
   const { data: { data } = {}, error } = useSWR<ApiResponse<GetClassStudentsData>, ApiError>(
     `/api/classes/${id}/students?page=${activePage}&projection=dob,schoolMail,name.full,name.initials,image.portrait`
@@ -36,7 +36,7 @@ export const Students: FunctionComponent<{ id: string }> = ({ id }) => {
   );
 };
 
-const Row: FunctionComponent<RowProps> = ({ _id, dob, image, name, online, schoolMail }) => {
+const Row: React.FC<RowProps> = ({ _id, dob, image, name, online, schoolMail }) => {
   const age =
     dob &&
     formatDuration(intervalToDuration({ start: new Date(dob), end: new Date() }), {
@@ -107,7 +107,7 @@ const Row: FunctionComponent<RowProps> = ({ _id, dob, image, name, online, schoo
   );
 };
 
-const Skeleton: FunctionComponent = () => {
+const Skeleton: React.FC = () => {
   return (
     <div
       className="grid w-full gap-x-28 py-5"

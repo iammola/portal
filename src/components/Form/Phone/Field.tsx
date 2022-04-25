@@ -1,6 +1,6 @@
 import PhoneNumber from "awesome-phonenumber";
 import { ChevronUpIcon } from "@heroicons/react/solid";
-import { FormEvent, FunctionComponent, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import Input from "components/Form/Input";
 import { classNames, useCountryFlag, useIsomorphicLayoutEffect } from "utils";
@@ -70,7 +70,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
       );
   }, [handleRegionChange, props.regionCode, regionCode, value]);
 
-  const validateCharacter = (e: FormEvent<HTMLInputElement> & { data: string }) =>
+  const validateCharacter = (e: React.FormEvent<HTMLInputElement> & { data: string }) =>
     !/\d/.test(e.data) && e.preventDefault();
 
   return (
@@ -124,7 +124,7 @@ const Field: Field = ({ onChange, required, value = "", ...props }) => {
   );
 };
 
-type Field = FunctionComponent<{
+type Field = React.FC<{
   value?: string;
   required?: boolean;
   regionCode?: string;

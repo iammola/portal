@@ -1,4 +1,4 @@
-import { FunctionComponent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import { classNames } from "utils";
 
@@ -33,7 +33,7 @@ const Regions: Regions = ({ onBlur, onRegionChange, selectedRegion, visible }) =
   );
 };
 
-type Regions = FunctionComponent<{
+type Regions = React.FC<{
   onBlur(): void;
   visible: boolean;
   selectedRegion: string;

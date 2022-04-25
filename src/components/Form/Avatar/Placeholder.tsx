@@ -1,5 +1,3 @@
-import { ComponentProps, FunctionComponent } from "react";
-
 const Placeholder: Placeholder = (props) => {
   return (
     <svg
@@ -15,6 +13,6 @@ const Placeholder: Placeholder = (props) => {
   );
 };
 
-type Placeholder = FunctionComponent<ComponentProps<"svg">>;
+type Placeholder = React.FC<React.ComponentProps<"svg">>;
 
 export default Placeholder;

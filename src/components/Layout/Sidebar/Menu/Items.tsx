@@ -1,13 +1,12 @@
+import { useState } from "react";
 import { Tab } from "@headlessui/react";
 import { useRouter } from "next/router";
 import Link, { LinkProps } from "next/link";
-import { FunctionComponent, useState } from "react";
 import { ChevronRightIcon } from "@heroicons/react/solid";
 
-import { classNames } from "utils";
-import { useIsomorphicLayoutEffect } from "hooks";
+import { classNames, useIsomorphicLayoutEffect } from "utils";
 
-export const Item: FunctionComponent<ItemProps> = ({ children, className, href }) => {
+export const Item: React.FC<ItemProps> = ({ children, className, href }) => {
   return (
     <Tab
       className={({ selected }) =>
@@ -24,7 +23,7 @@ export const Item: FunctionComponent<ItemProps> = ({ children, className, href }
   );
 };
 
-export const List: FunctionComponent<ListProps> = ({ children, items }) => {
+export const List: React.FC<ListProps> = ({ children, items }) => {
   const router = useRouter();
   const [active, setActive] = useState(-1);
 

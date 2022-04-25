@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { FormEvent, Fragment, useState, useMemo } from "react";
+import { Fragment, useState, useMemo } from "react";
 
 import { fetchAPIEndpoint } from "utils/api";
 import { Input, Select } from "components/Form";
@@ -41,7 +41,7 @@ const CreateSubject: NextPage = () => {
 
   const removeSubjectDivision = (idx: number) => setGroupSubjects((p) => p?.filter((_, i) => i !== idx));
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (selectedClass?.id && __type) {

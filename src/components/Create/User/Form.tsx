@@ -1,5 +1,3 @@
-import { ComponentProps, FunctionComponent } from "react";
-
 const Form: Form = ({ children, ...props }) => {
   return (
     <form
@@ -19,6 +17,6 @@ const Form: Form = ({ children, ...props }) => {
   );
 };
 
-type Form = FunctionComponent<Omit<ComponentProps<"form">, "className">>;
+type Form = React.FC<Omit<React.ComponentProps<"form">, "className">>;
 
 export default Form;

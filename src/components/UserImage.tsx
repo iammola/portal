@@ -1,9 +1,9 @@
+import { useState } from "react";
 import Image, { ImageProps } from "next/image";
-import { FunctionComponent, useState } from "react";
 
 import { classNames } from "utils";
 
-export const UserImage: FunctionComponent<Props> = ({ fallbackClassName, fallbackMax, fallbackText, ...props }) => {
+export const UserImage: React.FC<Props> = ({ fallbackClassName, fallbackMax, fallbackText, ...props }) => {
   const [error, setError] = useState(!props.src);
 
   return (
@@ -29,7 +29,7 @@ export const UserImage: FunctionComponent<Props> = ({ fallbackClassName, fallbac
   );
 };
 
-const Fallback: FunctionComponent<FallbackProps> = ({ className, max, text }) => {
+const Fallback: React.FC<FallbackProps> = ({ className, max, text }) => {
   return (
     <figcaption
       className={classNames(className, "absolute inset-0 z-[100000] flex h-full w-full items-center justify-center")}

@@ -1,4 +1,4 @@
-import { FunctionComponent, useMemo } from "react";
+import { useMemo } from "react";
 
 import { ModelNames } from "db/constants";
 import { classNames, useIsomorphicLayoutEffect } from "utils";
@@ -74,7 +74,7 @@ export type OptionValue = {
   id: SubjectRecord["__type"];
 };
 
-type Option = FunctionComponent<OptionValue & Pick<OptionsProps, "onChange"> & { selected: boolean; uniqueId: string }>;
+type Option = React.FC<OptionValue & Pick<OptionsProps, "onChange"> & { selected: boolean; uniqueId: string }>;
 
 type OptionsProps = {
   id: string;
@@ -83,6 +83,6 @@ type OptionsProps = {
   onChange(v: OptionValue["id"]): void;
 };
 
-type Options = FunctionComponent<OptionsProps>;
+type Options = React.FC<OptionsProps>;
 
 export default Options;

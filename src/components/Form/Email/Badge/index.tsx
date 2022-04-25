@@ -1,4 +1,4 @@
-import { FocusEvent, FunctionComponent, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 
 import { fetchAPIEndpoint } from "utils/api";
@@ -40,7 +40,7 @@ const Badge: Badge = ({ edit, item, remove, setItem, userType }) => {
     }
   }, [data, item, setItem]);
 
-  const handleFocus = (e: FocusEvent<HTMLElement>) => setShowDrawer(e.target.contains(document.activeElement));
+  const handleFocus = (e: React.FocusEvent<HTMLElement>) => setShowDrawer(e.target.contains(document.activeElement));
 
   return (
     <div
@@ -86,7 +86,7 @@ export interface Value {
   name?: Pick<UserBase["name"], "username" | "initials">;
 }
 
-type Badge = FunctionComponent<{
+type Badge = React.FC<{
   item: Value;
   edit(): void;
   remove(): void;

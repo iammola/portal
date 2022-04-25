@@ -1,5 +1,5 @@
 import { PlusSmIcon } from "@heroicons/react/solid";
-import { FunctionComponent, useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import { Select, Email } from "components/Form";
 
@@ -86,7 +86,7 @@ type Value = {
   relation: string;
 };
 
-type Guardians = FunctionComponent<{
+type Guardians = React.FC<{
   values?: Value[];
   onChange(v: Value[]): void;
 }>;

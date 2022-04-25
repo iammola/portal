@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { FormEvent, Fragment, useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import { fetchAPIEndpoint } from "utils/api";
@@ -22,7 +22,7 @@ const CreateTeacher: NextPage = () => {
   const genderOptions = useMemo(() => ["Male", "Female"].map((value) => ({ id: value[0], value })), []);
   const titleOptions = useMemo(() => ["Mr.", "Ms.", "Mrs.", "Dr.", "Barr."].map((id) => ({ id, value: id })), []);
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     try {

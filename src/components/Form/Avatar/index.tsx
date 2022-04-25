@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { XIcon } from "@heroicons/react/outline";
-import { ChangeEvent, FunctionComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Placeholder from "./Placeholder";
 
@@ -28,7 +28,7 @@ const Avatar: Avatar = ({ value, ...props }) => {
     props.onChange(undefined);
   }
 
-  async function handleChange(e: ChangeEvent<HTMLInputElement>) {
+  async function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
 
     if (file != undefined) {
@@ -81,7 +81,7 @@ const Avatar: Avatar = ({ value, ...props }) => {
   );
 };
 
-type Avatar = FunctionComponent<
+type Avatar = React.FC<
   (
     | {
         returnAs?: "file";

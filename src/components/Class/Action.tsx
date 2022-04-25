@@ -1,6 +1,4 @@
-import { FunctionComponent } from "react";
-
-export const Action: FunctionComponent<ActionProps> = ({ children, onClick, title }) => {
+export const Action: React.FC<ActionProps> = ({ children, onClick, title }) => {
   return (
     <div
       onClick={onClick}

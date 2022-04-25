@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { useState } from "react";
 
 import { useIsomorphicLayoutEffect } from "utils";
 import Input, { InputProps } from "components/Form/Input";
@@ -36,6 +36,6 @@ export type FieldProps = Omit<InputProps, "type"> & {
   }>;
 };
 
-type Field = FunctionComponent<FieldProps>;
+type Field = React.FC<FieldProps>;
 
 export default Field;

@@ -1,7 +1,7 @@
-import { Fragment, FunctionComponent } from "react";
+import { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 
-export const Delete: FunctionComponent<DeleteProps> = ({ close, show, ...props }) => {
+export const Delete: React.FC<DeleteProps> = ({ close, show, ...props }) => {
   return (
     <Transition
       show={show}

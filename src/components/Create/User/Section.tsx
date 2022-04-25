@@ -1,5 +1,3 @@
-import { FunctionComponent } from "react";
-
 const Section: Section = ({ children, description, title }) => {
   return (
     <section className="flex w-full items-stretch justify-start rounded-lg bg-white p-7 shadow-md md:gap-x-6 lg:gap-x-12">
@@ -12,7 +10,7 @@ const Section: Section = ({ children, description, title }) => {
   );
 };
 
-type Section = FunctionComponent<{
+type Section = React.FC<{
   title: string;
   description: string;
 }>;

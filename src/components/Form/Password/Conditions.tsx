@@ -1,5 +1,4 @@
 import { CheckCircleIcon, ExclamationCircleIcon, XCircleIcon } from "@heroicons/react/solid";
-import { FunctionComponent } from "react";
 
 import { FieldProps } from "./Field";
 
@@ -25,7 +24,7 @@ const Conditions: Conditions = ({ validators, value }) => {
   );
 };
 
-type Conditions = FunctionComponent<
+type Conditions = React.FC<
   Pick<FieldProps, "value"> & {
     validators: NonNullable<FieldProps["validators"]>;
   }

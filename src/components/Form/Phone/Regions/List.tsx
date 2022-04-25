@@ -1,10 +1,9 @@
-import { FunctionComponent, useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { CheckIcon } from "@heroicons/react/solid";
 import PhoneNumber from "awesome-phonenumber";
 import { byIso } from "country-code-lookup";
 
-import { useCountryFlag } from "hooks";
-import { classNames } from "utils";
+import { classNames, useCountryFlag } from "utils";
 
 const List: List = ({ className, handleBlur, handleRegionChange, search, selectedRegion, visible }) => {
   const otherRegions = useMemo<{ [k: string]: string | undefined }>(
@@ -103,8 +102,8 @@ type ListProps = {
   handleRegionChange(regionCode: string): void;
 };
 
-interface List extends FunctionComponent<ListProps> {
-  Item: FunctionComponent<
+interface List extends React.FC<ListProps> {
+  Item: React.FC<
     Pick<ListProps, "visible" | "handleBlur"> & {
       country?: string;
       selected: boolean;

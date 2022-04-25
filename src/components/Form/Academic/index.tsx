@@ -1,5 +1,3 @@
-import { FunctionComponent } from "react";
-
 import { Class, Subjects } from "./Components";
 
 const Academic: Academic = ({ handleClassChange, handleSubjectsChange, subjects, ...props }) => {
@@ -20,7 +18,7 @@ const Academic: Academic = ({ handleClassChange, handleSubjectsChange, subjects,
   );
 };
 
-type Academic = FunctionComponent<{
+type Academic = React.FC<{
   class: string;
   subjects: string[];
   handleClassChange(v: string): void;

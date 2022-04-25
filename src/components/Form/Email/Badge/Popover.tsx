@@ -1,11 +1,10 @@
 import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
-import { ComponentProps, FunctionComponent } from "react";
 
 import { classNames } from "utils";
 
 import type { Value } from ".";
 
-type Popover = FunctionComponent<{
+type Popover = React.FC<{
   item: Value;
   edit(): void;
   remove(): void;
@@ -14,10 +13,10 @@ type Popover = FunctionComponent<{
   selectedColor: string;
 }>;
 
-type Action = FunctionComponent<{
+type Action = React.FC<{
   type: string;
   action(): void;
-  Icon(props: ComponentProps<"svg">): JSX.Element;
+  Icon(props: React.ComponentProps<"svg">): JSX.Element;
 }>;
 
 const Popover: Popover = ({ className, edit, item, remove, selectedColor, valid }) => {

@@ -1,5 +1,3 @@
-import { FunctionComponent } from "react";
-
 import Options from "./Options";
 
 const SubjectType: SubjectType = ({ children, className }) => {
@@ -11,9 +9,9 @@ SubjectType.Label = ({ children, className }) => {
   return <span className={className}>{children}</span>;
 };
 
-interface SubjectType extends FunctionComponent<{ className: string }> {
+interface SubjectType extends React.FC<{ className: string }> {
   Options: Options;
-  Label: FunctionComponent<{ className: string }>;
+  Label: React.FC<{ className: string }>;
 }
 
 export default SubjectType;

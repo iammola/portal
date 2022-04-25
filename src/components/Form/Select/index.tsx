@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { classNames } from "utils";
 
@@ -70,7 +70,7 @@ interface SelectProps {
   onChange(value: Value): void;
 }
 
-interface Select extends FunctionComponent<SelectProps> {
+interface Select extends React.FC<SelectProps> {
   List: List;
   Button: Button;
   Option: Option;

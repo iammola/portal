@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { FormEvent, Fragment, useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import { fetchAPIEndpoint } from "utils/api";
@@ -26,7 +26,7 @@ const CreateStudent: NextPage = () => {
     subjects: [] as string[],
   });
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (dob && guardians && academic.class && academic.subjects.length) {

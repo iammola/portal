@@ -1,9 +1,8 @@
-import { FunctionComponent, useState } from "react";
+import { useState } from "react";
 
-import { classNames } from "utils";
-import { useIsomorphicLayoutEffect } from "hooks";
+import { classNames, useIsomorphicLayoutEffect } from "utils";
 
-export const Online: FunctionComponent = () => {
+export const Online: React.FC = () => {
   const [onLine, setOnLine] = useState(false);
 
   useIsomorphicLayoutEffect(() => {

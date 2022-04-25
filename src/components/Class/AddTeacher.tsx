@@ -1,6 +1,6 @@
+import { Fragment, useState } from "react";
 import { XIcon } from "@heroicons/react/solid";
 import { Dialog, Transition } from "@headlessui/react";
-import { FormEvent, Fragment, FunctionComponent, useState } from "react";
 
 import { fetchAPIEndpoint } from "utils";
 import Email, { Value } from "components/Form/Email";
@@ -8,7 +8,7 @@ import Email, { Value } from "components/Form/Email";
 import type { KeyedMutator } from "swr";
 import type { AddClassTeachersData as AddData, AddClassTeachersRequestBody as AddBody } from "types/api";
 
-const AddTeacher: FunctionComponent<AddTeacherProps> = ({ id, mutate, show, onClose }) => {
+const AddTeacher: React.FC<AddTeacherProps> = ({ id, mutate, show, onClose }) => {
   const [teachers, setTeachers] = useState<Value[]>([]);
 
   function close() {
@@ -16,7 +16,7 @@ const AddTeacher: FunctionComponent<AddTeacherProps> = ({ id, mutate, show, onCl
     setTeachers([]);
   }
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (teachers.length === 0) return;

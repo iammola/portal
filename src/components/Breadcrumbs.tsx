@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, FunctionComponent, useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { ChevronRightIcon, HomeIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
-export const Breadcrumbs: FunctionComponent<Props> = ({ className }) => {
+export const Breadcrumbs: React.FC<Props> = ({ className }) => {
   const { asPath, isReady } = useRouter();
   const length = isReady && asPath.indexOf("?") > 0 ? asPath.indexOf("?") : undefined;
   const paths = useMemo(() => asPath.slice(1, length).split("/"), [asPath, length]);

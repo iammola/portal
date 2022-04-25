@@ -1,5 +1,3 @@
-import { FunctionComponent } from "react";
-
 import Field from "./Field";
 
 const Textarea: Textarea = ({ children, className }) => {
@@ -12,9 +10,9 @@ Textarea.Label = ({ children, className }) => {
   return <span className={className}>{children}</span>;
 };
 
-interface Textarea extends FunctionComponent<{ className?: string }> {
+interface Textarea extends React.FC<{ className?: string }> {
   Field: Field;
-  Label: FunctionComponent<{ className: string }>;
+  Label: React.FC<{ className: string }>;
 }
 
 export default Textarea;
