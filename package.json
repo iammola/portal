@@ -18,6 +18,7 @@
     "@radix-ui/colors": "^0.1.8",
     "@tanem/react-nprogress": "^5.0.0",
     "awesome-phonenumber": "^2.70.0",
+    "cookies-next": "^2.0.4",
     "country-code-lookup": "^0.0.20",
     "country-flag-icons": "^1.4.26",
     "date-fns": "^2.28.0",
