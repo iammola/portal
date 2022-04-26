@@ -14,10 +14,16 @@ const AttendanceSchema = new mongoose.Schema<Schemas.Attendance.Record, Schemas.
   },
 });
 
-AttendanceSchema.static("findUser", function (userId: string | string[], ...args: [unknown?, mongoose.QueryOptions?]) {
-  if (Array.isArray(userId)) return this.find({ userId }, ...args);
-  return this.findOne({ userId }, ...args);
-});
+AttendanceSchema.static(
+  "findUser",
+  function (
+    userId: string | string[],
+    ...args: [mongoose.ProjectionType<Schemas.Attendance.Record>?, mongoose.QueryOptions?]
+  ) {
+    if (Array.isArray(userId)) return this.find({ userId }, ...args);
+    return this.findOne({ userId }, ...args);
+  }
+);
 
 AttendanceSchema.static("findUserRange", function (userId: string | string[], query: mongoose.QuerySelector<Date>) {
   return this.aggregate([

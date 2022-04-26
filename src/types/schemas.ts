@@ -40,9 +40,17 @@ declare global {
 
       export interface Model extends Mongoose.Model<Schema> {
         /** Find one user's attendance records by userId */
-        findUser(userId: string, projection?: unknown, options?: Mongoose.QueryOptions): SQuery<Schema>;
+        findUser(
+          userId: string,
+          projection?: Mongoose.ProjectionType<Schema> | null,
+          options?: Mongoose.QueryOptions
+        ): SQuery<Schema>;
         /** Find multiple users attendance records by userId */
-        findUser(userId: string[], projection?: unknown, options?: Mongoose.QueryOptions): SQuery<Schema[], Schema>;
+        findUser(
+          userId: string[],
+          projection?: Mongoose.ProjectionType<Schema> | null,
+          options?: Mongoose.QueryOptions
+        ): SQuery<Schema[], Schema>;
         /**
          * Filter a range of dates for specific users
          *
@@ -75,7 +83,7 @@ declare global {
         findByName(
           name: string,
           type: keyof ThingName,
-          projection?: unknown,
+          projection?: Mongoose.ProjectionType<Schema> | null,
           options?: Mongoose.QueryOptions
         ): SQuery<Schema, Schema, unknown, Virtuals>;
         /**
@@ -87,7 +95,7 @@ declare global {
          */
         getTeachers(
           classId: string,
-          teacherProjection?: unknown,
+          teacherProjection?: Mongoose.ProjectionType<Schema> | null,
           options?: Mongoose.QueryOptions
         ): SQuery<PopulatedTeachers, PopulatedTeachers, unknown, Virtuals>;
       }
@@ -155,7 +163,10 @@ declare global {
 
       export interface Model extends Mongoose.Model<Schema, unknown, unknown, Virtuals> {
         /** Find the term record where `{ current: true }` */
-        findCurrent(projection?: unknown, options?: Mongoose.QueryOptions): SQuery<Schema, Schema, unknown, Virtuals>;
+        findCurrent(
+          projection?: Mongoose.ProjectionType<Schema> | null,
+          options?: Mongoose.QueryOptions
+        ): SQuery<Schema, Schema, unknown, Virtuals>;
       }
     }
 
@@ -170,7 +181,10 @@ declare global {
 
       export interface Model extends Mongoose.Model<Schema> {
         /** Find the term record where `{ current: true }` */
-        findCurrent(projection?: unknown, options?: Mongoose.QueryOptions): SQuery<Schema>;
+        findCurrent(
+          projection?: Mongoose.ProjectionType<Schema> | null,
+          options?: Mongoose.QueryOptions
+        ): SQuery<Schema>;
       }
     }
 
@@ -218,25 +232,25 @@ declare global {
         /** Find a user by username */
         findByUsername(
           username: string,
-          projection?: unknown,
+          projection?: Mongoose.ProjectionType<S> | null,
           options?: Mongoose.QueryOptions
         ): SQuery<S, S, unknown, Virtuals>;
         /** Find all users by username */
         findByUsername(
           username: string[],
-          projection?: unknown,
+          projection?: Mongoose.ProjectionType<S> | null,
           options?: Mongoose.QueryOptions
         ): SQuery<S[], S, unknown, Virtuals>;
         /** Find a user by school mail */
         findBySchoolMail(
           mail: string,
-          projection?: unknown,
+          projection?: Mongoose.ProjectionType<S> | null,
           options?: Mongoose.QueryOptions
         ): SQuery<S, S, unknown, Virtuals>;
         /** Find all users by schoolMail */
         findBySchoolMail(
           mail: string[],
-          projection?: unknown,
+          projection?: Mongoose.ProjectionType<S> | null,
           options?: Mongoose.QueryOptions
         ): SQuery<S[], S, unknown, Virtuals>;
       }

@@ -19,9 +19,12 @@ const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>(
   },
 });
 
-TermSchema.static("findCurrent", function (...args: [unknown?, mongoose.QueryOptions?]) {
-  return this.findOne({ current: true }, ...args);
-});
+TermSchema.static(
+  "findCurrent",
+  function (...args: [mongoose.ProjectionType<Schemas.Term.Record>?, mongoose.QueryOptions?]) {
+    return this.findOne({ current: true }, ...args);
+  }
+);
 
 export const TermModel = (mongoose.models[ModelNames.TERM] ??
   mongoose.model(ModelNames.TERM, TermSchema)) as Schemas.Term.Model;

@@ -34,7 +34,11 @@ ClassSchema.virtual("subjectsCount", {
 
 ClassSchema.static(
   "findByName",
-  function (name: string, type: keyof Schemas.ThingName, ...args: [unknown?, mongoose.QueryOptions?]) {
+  function (
+    name: string,
+    type: keyof Schemas.ThingName,
+    ...args: [mongoose.ProjectionType<Schemas.Class.Record>?, mongoose.QueryOptions?]
+  ) {
     const regex = new RegExp(name.replaceAll(/[-_]/g, " "), "i");
     return this.findOne({ [`name.${type}`]: regex }, ...args);
   }

@@ -57,14 +57,23 @@ export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose
     foreignField: "userId",
   });
 
-  schema.static("findByUsername", function (username: string | string[], ...args: [unknown?, mongoose.QueryOptions?]) {
-    if (Array.isArray(username)) return this.find({ username }, ...args);
-    return this.findOne({ username }, ...args);
-  });
+  schema.static(
+    "findByUsername",
+    function (
+      username: string | string[],
+      ...args: [mongoose.ProjectionType<Schemas.User.Base>?, mongoose.QueryOptions?]
+    ) {
+      if (Array.isArray(username)) return this.find({ username }, ...args);
+      return this.findOne({ username }, ...args);
+    }
+  );
 
   schema.static(
     "findBySchoolMail",
-    function (schoolMail: string | string[], ...args: [unknown?, mongoose.QueryOptions?]) {
+    function (
+      schoolMail: string | string[],
+      ...args: [mongoose.ProjectionType<Schemas.User.Base>?, mongoose.QueryOptions?]
+    ) {
       if (Array.isArray(schoolMail)) return this.find({ schoolMail }, ...args);
       return this.findOne({ schoolMail }, ...args);
     }

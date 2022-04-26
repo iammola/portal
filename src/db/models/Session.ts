@@ -27,9 +27,12 @@ SessionSchema.virtual("termsCount", {
   foreignField: "session",
 });
 
-SessionSchema.static("findCurrent", function (...args: [unknown?, mongoose.QueryOptions?]) {
-  return this.findOne({ current: true }, ...args);
-});
+SessionSchema.static(
+  "findCurrent",
+  function (...args: [mongoose.ProjectionType<Schemas.Session.Record>?, mongoose.QueryOptions?]) {
+    return this.findOne({ current: true }, ...args);
+  }
+);
 
 export const SessionModel = (mongoose.models[ModelNames.SESSION] ??
   mongoose.model(ModelNames.SESSION, SessionSchema)) as Schemas.Session.Model;

@@ -8,7 +8,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 async function getTeachers(classID: string, proj: unknown): API.HandlerResponse<API.Class.GET.Teachers> {
   await connect();
-  const data = await ClassModel.getTeachers(classID, proj).lean({ getters: true });
+  const data = await ClassModel.getTeachers(classID, proj as null).lean({ getters: true });
 
   if (data === null) throw new NotFoundError("Class not found");
 
