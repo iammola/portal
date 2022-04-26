@@ -33,7 +33,7 @@ export const ThemePicker: React.FC = () => {
         sideOffset={5}
         className="rounded-md bg-gray-3 px-4 py-2.5 text-xs tracking-wide text-gray-12 ring-1 ring-gray-7 hover:ring-gray-8"
       >
-        <span className="capitalize">{theme}</span> theme active
+        <span className="font-bold">Active Theme:</span> <span className="font-light capitalize">{theme}</span>
       </Tooltip.Content>
     </Tooltip.Root>
   );
