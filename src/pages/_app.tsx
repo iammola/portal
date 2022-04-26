@@ -20,11 +20,6 @@ const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
           content="#1c1d1e"
         />
         <link
-          rel="mask-icon"
-          href="/safari-pinned-tab.svg"
-          color="#fb923c"
-        />
-        <link
           rel="icon"
           type="image/png"
           sizes="32x32"
