@@ -20,11 +20,11 @@ export const ThemePicker: React.FC = () => {
         <button
           type="button"
           onClick={() => setTheme(toggle[theme ?? "dark"])}
-          className="fixed bottom-8 right-8 z-[9999] grid place-items-center rounded-full bg-gray-3 p-4 text-gray-12 ring-1 ring-gray-7 hover:bg-gray-4 hover:ring-gray-8 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:ring-gray-dark-7 dark:hover:bg-gray-dark-4 dark:hover:ring-gray-dark-8"
+          className="fixed bottom-4 right-4 z-[9999] grid place-items-center rounded-full bg-gray-3 p-3 text-gray-12 ring-1 ring-gray-7 hover:bg-gray-4 hover:ring-gray-8 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:ring-gray-dark-7 dark:hover:bg-gray-dark-4 dark:hover:ring-gray-dark-8"
         >
-          {theme === "dark" && <MoonIcon className="h-12 w-12" />}
-          {theme === "light" && <SunIcon className="h-12 w-12" />}
-          {theme === "system" && <DesktopIcon className="h-12 w-12" />}
+          {theme === "dark" && <MoonIcon className="h-6 w-6" />}
+          {theme === "light" && <SunIcon className="h-6 w-6" />}
+          {theme === "system" && <DesktopIcon className="h-6 w-6" />}
         </button>
       </Tooltip.Trigger>
       <Tooltip.Content
