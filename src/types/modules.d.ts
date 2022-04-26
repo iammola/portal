@@ -6,3 +6,8 @@ declare module "mongoose-lean-virtuals" {
 declare module "if-emoji" {
   export default function ifEmoji(emoji: string): boolean;
 }
+
+declare module "@tailwindcss/forms" {
+  const plugin: TailwindPlugin;
+  export default plugin;
+}

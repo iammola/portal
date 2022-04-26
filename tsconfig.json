@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "checkJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": { "*": ["*", "src/*"] },
@@ -20,6 +21,6 @@
     "strict": true,
     "target": "esnext"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js"],
+  "include": ["next-env.d.ts", "*.config.js", "src"],
   "exclude": ["node_modules", ".next", "out"]
 }
