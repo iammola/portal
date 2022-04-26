@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { SWRConfig } from "swr";
+import { ThemeProvider } from "next-themes";
 
 import "style.css";
 import { Layout } from "components";
@@ -37,9 +38,14 @@ const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
           href="/apple-touch-icon.png"
         />
       </Head>
-      <Layout hideSidebar={["/_error", "/login"].includes(router.route)}>
-        <Component {...pageProps} />
-      </Layout>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+      >
+        <Layout hideSidebar={["/_error", "/login"].includes(router.route)}>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
     </SWRConfig>
   );
 };
