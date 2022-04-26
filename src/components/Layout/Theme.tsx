@@ -28,14 +28,12 @@ export const ThemePicker: React.FC = () => {
         </button>
       </Tooltip.Trigger>
       <Tooltip.Content
-        asChild
         side="top"
         align="center"
         sideOffset={5}
+        className="rounded-md bg-white px-4 py-2.5 text-sm tracking-wide text-gray-12"
       >
-        <span className="rounded-md bg-white px-4 py-2.5 text-sm tracking-wide text-gray-12">
-          <span className="capitalize">{theme}</span> theme active
-        </span>
+        <span className="capitalize">{theme}</span> theme active
       </Tooltip.Content>
     </Tooltip.Root>
   );
