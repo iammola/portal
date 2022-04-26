@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { DesktopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 
 export const ThemePicker: React.FC = () => {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [toggle] = useState<Record<string, string>>(
     ["dark", "light"].reduce((acc, theme, idx, arr) => ({ ...acc, [theme]: arr[idx === 0 ? 1 : 0] }), {})
   );
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
 
   return (
     <Tooltip.Root delayDuration={100}>
