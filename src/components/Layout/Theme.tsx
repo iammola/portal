@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTheme } from "next-themes";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { DesktopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 
 export const ThemePicker: React.FC = () => {
   const { theme, setTheme } = useTheme();
@@ -19,6 +19,7 @@ export const ThemePicker: React.FC = () => {
         >
           {theme === "dark" && <MoonIcon className="h-12 w-12" />}
           {theme === "light" && <SunIcon className="h-12 w-12" />}
+          {theme === "system" && <DesktopIcon className="h-12 w-12" />}
         </button>
       </Tooltip.Trigger>
       <Tooltip.Content
