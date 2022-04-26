@@ -31,7 +31,7 @@ export const Online: React.FC = () => {
       />
       <div className="absolute left-3 -top-8 hidden min-w-max items-center justify-center gap-x-2 rounded-lg bg-white p-2.5 text-xs shadow group-hover:flex">
         <span>{onLine ? "👍" : "👎"}</span>{" "}
-        <span className="tracking-wider text-gray-600">{onLine ? "Online" : "Offline"}</span>
+        <span className="text-gray-600 tracking-wider">{onLine ? "Online" : "Offline"}</span>
       </div>
     </div>
   );
