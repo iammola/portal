@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Body } from "./Body";
 import { Loading } from "./Loading";
 import { Sidebar } from "./Sidebar";
+import { ThemePicker } from "./Theme";
 
 export const Layout: React.FC<CP<LayoutProps>> = ({ children, hideSidebar }) => {
   const router = useRouter();
@@ -29,13 +30,14 @@ export const Layout: React.FC<CP<LayoutProps>> = ({ children, hideSidebar }) => 
   }, [router.events]);
 
   return (
-    <main className="flex h-screen w-screen items-stretch overflow-hidden font-urbane">
+    <main className="relative flex h-screen w-screen items-stretch overflow-hidden font-urbane">
       <Loading
         key={key}
         isAnimating={routeChanging}
       />
       {!hideSidebar && <Sidebar />}
       <Body>{children}</Body>
+      <ThemePicker />
     </main>
   );
 };
