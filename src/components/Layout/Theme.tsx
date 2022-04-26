@@ -7,7 +7,9 @@ export const ThemePicker: React.FC = () => {
   const { theme, resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [toggle] = useState<Record<string, string>>(
-    ["dark", "light"].reduce((acc, theme, idx, arr) => ({ ...acc, [theme]: arr[idx === 0 ? 1 : 0] }), {})
+    ["dark", "light"].reduce((acc, theme, idx, arr) => ({ ...acc, [theme]: arr[idx === 0 ? 1 : 0] }), {
+      system: "system",
+    })
   );
 
   useEffect(() => setMounted(true), []);
@@ -16,7 +18,7 @@ export const ThemePicker: React.FC = () => {
 
   function toggleTheme() {
     let newTheme = theme ?? "system";
-    if (newTheme === "system") newTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    if (newTheme === "system") newTheme = resolvedTheme ?? "system";
 
     setTheme(toggle[newTheme]);
   }
