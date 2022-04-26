@@ -1,11 +1,11 @@
 import { MinusSmIcon, PlusSmIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
-import { Input } from "all-old/components/Form";
+import { Input } from "./components/Form";
 
 import Teachers from "./Teachers";
 
-import type { Value as EmailValue } from "all-old/components/Form/Email";
+import type { Value as EmailValue } from "./components/Form/Email";
 
 const GroupSubject: GroupSubject = ({ addDivision, onChange, removeDivision, values = [] }) => {
   const handleChange = ({ i, ...obj }: Utils.OneKey<DivisionValue> & { i: number }) =>

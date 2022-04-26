@@ -4,7 +4,7 @@ import { useState } from "react";
 import { formatDistance, formatDuration, intervalToDuration } from "date-fns";
 import { CheckCircleIcon, MailIcon, XCircleIcon } from "@heroicons/react/solid";
 
-import { List, UserImage } from "all-old/components";
+import { List, UserImage } from "./components";
 
 export const Students: React.FC<{ id: string }> = ({ id }) => {
   const [activePage, setActivePage] = useState(0);

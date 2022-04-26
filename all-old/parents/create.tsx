@@ -3,8 +3,8 @@ import { Fragment, useState, useMemo } from "react";
 
 import { classNames } from "utils";
 import { fetchAPIEndpoint } from "utils/api";
-import * as FormComponents from "all-old/components/Form";
-import { Form, Section } from "all-old/components/Create/User";
+import * as FormComponents from "./components/Form";
+import { Form, Section } from "./components/Create/User";
 
 import type { NextPage } from "next";
 

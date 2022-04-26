@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import { Tab, Transition } from "@headlessui/react";
 
 import { classNames, useTabs } from "utils";
-import { ClassesList, Create } from "all-old/components/Class";
+import { ClassesList, Create } from "./components/Class";
 
 import type { NextPage } from "next";
 

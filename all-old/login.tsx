@@ -6,7 +6,7 @@ import { useState } from "react";
 import { SelectorIcon } from "@heroicons/react/solid";
 import { Listbox, Transition } from "@headlessui/react";
 
-import { Input, Password } from "all-old/components/Form";
+import { Input, Password } from "./components/Form";
 import { classNames, JWT_COOKIE_TOKEN, USER_COOKIE, fetchAPIEndpoint } from "utils";
 
 import type { NextPage } from "next";

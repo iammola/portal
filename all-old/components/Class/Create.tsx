@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 import { classNames, fetchAPIEndpoint } from "utils";
-import { Input, Email } from "all-old/components/Form";
+import { Input, Email } from "./components/Form";
 
-import type { Value as EmailValue } from "all-old/components/Form/Email";
+import type { Value as EmailValue } from "./components/Form/Email";
 
 export const Create: React.FC = () => {
   const [long, setLong] = useState("");

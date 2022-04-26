@@ -1,11 +1,11 @@
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
-import { UserImage } from "all-old/components";
+import { UserImage } from "./components";
 
 import type { NextPage } from "next";
 
-const StudentMe = dynamic(() => import("all-old/components/Student/Me"));
+const StudentMe = dynamic(() => import("./components/Student/Me"));
 
 const Me: NextPage = () => {
   return (

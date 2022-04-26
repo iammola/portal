@@ -2,7 +2,7 @@ import PhoneNumber from "awesome-phonenumber";
 import { ChevronUpIcon } from "@heroicons/react/solid";
 import { useCallback, useMemo, useState } from "react";
 
-import Input from "all-old/components/Form/Input";
+import Input from "./components/Form/Input";
 import { classNames, useCountryFlag, useIsomorphicLayoutEffect } from "utils";
 
 import Regions from "./Regions";

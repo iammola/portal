@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { classNames } from "utils";
 
 const MyDetails = dynamic(() => import("./MyDetails"));
-const Password = dynamic(() => import("all-old/components/Global/Me/Password"));
+const Password = dynamic(() => import("./components/Global/Me/Password"));
 
 const StudentMe: React.FC = () => {
   const router = useRouter();

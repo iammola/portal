@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Fragment, useState } from "react";
 import { ArrowSmDownIcon, ArrowSmUpIcon, ExternalLinkIcon, TrashIcon } from "@heroicons/react/solid";
 
-import { List } from "all-old/components";
+import { List } from "./components";
 import { fetchAPIEndpoint } from "utils";
 
 import { Action } from "./Action";

@@ -3,7 +3,7 @@ import { XIcon } from "@heroicons/react/solid";
 import { Dialog, Transition } from "@headlessui/react";
 
 import { fetchAPIEndpoint } from "utils";
-import Email, { Value } from "all-old/components/Form/Email";
+import Email, { Value } from "./components/Form/Email";
 
 import type { KeyedMutator } from "swr";
 

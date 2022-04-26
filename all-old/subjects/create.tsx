@@ -2,14 +2,14 @@ import Head from "next/head";
 import { Fragment, useState, useMemo } from "react";
 
 import { fetchAPIEndpoint } from "utils/api";
-import { Input, Select } from "all-old/components/Form";
+import { Input, Select } from "./components/Form";
 import { classNames, useIsomorphicLayoutEffect } from "utils";
-import { BaseSubject, GroupSubject, SubjectType } from "all-old/components/Create/Subject";
+import { BaseSubject, GroupSubject, SubjectType } from "./components/Create/Subject";
 
 import type { NextPage } from "next";
-import type { Value as EmailValue } from "all-old/components/Form/Email";
-import type { Value as SelectValue } from "all-old/components/Form/Select";
-import type { DivisionValue } from "all-old/components/Create/Subject/Group";
+import type { Value as EmailValue } from "./components/Form/Email";
+import type { Value as SelectValue } from "./components/Form/Select";
+import type { DivisionValue } from "./components/Create/Subject/Group";
 
 const CreateSubject: NextPage = () => {
   const [long, setLong] = useState("");

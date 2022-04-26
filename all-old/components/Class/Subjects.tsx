@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { ArrowSmUpIcon, ArrowSmDownIcon, TrashIcon } from "@heroicons/react/solid";
 
-import { List } from "all-old/components";
+import { List } from "./components";
 
 import { Action } from "./Action";
 

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ExternalLinkIcon, MailIcon } from "@heroicons/react/solid";
 
 import { fetchAPIEndpoint } from "utils";
-import { List, UserImage } from "all-old/components";
+import { List, UserImage } from "./components";
 
 import AddTeacher from "./AddTeacher";
 

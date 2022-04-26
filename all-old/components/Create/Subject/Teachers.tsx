@@ -1,4 +1,4 @@
-import Email, { Value } from "all-old/components/Form/Email";
+import Email, { Value } from "./components/Form/Email";
 
 const Teachers: Teachers = ({ onChange, values = [] }) => {
   return (

@@ -7,8 +7,8 @@ import { Fragment, useState } from "react";
 import { connect } from "db";
 import { useTabs } from "utils";
 import { ClassModel } from "db/models";
-import { Breadcrumbs } from "all-old/components";
-import { Students, Subjects, Teachers } from "all-old/components/Class";
+import { Breadcrumbs } from "./components";
+import { Students, Subjects, Teachers } from "./components/Class";
 
 import type { NextPage, GetServerSideProps } from "next";
 
