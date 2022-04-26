@@ -4,7 +4,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { DesktopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 
 export const ThemePicker: React.FC = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [toggle] = useState<Record<string, string>>(
     ["dark", "light"].reduce((acc, theme, idx, arr) => ({ ...acc, [theme]: arr[idx === 0 ? 1 : 0] }), {})
@@ -40,7 +40,10 @@ export const ThemePicker: React.FC = () => {
         sideOffset={5}
         className="rounded-md bg-gray-3 px-4 py-2.5 text-xs tracking-wide text-gray-12 ring-1 ring-gray-7 hover:ring-gray-8"
       >
-        <span className="font-bold">Active Theme:</span> <span className="font-light capitalize">{theme}</span>
+        <span className="font-bold">Active Theme:</span>{" "}
+        <span className="font-light uppercase">
+          {theme} {theme === "system" && resolvedTheme && `(${resolvedTheme})`}
+        </span>
       </Tooltip.Content>
     </Tooltip.Root>
   );
