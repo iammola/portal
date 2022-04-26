@@ -4,9 +4,13 @@ import { StatusCodes, ReasonPhrases } from "http-status-codes";
 
 declare global {
   namespace API {
-    export type DeleteData = Record<"success", boolean>;
     export type UpdateData = Record<"success", boolean>;
     export type CreateData<O = unknown> = Schemas.DocumentId & O;
+    export type DeleteData = {
+      // TODO: Add a count property to return number of records deleted
+      // TODO: count: number;
+      success: boolean;
+    };
 
     type ResponseCodes = Utils.FilterNumber<`${StatusCodes}`>;
 
