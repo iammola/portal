@@ -1,4 +1,4 @@
-import { parse } from "cookie";
+import { getCookie } from "cookies-next";
 
 import { JWT_COOKIE_TOKEN } from "utils/constants";
 
@@ -11,7 +11,7 @@ export async function fetchAPIEndpoint<ResponseData, Body = undefined>(
   endpoint: RequestInfo,
   { body, ...init }: Omit<RequestInit, "body"> & { body?: Body } = {}
 ) {
-  const JWT = parse(document.cookie)[JWT_COOKIE_TOKEN];
+  const JWT = getCookie(JWT_COOKIE_TOKEN);
 
   const response = await fetch(endpoint, {
     ...init,
@@ -19,7 +19,7 @@ export async function fetchAPIEndpoint<ResponseData, Body = undefined>(
     headers: {
       ...init?.headers,
       Accept: "application/json",
-      Authorization: JWT && `Bearer ${JWT}`,
+      Authorization: JWT ? `Bearer ${JWT.toString()}` : "",
     },
   });
 

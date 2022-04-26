@@ -1,6 +1,6 @@
-import { parse } from "cookie";
 import { Tab } from "@headlessui/react";
 import { useRouter } from "next/router";
+import { getCookie } from "cookies-next";
 import { Fragment, useCallback, useState } from "react";
 
 import { useIsomorphicLayoutEffect, USER_COOKIE } from "utils";
@@ -23,7 +23,7 @@ export const Menu: React.FC = () => {
   }, [items, router]);
 
   useIsomorphicLayoutEffect(() => {
-    const user = parse(document.cookie)[USER_COOKIE] as "student" | "teacher" | "parent";
+    const user = String(getCookie(USER_COOKIE)) as "student" | "teacher" | "parent";
     setItems(navigation[user] as unknown as Navigation[]);
   }, []);
 

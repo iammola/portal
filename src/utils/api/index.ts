@@ -1,4 +1,3 @@
-import { serialize } from "cookie";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { verifyAuth } from "./auth";
@@ -24,13 +23,9 @@ export async function routeWrapper<T extends object>(
 
   try {
     if (req.url !== "/api/auth") await verifyAuth(req);
-    (res as API.NextAPIResponse).cookie = (name, raw, opts) => {
-      const value = typeof raw === "object" ? JSON.stringify(raw) : String(raw);
-      res.setHeader("Set-Cookie", serialize(name, value, opts));
-    };
 
     if (methods.includes(req.method ?? "")) {
-      data = (await routeHandler(req, res as API.NextAPIResponse)) as API.RouteResponse<T>;
+      data = (await routeHandler(req, res)) as API.RouteResponse<T>;
       if (data) data[0] = { ...data[0], success: true } as API.RouteResponse<T>[0];
     }
   } catch (error: unknown) {

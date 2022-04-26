@@ -1,4 +1,3 @@
-import { CookieSerializeOptions } from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import { StatusCodes, ReasonPhrases } from "http-status-codes";
 
@@ -20,7 +19,7 @@ declare global {
 
     export type Handler<R extends object> = (
       req: NextApiRequest,
-      res: NextAPIResponse<Error | Response<R>>
+      res: NextApiResponse<Error | Response<R>>
     ) => Promise<Awaited<API.HandlerResponse<R>> | null>;
 
     interface Data<S> {
@@ -37,17 +36,6 @@ declare global {
     }
 
     export type Result<D> = Error | Response<D>;
-
-    export interface NextAPIResponse<T = unknown> extends NextApiResponse<T> {
-      /**
-       * Helper method to serialize a cookie name-value pair into a `Set-Cookie` header string
-       *
-       * @param name the name for the cookie
-       * @param value value to set the cookie to
-       * @param opts object containing serialization options
-       */
-      cookie(name: string, value: unknown, opts?: CookieSerializeOptions): void;
-    }
   }
 
   namespace API {
