@@ -31,7 +31,7 @@ export const ThemePicker: React.FC = () => {
         side="top"
         align="center"
         sideOffset={5}
-        className="rounded-md bg-white px-4 py-2.5 text-sm tracking-wide text-gray-12"
+        className="rounded-md bg-gray-3 px-4 py-2.5 text-xs tracking-wide text-gray-12 ring-1 ring-gray-7 hover:ring-gray-8"
       >
         <span className="capitalize">{theme}</span> theme active
       </Tooltip.Content>
