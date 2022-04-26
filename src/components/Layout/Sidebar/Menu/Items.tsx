@@ -6,7 +6,7 @@ import { ChevronRightIcon } from "@heroicons/react/solid";
 
 import { classNames, useIsomorphicLayoutEffect } from "utils";
 
-export const Item: React.FC<ItemProps> = ({ children, className, href }) => {
+export const Item: React.FC<CP<ItemProps>> = ({ children, className, href }) => {
   return (
     <Tab
       className={({ selected }) =>
@@ -23,7 +23,7 @@ export const Item: React.FC<ItemProps> = ({ children, className, href }) => {
   );
 };
 
-export const List: React.FC<ListProps> = ({ children, items }) => {
+export const List: React.FC<CP<ListProps>> = ({ children, items }) => {
   const router = useRouter();
   const [active, setActive] = useState(-1);
 

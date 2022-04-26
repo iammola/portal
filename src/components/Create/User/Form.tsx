@@ -17,6 +17,6 @@ const Form: Form = ({ children, ...props }) => {
   );
 };
 
-type Form = React.FC<Omit<React.ComponentProps<"form">, "className">>;
+type Form = React.FC<CP<Omit<React.ComponentProps<"form">, "className">>>;
 
 export default Form;

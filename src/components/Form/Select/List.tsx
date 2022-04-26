@@ -16,9 +16,11 @@ export const Option: Option = ({ children, className, handleChange, selected }) 
   );
 };
 
-export type Option = React.FC<{
-  selected: boolean;
-  handleChange(): void;
-  className: (selected: boolean) => string;
-}>;
-export type List = React.FC<{ className: string }>;
+export type Option = React.FC<
+  CP<{
+    selected: boolean;
+    handleChange(): void;
+    className: (selected: boolean) => string;
+  }>
+>;
+export type List = React.FC<CP<{ className: string }>>;

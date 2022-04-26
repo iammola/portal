@@ -2,7 +2,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
-export const List: React.FC<Props> = ({ children, className, pagination }) => {
+export const List: React.FC<CP<Props>> = ({ children, className, pagination }) => {
   function changePage(direction: "prev" | "next") {
     if (!pagination) return;
     const { page = 1, pages = 1 } = pagination;

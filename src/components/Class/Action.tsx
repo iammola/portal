@@ -1,4 +1,4 @@
-export const Action: React.FC<ActionProps> = ({ children, onClick, title }) => {
+export const Action: React.FC<CP<ActionProps>> = ({ children, onClick, title }) => {
   return (
     <div
       onClick={onClick}

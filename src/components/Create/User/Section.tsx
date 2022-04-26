@@ -10,9 +10,11 @@ const Section: Section = ({ children, description, title }) => {
   );
 };
 
-type Section = React.FC<{
-  title: string;
-  description: string;
-}>;
+type Section = React.FC<
+  CP<{
+    title: string;
+    description: string;
+  }>
+>;
 
 export default Section;

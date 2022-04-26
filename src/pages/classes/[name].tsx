@@ -12,7 +12,7 @@ import { Students, Subjects, Teachers } from "components/Class";
 
 import type { NextPage, GetServerSideProps } from "next";
 
-const Class: NextPage<API.Class.GET.Data> = ({ children: _, ...props }) => {
+const Class: NextPage<API.Class.GET.Data> = (props) => {
   const { data: studentsCount } = useSWR<API.Response<API.Class.GET.Students.Count>>(
     `/api/classes/${String(props._id)}/students/count`
   );

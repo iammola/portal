@@ -41,11 +41,13 @@ const Button: Button = ({ children, label, open, setOpen, valueSelected }) => {
   );
 };
 
-type Button = React.FC<{
-  open: boolean;
-  label: string;
-  valueSelected: boolean;
-  setOpen(open: boolean): void;
-}>;
+type Button = React.FC<
+  CP<{
+    open: boolean;
+    label: string;
+    valueSelected: boolean;
+    setOpen(open: boolean): void;
+  }>
+>;
 
 export default Button;

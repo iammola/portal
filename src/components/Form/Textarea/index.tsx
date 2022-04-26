@@ -10,9 +10,9 @@ Textarea.Label = ({ children, className }) => {
   return <span className={className}>{children}</span>;
 };
 
-interface Textarea extends React.FC<{ className?: string }> {
+interface Textarea extends React.FC<CP<{ className?: string }>> {
   Field: Field;
-  Label: React.FC<{ className: string }>;
+  Label: React.FC<CP<{ className: string }>>;
 }
 
 export default Textarea;

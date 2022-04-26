@@ -9,9 +9,9 @@ SubjectType.Label = ({ children, className }) => {
   return <span className={className}>{children}</span>;
 };
 
-interface SubjectType extends React.FC<{ className: string }> {
+interface SubjectType extends React.FC<CP<{ className: string }>> {
   Options: Options;
-  Label: React.FC<{ className: string }>;
+  Label: React.FC<CP<{ className: string }>>;
 }
 
 export default SubjectType;
