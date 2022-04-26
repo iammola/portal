@@ -3,7 +3,7 @@ const colors = require("@radix-ui/colors");
 /** @type {import("tailwindcss/tailwind-config").TailwindConfig } */
 module.exports = {
   darkMode: "class",
-  content: ["pages/**/*.{ts,tsx}", "components/**/*.{ts,tsx}", "hooks/**/*.{ts,tsx}"],
+  content: ["src/**/*.{ts,tsx}"],
   theme: {
     colors: radixToTailwindConfig(),
     extend: {
