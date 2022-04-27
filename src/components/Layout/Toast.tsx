@@ -2,6 +2,8 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 import * as ToastPrimitive from "@radix-ui/react-toast";
 import { createContext, useCallback, useContext, useState } from "react";
 
+import { LoadingIcon } from "components/Icons";
+
 const ToastContext = createContext<UseToastProps>({
   add: () => 0,
   remove: () => void 0,
@@ -51,6 +53,7 @@ const LoadingToast: React.FC<LoadingToastProps> = ({ kind: _, description, ...to
       {...toastProps}
       className="flex w-full items-center justify-start gap-2 rounded-md bg-white py-2.5 pl-4 pr-2 shadow-sm shadow-gray-a-9 ring-1 ring-gray-6 dark:bg-gray-dark-3 dark:ring-gray-dark-6"
     >
+      <LoadingIcon className="mr-1 h-5 w-5 animate-spin fill-gray-11 dark:fill-gray-dark-11" />
       <ToastPrimitive.Description className="grow text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">
         {description}
       </ToastPrimitive.Description>
