@@ -33,7 +33,7 @@ export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ chi
       {children}
       <ToastPrimitive.Provider {...providerProps}>
         {toasts}
-        <ToastPrimitive.Viewport />
+        <ToastPrimitive.Viewport className="fixed bottom-0 right-0 z-[99999999] flex w-[390px] max-w-[100vw] flex-col gap-2.5 p-6" />
       </ToastPrimitive.Provider>
     </ToastContext.Provider>
   );
