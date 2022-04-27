@@ -5,6 +5,7 @@ import { Body } from "./Body";
 import { Loading } from "./Loading";
 import { Sidebar } from "./Sidebar";
 import { ThemePicker } from "./Theme";
+import { ToastProvider } from "./Toast";
 
 export const Layout: React.FC<CP<LayoutProps>> = ({ children, hideSidebar }) => {
   const router = useRouter();
@@ -31,12 +32,14 @@ export const Layout: React.FC<CP<LayoutProps>> = ({ children, hideSidebar }) => 
 
   return (
     <main className="relative flex h-screen w-screen items-stretch overflow-hidden font-urbane">
+      {!hideSidebar && <Sidebar />}
+      <ToastProvider>
+        <Body>{children}</Body>
+      </ToastProvider>
       <Loading
         key={key}
         isAnimating={routeChanging}
       />
-      {!hideSidebar && <Sidebar />}
-      <Body>{children}</Body>
       <ThemePicker />
     </main>
   );
