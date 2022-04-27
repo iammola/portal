@@ -1,5 +1,5 @@
 export {};
 
 declare global {
-  export type CP<P = unknown> = Record<"children", React.ReactNode> & P;
+  export type CP<P = unknown> = { children?: React.ReactNode } & P;
 }
