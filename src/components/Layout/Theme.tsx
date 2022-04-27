@@ -43,7 +43,7 @@ export const ThemePicker: React.FC = () => {
         className="rounded-md bg-gray-3 px-4 py-2.5 text-xs tracking-wide text-gray-12 ring-1 ring-gray-7 hover:ring-gray-8"
       >
         <span className="font-bold">Active Theme:</span>{" "}
-        <span className="font-light uppercase">
+        <span className="font-light capitalize">
           {theme} {theme === "system" && resolvedTheme && `(${resolvedTheme})`}
         </span>
       </Tooltip.Content>
