@@ -201,9 +201,9 @@ declare global {
         salt: string;
       }
 
-      export interface Image {
+      export interface Images {
         cover?: string;
-        portrait?: string;
+        avatar?: string;
       }
 
       export type SubContact = {
@@ -218,7 +218,7 @@ declare global {
       export interface Base extends DocumentId {
         dob?: Date;
         name: Name;
-        image: Image;
+        images: Images;
         gender: Gender;
         contact: Contact;
         readonly schoolMail: string;

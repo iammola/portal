@@ -39,8 +39,8 @@ export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose
       type: Date,
       default: undefined,
     },
-    image: {
-      type: UserImage,
+    images: {
+      type: UserImages,
       default: undefined,
     },
   });
@@ -122,14 +122,14 @@ const UserContact = new mongoose.Schema<Schemas.User.Contact>(
   { _id: false }
 );
 
-const UserImage = new mongoose.Schema<Schemas.User.Image>(
+const UserImages = new mongoose.Schema<Schemas.User.Images>(
   {
     cover: {
       type: String,
       get: getImage,
       default: undefined,
     },
-    portrait: {
+    avatar: {
       type: String,
       get: getImage,
       default: undefined,
@@ -138,13 +138,13 @@ const UserImage = new mongoose.Schema<Schemas.User.Image>(
   { _id: false }
 );
 
-UserImage.pre("save", async function () {
-  const [cover, portrait] = await Promise.all(
-    [this.cover, this.portrait].map((url) => (url ? uploadImage(url) : undefined))
+UserImages.pre("save", async function () {
+  const [cover, avatar] = await Promise.all(
+    [this.cover, this.avatar].map((url) => (url ? uploadImage(url) : undefined))
   );
 
   this.cover = cover;
-  this.portrait = portrait;
+  this.avatar = avatar;
 });
 
 function userSubName(required?: string) {
