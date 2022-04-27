@@ -11,7 +11,7 @@ export const useToast = () => useContext(ToastContext);
 
 export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ children, ...providerProps }) => {
   const [count, setCount] = useState(0);
-  const [toasts, setToasts] = useState<unknown[]>([]);
+  const [toasts, setToasts] = useState<ToastProps[]>([]);
 
   const add = useCallback<UseToastProps["add"]>(
     (toast) => {
@@ -41,6 +41,13 @@ export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ chi
 
 interface UseToastProps {
   remove(id: number): void;
-  add(toast: unknown): number;
-  update(id: number, toast: unknown): void;
+  add(toast: ToastProps): number;
+  update(id: number, toast: ToastProps): void;
 }
+
+interface LoadingToastProps extends ToastPrimitive.ToastProps {
+  kind: "loading";
+  description: string;
+}
+
+type ToastProps = LoadingToastProps;
