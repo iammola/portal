@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# run build
-npx next build;
-
-# exit code
-exit $?;
