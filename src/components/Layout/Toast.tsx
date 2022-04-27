@@ -23,10 +23,13 @@ export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ chi
     [count]
   );
 
-  const remove: UseToastProps["remove"] = (id) => setToasts((toasts) => toasts.filter((_, idx) => idx == id));
+  const remove = useCallback<UseToastProps["remove"]>((id) => {
+    return setToasts((toasts) => toasts.filter((_, idx) => idx == id));
+  }, []);
 
-  const update: UseToastProps["update"] = (id, toast) =>
-    setToasts((toasts) => toasts.map((item, idx) => (idx === id ? toast : item)));
+  const update = useCallback<UseToastProps["update"]>((id, toast) => {
+    return setToasts((toasts) => toasts.map((item, idx) => (idx === id ? toast : item)));
+  }, []);
 
   return (
     <ToastContext.Provider value={{ add, remove, update }}>
