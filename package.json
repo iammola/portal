@@ -18,6 +18,7 @@
     "@radix-ui/colors": "^0.1.8",
     "@radix-ui/react-avatar": "^0.1.4",
     "@radix-ui/react-icons": "^1.1.0",
+    "@radix-ui/react-toast": "^0.1.1",
     "@radix-ui/react-tooltip": "^0.1.7",
     "@tanem/react-nprogress": "^5.0.0",
     "awesome-phonenumber": "^2.70.0",
