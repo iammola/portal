@@ -1,4 +1,3 @@
-import { forwardRef } from "react";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 
@@ -10,13 +9,12 @@ export const DialogTitle = DialogPrimitive.Title;
 
 export const DialogDescription = DialogPrimitive.Description;
 
-export const DialogContent = forwardRef<HTMLDivElement, CP<DialogPrimitive.DialogContentProps>>(
-  ({ children, ...contentProps }, forwardedRef) => (
+export const DialogContent: React.FC<CP<DialogPrimitive.DialogContentProps>> = ({ children, ...contentProps }) => {
+  return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className="fixed inset-0 bg-black-a-9" />
       <DialogPrimitive.Content
         {...contentProps}
-        ref={forwardedRef}
         className="fixed left-1/2 top-1/2 max-h-[85vh] w-[90vw] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-6 sm:max-w-lg"
       >
         {children}
@@ -28,7 +26,5 @@ export const DialogContent = forwardRef<HTMLDivElement, CP<DialogPrimitive.Dialo
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </DialogPrimitive.Portal>
-  )
-);
-
-DialogContent.displayName = "DialogContent";
+  );
+};
