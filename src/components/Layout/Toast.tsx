@@ -43,8 +43,8 @@ export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ chi
     <ToastContext.Provider value={{ add, remove, update }}>
       {children}
       <ToastPrimitive.Provider {...providerProps}>
-        {toasts.map((toast) => {
-          if (toast.kind === "loading") return <LoadingToast {...toast} />;
+        {toasts.map(({ kind, ...toast }) => {
+          if (kind === "loading") return <LoadingToast {...toast} />;
         })}
         <ToastPrimitive.Viewport className="fixed bottom-0 right-0 z-[99999999] flex w-[390px] max-w-[100vw] flex-col gap-2.5 p-6" />
       </ToastPrimitive.Provider>
@@ -52,7 +52,7 @@ export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ chi
   );
 };
 
-const LoadingToast: React.FC<Toast.Loading> = ({ kind: _, description, ...toastProps }) => {
+const LoadingToast: React.FC<Toast.LoadingProps> = ({ description, ...toastProps }) => {
   return (
     <ToastPrimitive.Root
       {...toastProps}

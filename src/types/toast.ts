@@ -13,6 +13,8 @@ declare global {
       description: string;
     }
 
+    export type LoadingProps = Omit<Loading, "kind">;
+
     export type Props = Loading;
   }
 }
