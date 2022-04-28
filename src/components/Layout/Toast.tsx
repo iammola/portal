@@ -58,7 +58,7 @@ const LoadingToast: React.FC<Toast.LoadingProps> = ({ description, ...toastProps
   return (
     <ToastPrimitive.Root
       {...toastProps}
-      className="flex w-full items-center justify-start gap-2 rounded-md bg-white py-2.5 pl-4 pr-2 shadow-sm shadow-gray-a-9 ring-1 ring-gray-6 dark:bg-gray-dark-3 dark:ring-gray-dark-6"
+      className="flex h-12 w-full items-center justify-start gap-2 rounded-md bg-white py-2.5 pl-4 pr-2 shadow-sm shadow-gray-a-9 ring-1 ring-gray-6 dark:bg-gray-dark-3 dark:ring-gray-dark-6"
     >
       <LoadingIcon className="mr-1 h-5 w-5 animate-spin fill-gray-11 dark:fill-gray-dark-11" />
       <ToastPrimitive.Description className="grow text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">
@@ -81,7 +81,7 @@ const SuccessToast: React.FC<Toast.SuccessProps> = ({ action, description, ...to
   return (
     <ToastPrimitive.Root
       {...toastProps}
-      className="flex w-full items-center justify-start gap-2 rounded-md bg-white py-2.5 pl-4 pr-2 shadow-sm shadow-green-a-9 ring-1 ring-green-6 dark:bg-gray-dark-3 dark:ring-green-dark-6"
+      className="flex h-12 w-full items-center justify-start gap-2 rounded-md bg-white py-2.5 pl-4 pr-2 shadow-sm shadow-green-a-9 ring-1 ring-green-6 dark:bg-gray-dark-3 dark:ring-green-dark-6"
     >
       <ToastPrimitive.Description className="grow text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">
         {description}
@@ -112,7 +112,7 @@ const ErrorToast: React.FC<Toast.ErrorProps> = ({ action, description, ...toastP
   return (
     <ToastPrimitive.Root
       {...toastProps}
-      className="flex w-full items-center justify-start gap-2 rounded-md bg-white py-2.5 pl-4 pr-2 shadow-sm shadow-red-a-9 ring-1 ring-red-6 dark:bg-gray-dark-3 dark:ring-red-dark-6"
+      className="flex h-12 w-full items-center justify-start gap-2 rounded-md bg-white py-2.5 pl-4 pr-2 shadow-sm shadow-red-a-9 ring-1 ring-red-6 dark:bg-gray-dark-3 dark:ring-red-dark-6"
     >
       <ToastPrimitive.Description className="grow text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">
         {description}
