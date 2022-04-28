@@ -48,7 +48,7 @@ export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ chi
           if (kind === "success") return <SuccessToast {...toast} />;
           if (kind === "error") return <ErrorToast {...toast} />;
         })}
-        <ToastPrimitive.Viewport className="fixed bottom-0 right-0 z-[99999999] flex w-[390px] max-w-[100vw] flex-col gap-2.5 p-6" />
+        <ToastPrimitive.Viewport className="fixed bottom-0 right-0 z-[99999999] mb-[50px] flex w-[390px] max-w-[100vw] flex-col gap-2.5 p-6" />
       </ToastPrimitive.Provider>
     </ToastContext.Provider>
   );
