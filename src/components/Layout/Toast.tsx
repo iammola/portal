@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useState } from "react";
 
 import { LoadingIcon } from "components/Icons";
 
-const ToastContext = createContext<UseToastProps>({
+const ToastContext = createContext<Toast.Hook>({
   add: () => 0,
   remove: () => void 0,
   update: () => void 0,
@@ -14,9 +14,9 @@ export const useToast = () => useContext(ToastContext);
 
 export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ children, ...providerProps }) => {
   const [count, setCount] = useState(0);
-  const [toasts, setToasts] = useState<ToastProps[]>([]);
+  const [toasts, setToasts] = useState<Toast.Props[]>([]);
 
-  const add = useCallback<UseToastProps["add"]>(
+  const add = useCallback<Toast.Hook["add"]>(
     (toast) => {
       setCount((count) => ++count);
       setToasts((toasts) => [...toasts, toast]);
@@ -26,11 +26,11 @@ export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ chi
     [count]
   );
 
-  const remove = useCallback<UseToastProps["remove"]>((id) => {
+  const remove = useCallback<Toast.Hook["remove"]>((id) => {
     return setToasts((toasts) => toasts.filter((_, idx) => idx == id));
   }, []);
 
-  const update = useCallback<UseToastProps["update"]>((id, toast) => {
+  const update = useCallback<Toast.Hook["update"]>((id, toast) => {
     return setToasts((toasts) => toasts.map((item, idx) => (idx === id ? toast : item)));
   }, []);
 
@@ -47,7 +47,7 @@ export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ chi
   );
 };
 
-const LoadingToast: React.FC<LoadingToastProps> = ({ kind: _, description, ...toastProps }) => {
+const LoadingToast: React.FC<Toast.Loading> = ({ kind: _, description, ...toastProps }) => {
   return (
     <ToastPrimitive.Root
       {...toastProps}
@@ -69,16 +69,3 @@ const LoadingToast: React.FC<LoadingToastProps> = ({ kind: _, description, ...to
     </ToastPrimitive.Root>
   );
 };
-
-interface UseToastProps {
-  remove(id: number): void;
-  add(toast: ToastProps): number;
-  update(id: number, toast: ToastProps): void;
-}
-
-interface LoadingToastProps extends ToastPrimitive.ToastProps {
-  kind: "loading";
-  description: string;
-}
-
-type ToastProps = LoadingToastProps;
