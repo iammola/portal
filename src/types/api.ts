@@ -198,7 +198,7 @@ declare global {
         export type Data = CreateData<Pick<Schemas.Student.Schema, "schoolMail">>;
 
         export interface Body
-          extends Required<Pick<Schemas.Student.Schema, "dob" | "gender" | "image" | "name" | "contact">> {
+          extends Required<Pick<Schemas.Student.Schema, "dob" | "gender" | "images" | "name" | "contact">> {
           password: string;
           academic: { class: string; subjects: string[] };
           guardians: Array<Record<"mail" | "relation", string>>;
