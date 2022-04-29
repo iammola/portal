@@ -3,6 +3,10 @@ import { useCallback, useEffect, useRef } from "react";
 import { useToast } from "components";
 import { OFFLINE_MESSAGE, ONLINE_MESSAGE } from "utils";
 
+/**
+ * It adds a toast when the user goes offline, and removes it when they go back online
+ * @returns A boolean value that indicates whether the user is online or not.
+ */
 export function useOnline() {
   const toasts = useToast();
   const toastID = useRef<number>();
