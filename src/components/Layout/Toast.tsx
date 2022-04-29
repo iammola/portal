@@ -17,7 +17,7 @@ export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ chi
 
   const add = useCallback<Toast.Hook["add"]>(
     (toast) => {
-      setToasts((toasts) => [...toasts, Object.assign(toast, { open: true })]);
+      setToasts((toasts) => [...toasts, toast]);
       return toasts.length;
     },
     [toasts]
