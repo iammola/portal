@@ -40,10 +40,12 @@ export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ chi
     <ToastContext.Provider value={{ add, remove, update }}>
       {children}
       <ToastPrimitive.Provider {...providerProps}>
-        {toasts.map(({ kind, ...toast }) => {
-          if (kind === "loading") return <LoadingToast {...toast} />;
-          if (kind === "success") return <SuccessToast {...toast} />;
-          if (kind === "error") return <ErrorToast {...toast} />;
+        {toasts.map(({ kind, ...toast }, idx) => {
+          const props = { key: idx, ...toast };
+
+          if (kind === "loading") return <LoadingToast {...props} />;
+          if (kind === "success") return <SuccessToast {...props} />;
+          if (kind === "error") return <ErrorToast {...props} />;
         })}
         <ToastPrimitive.Viewport className="fixed bottom-0 right-0 z-[9999] mb-[50px] flex w-[390px] max-w-[100vw] flex-col gap-2.5 p-6" />
       </ToastPrimitive.Provider>
