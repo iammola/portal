@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Tab } from "@headlessui/react";
 import { useRouter } from "next/router";
 import Link, { LinkProps } from "next/link";
-import { ChevronRightIcon } from "@heroicons/react/solid";
+import { ChevronRightIcon } from "@radix-ui/react-icons";
 
 import { cx, useIsomorphicLayoutEffect } from "utils";
 
@@ -10,13 +10,13 @@ export const Item: React.FC<CP<ItemProps>> = ({ children, className, href }) => 
   return (
     <Tab
       className={({ selected }) =>
-        cx("hover:bg-slate-50 h-11 w-full cursor-pointer rounded-lg", { "bg-slate-50": selected }, className)
+        cx("hover:bg-gray-4 h-11 w-full cursor-pointer rounded-lg", { "bg-gray-4": selected }, className)
       }
     >
       <Link href={href}>
         <a className="flex h-full items-center justify-start gap-x-4 px-4">
-          <span className="after:ring-gray-700 relative flex h-5 w-5 shrink-0 items-center justify-center after:h-1.5 after:w-1.5 after:rounded-full after:bg-white after:ring-2" />
-          <div className="text-gray-700 grow truncate text-left text-sm font-light tracking-wide">{children}</div>
+          <span className="after:ring-gray-7 relative flex h-5 w-5 shrink-0 items-center justify-center after:h-1.5 after:w-1.5 after:rounded-full after:bg-white after:ring-2" />
+          <div className="text-gray-11 grow truncate text-left text-sm font-light tracking-wide">{children}</div>
         </a>
       </Link>
     </Tab>
@@ -42,19 +42,19 @@ export const List: React.FC<CP<ListProps>> = ({ children, items }) => {
         as="summary"
         className={({ selected }) =>
           cx(
-            "hover:bg-slate-50 group-open:bg-slate-50 flex h-11 w-full cursor-pointer items-center justify-start gap-x-4 rounded-lg px-4 group-open:mb-1",
-            { "bg-slate-50": selected }
+            "hover:bg-gray-4 group-open:bg-gray-4 flex h-11 w-full cursor-pointer items-center justify-start gap-x-4 rounded-lg px-4 group-open:mb-1",
+            { "bg-gray-4": selected }
           )
         }
       >
-        <ChevronRightIcon className="fill-gray-700 h-5 w-5 shrink-0 group-open:rotate-90" />
-        <div className="text-gray-700 grow truncate text-sm font-light tracking-wide">{children}</div>
+        <ChevronRightIcon className="text-gray-11 h-5 w-5 shrink-0 group-open:rotate-90" />
+        <div className="text-gray-11 grow truncate text-sm font-light tracking-wide">{children}</div>
       </Tab>
       {items.map((item, itemIdx) => (
         <Item
           key={item.title}
           href={item.href}
-          className={cx("pl-8", { "bg-slate-50": itemIdx === active })}
+          className={cx("pl-8", { "bg-gray-4": itemIdx === active })}
         >
           {item.title}
         </Item>

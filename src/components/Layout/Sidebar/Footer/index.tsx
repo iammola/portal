@@ -14,8 +14,8 @@ export const Footer: React.FC = () => {
         <Online />
       </div>
       <div>
-        <div className="text-slate-700 truncate text-sm">Rebecca Pearson</div>
-        <div className="text-slate-500 truncate text-xs tracking-wide">rebecca.pearson@thisisus.com</div>
+        <div className="text-gray-12 truncate text-sm">Rebecca Pearson</div>
+        <div className="text-gray-11 truncate text-xs tracking-wide">rebecca.pearson@thisisus.com</div>
       </div>
     </div>
   );
