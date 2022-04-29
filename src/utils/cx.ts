@@ -1,40 +1,17 @@
-/**
- * Utility function for conditionally generating class names
- *
- * @example
- *
- * ```jsx
- * const className = classNames(
- *   "text-white",
- *   [isValid, "bg-green", "bg-red"],
- *   { "display-none": isDisabled }
- * )
- *
- * <div className={className}>
- *   My Div
- * </div>
- * ```
- *
- * @param args Array of classes you want formatted
- * @returns the formatted classes string
- */
-export const cx = (...args: C[]) => {
-  return [
-    ...new Set(
-      args.reduce((acc: string[], cur) => {
-        let classes = "";
+export function cx(...args: CX[]) {
+  const classes = args.reduce<Array<string | string[]>>((acc, cur) => {
+    let item: string | string[] = [];
 
-        if (typeof cur === "string") classes = cur;
-        else if (Array.isArray(cur)) classes = cur[0] ? cur[1] : cur[2];
-        else classes = Object.keys(Object.fromEntries(Object.entries(cur ?? {}).filter((i) => i[1]))).join(" ");
+    if (!cur) return acc;
 
-        return [...acc, classes];
-      }, [])
-    ),
-  ]
-    .filter(Boolean)
-    .join(" ")
-    .replace(/\s{2,}/g, " ");
-};
+    if (typeof cur === "string") item = cur;
+    else if (Array.isArray(cur)) item = (cur[0] ? cur[1] : cur[2]) ?? [];
+    else item = Object.keys(Object.fromEntries(Object.entries(cur ?? {}).filter((i) => i[1])));
 
-type C = undefined | null | string | [unknown, string, string] | Record<string, unknown>;
+    return item ? [...acc, item] : acc;
+  }, []);
+
+  return [...new Set(classes.flat())].join(" ").replace(/\s{2,}/g, " ");
+}
+
+type CX = undefined | null | false | string | [unknown, string, string?] | Record<string, unknown>;
