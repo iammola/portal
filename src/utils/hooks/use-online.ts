@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
 
 import { useToast } from "components";
-import { OFFLINE_MESSAGE, ONLINE_MESSAGE } from "utils";
+import { NETWORK_STATE } from "utils";
 
 /**
  * It adds a toast when the user goes offline, and removes it when they go back online
@@ -17,7 +17,7 @@ export function useOnline() {
     if (!isOnline && toastID.current === undefined) {
       toastID.current = toasts.add({
         kind: "error",
-        description: OFFLINE_MESSAGE,
+        ...NETWORK_STATE.offline,
       });
     }
 
@@ -26,7 +26,7 @@ export function useOnline() {
       toasts.add({
         duration: 2e3,
         kind: "success",
-        description: ONLINE_MESSAGE,
+        ...NETWORK_STATE.online,
       });
       toastID.current = undefined;
     }
