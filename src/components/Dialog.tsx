@@ -5,9 +5,27 @@ export const Dialog = DialogPrimitive.Root;
 
 export const DialogTrigger = DialogPrimitive.Trigger;
 
-export const DialogTitle = DialogPrimitive.Title;
+export const DialogTitle: React.FC<CP<DialogPrimitive.DialogTitleProps>> = ({ children, ...props }) => {
+  return (
+    <DialogPrimitive.Title
+      {...props}
+      className="text-lg font-medium text-gray-12"
+    >
+      {children}
+    </DialogPrimitive.Title>
+  );
+};
 
-export const DialogDescription = DialogPrimitive.Description;
+export const DialogDescription: React.FC<CP<DialogPrimitive.DialogDescriptionProps>> = ({ children, ...props }) => {
+  return (
+    <DialogPrimitive.Description
+      {...props}
+      className="mb-5 text-sm text-gray-11 dark:text-gray-dark-11"
+    >
+      {children}
+    </DialogPrimitive.Description>
+  );
+};
 
 export const DialogContent: React.FC<CP<DialogPrimitive.DialogContentProps>> = ({ children, ...contentProps }) => {
   return (
