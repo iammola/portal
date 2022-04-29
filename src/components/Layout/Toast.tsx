@@ -74,13 +74,14 @@ const LoadingToast: React.FC<Toast.LoadingProps> = ({ description, ...toastProps
   );
 };
 
-const SuccessToast: React.FC<Toast.SuccessProps> = ({ action, description, ...toastProps }) => {
+const SuccessToast: React.FC<Toast.SuccessProps> = ({ action, emoji, description, ...toastProps }) => {
   return (
     <ToastPrimitive.Root
       {...toastProps}
       className="flex h-12 w-full items-center justify-start gap-2 rounded-md bg-white py-2.5 pl-4 pr-2 ring-1 ring-green-6 dark:bg-gray-dark-3 dark:ring-green-dark-6"
     >
       <ToastPrimitive.Description className="grow text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">
+        <span className="text-base mr-4">{emoji}</span>
         {description}
       </ToastPrimitive.Description>
       {action ? (
@@ -105,13 +106,14 @@ const SuccessToast: React.FC<Toast.SuccessProps> = ({ action, description, ...to
   );
 };
 
-const ErrorToast: React.FC<Toast.ErrorProps> = ({ action, description, ...toastProps }) => {
+const ErrorToast: React.FC<Toast.ErrorProps> = ({ action, emoji, description, ...toastProps }) => {
   return (
     <ToastPrimitive.Root
       {...toastProps}
       className="flex h-12 w-full items-center justify-start gap-2 rounded-md bg-white py-2.5 pl-4 pr-2 ring-1 ring-red-6 dark:bg-gray-dark-3 dark:ring-red-dark-6"
     >
       <ToastPrimitive.Description className="grow text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">
+        <span className="text-base mr-4">{emoji}</span>
         {description}
       </ToastPrimitive.Description>
       {action ? (
