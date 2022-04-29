@@ -2,11 +2,6 @@ declare module "if-emoji" {
   export default function ifEmoji(emoji: string): boolean;
 }
 
-declare module "@tailwindcss/forms" {
-  const plugin: TailwindPlugin;
-  export default plugin;
-}
-
 declare module "next-themes" {
   interface ValueObject {
     [themeName: string]: string;
