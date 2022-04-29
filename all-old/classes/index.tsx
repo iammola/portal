@@ -17,7 +17,7 @@ const Classes: NextPage = () => {
   return (
     <Fragment>
       <Head>
-        <title>Classes | GRS Portal</title>
+        <title>Classes</title>
       </Head>
       <h1 className="text-slate-700 self-center pt-6 pb-8 text-6xl font-light uppercase tracking-wide">Classes</h1>
       <div className="flex w-full grow flex-col gap-x-4 pt-5">

@@ -36,7 +36,7 @@ const Class: NextPage<API.Class.GET.Data> = (props) => {
   return (
     <Fragment>
       <Head>
-        <title>{data.name.long} | GRS Portal</title>
+        <title>{data.name.long}</title>
       </Head>
       <section className="flex w-full grow flex-col items-start justify-start">
         <header className="bg-slate-100 grid w-full grid-cols-[minmax(0,_1fr)_max-content] grid-rows-3 px-8 pt-4 pb-6">

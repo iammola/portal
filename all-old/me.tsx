@@ -32,7 +32,7 @@ const Me: NextPage = () => {
             </div>
             <div className="ml-44 flex flex-col items-start justify-center gap-y-1 pl-5">
               <h3 className="text-slate-700 text-4xl">Christina Andrews</h3>
-              <span className="text-slate-500 text-xs tracking-wider">c.andrews@grschool.com</span>
+              <span className="text-slate-500 text-xs tracking-wider">c.andrews@grs.io</span>
             </div>
           </div>
           <StudentMe />

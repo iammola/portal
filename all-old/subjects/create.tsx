@@ -68,7 +68,7 @@ const CreateSubject: NextPage = () => {
   return (
     <Fragment>
       <Head>
-        <title>Create Subject | Portal | GRS™</title>
+        <title>Create Subject</title>
         <meta
           name="description"
           content="Page for Subject Creation"
