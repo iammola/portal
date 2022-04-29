@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useToast } from "components";
 import { NETWORK_STATE } from "utils";
@@ -9,28 +9,35 @@ import { NETWORK_STATE } from "utils";
  */
 export function useOnline() {
   const toasts = useToast();
-  const toastID = useRef<number>();
+  const [lastOnline, setLastOnline] = useState(true);
+  const [toastIDs, setToastIDs] = useState<number[]>([]);
 
   const handleOnline = useCallback(() => {
+    let toastID = -1;
     const isOnline = navigator.onLine;
 
-    if (!isOnline && toastID.current === undefined) {
-      toastID.current = toasts.add({
+    if (!isOnline && lastOnline) {
+      toastID = toasts.add({
         kind: "error",
         ...NETWORK_STATE.offline,
       });
     }
 
-    if (isOnline && toastID.current !== undefined) {
-      toasts.remove(toastID.current);
-      toasts.add({
+    if (isOnline && !lastOnline) {
+      toastID = toasts.add({
         duration: 2e3,
         kind: "success",
         ...NETWORK_STATE.online,
       });
-      toastID.current = undefined;
     }
-  }, [toasts]);
+
+    if (toastID > -1) {
+      toastIDs.forEach((id) => toasts.remove(id));
+      setToastIDs((toastIDs) => [...toastIDs, toastID]);
+    }
+
+    setLastOnline(isOnline);
+  }, [lastOnline, toastIDs, toasts]);
 
   useEffect(() => {
     handleOnline();
@@ -43,5 +50,5 @@ export function useOnline() {
     };
   }, [handleOnline]);
 
-  return { online: toastID === undefined };
+  return { online: lastOnline };
 }
