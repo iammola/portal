@@ -7,7 +7,8 @@ declare global {
       description: string;
     }
 
-    interface ActionProps {
+    interface OtherProps {
+      emoji?: string;
       action?: ToastPrimitiveProps.ToastActionProps & {
         text: string;
         onClick(): void;
@@ -21,8 +22,8 @@ declare global {
     }
 
     type Loading = ToastPrimitiveProps.ToastProps & DefaultProps<"loading">;
-    type Success = ToastPrimitiveProps.ToastProps & DefaultProps<"success"> & ActionProps;
-    type Error = ToastPrimitiveProps.ToastProps & DefaultProps<"error"> & ActionProps;
+    type Success = ToastPrimitiveProps.ToastProps & DefaultProps<"success"> & OtherProps;
+    type Error = ToastPrimitiveProps.ToastProps & DefaultProps<"error"> & OtherProps;
 
     export type LoadingProps = Omit<Loading, "kind">;
     export type SuccessProps = Omit<Success, "kind">;
