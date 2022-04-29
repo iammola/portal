@@ -16,8 +16,8 @@ declare global {
 
     export interface Hook {
       remove(id: number): void;
-      add(toast: Props): number;
-      update(id: number, toast: Props): void;
+      add(toast: Omit<Props, "open">): number;
+      update(id: number, toast: Omit<Props, "open">): void;
     }
 
     type Loading = ToastPrimitiveProps.ToastProps & DefaultProps<"loading">;
