@@ -11,6 +11,11 @@ if (!CRED) throw new Error("Please define the GOOGLE_API_CRED env variable");
 const dataURLRegex = /,(.+)/;
 const keys = JSON.parse(CRED) as GoogleAPICred;
 
+/**
+ * It takes a base64 encoded image, uploads it to Google Drive, and returns the file ID
+ * @param {string} [dataURL] - The base64 encoded image data.
+ * @returns The ID of the uploaded file
+ */
 export async function uploadImage(dataURL?: string) {
   if (!dataURL) return;
 
@@ -53,20 +58,9 @@ export async function uploadImage(dataURL?: string) {
 }
 
 /**
- * This URL template can also be gotten with by accessing the `drive.files.get` method
- * 
- * @example
- * 
- * ```js
- * const file = await client.files.get({
-     fileId: id,
-     fields: "webContentLink",
-  });
-  return file.webContentLink; // link to download file
- * ```
- * 
- * @param id The file's ID
- * @returns A link to download the file
+ * If the id is a data URL, return it, otherwise return a Google Drive URL
+ * @param {string} [id] - The id of the image.
+ * @returns a dataURL if the id is a dataURL, otherwise it returns a google drive url.
  */
 export const getImage = (id?: string) => {
   if (!id) return;

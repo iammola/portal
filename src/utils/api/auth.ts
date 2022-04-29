@@ -6,6 +6,10 @@ import { UnauthorizedError } from "./error";
 
 import type { NextApiRequest } from "next";
 
+/**
+ * It verifies that the JWT in the Authorization header matches the JWT in the cookie
+ * @param {NextApiRequest} request - NextApiRequest - This is the request object that Next.js provides to the API route.
+ */
 export async function verifyAuth(request: NextApiRequest) {
   const key = request.cookies[JWT_COOKIE_KEY];
   const auth = (request.headers.authorization as string)?.split(" ");

@@ -1,9 +1,9 @@
 import { Error } from "mongoose";
 
 /**
- * Extracts important information from error
- * @param {*} error
- * @return {*} the formatted error object
+ * It takes an error object and returns a string
+ * @param {unknown} error - unknown - The error object that we want to format.
+ * @returns An object with the key being the path and the value being the error message.
  */
 export function formatError(error: unknown) {
   if (error instanceof Error.ValidationError)

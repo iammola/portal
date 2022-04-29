@@ -6,9 +6,9 @@ const PASSWORD_ENCODING = "hex";
 const PASSWORD_DIGEST = "sha512";
 
 /**
- * Hash a user's password for storing in a database
- * @param password The string to hash
- * @returns - {@link Schemas.User.Password} - The resulting object with the password's hash and salt
+ * It takes a password, generates a random salt, and then uses the salt to hash the password
+ * @param {string} password - The password to hash
+ * @returns An object with two properties: salt and hash.
  */
 export function hashPassword(password: string) {
   const salt = randomBytes(128).toString("base64");
@@ -20,12 +20,10 @@ export function hashPassword(password: string) {
 }
 
 /**
- * Verify that an attempted password matches the stored hash
- * @param attempt The request password attemp
- * @param password{@link Schemas.User.Password} A user's stored password object
- * @param password.salt The salt string used to hash the password
- * @param password.hash The hashed password
- * @returns boolean. true if the attempt matches the password
+ * It takes a password attempt and a password object, and returns true if the attempt matches hash
+ * @param {string} attempt - The password that the user is trying to log in with.
+ * @param obj - The object that contains the salt and hash.
+ * @returns A boolean value.
  */
 export function comparePassword(attempt: string, { salt, hash }: Schemas.User.Password) {
   const attemptHash = pbkdf2Sync(attempt, salt, PASSWORD_ITERATIONS, PASSWORD_LENGTH, PASSWORD_DIGEST).toString(

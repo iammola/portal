@@ -3,6 +3,12 @@ import { startSession } from "mongoose";
 import { connect } from "db";
 import { AuthModel, ParentModel, StudentModel, TeacherModel } from "db/models";
 
+/**
+ * It creates a user of type T, with the body B, and returns the user's id and schoolMail
+ * @param {T} type - The type of user to create.
+ * @param {B} body - The body of the request.
+ * @returns a Promise that resolves to an object with the keys _id and schoolMail.
+ */
 export async function createUser<T extends User, B extends { password: string }>(type: T, body: B) {
   await connect();
   const session = await startSession();

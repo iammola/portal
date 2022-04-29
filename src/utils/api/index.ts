@@ -6,12 +6,12 @@ import { formatError, NotFoundError, UnauthorizedError } from "./error";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 /**
- * Used to catch errors in a route and properly format response object
- *
- * @param req {@link NextApiRequest}
- * @param res {@link NextApiResponse}
- * @param routeHandler Handler to this routes functions
- * @param methods THe HTTP methods allowed on this route
+ * It takes a request, a response, a route handler, and an array of allowed methods, and it returns a
+ * response with the correct status code and headers
+ * @param {NextApiRequest} req - NextApiRequest - The request object from Next.js
+ * @param {NextApiResponse} res - NextApiResponse - The response object from Next.js
+ * @param routeHandler - The function that will be called when the route is hit.
+ * @param {string[]} methods - An array of HTTP methods that the route supports.
  */
 export async function routeWrapper<T extends object>(
   req: NextApiRequest,

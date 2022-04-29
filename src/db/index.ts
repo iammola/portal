@@ -9,6 +9,10 @@ const cached = global.mongoose ?? {};
 mongoose.plugin(mongooseLeanGetters);
 mongoose.plugin(mongooseLeanVirtuals);
 
+/**
+ * It connects to the database and returns a promise that resolves to the mongoose connection object
+ * @returns The mongoose object
+ */
 export async function connect(): Promise<typeof mongoose> {
   if (!MONGODB_URI) throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
 
