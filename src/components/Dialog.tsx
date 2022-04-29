@@ -5,6 +5,8 @@ export const Dialog = DialogPrimitive.Root;
 
 export const DialogTrigger = DialogPrimitive.Trigger;
 
+export const DialogClose = DialogPrimitive.Close;
+
 export const DialogTitle: React.FC<CP<DialogPrimitive.DialogTitleProps>> = ({ children, ...props }) => {
   return (
     <DialogPrimitive.Title
