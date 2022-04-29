@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { classNames, useIsomorphicLayoutEffect } from "utils";
+import { cx, useIsomorphicLayoutEffect } from "utils";
 
 export const Online: React.FC = () => {
   const [onLine, setOnLine] = useState(false);
@@ -21,9 +21,9 @@ export const Online: React.FC = () => {
 
   return (
     <div className="group absolute top-0 right-0 h-3 w-3 cursor-pointer">
-      <div className={classNames("h-3 w-3 rounded-full ring ring-white", [onLine, "bg-green-600", "bg-red-600"])} />
+      <div className={cx("h-3 w-3 rounded-full ring ring-white", [onLine, "bg-green-600", "bg-red-600"])} />
       <div
-        className={classNames("absolute inset-0 h-3 w-3 animate-ping rounded-full opacity-75", [
+        className={cx("absolute inset-0 h-3 w-3 animate-ping rounded-full opacity-75", [
           onLine,
           "bg-green-500",
           "bg-red-500",

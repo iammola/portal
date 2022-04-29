@@ -18,7 +18,7 @@
  * @param args Array of classes you want formatted
  * @returns the formatted classes string
  */
-export const classNames = (...args: C[]) => {
+export const cx = (...args: C[]) => {
   return [
     ...new Set(
       args.reduce((acc: string[], cur) => {
