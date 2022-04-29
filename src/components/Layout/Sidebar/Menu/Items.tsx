@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Tab } from "@headlessui/react";
 import { useRouter } from "next/router";
 import Link, { LinkProps } from "next/link";
-import { ChevronRightIcon } from "@heroicons/react/solid";
+import { ChevronRightIcon } from "@radix-ui/react-icons";
 
 import { cx, useIsomorphicLayoutEffect } from "utils";
 
