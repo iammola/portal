@@ -1,3 +1,8 @@
+/**
+ * It takes an array of strings, arrays, and objects, and returns a string of all the truthy values
+ * @param {CX[]} args - CX[]
+ * @returns a string of class names.
+ */
 export function cx(...args: CX[]) {
   const classes = args.reduce<Array<string | string[]>>((acc, cur) => {
     let item: string | string[] = [];
