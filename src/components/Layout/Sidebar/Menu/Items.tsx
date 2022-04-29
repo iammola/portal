@@ -4,13 +4,13 @@ import { useRouter } from "next/router";
 import Link, { LinkProps } from "next/link";
 import { ChevronRightIcon } from "@heroicons/react/solid";
 
-import { classNames, useIsomorphicLayoutEffect } from "utils";
+import { cx, useIsomorphicLayoutEffect } from "utils";
 
 export const Item: React.FC<CP<ItemProps>> = ({ children, className, href }) => {
   return (
     <Tab
       className={({ selected }) =>
-        classNames("hover:bg-slate-50 h-11 w-full cursor-pointer rounded-lg", { "bg-slate-50": selected }, className)
+        cx("hover:bg-slate-50 h-11 w-full cursor-pointer rounded-lg", { "bg-slate-50": selected }, className)
       }
     >
       <Link href={href}>
@@ -41,7 +41,7 @@ export const List: React.FC<CP<ListProps>> = ({ children, items }) => {
       <Tab
         as="summary"
         className={({ selected }) =>
-          classNames(
+          cx(
             "hover:bg-slate-50 group-open:bg-slate-50 flex h-11 w-full cursor-pointer items-center justify-start gap-x-4 rounded-lg px-4 group-open:mb-1",
             { "bg-slate-50": selected }
           )
@@ -54,7 +54,7 @@ export const List: React.FC<CP<ListProps>> = ({ children, items }) => {
         <Item
           key={item.title}
           href={item.href}
-          className={classNames("pl-8", { "bg-slate-50": itemIdx === active })}
+          className={cx("pl-8", { "bg-slate-50": itemIdx === active })}
         >
           {item.title}
         </Item>

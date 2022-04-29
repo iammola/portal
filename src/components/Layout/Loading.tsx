@@ -1,6 +1,6 @@
 import { useNProgress } from "@tanem/react-nprogress";
 
-import { classNames } from "utils";
+import { cx } from "utils";
 
 export const Loading: React.FC<{ isAnimating: boolean }> = (props) => {
   const { animationDuration, isFinished, progress } = useNProgress(props);
@@ -8,7 +8,7 @@ export const Loading: React.FC<{ isAnimating: boolean }> = (props) => {
   return (
     <div
       style={{ transitionDuration: `${animationDuration}ms` }}
-      className={classNames("pointer-events-none transition-opacity", { "opacity-0": isFinished })}
+      className={cx("pointer-events-none transition-opacity", { "opacity-0": isFinished })}
     >
       <div
         style={{
