@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { useToast } from "components";
-import { NETWORK_STATE } from "utils";
+import { NETWORK_STATE, useIsomorphicLayoutEffect } from "utils";
 
 /**
  * It adds a toast when the user goes offline, and removes it when they go back online
@@ -39,7 +39,7 @@ export function useOnline() {
     setLastOnline(isOnline);
   }, [lastOnline, toastIDs, toasts]);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     handleOnline();
     addEventListener("online", handleOnline);
     addEventListener("offline", handleOnline);
