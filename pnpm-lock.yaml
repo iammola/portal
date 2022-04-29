@@ -34,7 +34,7 @@ specifiers:
   if-emoji: ^0.1.0
   jose: ^4.8.0
   mongoose: ^6.3.1
-  mongoose-lean-getters: ^0.3.1
+  mongoose-lean-getters: 0.3.1
   mongoose-lean-virtuals: ^0.9.1
   next: latest
   next-themes: ^0.1.1
@@ -2516,8 +2516,8 @@ packages:
       saslprep: 1.0.3
     dev: false
 
-  /mongoose-lean-getters/0.3.2_mongoose@6.3.1:
-    resolution: {integrity: sha512-suG2VMC6Mv9oc7NJsD3v6TY6t5Ggr7YbtZH9ygkfEMXgq/xAC0JqAFdIaasPv9o8svYGLyq0d5GlRsP1JYuf4A==}
+  /mongoose-lean-getters/0.3.1_mongoose@6.3.1:
+    resolution: {integrity: sha512-xoyPilYH9zxYBo8iPo/56j96Pi8FzFpgUG0SblTVyZ+cYka64CEcuQshR/oObBLc/4p5T7eGqhVVa+WmlGPG/Q==}
     engines: {node: '>= 8'}
     peerDependencies:
       mongoose: '>= 5.11.0 | 6.x'
