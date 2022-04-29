@@ -4,9 +4,19 @@ export const AlertDialog = AlertDialogPrimitive.Root;
 
 export const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
 
-export const AlertDialogAction = AlertDialogPrimitive.Action;
-
-export const AlertDialogCancel = AlertDialogPrimitive.Cancel;
+export const AlertDialogAction: React.FC<AlertDialogActionProps> = ({ cancelProps, children, ...props }) => {
+  return (
+    <div className="flex w-full justify-end gap-6">
+      <AlertDialogPrimitive.Cancel
+        {...cancelProps}
+        className="inline-flex items-center justify-center rounded bg-gray-3 px-4 py-2.5 text-sm font-medium text-gray-11 hover:bg-gray-4 active:bg-gray-5 dark:bg-gray-dark-3 dark:hover:bg-gray-dark-4 dark:active:bg-gray-dark-5"
+      >
+        Cancel
+      </AlertDialogPrimitive.Cancel>
+      <AlertDialogPrimitive.Action {...props}>{children}</AlertDialogPrimitive.Action>
+    </div>
+  );
+};
 
 export const AlertDialogTitle: React.FC<CP<AlertDialogPrimitive.AlertDialogTitleProps, string>> = ({
   children,
@@ -52,3 +62,8 @@ export const AlertDialogContent: React.FC<CP<AlertDialogPrimitive.AlertDialogCon
     </AlertDialogPrimitive.Portal>
   );
 };
+
+type AlertDialogActionProps = CP<
+  AlertDialogPrimitive.AlertDialogActionProps & { cancelProps: AlertDialogPrimitive.AlertDialogCancelProps },
+  string
+>;
