@@ -13,17 +13,14 @@ const ToastContext = createContext<Toast.Hook>({
 export const useToast = () => useContext(ToastContext);
 
 export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ children, ...providerProps }) => {
-  const [count, setCount] = useState(0);
   const [toasts, setToasts] = useState<Toast.Props[]>([]);
 
   const add = useCallback<Toast.Hook["add"]>(
     (toast) => {
-      setCount((count) => ++count);
       setToasts((toasts) => [...toasts, toast]);
-
-      return count + 1;
+      return toasts.length;
     },
-    [count]
+    [toasts]
   );
 
   const remove = useCallback<Toast.Hook["remove"]>(
