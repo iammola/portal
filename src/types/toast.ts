@@ -7,7 +7,8 @@ declare global {
       description: string;
     }
 
-    interface ActionProps {
+    interface OtherProps {
+      emoji?: string;
       action?: ToastPrimitiveProps.ToastActionProps & {
         text: string;
         onClick(): void;
@@ -16,13 +17,13 @@ declare global {
 
     export interface Hook {
       remove(id: number): void;
-      add(toast: Props): number;
-      update(id: number, toast: Props): void;
+      add(toast: Omit<Props, "open">): number;
+      update(id: number, toast: Omit<Props, "open">): void;
     }
 
     type Loading = ToastPrimitiveProps.ToastProps & DefaultProps<"loading">;
-    type Success = ToastPrimitiveProps.ToastProps & DefaultProps<"success"> & ActionProps;
-    type Error = ToastPrimitiveProps.ToastProps & DefaultProps<"error"> & ActionProps;
+    type Success = ToastPrimitiveProps.ToastProps & DefaultProps<"success"> & OtherProps;
+    type Error = ToastPrimitiveProps.ToastProps & DefaultProps<"error"> & OtherProps;
 
     export type LoadingProps = Omit<Loading, "kind">;
     export type SuccessProps = Omit<Success, "kind">;

@@ -13,17 +13,14 @@ const ToastContext = createContext<Toast.Hook>({
 export const useToast = () => useContext(ToastContext);
 
 export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ children, ...providerProps }) => {
-  const [count, setCount] = useState(0);
   const [toasts, setToasts] = useState<Toast.Props[]>([]);
 
   const add = useCallback<Toast.Hook["add"]>(
     (toast) => {
-      setCount((count) => ++count);
       setToasts((toasts) => [...toasts, toast]);
-
-      return count + 1;
+      return toasts.length;
     },
-    [count]
+    [toasts]
   );
 
   const remove = useCallback<Toast.Hook["remove"]>(
@@ -43,10 +40,12 @@ export const ToastProvider: React.FC<ToastPrimitive.ToastProviderProps> = ({ chi
     <ToastContext.Provider value={{ add, remove, update }}>
       {children}
       <ToastPrimitive.Provider {...providerProps}>
-        {toasts.map(({ kind, ...toast }) => {
-          if (kind === "loading") return <LoadingToast {...toast} />;
-          if (kind === "success") return <SuccessToast {...toast} />;
-          if (kind === "error") return <ErrorToast {...toast} />;
+        {toasts.map(({ kind, ...toast }, idx) => {
+          const props = { key: idx, ...toast };
+
+          if (kind === "loading") return <LoadingToast {...props} />;
+          if (kind === "success") return <SuccessToast {...props} />;
+          if (kind === "error") return <ErrorToast {...props} />;
         })}
         <ToastPrimitive.Viewport className="fixed bottom-0 right-0 z-[9999] mb-[50px] flex w-[390px] max-w-[100vw] flex-col gap-2.5 p-6" />
       </ToastPrimitive.Provider>
@@ -77,13 +76,14 @@ const LoadingToast: React.FC<Toast.LoadingProps> = ({ description, ...toastProps
   );
 };
 
-const SuccessToast: React.FC<Toast.SuccessProps> = ({ action, description, ...toastProps }) => {
+const SuccessToast: React.FC<Toast.SuccessProps> = ({ action, emoji, description, ...toastProps }) => {
   return (
     <ToastPrimitive.Root
       {...toastProps}
       className="flex h-12 w-full items-center justify-start gap-2 rounded-md bg-white py-2.5 pl-4 pr-2 ring-1 ring-green-6 dark:bg-gray-dark-3 dark:ring-green-dark-6"
     >
       <ToastPrimitive.Description className="grow text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">
+        <span className="text-base mr-4">{emoji}</span>
         {description}
       </ToastPrimitive.Description>
       {action ? (
@@ -108,13 +108,14 @@ const SuccessToast: React.FC<Toast.SuccessProps> = ({ action, description, ...to
   );
 };
 
-const ErrorToast: React.FC<Toast.ErrorProps> = ({ action, description, ...toastProps }) => {
+const ErrorToast: React.FC<Toast.ErrorProps> = ({ action, emoji, description, ...toastProps }) => {
   return (
     <ToastPrimitive.Root
       {...toastProps}
       className="flex h-12 w-full items-center justify-start gap-2 rounded-md bg-white py-2.5 pl-4 pr-2 ring-1 ring-red-6 dark:bg-gray-dark-3 dark:ring-red-dark-6"
     >
       <ToastPrimitive.Description className="grow text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">
+        <span className="text-base mr-4">{emoji}</span>
         {description}
       </ToastPrimitive.Description>
       {action ? (

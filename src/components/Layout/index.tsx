@@ -34,8 +34,8 @@ export const Layout: React.FC<CP<LayoutProps>> = ({ children, hideSidebar }) => 
 
   return (
     <main className="relative flex h-screen w-screen items-stretch overflow-hidden font-urbane">
-      {!hideSidebar && <Sidebar />}
       <ToastProvider>
+        {!hideSidebar && <Sidebar />}
         <Body>{children}</Body>
       </ToastProvider>
       <Loading
