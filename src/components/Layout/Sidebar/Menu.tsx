@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { useMemo } from "react";
 import { getCookie } from "cookies-next";
+import { Fragment, useMemo } from "react";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 
 import { USER_COOKIE } from "utils";
@@ -17,7 +17,26 @@ export const Menu: React.FC = () => {
 
   return (
     <NavigationMenuPrimitive.Root orientation="vertical">
-      <NavigationMenuPrimitive.List className="w-full grow space-y-2 p-4" />
+      <NavigationMenuPrimitive.List className="w-full grow space-y-2 p-4">
+        {list.map((item, idx) => (
+          <NavigationMenuPrimitive.Item key={`${idx} - ${item.title}`}>
+            {item.kind === "link" && <NavigationLink {...item} />}
+            {item.kind === "list" && (
+              <Fragment>
+                <NavigationMenuPrimitive.Trigger>{item.title}</NavigationMenuPrimitive.Trigger>
+                <NavigationMenuPrimitive.Content>
+                  {item.list.map((item) => (
+                    <NavigationLink
+                      {...item}
+                      key={item.title}
+                    />
+                  ))}
+                </NavigationMenuPrimitive.Content>
+              </Fragment>
+            )}
+          </NavigationMenuPrimitive.Item>
+        ))}
+      </NavigationMenuPrimitive.List>
       <NavigationMenuPrimitive.Viewport />
     </NavigationMenuPrimitive.Root>
   );
