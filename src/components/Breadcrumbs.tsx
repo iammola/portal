@@ -10,7 +10,7 @@ export const Breadcrumbs: React.FC = () => {
     const keys = asPath.slice(1, query).replaceAll("-", " ").split("/");
 
     return keys.reduce<string[]>((acc, _, idx) => {
-      return [...acc, keys.slice(0, idx + 1).join("/")];
+      return [...acc, keys.slice(0, idx + 1).join("/")].filter(Boolean);
     }, []);
   }, [asPath]);
 
