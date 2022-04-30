@@ -1,3 +1,5 @@
+import * as Separator from "@radix-ui/react-separator";
+
 import { Avatar } from "components";
 import { cx, useOnline } from "utils";
 
@@ -9,6 +11,7 @@ export const Sidebar: React.FC = () => {
   return (
     <aside className="divide-slate-300 flex h-full w-[22.5rem] shrink-0 flex-col items-start justify-start divide-y overflow-y-auto">
       <Menu />
+      <Separator.Root className="h-px w-full bg-gray-6" />
       <Footer online={online} />
     </aside>
   );
