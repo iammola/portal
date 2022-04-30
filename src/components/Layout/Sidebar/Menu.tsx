@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useMemo } from "react";
 import { getCookie } from "cookies-next";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
@@ -19,6 +20,16 @@ export const Menu: React.FC = () => {
       <NavigationMenuPrimitive.List className="w-full grow space-y-2 p-4" />
       <NavigationMenuPrimitive.Viewport />
     </NavigationMenuPrimitive.Root>
+  );
+};
+
+const NavigationLink: React.FC<MenuLink> = ({ title, href }) => {
+  return (
+    <NavigationMenuPrimitive.Link asChild>
+      <Link href={href}>
+        <a>{title}</a>
+      </Link>
+    </NavigationMenuPrimitive.Link>
   );
 };
 
