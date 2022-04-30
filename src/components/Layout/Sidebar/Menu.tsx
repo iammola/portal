@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
 import { Fragment, useMemo } from "react";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
@@ -43,6 +44,9 @@ export const Menu: React.FC = () => {
 };
 
 const NavigationLink: React.FC<MenuLink> = ({ title, href }) => {
+  const { asPath } = useRouter();
+  const isActive = asPath === href;
+
   return (
     <NavigationMenuPrimitive.Link asChild>
       <Link href={href}>
