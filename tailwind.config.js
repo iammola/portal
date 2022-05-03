@@ -1,4 +1,5 @@
 const colors = require("@radix-ui/colors");
+const { fontFamily } = require("tailwindcss/defaultTheme");
 
 /** @type {import("tailwindcss/tailwind-config").TailwindConfig } */
 module.exports = {
@@ -6,13 +7,8 @@ module.exports = {
   content: ["src/**/*.{ts,tsx}"],
   theme: {
     colors: radixToTailwindConfig(),
-    extend: {
-      fontFamily: {
-        inter: ["Inter"],
-        urbane: ["Urbane"],
-        poppins: ["Poppins"],
-      },
-    },
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    extend: { fontFamily: { inter: ["Inter", ...fontFamily.sans] } },
   },
 };
 
