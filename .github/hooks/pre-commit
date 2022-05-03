@@ -1,5 +1,5 @@
 #!/bin/sh
 
-npx git-format-staged -f "prettier --stdin-filepath '{}'" "*.js" "*.ts" "*.tsx" "*.json";
+npx git-format-staged -f "prettier --stdin-filepath '{}'" "*.js" "*.ts" "*.tsx" "*.json" "*.yaml";
 
 exit $?;

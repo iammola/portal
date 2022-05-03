@@ -20,7 +20,7 @@ export const Sidebar: React.FC = () => {
 const Footer: React.FC<{ online: boolean }> = ({ online }) => {
   return (
     <div className="flex w-full items-center gap-x-4 p-4">
-      <div className="relative ring-1 ring-gray-6 dark:ring-gray-dark-6 rounded-full">
+      <div className="relative rounded-full ring-1 ring-gray-6 dark:ring-gray-dark-6">
         <Avatar
           initials="RP"
           src="/Users/005.jpg"
@@ -35,8 +35,8 @@ const Footer: React.FC<{ online: boolean }> = ({ online }) => {
         />
       </div>
       <div>
-        <div className="text-gray-12 truncate text-sm">Rebecca Pearson</div>
-        <div className="text-gray-11 truncate text-xs tracking-wide">rebecca.pearson@thisisus.com</div>
+        <div className="truncate text-sm text-gray-12">Rebecca Pearson</div>
+        <div className="truncate text-xs tracking-wide text-gray-11">rebecca.pearson@thisisus.com</div>
       </div>
     </div>
   );
