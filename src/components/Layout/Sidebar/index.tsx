@@ -9,11 +9,11 @@ export const Sidebar: React.FC = () => {
   const { online } = useOnline();
 
   return (
-    <aside className="fixed inset-0 z-50 grid h-screen w-screen max-w-[20rem] grid-rows-[minmax(0,_1fr)_repeat(2,max-content)] overflow-x-auto overflow-y-auto bg-gray-2 dark:bg-gray-dark-2 md:h-full lg:relative">
+    <aside className="fixed inset-0 z-50 grid h-screen w-screen grid-rows-[minmax(0,_1fr)_repeat(2,max-content)] overflow-x-auto overflow-y-auto bg-gray-2 dark:bg-gray-dark-2 xs:max-w-[20rem] md:relative md:h-full">
       <Menu />
       <Separator.Root className="h-px w-full bg-gray-6" />
       <Footer online={online} />
-      <div className="fixed right-0 top-0 z-[-1] hidden h-screen w-[calc(100vw-20rem)] bg-transparent backdrop-blur sm:block lg:hidden" />
+      <div className="fixed right-0 top-0 z-[-1] hidden h-screen w-[calc(100vw-20rem)] bg-transparent backdrop-blur xs:block md:hidden" />
     </aside>
   );
 };
