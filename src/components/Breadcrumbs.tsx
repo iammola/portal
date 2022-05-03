@@ -32,22 +32,24 @@ export const Breadcrumbs: React.FC = () => {
 
 const Home: React.FC = () => {
   return (
-    <Link href="/">
-      <a className="flex items-center justify-start gap-2 text-sm text-gray-11">
-        <HomeIcon />
-        Home
-      </a>
+    <Link
+      href="/"
+      className="flex items-center justify-start gap-2 text-sm text-gray-11"
+    >
+      <HomeIcon />
+      Home
     </Link>
   );
 };
 
 const Path: React.FC<CP<{ href: string }, string>> = ({ children, href }) => {
   return (
-    <Link href={href}>
-      <a className="flex items-center justify-start gap-2 text-sm text-gray-11">
-        <CaretRightIcon />
-        {children}
-      </a>
+    <Link
+      href={href}
+      className="flex items-center justify-start gap-2 text-sm text-gray-11"
+    >
+      <CaretRightIcon />
+      {children}
     </Link>
   );
 };
