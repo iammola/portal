@@ -2,7 +2,6 @@ lockfileVersion: 5.4
 
 specifiers:
   '@googleapis/drive': ^2.3.0
-  '@headlessui/react': ^1.6.1
   '@radix-ui/colors': ^0.1.8
   '@radix-ui/react-alert-dialog': ^0.1.7
   '@radix-ui/react-avatar': ^0.1.4
@@ -52,7 +51,6 @@ specifiers:
 
 dependencies:
   '@googleapis/drive': 2.3.0
-  '@headlessui/react': 1.6.1_ef5jwxihqo6n7gxfmzogljlgcm
   '@radix-ui/colors': 0.1.8
   '@radix-ui/react-alert-dialog': 0.1.7_i6xcbgvvylvakhe2evaee3dlf4
   '@radix-ui/react-avatar': 0.1.4_react@18.1.0
@@ -143,17 +141,6 @@ packages:
     transitivePeerDependencies:
       - encoding
       - supports-color
-    dev: false
-
-  /@headlessui/react/1.6.1_ef5jwxihqo6n7gxfmzogljlgcm:
-    resolution: {integrity: sha512-gMd6uIs1U4Oz718Z5gFoV0o/vD43/4zvbyiJN9Dt7PK9Ubxn+TmJwTmYwyNJc5KxxU1t0CmgTNgwZX9+4NjCnQ==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: ^16 || ^17 || ^18
-      react-dom: ^16 || ^17 || ^18
-    dependencies:
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
     dev: false
 
   /@humanwhocodes/config-array/0.9.5:
