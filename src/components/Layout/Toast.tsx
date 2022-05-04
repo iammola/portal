@@ -67,10 +67,7 @@ const LoadingToast: React.FC<Toast.LoadingProps> = ({ description, ...toastProps
         aria-label="Close"
         className="rounded-full p-1.5 hover:bg-gray-4 active:bg-gray-5 dark:hover:bg-gray-dark-4 dark:active:bg-gray-dark-5"
       >
-        <Cross2Icon
-          aria-hidden
-          className="h-4 w-4 text-gray-11 dark:text-gray-dark-11"
-        />
+        <Cross2Icon aria-hidden className="h-4 w-4 text-gray-11 dark:text-gray-dark-11" />
       </ToastPrimitive.Close>
     </ToastPrimitive.Root>
   );
@@ -98,10 +95,7 @@ const SuccessToast: React.FC<Toast.SuccessProps> = ({ action, emoji, description
           aria-label="Close"
           className="rounded-full p-1.5 hover:bg-gray-4 active:bg-gray-5 dark:hover:bg-gray-dark-4 dark:active:bg-gray-dark-5"
         >
-          <Cross2Icon
-            aria-hidden
-            className="h-4 w-4 text-gray-11 dark:text-gray-dark-11"
-          />
+          <Cross2Icon aria-hidden className="h-4 w-4 text-gray-11 dark:text-gray-dark-11" />
         </ToastPrimitive.Close>
       )}
     </ToastPrimitive.Root>
@@ -130,10 +124,7 @@ const ErrorToast: React.FC<Toast.ErrorProps> = ({ action, emoji, description, ..
           aria-label="Close"
           className="rounded-full p-1.5 hover:bg-gray-4 active:bg-gray-5 dark:hover:bg-gray-dark-4 dark:active:bg-gray-dark-5"
         >
-          <Cross2Icon
-            aria-hidden
-            className="h-4 w-4 text-gray-11 dark:text-gray-dark-11"
-          />
+          <Cross2Icon aria-hidden className="h-4 w-4 text-gray-11 dark:text-gray-dark-11" />
         </ToastPrimitive.Close>
       )}
     </ToastPrimitive.Root>

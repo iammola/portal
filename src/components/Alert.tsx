@@ -23,10 +23,7 @@ export const AlertDialogTitle: React.FC<CP<AlertDialogPrimitive.AlertDialogTitle
   ...props
 }) => {
   return (
-    <AlertDialogPrimitive.Title
-      {...props}
-      className="text-lg font-medium text-gray-12"
-    >
+    <AlertDialogPrimitive.Title {...props} className="text-lg font-medium text-gray-12">
       {children}
     </AlertDialogPrimitive.Title>
   );
@@ -37,10 +34,7 @@ export const AlertDialogDescription: React.FC<CP<AlertDialogPrimitive.AlertDialo
   ...props
 }) => {
   return (
-    <AlertDialogPrimitive.Description
-      {...props}
-      className="mb-5 text-sm text-gray-11 dark:text-gray-dark-11"
-    >
+    <AlertDialogPrimitive.Description {...props} className="mb-5 text-sm text-gray-11 dark:text-gray-dark-11">
       {children}
     </AlertDialogPrimitive.Description>
   );

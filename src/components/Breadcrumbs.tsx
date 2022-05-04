@@ -19,10 +19,7 @@ export const Breadcrumbs: React.FC = () => {
     <div className="flex items-center justify-start gap-2">
       <Home />
       {paths.map((path) => (
-        <Path
-          key={path}
-          href={path}
-        >
+        <Path key={path} href={path}>
           {path.replace(/(?:.*?\/)+/, "")}
         </Path>
       ))}
@@ -32,10 +29,7 @@ export const Breadcrumbs: React.FC = () => {
 
 const Home: React.FC = () => {
   return (
-    <Link
-      href="/"
-      className="flex items-center justify-start gap-2 text-sm text-gray-11"
-    >
+    <Link href="/" className="flex items-center justify-start gap-2 text-sm text-gray-11">
       <HomeIcon />
       Home
     </Link>
@@ -44,10 +38,7 @@ const Home: React.FC = () => {
 
 const Path: React.FC<CP<{ href: string }, string>> = ({ children, href }) => {
   return (
-    <Link
-      href={href}
-      className="flex items-center justify-start gap-2 text-sm text-gray-11"
-    >
+    <Link href={href} className="flex items-center justify-start gap-2 text-sm text-gray-11">
       <CaretRightIcon />
       {children}
     </Link>

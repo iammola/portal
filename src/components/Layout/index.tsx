@@ -38,10 +38,7 @@ export const Layout: React.FC<CP<LayoutProps>> = ({ children, hideSidebar }) => 
         {!hideSidebar && <Sidebar />}
         <Body>{children}</Body>
       </ToastProvider>
-      <Loading
-        key={key}
-        isAnimating={routeChanging}
-      />
+      <Loading key={key} isAnimating={routeChanging} />
       <ThemePicker />
     </main>
   );

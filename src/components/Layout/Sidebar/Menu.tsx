@@ -20,10 +20,7 @@ export const Menu: React.FC = () => {
     <NavigationMenuPrimitive.Root orientation="vertical">
       <NavigationMenuPrimitive.List className="w-full space-y-2 py-4 px-3">
         {list.map((item, idx) => (
-          <NavigationLink
-            {...item}
-            key={`${idx} - ${item.title}`}
-          />
+          <NavigationLink {...item} key={`${idx} - ${item.title}`} />
         ))}
       </NavigationMenuPrimitive.List>
     </NavigationMenuPrimitive.Root>
