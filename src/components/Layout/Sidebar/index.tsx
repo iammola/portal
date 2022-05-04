@@ -45,7 +45,12 @@ export const Sidebar: React.FC = () => {
         <Menu />
         <SeparatorPrimitive.Root className="h-px w-full bg-gray-6" />
         <Footer online={online} />
-        <div className="fixed right-0 top-0 z-[-1] hidden h-screen w-[calc(100vw-20rem)] bg-transparent backdrop-blur xs:block lg:hidden" />
+        {isOpen && (
+          <div
+            onClick={() => setIsOpen(false)}
+            className="fixed right-0 top-0 z-[-1] hidden h-screen w-[calc(100vw-20rem)] bg-transparent backdrop-blur xs:block lg:hidden"
+          />
+        )}
       </aside>
       {!isOpen && (
         <TooltipPrimitive.Root delayDuration={100}>
