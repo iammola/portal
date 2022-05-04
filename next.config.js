@@ -2,7 +2,6 @@
 module.exports = {
   // swcMinify: true,
   reactStrictMode: true,
-  images: {
-    domains: ["drive.google.com"],
-  },
+  images: { domains: ["drive.google.com"] },
+  experimental: { newNextLinkBehavior: true },
 };
