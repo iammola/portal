@@ -51,21 +51,27 @@ export const Input: React.FC<InputProps> = ({ children, id, onChange, validators
   );
 };
 
-export const Select: Select = ({ children, ...props }) => {
+export const Select: Select = ({ children, label, ...props }) => {
   return (
-    <SelectPrimitive.Root {...props}>
-      <SelectPrimitive.Trigger className="inline-flex h-[45px] max-w-[200px] select-none items-center justify-center gap-8 rounded bg-gray-3 px-4 text-sm text-gray-11 hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-5 dark:bg-gray-dark-3 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-5">
-        <SelectPrimitive.Value />
-        <SelectPrimitive.Icon asChild>
-          <ChevronDownIcon />
-        </SelectPrimitive.Icon>
-      </SelectPrimitive.Trigger>
-      <SelectPrimitive.Content className="overflow-hidden rounded-md bg-white shadow-md dark:bg-gray-dark-3">
-        <SelectPrimitive.ScrollUpButton className="grid h-6 place-items-center bg-white text-gray-11 dark:bg-gray-dark-2 dark:text-gray-dark-11" />
-        <SelectPrimitive.Viewport className="space-y-1 py-3">{children}</SelectPrimitive.Viewport>
-        <SelectPrimitive.ScrollDownButton className="grid h-6 place-items-center bg-white text-gray-11 dark:bg-gray-dark-2 dark:text-gray-dark-11" />
-      </SelectPrimitive.Content>
-    </SelectPrimitive.Root>
+    <LabelPrimitive.Root>
+      <span className="flex w-full select-none items-center justify-between gap-4">
+        <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{label}</span>
+        {!props.required && <span className="text-xs text-gray-11 dark:text-gray-dark-11">Optional</span>}
+      </span>
+      <SelectPrimitive.Root {...props}>
+        <SelectPrimitive.Trigger className="inline-flex h-[45px] max-w-[200px] select-none items-center justify-center gap-8 rounded bg-gray-3 px-4 text-sm text-gray-11 hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-5 dark:bg-gray-dark-3 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-5">
+          <SelectPrimitive.Value />
+          <SelectPrimitive.Icon asChild>
+            <ChevronDownIcon />
+          </SelectPrimitive.Icon>
+        </SelectPrimitive.Trigger>
+        <SelectPrimitive.Content className="overflow-hidden rounded-md bg-white shadow-md dark:bg-gray-dark-3">
+          <SelectPrimitive.ScrollUpButton className="grid h-6 place-items-center bg-white text-gray-11 dark:bg-gray-dark-2 dark:text-gray-dark-11" />
+          <SelectPrimitive.Viewport className="space-y-1 py-3">{children}</SelectPrimitive.Viewport>
+          <SelectPrimitive.ScrollDownButton className="grid h-6 place-items-center bg-white text-gray-11 dark:bg-gray-dark-2 dark:text-gray-dark-11" />
+        </SelectPrimitive.Content>
+      </SelectPrimitive.Root>
+    </LabelPrimitive.Root>
   );
 };
 
@@ -93,6 +99,11 @@ interface InputProps extends Omit<React.ComponentProps<"input">, "onChange"> {
   }>;
 }
 
-interface Select extends React.FC<CP<Parameters<typeof SelectPrimitive.Root>[0]>> {
+interface SelectProps {
+  label: string;
+  required?: boolean;
+}
+
+interface Select extends React.FC<CP<Parameters<typeof SelectPrimitive.Root>[0] & SelectProps>> {
   Item: React.FC<Parameters<typeof SelectPrimitive.Item>[0]>;
 }
