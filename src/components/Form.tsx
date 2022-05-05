@@ -32,7 +32,7 @@ export const Input: React.FC<InputProps> = ({ children, id, onChange, validators
         type="text"
         id={id || customId}
         onChange={(e) => onChange(e.target.value)}
-        className="inline-flex h-[45px] w-full min-w-[300px] items-center justify-center rounded bg-gray-2 px-2.5 text-sm text-gray-12 focus:outline-none focus:ring-2 focus:ring-gray-8 dark:bg-gray-dark-2 dark:text-gray-dark-12 dark:ring-gray-dark-7 dark:focus:ring-gray-dark-8"
+        className="inline-flex h-[45px] w-full min-w-[300px] items-center justify-center rounded bg-gray-2 px-2.5 text-sm text-gray-12 focus:outline-none focus:ring-2 focus:ring-gray-8 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:ring-gray-dark-7 dark:focus:ring-gray-dark-8"
       />
       {error && (
         <span className="mt-1 inline-flex items-center justify-start gap-1 text-xs text-red-11 dark:text-red-dark-11">
