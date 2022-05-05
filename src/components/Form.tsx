@@ -8,9 +8,10 @@ export const Input: React.FC<InputProps> = ({ children, id, onChange, ...props }
     <div className="flex flex-col items-start justify-center gap-1">
       <LabelPrimitive.Root
         htmlFor={id || customId}
-        className="select-none text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12"
+        className="flex w-full select-none items-center justify-between gap-4"
       >
-        {children}
+        <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{children}</span>
+        {!props.required && <span className="text-xs text-gray-11 dark:text-gray-dark-11">Optional</span>}
       </LabelPrimitive.Root>
       <input
         {...props}
