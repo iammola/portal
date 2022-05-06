@@ -18,7 +18,7 @@ export const Input: React.FC<InputProps> = ({ children, id, onChange, validators
     if (error) setError(error.message);
     else {
       setError(null);
-      setTimeout(() => setError(undefined), 3e3);
+      setTimeout(() => setError((err) => (err === null ? undefined : err)), 3e3);
     }
   }, [props.value, validators]);
 
