@@ -72,7 +72,7 @@ export const Password: React.FC<InputProps> = ({ children, id, onChange, ...prop
   const strength = useMemo(() => {
     const value = props.value as string;
     const { score = -1 } = value ? check(value) : {};
-    const title = ["Poor", "Weak", "Fair", "Good", "Strong"][score] ?? "No";
+    const title = ["Poor", "Weak", "Good", "Strong"][score] ?? "No";
 
     return { score, title };
   }, [check, props.value]);
