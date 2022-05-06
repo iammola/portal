@@ -4,7 +4,7 @@ import englishCountries from "i18n-iso-countries/langs/en.json";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { useEffect, useId, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -136,12 +136,37 @@ export const Password: React.FC<InputProps> = ({ children, id, onChange, ...prop
 countries.registerLocale(englishCountries);
 export const Phone: React.FC<InputProps> = ({ children, id, onChange, ...props }) => {
   const customId = useId();
+  const [formatted, setFormatted] = useState("");
   const [regions] = useState(PhoneNumber.getSupportedRegionCodes());
   const [activeRegion, setActiveRegion] = useState(() => {
     let region = PhoneNumber(props.value ?? "").getRegionCode() ?? "";
     if (!region && typeof window !== "undefined") region = new Intl.Locale(navigator.language).region ?? "";
     return region;
   });
+  const formatter = useMemo(() => PhoneNumber.getAsYouType(activeRegion), [activeRegion]);
+
+  const updateRegion = useCallback(
+    (regionCode: string) => {
+      onChange("");
+      setFormatted("");
+      setActiveRegion(regionCode);
+    },
+    [onChange]
+  );
+
+  const updateValue = useCallback(
+    (value: string) => {
+      const phone = PhoneNumber(value, activeRegion);
+      const type = value.startsWith("+") ? undefined : "national";
+
+      let number = (phone.getNumber(type) ?? value) || null;
+      if (number && !number.startsWith("0") && type === "national") number = `0${number}`;
+
+      onChange(phone.getNumber());
+      setFormatted(formatter.reset(number as string));
+    },
+    [activeRegion, formatter, onChange]
+  );
 
   return (
     <div className="flex flex-col items-start justify-center gap-1">
@@ -152,7 +177,7 @@ export const Phone: React.FC<InputProps> = ({ children, id, onChange, ...props }
         <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{children}</span>
         {!props.required && <span className="text-xs text-gray-11 dark:text-gray-dark-11">Optional</span>}
       </LabelPrimitive.Root>
-      <SelectPrimitive.Root value={activeRegion} onValueChange={setActiveRegion}>
+      <SelectPrimitive.Root value={activeRegion} onValueChange={updateRegion}>
         <div className="relative flex">
           <SelectPrimitive.Trigger className="inline-flex items-center justify-center gap-2 rounded-l bg-gray-3 px-4 text-sm text-gray-11 hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-5 dark:bg-gray-dark-3 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-5">
             <SelectPrimitive.Value>{getFlagEmoji(activeRegion)}</SelectPrimitive.Value>
@@ -163,8 +188,9 @@ export const Phone: React.FC<InputProps> = ({ children, id, onChange, ...props }
           <input
             {...props}
             type="text"
+            value={formatted}
             id={id || customId}
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) => updateValue(e.target.value)}
             className="inline-flex h-[45px] w-full min-w-[300px] items-center justify-center rounded-r bg-gray-2 px-2.5 text-sm text-gray-12 focus:outline-none focus:ring-2 focus:ring-gray-8 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:ring-gray-dark-7 dark:focus:ring-gray-dark-8"
           />
         </div>
