@@ -2,7 +2,14 @@ import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { useEffect, useId, useMemo, useState } from "react";
-import { CheckIcon, ChevronDownIcon, Cross2Icon, EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  Cross2Icon,
+  EyeClosedIcon,
+  EyeOpenIcon,
+} from "@radix-ui/react-icons";
 
 import { checkPasswordStrength, cx } from "utils";
 
@@ -161,11 +168,15 @@ export const Select: Select = ({ children, label, ...props }) => {
           </SelectPrimitive.Icon>
         </SelectPrimitive.Trigger>
         <SelectPrimitive.Content className="overflow-hidden rounded-md bg-white shadow-md dark:bg-gray-dark-3">
-          <SelectPrimitive.ScrollUpButton className="grid h-6 place-items-center bg-white text-gray-11 dark:bg-gray-dark-2 dark:text-gray-dark-11" />
+          <SelectPrimitive.ScrollUpButton className="grid h-6 place-items-center bg-white text-gray-11 dark:bg-gray-dark-2 dark:text-gray-dark-11">
+            <ChevronUpIcon />
+          </SelectPrimitive.ScrollUpButton>
           <SelectPrimitive.Viewport className="flex flex-col justify-start gap-3 py-3">
             {children}
           </SelectPrimitive.Viewport>
-          <SelectPrimitive.ScrollDownButton className="grid h-6 place-items-center bg-white text-gray-11 dark:bg-gray-dark-2 dark:text-gray-dark-11" />
+          <SelectPrimitive.ScrollDownButton className="grid h-6 place-items-center bg-white text-gray-11 dark:bg-gray-dark-2 dark:text-gray-dark-11">
+            <ChevronDownIcon />
+          </SelectPrimitive.ScrollDownButton>
         </SelectPrimitive.Content>
       </SelectPrimitive.Root>
     </LabelPrimitive.Root>
