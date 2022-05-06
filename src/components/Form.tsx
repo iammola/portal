@@ -11,7 +11,7 @@ export const Input: React.FC<InputProps> = ({ children, id, onChange, validators
   const [error, setError] = useState<string | null>(); // `string` - Error; `null` - No Error; `undefined` - Nothing
 
   useEffect(() => {
-    const value = props.value as string;
+    const value = props.value;
     if (!value) return;
 
     const error = validators?.find(({ test: t }) => !(typeof t === "object" ? t.test(value) : t(value)));
@@ -186,8 +186,9 @@ Select.Item = function Item({ children, ...props }) {
   );
 };
 
-interface InputProps extends Omit<React.ComponentProps<"input">, "onChange"> {
+interface InputProps extends Omit<React.ComponentProps<"input">, "onChange" | "value"> {
   id?: string;
+  value?: string;
   children: string;
   onChange(val: string): void;
   validators?: Array<{
