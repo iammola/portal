@@ -233,7 +233,7 @@ export const Select: Select = ({ children, label, ...props }) => {
           <SelectPrimitive.ScrollUpButton className="grid h-6 place-items-center bg-white text-gray-11 dark:bg-gray-dark-2 dark:text-gray-dark-11">
             <ChevronUpIcon />
           </SelectPrimitive.ScrollUpButton>
-          <SelectPrimitive.Viewport className="flex flex-col justify-start gap-3 py-3">
+          <SelectPrimitive.Viewport className="flex flex-col justify-start gap-1 py-3">
             {children}
           </SelectPrimitive.Viewport>
           <SelectPrimitive.ScrollDownButton className="grid h-6 place-items-center bg-white text-gray-11 dark:bg-gray-dark-2 dark:text-gray-dark-11">
@@ -249,7 +249,7 @@ Select.Item = function Item({ children, ...props }) {
   return (
     <SelectPrimitive.Item
       {...props}
-      className="relative flex h-8 cursor-pointer select-none items-center py-1 pr-9 pl-6 text-sm tracking-wide text-gray-11 hover:bg-gray-4 focus:bg-gray-5 focus:outline-none dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:bg-gray-dark-5"
+      className="relative flex h-9 cursor-pointer select-none items-center py-2 pr-9 pl-6 text-sm tracking-wide text-gray-11 hover:bg-gray-4 focus:bg-gray-5 focus:outline-none dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:bg-gray-dark-5"
     >
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator className="absolute left-0 inline-grid w-6 place-items-center">
