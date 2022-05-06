@@ -183,7 +183,7 @@ export const Phone: React.FC<InputProps> = ({ children, id, onChange, ...props }
           </SelectPrimitive.Trigger>
           <input
             {...props}
-            type="text"
+            type="tel"
             value={formatted}
             id={id || customId}
             onChange={(e) => updateValue(e.target.value)}
