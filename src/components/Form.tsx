@@ -175,7 +175,7 @@ export const Phone: React.FC<InputProps> = ({ children, id, onChange, ...props }
       </LabelPrimitive.Root>
       <SelectPrimitive.Root value={activeRegion} onValueChange={updateRegion}>
         <div className="relative flex">
-          <SelectPrimitive.Trigger className="inline-flex items-center justify-center gap-2 rounded-l bg-gray-3 px-4 text-sm text-gray-11 hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-5 dark:bg-gray-dark-3 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-5">
+          <SelectPrimitive.Trigger className="inline-flex items-center justify-center gap-2 rounded-l bg-gray-2 px-4 text-sm text-gray-11 hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-5 dark:bg-gray-dark-3 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-5">
             <SelectPrimitive.Value>{getFlagEmoji(activeRegion)}</SelectPrimitive.Value>
             <SelectPrimitive.Icon asChild>
               <ChevronDownIcon />
