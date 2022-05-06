@@ -1,6 +1,7 @@
 import { useEffect, useId, useState } from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SelectPrimitive from "@radix-ui/react-select";
+import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { CheckIcon, ChevronDownIcon, Cross2Icon, EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
 export const Input: React.FC<InputProps> = ({ children, id, onChange, validators, ...props }) => {
@@ -56,29 +57,40 @@ export const Password: React.FC<InputProps> = ({ children, id, onChange, ...prop
   const [isVisible, setIsVisible] = useState(false);
 
   return (
-    <div className="relative flex flex-col items-start justify-center gap-1">
-      <LabelPrimitive.Root
-        htmlFor={id || customId}
-        className="flex w-full select-none items-center justify-between gap-4"
-      >
-        <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{children}</span>
-      </LabelPrimitive.Root>
-      <div className="relative">
-        <input
-          {...props}
-          id={id || customId}
-          type={isVisible ? "text" : "password"}
-          onChange={(e) => onChange(e.target.value)}
-          className="inline-flex h-[45px] w-full min-w-[300px] items-center justify-center rounded bg-gray-2 px-2.5 text-sm text-gray-12 focus:outline-none focus:ring-2 focus:ring-gray-8 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:ring-gray-dark-7 dark:focus:ring-gray-dark-8"
-        />
-        <div
-          onClick={() => setIsVisible(!isVisible)}
-          className="absolute top-0 bottom-0 right-2 inline-flex w-6 cursor-pointer items-center justify-center text-gray-11 dark:text-gray-dark-11"
+    <PopoverPrimitive.Root>
+      <div className="relative flex flex-col items-start justify-center gap-1">
+        <LabelPrimitive.Root
+          htmlFor={id || customId}
+          className="flex w-full select-none items-center justify-between gap-4"
         >
-          {isVisible ? <EyeOpenIcon /> : <EyeClosedIcon />}
-        </div>
+          <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{children}</span>
+        </LabelPrimitive.Root>
+        <PopoverPrimitive.Anchor className="relative">
+          <PopoverPrimitive.Trigger asChild>
+            <input
+              {...props}
+              id={id || customId}
+              type={isVisible ? "text" : "password"}
+              onChange={(e) => onChange(e.target.value)}
+              className="inline-flex h-[45px] w-full min-w-[300px] items-center justify-center rounded bg-gray-2 px-2.5 text-sm text-gray-12 focus:outline-none focus:ring-2 focus:ring-gray-8 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:ring-gray-dark-7 dark:focus:ring-gray-dark-8"
+            />
+          </PopoverPrimitive.Trigger>
+          <div
+            onClick={() => setIsVisible(!isVisible)}
+            className="absolute top-0 bottom-0 right-2 inline-flex w-6 cursor-pointer items-center justify-center text-gray-11 dark:text-gray-dark-11"
+          >
+            {isVisible ? <EyeOpenIcon /> : <EyeClosedIcon />}
+          </div>
+        </PopoverPrimitive.Anchor>
+        <PopoverPrimitive.Content
+          sideOffset={7}
+          onOpenAutoFocus={(e) => e.preventDefault()}
+          className="flex min-w-[300px] flex-col items-start justify-center gap-3 rounded-md bg-white p-5 shadow-md focus:outline-none dark:bg-gray-dark-3"
+        >
+          <h4 className="font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">Password Level</h4>
+        </PopoverPrimitive.Content>
       </div>
-    </div>
+    </PopoverPrimitive.Root>
   );
 };
 
