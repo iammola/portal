@@ -156,16 +156,12 @@ export const Phone: React.FC<InputProps> = ({ children, id, onChange, ...props }
 
   const updateValue = useCallback(
     (value: string) => {
-      const phone = PhoneNumber(value, activeRegion);
-      const type = value.startsWith("+") ? undefined : "national";
+      const phone = value.replace(/(\s|-|\(|\))*/g, "") || null;
 
-      let number = (phone.getNumber(type) ?? value) || null;
-      if (number && !number.startsWith("0") && type === "national") number = `0${number}`;
-
-      onChange(phone.getNumber());
-      setFormatted(formatter.reset(number as string));
+      setFormatted(formatter.reset(phone as string));
+      onChange(formatter.getPhoneNumber().getNumber() ?? "");
     },
-    [activeRegion, formatter, onChange]
+    [formatter, onChange]
   );
 
   return (
