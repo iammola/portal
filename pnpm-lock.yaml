@@ -23,6 +23,9 @@ specifiers:
   "@types/tailwindcss": ^3.0.10
   "@typescript-eslint/eslint-plugin": ^5.22.0
   "@typescript-eslint/parser": ^5.22.0
+  "@zxcvbn-ts/core": ^2.0.1
+  "@zxcvbn-ts/language-common": ^2.0.1
+  "@zxcvbn-ts/language-en": ^2.0.1
   autoprefixer: ^10.4.7
   awesome-phonenumber: ^2.72.0
   bson: ^4.6.3
@@ -68,6 +71,9 @@ dependencies:
   "@radix-ui/react-toast": 0.1.1_ef5jwxihqo6n7gxfmzogljlgcm
   "@radix-ui/react-tooltip": 0.1.7_ef5jwxihqo6n7gxfmzogljlgcm
   "@tanem/react-nprogress": 5.0.0_ef5jwxihqo6n7gxfmzogljlgcm
+  "@zxcvbn-ts/core": 2.0.1
+  "@zxcvbn-ts/language-common": 2.0.1
+  "@zxcvbn-ts/language-en": 2.0.1
   awesome-phonenumber: 2.72.0
   cookies-next: 2.0.4
   country-flag-icons: 1.4.26
@@ -1089,6 +1095,23 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
+  /@zxcvbn-ts/core/2.0.1:
+    resolution:
+      { integrity: sha512-i3viYattwORK5liqS/d9WaIWSLki75oKVog5Elg9Ls9d8L6zKLwpAkj6PT/P4LZqJHIVRPnKjgajpP6SLerr6Q== }
+    dependencies:
+      fastest-levenshtein: 1.0.12
+    dev: false
+
+  /@zxcvbn-ts/language-common/2.0.1:
+    resolution:
+      { integrity: sha512-P+v5MA/UNc9nb3FEOEoDgTyIGQc2vLc6m04pdf5YyuNOzrL0iNANhECk2TUp62JbrjouJVodqhMH0j1a8/24Bg== }
+    dev: false
+
+  /@zxcvbn-ts/language-en/2.0.1:
+    resolution:
+      { integrity: sha512-lxwaeCJWzZdbncA+oEctZxlL05dwGCU1JSWaPztz+ItptLQfcajn16E96o+LAF/pR35wkRZf6z+Qk5mmStHWCA== }
+    dev: false
+
   /abort-controller/3.0.0:
     resolution:
       { integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg== }
@@ -2072,6 +2095,11 @@ packages:
   /fast-text-encoding/1.0.3:
     resolution:
       { integrity: sha512-dtm4QZH9nZtcDt8qJiOH9fcQd1NAgi+K1O2DbE6GG1PPCK/BWfOH3idCTRQ4ImXRUOyopDEgDEnVEE7Y/2Wrig== }
+    dev: false
+
+  /fastest-levenshtein/1.0.12:
+    resolution:
+      { integrity: sha512-On2N+BpYJ15xIC974QNVuYGMOlEVt4s0EOI3wwMqOmK1fdDY+FN/zltPV8vosq4ad4c/gJ1KHScUn/6AWIgiow== }
     dev: false
 
   /fastq/1.13.0:
