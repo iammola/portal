@@ -1,8 +1,10 @@
-import { useEffect, useId, useState } from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
+import { useEffect, useId, useMemo, useState } from "react";
 import { CheckIcon, ChevronDownIcon, Cross2Icon, EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+
+import { checkPasswordStrength, cx } from "utils";
 
 export const Input: React.FC<InputProps> = ({ children, id, onChange, validators, ...props }) => {
   const customId = useId();
@@ -55,6 +57,15 @@ export const Input: React.FC<InputProps> = ({ children, id, onChange, validators
 export const Password: React.FC<InputProps> = ({ children, id, onChange, ...props }) => {
   const customId = useId();
   const [isVisible, setIsVisible] = useState(false);
+  const [check] = useState(checkPasswordStrength);
+
+  const strength = useMemo(() => {
+    const value = props.value as string;
+    const { score = -1 } = value ? check(value) : {};
+    const title = ["Poor", "Weak", "Fair", "Good", "Strong"][score] ?? "No";
+
+    return { score, title };
+  }, [check, props.value]);
 
   return (
     <PopoverPrimitive.Root>
@@ -87,7 +98,24 @@ export const Password: React.FC<InputProps> = ({ children, id, onChange, ...prop
           onOpenAutoFocus={(e) => e.preventDefault()}
           className="flex min-w-[300px] flex-col items-start justify-center gap-3 rounded-md bg-white p-5 shadow-md focus:outline-none dark:bg-gray-dark-3"
         >
-          <h4 className="font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">Password Level</h4>
+          <h4 className="font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{strength.title} Password</h4>
+          <div className="flex w-full justify-start gap-1">
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <div
+                key={idx}
+                className={cx(
+                  "h-1.5 shrink-0 grow rounded-full",
+                  idx <= strength.score
+                    ? {
+                        "bg-red-9 dark:bg-red-dark-9": strength.score < 2,
+                        "bg-green-9 dark:bg-green-dark-9": strength.score > 2,
+                        "bg-amber-9 dark:bg-amber-dark-9": strength.score === 2,
+                      }
+                    : "bg-gray-5 dark:bg-gray-dark-5"
+                )}
+              />
+            ))}
+          </div>
         </PopoverPrimitive.Content>
       </div>
     </PopoverPrimitive.Root>
