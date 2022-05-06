@@ -116,6 +116,7 @@ export const Password: React.FC<InputProps> = ({ children, id, onChange, ...prop
               />
             ))}
           </div>
+          <PopoverPrimitive.Arrow className="fill-white dark:fill-gray-dark-3" />
         </PopoverPrimitive.Content>
       </div>
     </PopoverPrimitive.Root>
