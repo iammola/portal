@@ -7,6 +7,7 @@ specifiers:
   "@radix-ui/react-avatar": ^0.1.4
   "@radix-ui/react-checkbox": ^0.1.5
   "@radix-ui/react-dialog": ^0.1.7
+  "@radix-ui/react-hover-card": ^0.1.5
   "@radix-ui/react-icons": ^1.1.0
   "@radix-ui/react-label": ^0.1.5
   "@radix-ui/react-navigation-menu": ^0.1.2
@@ -66,6 +67,7 @@ dependencies:
   "@radix-ui/react-avatar": 0.1.4_react@18.1.0
   "@radix-ui/react-checkbox": 0.1.5_react@18.1.0
   "@radix-ui/react-dialog": 0.1.7_i6xcbgvvylvakhe2evaee3dlf4
+  "@radix-ui/react-hover-card": 0.1.5_ef5jwxihqo6n7gxfmzogljlgcm
   "@radix-ui/react-icons": 1.1.0_react@18.1.0
   "@radix-ui/react-label": 0.1.5_react@18.1.0
   "@radix-ui/react-navigation-menu": 0.1.2_ef5jwxihqo6n7gxfmzogljlgcm
@@ -529,6 +531,27 @@ packages:
       "@radix-ui/react-primitive": 0.1.4_react@18.1.0
       "@radix-ui/react-use-callback-ref": 0.1.0_react@18.1.0
       react: 18.1.0
+    dev: false
+
+  /@radix-ui/react-hover-card/0.1.5_ef5jwxihqo6n7gxfmzogljlgcm:
+    resolution:
+      { integrity: sha512-9eeBUZGalPbKL2dDZTbGUoAQR77PpL0IgQ27mKyj1tXnvhRcUPOSonM1KjqcCKOq2SS+G5gq7xhKHsf0v9XmTg== }
+    peerDependencies:
+      react: ^16.8 || ^17.0
+      react-dom: ^16.8 || ^17.0
+    dependencies:
+      "@babel/runtime": 7.17.9
+      "@radix-ui/primitive": 0.1.0
+      "@radix-ui/react-compose-refs": 0.1.0_react@18.1.0
+      "@radix-ui/react-context": 0.1.1_react@18.1.0
+      "@radix-ui/react-dismissable-layer": 0.1.5_react@18.1.0
+      "@radix-ui/react-popper": 0.1.4_react@18.1.0
+      "@radix-ui/react-portal": 0.1.4_ef5jwxihqo6n7gxfmzogljlgcm
+      "@radix-ui/react-presence": 0.1.2_react@18.1.0
+      "@radix-ui/react-primitive": 0.1.4_react@18.1.0
+      "@radix-ui/react-use-controllable-state": 0.1.0_react@18.1.0
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
     dev: false
 
   /@radix-ui/react-icons/1.1.0_react@18.1.0:
