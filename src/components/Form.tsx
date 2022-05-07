@@ -140,14 +140,14 @@ export const Phone: React.FC<InputProps> = ({ children, id, onChange, ...props }
   const customId = useId();
   const [formatted, setFormatted] = useState("");
   const [regions] = useState(PhoneNumber.getSupportedRegionCodes());
-  const [activeRegion, setActiveRegion] = useState(() => PhoneNumber(props.value ?? "").getRegionCode() ?? "NG");
-  const formatter = useMemo(() => PhoneNumber.getAsYouType(activeRegion), [activeRegion]);
+  const [regionCode, setRegionCode] = useState(() => PhoneNumber(props.value ?? "").getRegionCode() ?? "NG");
+  const formatter = useMemo(() => PhoneNumber.getAsYouType(regionCode), [regionCode]);
 
   const updateRegion = useCallback(
     (regionCode: string) => {
       onChange("");
       setFormatted("");
-      setActiveRegion(regionCode);
+      setRegionCode(regionCode);
     },
     [onChange]
   );
@@ -171,10 +171,10 @@ export const Phone: React.FC<InputProps> = ({ children, id, onChange, ...props }
         <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{children}</span>
         {!props.required && <span className="text-xs text-gray-11 dark:text-gray-dark-11">Optional</span>}
       </LabelPrimitive.Root>
-      <SelectPrimitive.Root value={activeRegion} onValueChange={updateRegion}>
+      <SelectPrimitive.Root value={regionCode} onValueChange={updateRegion}>
         <div className="relative flex">
           <SelectPrimitive.Trigger className="inline-flex items-center justify-center gap-2 rounded-l bg-gray-2 px-4 text-sm text-gray-11 hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-5 dark:bg-gray-dark-3 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-5">
-            <SelectPrimitive.Value>{getFlagEmoji(activeRegion)}</SelectPrimitive.Value>
+            <SelectPrimitive.Value>{getFlagEmoji(regionCode)}</SelectPrimitive.Value>
             <SelectPrimitive.Icon asChild>
               <ChevronDownIcon />
             </SelectPrimitive.Icon>
