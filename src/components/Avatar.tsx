@@ -10,7 +10,7 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
       />
       <AvatarPrimitive.Fallback
         delayMs={600}
-        className="grid h-full w-full place-items-center bg-white text-sm font-medium text-black dark:bg-black dark:text-white"
+        className="grid h-full w-full place-items-center bg-gray-3 text-sm font-medium text-gray-12 dark:bg-gray-dark-3 dark:text-gray-dark-12"
       >
         {props.initials}
       </AvatarPrimitive.Fallback>
