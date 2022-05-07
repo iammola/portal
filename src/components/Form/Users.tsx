@@ -1,6 +1,8 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
+import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 import { Fragment, useId, useState } from "react";
 import { EyeOpenIcon, Pencil1Icon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 import { useIsomorphicLayoutEffect } from "utils";
 
@@ -54,15 +56,41 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
           )}
         </button>
       </LabelPrimitive.Root>
-      <textarea
-        {...props}
-        value={raw}
-        id={id || customId}
-        onChange={(e) => setRaw(e.target.value)}
-        placeholder="Use @username to mention a user"
-        className="min-h-[100px] min-w-[375px] rounded-md bg-gray-3 p-4 text-xs tracking-wide placeholder:text-gray-11 focus:outline-none focus:ring-2 focus:ring-gray-7 dark:bg-gray-dark-3 dark:placeholder:text-gray-dark-11 dark:focus:ring-gray-dark-7"
-      />
+      {preview ? (
+        <div className="flex min-h-[100px] min-w-[375px] flex-wrap content-start items-start gap-2 rounded-md bg-gray-3 p-4 text-xs tracking-wide dark:bg-gray-dark-3">
+          {raw.split(" ").map((user, idx) => (
+            <User key={idx} username={user} />
+          ))}
+        </div>
+      ) : (
+        <textarea
+          {...props}
+          value={raw}
+          id={id || customId}
+          onChange={(e) => setRaw(e.target.value)}
+          placeholder="Use @username to mention a user"
+          className="min-h-[100px] min-w-[375px] rounded-md bg-gray-3 p-4 text-xs tracking-wide placeholder:text-gray-11 focus:outline-none focus:ring-2 focus:ring-gray-7 dark:bg-gray-dark-3 dark:placeholder:text-gray-dark-11 dark:focus:ring-gray-dark-7"
+        />
+      )}
     </div>
+  );
+};
+
+const User: React.FC<{ username: string }> = ({ username }) => {
+  return (
+    <HoverCardPrimitive.Root>
+      <HoverCardPrimitive.Trigger asChild>
+        <Link
+          href={`/link/to/${username}`}
+          className="font-medium tracking-wider text-gray-12 hover:underline hover:underline-offset-1 dark:text-gray-dark-12"
+        >
+          {username}
+        </Link>
+      </HoverCardPrimitive.Trigger>
+      <HoverCardPrimitive.Content sideOffset={3} className="rounded-md bg-white p-5 shadow-md dark:bg-gray-dark-2">
+        <HoverCardPrimitive.Arrow className="fill-white dark:fill-gray-dark-2" />
+      </HoverCardPrimitive.Content>
+    </HoverCardPrimitive.Root>
   );
 };
 
