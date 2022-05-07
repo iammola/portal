@@ -9,3 +9,5 @@ export { Phone } from "./Phone";
 export { RadioGroup } from "./Radio";
 
 export { Checkbox } from "./Checkbox";
+
+export { Users } from "./Users";
