@@ -4,12 +4,14 @@ import englishCountries from "i18n-iso-countries/langs/en.json";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import {
   CheckIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   Cross2Icon,
+  DividerHorizontalIcon,
   EyeClosedIcon,
   EyeOpenIcon,
 } from "@radix-ui/react-icons";
@@ -259,6 +261,31 @@ Select.Item = function Item({ children, ...props }) {
   );
 };
 
+export const Checkbox: React.FC<CheckboxProps> = ({ children, id, ...props }) => {
+  const customId = useId();
+
+  return (
+    <div className="flex items-center gap-2.5">
+      <CheckboxPrimitive.Root
+        {...props}
+        id={id || customId}
+        className="grid h-6 w-6 place-items-center rounded bg-white hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-5 active:bg-gray-5 dark:bg-gray-dark-3 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-5 dark:active:bg-gray-dark-5"
+      >
+        <CheckboxPrimitive.Indicator className="text-gray-11">
+          {props.checked === true && <CheckIcon />}
+          {props.checked === "indeterminate" && <DividerHorizontalIcon />}
+        </CheckboxPrimitive.Indicator>
+      </CheckboxPrimitive.Root>
+      <LabelPrimitive.Root
+        htmlFor={id || customId}
+        className="select-none text-sm tracking-wide text-gray-12 dark:text-gray-dark-12"
+      >
+        {children}
+      </LabelPrimitive.Root>
+    </div>
+  );
+};
+
 interface InputProps extends Omit<React.ComponentProps<"input">, "onChange" | "value"> {
   id?: string;
   value?: string;
@@ -269,6 +296,8 @@ interface InputProps extends Omit<React.ComponentProps<"input">, "onChange" | "v
     test: RegExp | ((val: string) => boolean);
   }>;
 }
+
+type CheckboxProps = CP<Parameters<typeof CheckboxPrimitive.Root>[0], string>;
 
 interface SelectProps {
   label: string;
