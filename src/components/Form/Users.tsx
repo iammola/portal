@@ -5,7 +5,7 @@ import { EyeOpenIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
 import { Avatar } from "components";
-import { useIsomorphicLayoutEffect } from "utils";
+import { cx, useIsomorphicLayoutEffect } from "utils";
 
 export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }) => {
   const customId = useId();
@@ -71,31 +71,44 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
 };
 
 const User: React.FC<{ username: string }> = ({ username }) => {
-  const [user] = useState({
-    image: { portrait: "LinkedUserImage" },
-    name: "Linked User Name",
-    initials: "LUN",
-  });
+  // `true` - User Exists; `false` - User does not exist; `null` - Checking user
+  const [isUser] = useState<boolean | null>(null);
+  /* Use `SWR` hook to fetch user data. */
+  const [user] = useState({ image: { portrait: "LinkedUserImage" }, name: "Linked User Name", initials: "LUN" });
 
   return (
     <HoverCardPrimitive.Root>
       <HoverCardPrimitive.Trigger asChild>
         <Link
           href={`/link/to/${username}`}
-          className="font-medium tracking-wider text-gray-12 hover:underline hover:underline-offset-1 dark:text-gray-dark-12"
+          className={cx([
+            isUser !== false,
+            "font-medium tracking-wider text-gray-12 underline-offset-1 hover:underline dark:text-gray-dark-12",
+            "text-red-11 dark:text-red-dark-11",
+          ])}
         >
           {username}
         </Link>
       </HoverCardPrimitive.Trigger>
       <HoverCardPrimitive.Content
         sideOffset={3}
-        className="flex items-center justify-start gap-3 rounded-md bg-white p-5 shadow-md dark:bg-gray-dark-2"
+        className={cx("flex items-center rounded-md bg-white shadow-md dark:bg-gray-dark-2", [
+          !isUser,
+          "justify-center p-3",
+          "justify-start gap-3 p-5",
+        ])}
       >
-        <Avatar {...user} src={user.image.portrait} />
-        <div className="flex flex-col items-start justify-center gap-1">
-          <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{user.name}</span>
-          <span className="text-xs text-gray-11 dark:text-gray-dark-11">{username}</span>
-        </div>
+        {isUser && (
+          <Fragment>
+            <Avatar {...user} src={user.image.portrait} />
+            <div className="flex flex-col items-start justify-center gap-1">
+              <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{user.name}</span>
+              <span className="text-xs text-gray-11 dark:text-gray-dark-11">{username}</span>
+            </div>
+          </Fragment>
+        )}
+        {isUser === null && "Checking User..."}
+        {isUser === false && "User does not exist"}
         <HoverCardPrimitive.Arrow className="fill-white dark:fill-gray-dark-2" />
       </HoverCardPrimitive.Content>
     </HoverCardPrimitive.Root>
