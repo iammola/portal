@@ -287,7 +287,6 @@ export const Checkbox: React.FC<CheckboxProps> = ({ children, id, ...props }) =>
 };
 
 interface InputProps extends Omit<React.ComponentProps<"input">, "onChange" | "value"> {
-  id?: string;
   value?: string;
   children: string;
   onChange(val: string): void;
