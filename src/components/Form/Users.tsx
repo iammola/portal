@@ -4,6 +4,7 @@ import { Fragment, useId, useState } from "react";
 import { EyeOpenIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
+import { Avatar } from "components";
 import { useIsomorphicLayoutEffect } from "utils";
 
 export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }) => {
@@ -70,6 +71,12 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
 };
 
 const User: React.FC<{ username: string }> = ({ username }) => {
+  const [user] = useState({
+    image: { portrait: "LinkedUserImage" },
+    name: "Linked User Name",
+    initials: "LUN",
+  });
+
   return (
     <HoverCardPrimitive.Root>
       <HoverCardPrimitive.Trigger asChild>
@@ -80,7 +87,15 @@ const User: React.FC<{ username: string }> = ({ username }) => {
           {username}
         </Link>
       </HoverCardPrimitive.Trigger>
-      <HoverCardPrimitive.Content sideOffset={3} className="rounded-md bg-white p-5 shadow-md dark:bg-gray-dark-2">
+      <HoverCardPrimitive.Content
+        sideOffset={3}
+        className="flex items-center justify-start gap-3 rounded-md bg-white p-5 shadow-md dark:bg-gray-dark-2"
+      >
+        <Avatar {...user} src={user.image.portrait} />
+        <div className="flex flex-col items-start justify-center gap-1">
+          <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{user.name}</span>
+          <span className="text-xs text-gray-11 dark:text-gray-dark-11">{username}</span>
+        </div>
         <HoverCardPrimitive.Arrow className="fill-white dark:fill-gray-dark-2" />
       </HoverCardPrimitive.Content>
     </HoverCardPrimitive.Root>
