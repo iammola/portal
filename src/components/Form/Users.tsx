@@ -4,7 +4,7 @@ import { Fragment, useId, useState } from "react";
 import { EyeOpenIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
-import { Avatar } from "components";
+import { Avatar, Icons } from "components";
 import { cx, useIsomorphicLayoutEffect } from "utils";
 
 export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }) => {
@@ -107,8 +107,8 @@ const User: React.FC<{ username: string }> = ({ username }) => {
             </div>
           </Fragment>
         )}
-        {isUser === null && "Checking User..."}
-        {isUser === false && "User does not exist"}
+        {isUser === null && <Icons.LoadingIcon className="h-6 w-6 animate-spin fill-gray-9 dark:fill-gray-dark-9" />}
+        {isUser === false && <span className="text-sm text-gray-11 dark:text-gray-dark-11">Username not found</span>}
         <HoverCardPrimitive.Arrow className="fill-white dark:fill-gray-dark-2" />
       </HoverCardPrimitive.Content>
     </HoverCardPrimitive.Root>
