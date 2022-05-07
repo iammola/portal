@@ -12,15 +12,6 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
   const [raw, setRaw] = useState(() => formatValue(props.value ?? ""));
 
   useIsomorphicLayoutEffect(() => {
-    if (!preview) return;
-    setRaw((val) => {
-      const value = formatValue(val);
-      onChange(value);
-      return value;
-    });
-  }, [onChange, preview]);
-
-  useIsomorphicLayoutEffect(() => {
     const timeout = setTimeout(() => onChange(formatValue(raw)), 5e2);
     return () => clearTimeout(timeout);
   }, [raw, onChange]);
@@ -58,9 +49,11 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
       </LabelPrimitive.Root>
       {preview ? (
         <div className="flex min-h-[100px] min-w-[375px] flex-wrap content-start items-start gap-2 rounded-md bg-gray-3 p-4 text-xs tracking-wide dark:bg-gray-dark-3">
-          {raw.split(" ").map((user, idx) => (
-            <User key={idx} username={user} />
-          ))}
+          {formatValue(raw)
+            .split(" ")
+            .map((user, idx) => (
+              <User key={idx} username={user} />
+            ))}
         </div>
       ) : (
         <textarea
