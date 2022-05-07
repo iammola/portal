@@ -292,7 +292,9 @@ interface InputProps extends Omit<React.ComponentProps<"input">, "onChange" | "v
   }>;
 }
 
-type CheckboxProps = CP<Parameters<typeof CheckboxPrimitive.Root>[0], string>;
+type CheckboxProps = Parameters<typeof CheckboxPrimitive.Root>[0] & {
+  children: string;
+};
 
 interface SelectProps {
   label: string;
