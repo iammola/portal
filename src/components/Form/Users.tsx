@@ -2,9 +2,30 @@ import * as LabelPrimitive from "@radix-ui/react-label";
 import { Fragment, useId, useState } from "react";
 import { EyeOpenIcon, Pencil1Icon } from "@radix-ui/react-icons";
 
+import { useIsomorphicLayoutEffect } from "utils";
+
 export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }) => {
   const customId = useId();
   const [preview, setPreview] = useState(false);
+  const [raw, setRaw] = useState(() => formatValue(props.value ?? ""));
+
+  useIsomorphicLayoutEffect(() => {
+    if (!preview) return;
+    setRaw((val) => {
+      const value = formatValue(val);
+      onChange(value);
+      return value;
+    });
+  }, [onChange, preview]);
+
+  function formatValue(val: string) {
+    return val
+      .toLowerCase()
+      .split(/.(?=@\w)|,|\s/g)
+      .filter((str) => /^@\w+/.test(str))
+      .join(" ")
+      .trim();
+  }
 
   return (
     <div className="flex flex-col items-start justify-center gap-2">
@@ -30,8 +51,9 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
       </LabelPrimitive.Root>
       <textarea
         {...props}
+        value={raw}
         id={id || customId}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => setRaw(e.target.value)}
         placeholder="Use @username to mention a user"
         className="min-h-[100px] min-w-[375px] rounded-md bg-gray-3 p-4 text-xs tracking-wide placeholder:text-gray-11 focus:outline-none focus:ring-2 focus:ring-gray-7 dark:bg-gray-dark-3 dark:placeholder:text-gray-dark-11 dark:focus:ring-gray-dark-7"
       />
