@@ -140,11 +140,7 @@ export const Phone: React.FC<InputProps> = ({ children, id, onChange, ...props }
   const customId = useId();
   const [formatted, setFormatted] = useState("");
   const [regions] = useState(PhoneNumber.getSupportedRegionCodes());
-  const [activeRegion, setActiveRegion] = useState(() => {
-    let region = PhoneNumber(props.value ?? "").getRegionCode() ?? "";
-    if (!region && typeof window !== "undefined") region = new Intl.Locale(navigator.language).region ?? "";
-    return region;
-  });
+  const [activeRegion, setActiveRegion] = useState(() => PhoneNumber(props.value ?? "").getRegionCode() ?? "NG");
   const formatter = useMemo(() => PhoneNumber.getAsYouType(activeRegion), [activeRegion]);
 
   const updateRegion = useCallback(
