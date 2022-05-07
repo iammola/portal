@@ -18,6 +18,11 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
     });
   }, [onChange, preview]);
 
+  useIsomorphicLayoutEffect(() => {
+    const timeout = setTimeout(() => onChange(formatValue(raw)), 5e2);
+    return () => clearTimeout(timeout);
+  }, [raw, onChange]);
+
   function formatValue(val: string) {
     return val
       .toLowerCase()
