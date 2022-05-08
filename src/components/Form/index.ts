@@ -11,3 +11,5 @@ export { RadioGroup } from "./Radio";
 export { Checkbox } from "./Checkbox";
 
 export { Users } from "./Users";
+
+export { Number } from "./Number";
