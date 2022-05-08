@@ -31,6 +31,7 @@ export const Input: React.FC<InputProps> = ({ children, id, onChange, validators
         {...props}
         type="text"
         id={id || customId}
+        value={props.value ?? ""}
         onChange={(e) => onChange(e.target.value)}
         className="inline-flex h-[45px] w-full min-w-[300px] items-center justify-center rounded bg-gray-3 px-2.5 text-sm text-gray-12 focus:outline-none focus:ring-2 focus:ring-gray-7 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:focus:ring-gray-dark-7"
       />
