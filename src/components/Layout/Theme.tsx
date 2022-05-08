@@ -6,11 +6,11 @@ import { DesktopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 export const ThemePicker: React.FC = () => {
   const { theme, resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [toggle] = useState<Record<string, string>>(
-    ["dark", "light"].reduce((acc, theme, idx, arr) => ({ ...acc, [theme]: arr[idx === 0 ? 1 : 0] }), {
-      system: "system",
-    })
-  );
+  const [toggle] = useState<Record<string, string>>(() => ({
+    light: "dark",
+    dark: "light",
+    system: "system",
+  }));
 
   useEffect(() => setMounted(true), []);
 
