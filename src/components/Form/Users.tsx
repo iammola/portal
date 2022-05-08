@@ -80,6 +80,8 @@ const User: React.FC<{ username: string }> = ({ username }) => {
     <HoverCardPrimitive.Root>
       <HoverCardPrimitive.Trigger asChild>
         <Link
+          target="_blank"
+          rel="noopener noreferrer"
           href={`/link/to/${username}`}
           className={cx([
             isUser !== false,
