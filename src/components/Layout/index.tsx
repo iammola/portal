@@ -33,7 +33,7 @@ export const Layout: React.FC<CP<LayoutProps>> = ({ children, hideSidebar }) => 
   }, [router.events]);
 
   return (
-    <main className="relative flex h-screen w-screen items-stretch overflow-hidden font-inter">
+    <main className="relative flex h-screen w-screen items-stretch overflow-hidden font-sans">
       <ToastProvider>
         {!hideSidebar && <Sidebar />}
         <Body>{children}</Body>

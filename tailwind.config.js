@@ -9,7 +9,7 @@ module.exports = {
     colors: radixToTailwindConfig(),
     screens: { xs: "475px", ...defaultTheme.screens },
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    extend: { fontFamily: { inter: ["Inter", ...defaultTheme.fontFamily.sans] } },
+    extend: { fontFamily: { sans: ["Inter", ...defaultTheme.fontFamily.sans] } },
   },
 };
 
