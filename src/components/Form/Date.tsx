@@ -152,7 +152,7 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
 export { Component as Date };
 
 const Calendar: React.FC<CalendarProps> = ({ date, month, year, onChange }) => {
-  const [activeMonth] = useState(String(month === "" ? new Date().getMonth() : +month));
+  const [activeMonth, setActiveMonth] = useState(String(month === "" ? new Date().getMonth() : +month));
   const [textYear, setTextYear] = useState(() => String(year === "" ? new Date().getFullYear() : +year));
 
   const [{ days, months }] = useState(() => ({
@@ -221,12 +221,14 @@ const Calendar: React.FC<CalendarProps> = ({ date, month, year, onChange }) => {
         <div className="flex shrink-0 items-center gap-2">
           <button
             type="button"
+            onClick={() => +activeMonth > 1 && setActiveMonth(String(+activeMonth - 1))}
             className="rounded-full p-1 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7"
           >
             <ChevronLeftIcon />
           </button>
           <button
             type="button"
+            onClick={() => +activeMonth < 12 && setActiveMonth(String(+activeMonth + 1))}
             className="rounded-full p-1 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7"
           >
             <ChevronRightIcon />
