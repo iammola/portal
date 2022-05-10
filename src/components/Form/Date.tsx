@@ -55,10 +55,10 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
     if (val === "") return updateValue(val, "year");
 
     const max = new Date().getFullYear() + 3e2;
-    const year = String(+val);
+    let year = String(+val);
+    if (+year > max) year = String(new Date().getFullYear());
 
     updateValue(year.padStart(4, "0"), "year");
-    if (+year > max) updateValue(String(new Date().getFullYear()), "year");
   }
 
   return (
