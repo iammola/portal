@@ -98,6 +98,7 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
               inputMode="numeric"
               onFocus={(e) => e.target.select()}
               onChange={(e) => setDate(e.target.value)}
+              onBlur={() => value.date === "00" && setDate("1")}
               className="h-full w-[40px] shrink-0 bg-transparent text-center focus:outline-none"
               autoComplete={props.autoComplete?.includes("bday") ? "bday-date" : undefined}
             />
@@ -111,6 +112,7 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
               inputMode="numeric"
               onFocus={(e) => e.target.select()}
               onChange={(e) => setMonth(e.target.value)}
+              onBlur={() => value.month === "00" && setMonth("1")}
               className="h-full w-[40px] shrink-0 bg-transparent text-center focus:outline-none"
               autoComplete={props.autoComplete?.includes("bday") ? "bday-month" : undefined}
             />
