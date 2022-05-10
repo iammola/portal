@@ -12,7 +12,7 @@ import {
   ChevronUpIcon,
 } from "@radix-ui/react-icons";
 
-import { useIsomorphicLayoutEffect } from "utils";
+import { cx, useIsomorphicLayoutEffect } from "utils";
 
 const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
   const customId = useId();
@@ -157,11 +157,12 @@ export { Component as Date };
 const Calendar: React.FC<CalendarProps> = ({ date, month, year, onChange }) => {
   const [activeMonth, setActiveMonth] = useState(String(month === "" ? new Date().getMonth() + 1 : +month));
   const [textYear, setTextYear] = useState(() => String(year === "" ? new Date().getFullYear() : +year));
-
   const [{ days, months }] = useState(() => ({
     days: "Su Mo Tu We Th Fr Sa".split(" "),
     months: "January February March April May June July August September October November December".split(" "),
   }));
+
+  const dates = useMonthDates(activeMonth, year || textYear);
 
   function setYear(val: string) {
     if (isNaN(+val)) return;
@@ -250,263 +251,23 @@ const Calendar: React.FC<CalendarProps> = ({ date, month, year, onChange }) => {
         ))}
       </div>
       <div className="grid h-full w-full grow grid-cols-7 items-center gap-2 text-sm">
-        <button
-          type="button"
-          onClick={() => handleChange("1", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          1
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("2", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          2
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("3", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          3
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("4", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          4
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("5", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          5
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("6", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          6
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("7", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          7
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("8", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          8
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("9", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          9
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("10", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          10
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("11", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          11
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("12", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          12
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("13", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          13
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("14", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          14
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("15", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          15
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("16", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          16
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("17", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          17
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("18", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          18
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("19", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          19
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("20", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          20
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("21", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          21
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("22", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          22
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("23", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          23
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("24", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          24
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("25", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          25
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("26", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          26
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("27", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          27
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("28", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          28
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("29", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          29
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("30", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          30
-        </button>
-        <button
-          type="button"
-          onClick={() => handleChange("31", "date")}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          31
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            handleChange("1", "date");
-            handleChange(String(+activeMonth + 1), "month");
-          }}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-11 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-11 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          1
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            handleChange("2", "date");
-            handleChange(String(+activeMonth + 1), "month");
-          }}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-11 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-11 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          2
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            handleChange("3", "date");
-            handleChange(String(+activeMonth + 1), "month");
-          }}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-11 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-11 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          3
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            handleChange("4", "date");
-            handleChange(String(+activeMonth + 1), "month");
-          }}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-11 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-11 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
-        >
-          4
-        </button>
+        {dates.map((item) => (
+          <button
+            type="button"
+            key={`${item.date.getDate()} - ${item.type}`}
+            onClick={() => {
+              handleChange(String(item.date.getDate()), "date");
+              handleChange(String(item.date.getFullYear()), "year");
+              handleChange(String(item.date.getMonth() + 1), "month");
+            }}
+            className={cx(
+              "flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6",
+              [item.type === "current", "text-gray-12 dark:text-gray-dark-12", "text-gray-11 dark:text-gray-dark-11"]
+            )}
+          >
+            {item.date.getDate()}
+          </button>
+        ))}
       </div>
     </Fragment>
   );
