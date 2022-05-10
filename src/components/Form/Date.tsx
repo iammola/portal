@@ -1,7 +1,15 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
+import * as SelectPrimitive from "@radix-ui/react-select";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { useId, useRef, useState } from "react";
-import { CalendarIcon } from "@radix-ui/react-icons";
+import { Fragment, useId, useRef, useState } from "react";
+import {
+  CalendarIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
+} from "@radix-ui/react-icons";
 
 const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
   const customId = useId();
@@ -125,9 +133,9 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
         <PopoverPrimitive.Content
           align="start"
           sideOffset={5}
-          className="min-w-full rounded-md bg-white p-5 shadow-md dark:bg-gray-dark-3"
+          className="flex select-none flex-col items-start justify-start gap-3 rounded-md bg-white p-5 shadow-md dark:bg-gray-dark-3"
         >
-          Calendar
+          <Calendar />
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Root>
     </div>
@@ -135,6 +143,308 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
 };
 
 export { Component as Date };
+
+const Calendar: React.FC = () => {
+  const [activeMonth, setActiveMonth] = useState(() => String(new Date().getMonth()));
+  const [activeYear, setActiveYear] = useState(() => String(new Date().getFullYear()));
+  const [textYear, setTextYear] = useState(() => activeYear);
+
+  const [{ days, months }] = useState(() => ({
+    days: "Su Mo Tu We Th Fr Sa".split(" "),
+    months: "January February March April May June July August September October November December".split(" "),
+  }));
+
+  function setYear(val: string) {
+    if (isNaN(+val)) return;
+    if (val === "") return String(new Date().getFullYear());
+
+    const max = new Date().getFullYear() + 3e2;
+    let year = String(+val);
+    if (+year > max) year = String(new Date().getFullYear());
+
+    return year.padStart(4, "0");
+  }
+
+  return (
+    <Fragment>
+      <div className="flex w-full gap-3 pb-2">
+        <div className="h-[30px] grow space-x-2 text-sm text-gray-12 dark:text-gray-dark-12">
+          <SelectPrimitive.Root value={activeMonth} onValueChange={setActiveMonth}>
+            <SelectPrimitive.Trigger className="inline-flex h-full select-none items-center justify-center gap-3 rounded px-2 text-sm text-gray-11 hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-5 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-5">
+              <SelectPrimitive.Value />
+              <SelectPrimitive.Icon asChild>
+                <ChevronDownIcon />
+              </SelectPrimitive.Icon>
+            </SelectPrimitive.Trigger>
+            <SelectPrimitive.Content className="overflow-hidden rounded-md bg-white shadow-md dark:bg-gray-dark-3">
+              <SelectPrimitive.ScrollUpButton className="grid h-6 place-items-center bg-white text-gray-11 dark:bg-gray-dark-2 dark:text-gray-dark-11">
+                <ChevronUpIcon />
+              </SelectPrimitive.ScrollUpButton>
+              <SelectPrimitive.Viewport className="flex flex-col justify-start gap-1 py-3">
+                {months.map((month, idx) => (
+                  <SelectPrimitive.Item
+                    key={month}
+                    value={String(idx)}
+                    className="relative flex h-9 cursor-pointer select-none items-center py-2 pr-9 pl-6 text-sm tracking-wide text-gray-11 hover:bg-gray-4 focus:bg-gray-5 focus:outline-none dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:bg-gray-dark-5"
+                  >
+                    <SelectPrimitive.ItemText>{month}</SelectPrimitive.ItemText>
+                    <SelectPrimitive.ItemIndicator className="absolute left-0 inline-grid w-6 place-items-center">
+                      <CheckIcon />
+                    </SelectPrimitive.ItemIndicator>
+                  </SelectPrimitive.Item>
+                ))}
+              </SelectPrimitive.Viewport>
+              <SelectPrimitive.ScrollDownButton className="grid h-6 place-items-center bg-white text-gray-11 dark:bg-gray-dark-2 dark:text-gray-dark-11">
+                <ChevronDownIcon />
+              </SelectPrimitive.ScrollDownButton>
+            </SelectPrimitive.Content>
+          </SelectPrimitive.Root>
+          <input
+            type="text"
+            pattern="\d*"
+            value={textYear}
+            inputMode="numeric"
+            onBlur={(e) => setActiveYear((v) => setYear(e.target.value) ?? v)}
+            onChange={(e) => setTextYear((v) => setYear(e.target.value) ?? v)}
+            onKeyDown={(e) => e.code === "Enter" && (e.target as HTMLInputElement).blur()}
+            className="inline-flex h-full w-[60px] items-center justify-center border-b border-gray-7 bg-gray-3 px-2.5 text-sm text-gray-11 focus:outline-none dark:border-gray-dark-7 dark:bg-gray-dark-3 dark:text-gray-dark-11"
+          />
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            className="rounded-full p-1 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7"
+          >
+            <ChevronLeftIcon />
+          </button>
+          <button
+            type="button"
+            className="rounded-full p-1 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7"
+          >
+            <ChevronRightIcon />
+          </button>
+        </div>
+      </div>
+      <div className="grid w-full grid-cols-7 items-center gap-1 text-center text-xs text-gray-11 dark:text-gray-dark-11">
+        {days.map((d) => (
+          <span key={d}>{d}</span>
+        ))}
+      </div>
+      <div className="grid h-full w-full grow grid-cols-7 items-center gap-2 text-sm">
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          1
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          2
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          3
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          4
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          5
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          6
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          7
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          8
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          9
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          10
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          11
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          12
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          13
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          14
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          15
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          16
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          17
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          18
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          19
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          20
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          21
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          22
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          23
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          24
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          25
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          26
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          27
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          28
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          29
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          30
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          31
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-11 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-11 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          1
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-11 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-11 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          2
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-11 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-11 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          3
+        </button>
+        <button
+          type="button"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded text-gray-11 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-6 dark:text-gray-dark-11 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-6"
+        >
+          4
+        </button>
+      </div>
+    </Fragment>
+  );
+};
 
 interface DateProps extends Omit<React.ComponentProps<"input">, "onChange" | "value"> {
   value?: Date;
