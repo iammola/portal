@@ -155,7 +155,7 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
 export { Component as Date };
 
 const Calendar: React.FC<CalendarProps> = ({ date, month, year, onChange }) => {
-  const [activeMonth, setActiveMonth] = useState(String(month === "" ? new Date().getMonth() : +month));
+  const [activeMonth, setActiveMonth] = useState(String(month === "" ? new Date().getMonth() + 1 : +month));
   const [textYear, setTextYear] = useState(() => String(year === "" ? new Date().getFullYear() : +year));
 
   const [{ days, months }] = useState(() => ({
