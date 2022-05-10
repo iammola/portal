@@ -36,7 +36,6 @@
     "cookies-next": "^2.0.4",
     "country-flag-icons": "^1.4.26",
     "http-status-codes": "^2.2.0",
-    "i18n-iso-countries": "^7.4.0",
     "if-emoji": "^0.1.0",
     "jose": "^4.8.1",
     "mongoose": "^6.3.2",
