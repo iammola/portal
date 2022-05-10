@@ -1,6 +1,7 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
+import { eachDayOfInterval, endOfMonth, subDays } from "date-fns";
 import { Fragment, useId, useRef, useState } from "react";
 import {
   CalendarIcon,
@@ -10,6 +11,8 @@ import {
   ChevronRightIcon,
   ChevronUpIcon,
 } from "@radix-ui/react-icons";
+
+import { useIsomorphicLayoutEffect } from "utils";
 
 const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
   const customId = useId();
@@ -503,6 +506,30 @@ const Calendar: React.FC<CalendarProps> = ({ date, month, year, onChange }) => {
   );
 };
 
+function useMonthDates(month: string, year: string) {
+  const [dates, setDates] = useState<MonthDate[]>([]);
+
+  useIsomorphicLayoutEffect(() => {
+    const start = new Date(+year, +month - 1);
+    const end = endOfMonth(start);
+
+    const dates = eachDayOfInterval({
+      start: start.getDay() > 0 ? subDays(start, start.getDay()) : start,
+      end: end.getDay() < 6 ? subDays(end, end.getDay() - 6) : end,
+    }).map((date) => {
+      const monthEnd = endOfMonth(date);
+
+      return {
+        date,
+        type: monthEnd.getTime() > end.getTime() ? "next" : monthEnd.getTime() < end.getTime() ? "previous" : "current",
+      } as const;
+    });
+    setDates(dates);
+  }, [month, year]);
+
+  return dates;
+}
+
 interface DateProps extends Omit<React.ComponentProps<"input">, "onChange" | "value"> {
   value?: Date;
   children: string;
@@ -511,4 +538,9 @@ interface DateProps extends Omit<React.ComponentProps<"input">, "onChange" | "va
 
 interface CalendarProps extends Record<"date" | "month" | "year", string> {
   onChange(val: string, key: "date" | "month" | "year"): void;
+}
+
+interface MonthDate {
+  date: Date;
+  type: "previous" | "current" | "next";
 }
