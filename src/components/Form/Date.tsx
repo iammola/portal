@@ -1,5 +1,7 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
+import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { useId, useRef, useState } from "react";
+import { CalendarIcon } from "@radix-ui/react-icons";
 
 const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
   const customId = useId();
@@ -73,47 +75,61 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
         id={id || customId}
         value={props.value ? `${value.year}-${value.month}-${value.date}` : ""}
       />
-      <div className="inline-flex h-[45px] items-center justify-center gap-1.5 rounded bg-gray-3 px-2.5 text-sm text-gray-12 dark:bg-gray-dark-3 dark:text-gray-dark-12">
-        <input
-          type="text"
-          pattern="\d*"
-          ref={dateRef}
-          placeholder="DD"
-          value={value.date}
-          inputMode="numeric"
-          onFocus={(e) => e.target.select()}
-          onChange={(e) => setDate(e.target.value)}
-          className="h-full w-[40px] bg-transparent text-center focus:outline-none"
-          autoComplete={props.autoComplete?.includes("bday") ? "bday-date" : undefined}
-        />
-        /
-        <input
-          type="text"
-          pattern="\d*"
-          ref={monthRef}
-          placeholder="MM"
-          value={value.month}
-          inputMode="numeric"
-          onFocus={(e) => e.target.select()}
-          onChange={(e) => setMonth(e.target.value)}
-          className="h-full w-[40px] bg-transparent text-center focus:outline-none"
-          autoComplete={props.autoComplete?.includes("bday") ? "bday-month" : undefined}
-        />
-        /
-        <input
-          type="text"
-          ref={yearRef}
-          pattern="\d*"
-          placeholder="YYYY"
-          value={value.year}
-          inputMode="numeric"
-          onFocus={(e) => e.target.select()}
-          onChange={(e) => setYear(e.target.value)}
-          onBlur={() => value.year === "0000" && setYear("1")}
-          className="h-full w-[50px] bg-transparent text-center focus:outline-none"
-          autoComplete={props.autoComplete?.includes("bday") ? "bday-year" : undefined}
-        />
-      </div>
+      <PopoverPrimitive.Root>
+        <PopoverPrimitive.Anchor className="inline-flex h-[45px] items-center justify-center gap-0.5 rounded bg-gray-3 px-2.5 text-sm text-gray-12 dark:bg-gray-dark-3 dark:text-gray-dark-12">
+          <div className="inline-flex h-full shrink-0 items-center justify-center gap-1.5">
+            <input
+              type="text"
+              pattern="\d*"
+              ref={dateRef}
+              placeholder="DD"
+              value={value.date}
+              inputMode="numeric"
+              onFocus={(e) => e.target.select()}
+              onChange={(e) => setDate(e.target.value)}
+              className="h-full w-[40px] shrink-0 bg-transparent text-center focus:outline-none"
+              autoComplete={props.autoComplete?.includes("bday") ? "bday-date" : undefined}
+            />
+            /
+            <input
+              type="text"
+              pattern="\d*"
+              ref={monthRef}
+              placeholder="MM"
+              value={value.month}
+              inputMode="numeric"
+              onFocus={(e) => e.target.select()}
+              onChange={(e) => setMonth(e.target.value)}
+              className="h-full w-[40px] shrink-0 bg-transparent text-center focus:outline-none"
+              autoComplete={props.autoComplete?.includes("bday") ? "bday-month" : undefined}
+            />
+            /
+            <input
+              type="text"
+              ref={yearRef}
+              pattern="\d*"
+              placeholder="YYYY"
+              value={value.year}
+              inputMode="numeric"
+              onFocus={(e) => e.target.select()}
+              onChange={(e) => setYear(e.target.value)}
+              onBlur={() => value.year === "0000" && setYear("1")}
+              className="h-full w-[50px] shrink-0 bg-transparent text-center focus:outline-none"
+              autoComplete={props.autoComplete?.includes("bday") ? "bday-year" : undefined}
+            />
+          </div>
+          <PopoverPrimitive.Trigger className="rounded-full p-2.5 hover:bg-gray-5 dark:hover:bg-gray-dark-5">
+            <CalendarIcon />
+          </PopoverPrimitive.Trigger>
+        </PopoverPrimitive.Anchor>
+        <PopoverPrimitive.Content
+          align="start"
+          sideOffset={5}
+          className="min-w-full rounded-md bg-white p-5 shadow-md dark:bg-gray-dark-3"
+        >
+          Calendar
+        </PopoverPrimitive.Content>
+      </PopoverPrimitive.Root>
     </div>
   );
 };
