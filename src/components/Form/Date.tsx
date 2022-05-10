@@ -81,6 +81,7 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
           onFocus={(e) => e.target.select()}
           onChange={(e) => setDate(e.target.value)}
           className="h-full w-[40px] bg-transparent text-center focus:outline-none"
+          autoComplete={props.autoComplete?.includes("bday") ? "bday-date" : undefined}
         />
         /
         <input
@@ -93,6 +94,7 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
           onFocus={(e) => e.target.select()}
           onChange={(e) => setMonth(e.target.value)}
           className="h-full w-[40px] bg-transparent text-center focus:outline-none"
+          autoComplete={props.autoComplete?.includes("bday") ? "bday-month" : undefined}
         />
         /
         <input
@@ -106,6 +108,7 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
           onChange={(e) => setYear(e.target.value)}
           onBlur={() => value.year === "0000" && setYear("1")}
           className="h-full w-[50px] bg-transparent text-center focus:outline-none"
+          autoComplete={props.autoComplete?.includes("bday") ? "bday-year" : undefined}
         />
       </div>
     </div>
