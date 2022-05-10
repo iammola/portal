@@ -252,9 +252,9 @@ const Calendar: React.FC<CalendarProps> = ({ date, month, year, onChange }) => {
       </div>
       <div className="grid h-full w-full grow grid-cols-7 items-center gap-2 text-sm">
         {dates.map((item) => (
-          <button
-            type="button"
+          <CalendarDate
             key={`${item.date.getDate()} - ${item.type}`}
+            isSelected={item.date.getTime() === new Date(+year, +month - 1, +date).getTime()}
             onClick={() => {
               handleChange(String(item.date.getDate()), "date");
               handleChange(String(item.date.getFullYear()), "year");
@@ -266,10 +266,24 @@ const Calendar: React.FC<CalendarProps> = ({ date, month, year, onChange }) => {
             )}
           >
             {item.date.getDate()}
-          </button>
+          </CalendarDate>
         ))}
       </div>
     </Fragment>
+  );
+};
+
+const CalendarDate: React.FC<CalendarDateProps> = ({ children, isSelected, ...props }) => {
+  const ref = useRef<HTMLButtonElement>(null);
+
+  useIsomorphicLayoutEffect(() => {
+    if (isSelected) ref.current?.focus();
+  }, [isSelected]);
+
+  return (
+    <button {...props} type="button" ref={ref}>
+      {children}
+    </button>
   );
 };
 
@@ -310,4 +324,11 @@ interface CalendarProps extends Record<"date" | "month" | "year", string> {
 interface MonthDate {
   date: Date;
   type: "previous" | "current" | "next";
+}
+
+interface CalendarDateProps {
+  className: string;
+  onClick(): void;
+  children: number;
+  isSelected: boolean;
 }
