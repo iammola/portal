@@ -180,7 +180,13 @@ const Calendar: React.FC<CalendarProps> = ({ date, month, year, onChange }) => {
     <Fragment>
       <div className="flex w-full gap-3 pb-2">
         <div className="h-[30px] grow space-x-2 text-sm text-gray-12 dark:text-gray-dark-12">
-          <SelectPrimitive.Root value={activeMonth} onValueChange={(v) => handleChange(v, "month")}>
+          <SelectPrimitive.Root
+            value={activeMonth}
+            onValueChange={(month) => {
+              handleChange(month, "month");
+              setActiveMonth(String(+month));
+            }}
+          >
             <SelectPrimitive.Trigger className="inline-flex h-full select-none items-center justify-center gap-3 rounded px-2 text-sm text-gray-11 hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-5 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-5">
               <SelectPrimitive.Value />
               <SelectPrimitive.Icon asChild>
