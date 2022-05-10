@@ -17,6 +17,7 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
   const updateValue = (val: string, key: keyof typeof value) => setValue((value) => ({ ...value, [key]: val }));
 
   function setDate(val: string) {
+    if (isNaN(+val)) return;
     if (val === "") return updateValue(val, "date");
 
     let max = 31;
@@ -35,6 +36,7 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
   }
 
   function setMonth(val: string) {
+    if (isNaN(+val)) return;
     if (val === "") return updateValue(val, "month");
 
     const max = 12;
@@ -47,6 +49,7 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
   }
 
   function setYear(val: string) {
+    if (isNaN(+val)) return;
     if (val === "") return updateValue(val, "year");
 
     const max = new Date().getFullYear() + 3e2;
