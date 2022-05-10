@@ -13,3 +13,5 @@ export { Checkbox } from "./Checkbox";
 export { Users } from "./Users";
 
 export { Number } from "./Number";
+
+export { Date } from "./Date";
