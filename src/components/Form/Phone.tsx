@@ -1,18 +1,16 @@
-import * as countries from "i18n-iso-countries";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { useId, useState, useMemo, useCallback } from "react";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import PhoneNumber from "awesome-phonenumber";
-import englishCountries from "i18n-iso-countries/langs/en.json";
 
 import { getFlagEmoji } from "utils";
 
-countries.registerLocale(englishCountries);
 export const Phone: React.FC<PhoneProps> = ({ children, id, onChange, ...props }) => {
   const customId = useId();
   const [formatted, setFormatted] = useState("");
   const [regions] = useState(PhoneNumber.getSupportedRegionCodes());
+  const [regionNames] = useState(() => new Intl.DisplayNames([], { type: "region" }));
   const [regionCode, setRegionCode] = useState(() => PhoneNumber(props.value ?? "").getRegionCode() ?? "NG");
   const formatter = useMemo(() => PhoneNumber.getAsYouType(regionCode), [regionCode]);
 
@@ -77,7 +75,7 @@ export const Phone: React.FC<PhoneProps> = ({ children, id, onChange, ...props }
                   <div className="flex items-center gap-3">
                     <span className="inline-grid place-items-center">{getFlagEmoji(region)}</span>
                     <span className="text-sm text-gray-11">
-                      {countries.getName(region, "en") || region} (+{PhoneNumber.getCountryCodeForRegionCode(region)})
+                      {regionNames.of(region)} (+{PhoneNumber.getCountryCodeForRegionCode(region)})
                     </span>
                   </div>
                 </SelectPrimitive.ItemText>
