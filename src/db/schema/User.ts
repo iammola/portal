@@ -1,5 +1,5 @@
-import PhoneNumber from "awesome-phonenumber";
 import * as mongoose from "mongoose";
+import { parsePhoneNumber } from "awesome-phonenumber";
 
 import { ModelNames } from "db";
 import { generateSchoolMail } from "utils/user";
@@ -111,7 +111,7 @@ const UserContact = new mongoose.Schema<Schemas.User.Contact>(
     phone: {
       required: [true, "Phone required"],
       type: userSubContact("Phone required", {
-        validate: [(v?: string) => PhoneNumber(v ?? "").isValid(), "Invalid phone number"],
+        validate: [(v?: string) => parsePhoneNumber(v ?? "").isValid(), "Invalid phone number"],
       }),
     },
     address: {
