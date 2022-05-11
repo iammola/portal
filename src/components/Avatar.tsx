@@ -18,8 +18,8 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
   );
 };
 
-interface AvatarProps {
+type AvatarProps = {
   src: string;
   name: string;
   initials: string;
-}
+};

@@ -313,24 +313,24 @@ function useMonthDates(month: string, year: string) {
   return dates;
 }
 
-interface DateProps extends Omit<React.ComponentProps<"input">, "onChange" | "value"> {
+type DateProps = {
   value?: Date;
   children: string;
   onChange(val?: Date): void;
-}
+} & Omit<React.ComponentProps<"input">, "onChange" | "value">;
 
-interface CalendarProps extends Record<"date" | "month" | "year", string> {
+type CalendarProps = {
   onChange(val: string, key: "date" | "month" | "year"): void;
-}
+} & Record<"date" | "month" | "year", string>;
 
-interface MonthDate {
+type MonthDate = {
   date: Date;
   type: "previous" | "current" | "next";
-}
+};
 
-interface CalendarDateProps {
+type CalendarDateProps = {
   className: string;
   onClick(): void;
   children: number;
   isSelected: boolean;
-}
+};

@@ -20,15 +20,17 @@ declare global {
       (K extends true ? V : Utils.FlattenIntersection<K extends keyof V ? Pick<V, K> : unknown>);
 
     // Todo: Get a better name than "Thing" for this type. Meant to group classes or subjects or terms or sessions
-    export type ThingName = Record<"long" | "short", string> & { special?: string };
+    export type ThingName = {
+      special?: string;
+    } & Record<"long" | "short", string>;
   }
 
   namespace Schemas {
     namespace Attendance {
-      export interface Schema extends DocumentId {
+      export type Schema = {
         userId: ObjectId;
         dates: Date[];
-      }
+      } & DocumentId;
 
       export type Date = {
         readonly in: Date;
@@ -38,7 +40,7 @@ declare global {
 
       export type Record = ModelRecord<Schema>;
 
-      export interface Model extends Mongoose.Model<Schema> {
+      export type Model = {
         /** Find one user's attendance records by userId */
         findUser(
           userId: string,
@@ -58,27 +60,27 @@ declare global {
          * @param query The conditions to filter the attendance with
          */
         findUserRange(userId: string | string[], query: Mongoose.QuerySelector<Date>): AQuery<Pick<Schema, "dates">>;
-      }
+      } & Mongoose.Model<Schema>;
     }
 
     namespace Class {
-      export interface Schema extends DocumentId {
+      export type Schema = {
         /** The class order. How it'll be sorted when fetched from DB */
         order: number;
         name: ThingName;
         createdAt: Date;
         teachers: ObjectId[];
-      }
+      } & DocumentId;
 
-      export interface Virtuals {
+      export type Virtuals = {
         subjectsCount: number;
-      }
+      };
 
       export type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
 
       type PopulatedTeachers = { teachers: Teacher.Schema[] };
 
-      export interface Model extends Mongoose.Model<Schema, unknown, unknown, Virtuals> {
+      export type Model = {
         /** Find a class by any of it's long, short or special names */
         findByName(
           name: string,
@@ -98,37 +100,37 @@ declare global {
           teacherProjection?: Mongoose.ProjectionType<Schema> | null,
           options?: Mongoose.QueryOptions
         ): SQuery<PopulatedTeachers, PopulatedTeachers, unknown, Virtuals>;
-      }
+      } & Mongoose.Model<Schema, unknown, unknown, Virtuals>;
     }
 
     namespace Subject {
-      interface Schema {
+      type Schema = {
         class: ObjectId;
         order: number;
         mandatory?: true;
         sessions?: ObjectId[];
-      }
+      };
 
-      interface Subject<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT> extends DocumentId, Schema {
+      type Subject<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT> = DocumentId & {
         __type: T;
         name: ThingName;
-      }
+      } & Schema;
 
-      export interface BaseSchema extends Subject<ModelNames.B_SUBJECT> {
+      export type BaseSchema = {
         teachers: ObjectId[];
-      }
+      } & Subject<ModelNames.B_SUBJECT>;
 
-      export interface BaseVirtuals {
+      export type BaseVirtuals = {
         teachersCount: number;
-      }
+      };
 
-      export interface GroupSchema extends Subject<ModelNames.G_SUBJECT> {
+      export type GroupSchema = {
         divisions: Array<Pick<BaseSchema, "_id" | "name" | "teachers">>;
-      }
+      } & Subject<ModelNames.G_SUBJECT>;
 
-      export interface GroupVirtuals {
+      export type GroupVirtuals = {
         divisionsCount: number;
-      }
+      };
 
       export type Model = Mongoose.Model<BaseSchema | GroupSchema>;
       export type Record<V extends boolean = false> = ModelRecord<
@@ -149,62 +151,62 @@ declare global {
     }
 
     namespace Session {
-      export interface Schema extends DocumentId {
+      export type Schema = {
         current?: true;
         name: ThingName;
-      }
+      } & DocumentId;
 
-      interface Virtuals {
+      type Virtuals = {
         termsCount: number;
         terms: Array<Omit<Term.Schema, "session">>;
-      }
+      };
 
       export type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
 
-      export interface Model extends Mongoose.Model<Schema, unknown, unknown, Virtuals> {
+      export type Model = {
         /** Find the term record where `{ current: true }` */
         findCurrent(
           projection?: Mongoose.ProjectionType<Schema> | null,
           options?: Mongoose.QueryOptions
         ): SQuery<Schema, Schema, unknown, Virtuals>;
-      }
+      } & Mongoose.Model<Schema, unknown, unknown, Virtuals>;
     }
 
     namespace Term {
-      export interface Schema extends DocumentId {
+      export type Schema = {
         current?: true;
         name: ThingName;
         session: ObjectId;
-      }
+      } & DocumentId;
 
       export type Record = ModelRecord<Schema>;
 
-      export interface Model extends Mongoose.Model<Schema> {
+      export type Model = {
         /** Find the term record where `{ current: true }` */
         findCurrent(
           projection?: Mongoose.ProjectionType<Schema> | null,
           options?: Mongoose.QueryOptions
         ): SQuery<Schema>;
-      }
+      } & Mongoose.Model<Schema>;
     }
 
     namespace User {
       export type Type = "parent" | "teacher" | "student";
 
-      export interface Name extends Record<"initials" | "title" | "full" | "first" | "last", string> {
+      export type Name = {
         other?: string;
         readonly username: string;
-      }
+      } & Record<"initials" | "title" | "full" | "first" | "last", string>;
 
-      export interface Password {
+      export type Password = {
         hash: string;
         salt: string;
-      }
+      };
 
-      export interface Images {
+      export type Images = {
         cover?: string;
         avatar?: string;
-      }
+      };
 
       export type SubContact = {
         primary: string;
@@ -215,20 +217,20 @@ declare global {
 
       export type Gender = "M" | "F";
 
-      export interface Base extends DocumentId {
+      export type Base = {
         dob?: Date;
         name: Name;
         images: Images;
         gender: Gender;
         contact: Contact;
         readonly schoolMail: string;
-      }
+      } & DocumentId;
 
-      export interface Virtuals {
+      export type Virtuals = {
         password: Password;
-      }
+      };
 
-      export interface StaticMethods<S> {
+      export type StaticMethods<S> = {
         /** Find a user by username */
         findByUsername(
           username: string,
@@ -253,31 +255,29 @@ declare global {
           projection?: Mongoose.ProjectionType<S> | null,
           options?: Mongoose.QueryOptions
         ): SQuery<S[], S, unknown, Virtuals>;
-      }
+      };
     }
 
     namespace Student {
-      export interface Guardian {
+      export type Guardian = {
         guardian: ObjectId;
         relation: "father" | "mother" | "other";
-      }
+      };
 
-      export interface Academic {
+      export type Academic = {
         term: ObjectId;
         class: ObjectId;
         subjects: ObjectId[];
-      }
+      };
 
-      export interface Schema extends User.Base {
+      export type Schema = {
         academic: Academic[];
         guardians: Guardian[];
-      }
+      } & User.Base;
 
       export type Record<V extends boolean | keyof User.Virtuals = false> = ModelRecord<Schema, User.Virtuals, V>;
 
-      export interface Model
-        extends Mongoose.Model<Schema, unknown, unknown, User.Virtuals>,
-          User.StaticMethods<Schema> {}
+      export type Model = Mongoose.Model<Schema, unknown, unknown, User.Virtuals> & User.StaticMethods<Schema>;
     }
 
     namespace Teacher {
@@ -285,21 +285,17 @@ declare global {
 
       export type Record<V extends boolean | keyof User.Virtuals = false> = ModelRecord<Schema, User.Virtuals, V>;
 
-      export interface Model
-        extends Mongoose.Model<Schema, unknown, unknown, User.Virtuals>,
-          User.StaticMethods<Schema> {}
+      export type Model = Mongoose.Model<Schema, unknown, unknown, User.Virtuals> & User.StaticMethods<Schema>;
     }
 
     namespace Parent {
-      export interface Schema extends User.Base {
+      export type Schema = {
         occupation: string;
-      }
+      } & User.Base;
 
       export type Record<V extends boolean | keyof User.Virtuals = false> = ModelRecord<Schema, User.Virtuals, V>;
 
-      export interface Model
-        extends Mongoose.Model<Schema, unknown, unknown, User.Virtuals>,
-          User.StaticMethods<Schema> {}
+      export type Model = Mongoose.Model<Schema, unknown, unknown, User.Virtuals> & User.StaticMethods<Schema>;
     }
   }
 }

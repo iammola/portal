@@ -51,9 +51,9 @@ export const Number: React.FC<NumberProps> = ({ children, id, onChange, ...props
   );
 };
 
-interface NumberProps extends Omit<React.ComponentProps<"input">, "onChange" | "value"> {
+type NumberProps = {
   value?: number;
   children: string;
   onChange(val: number): void;
   inputMode?: "numeric" | "decimal";
-}
+} & Omit<React.ComponentProps<"input">, "onChange" | "value">;

@@ -101,8 +101,8 @@ export const Phone: React.FC<PhoneProps> = ({ children, id, onChange, ...props }
   );
 };
 
-interface PhoneProps extends Omit<React.ComponentProps<"input">, "onChange" | "value"> {
+type PhoneProps = {
   value?: string;
   children: string;
   onChange(val: string): void;
-}
+} & Omit<React.ComponentProps<"input">, "onChange" | "value">;

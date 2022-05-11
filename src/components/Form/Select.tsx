@@ -46,11 +46,11 @@ Select.Item = function Item({ children, ...props }) {
   );
 };
 
-interface SelectProps {
+type SelectProps = {
   label: string;
   required?: boolean;
-}
+};
 
-interface Select extends React.FC<CP<Parameters<typeof SelectPrimitive.Root>[0] & SelectProps>> {
+type Select = {
   Item: React.FC<Parameters<typeof SelectPrimitive.Item>[0]>;
-}
+} & React.FC<CP<Parameters<typeof SelectPrimitive.Root>[0] & SelectProps>>;

@@ -117,8 +117,8 @@ const User: React.FC<{ username: string }> = ({ username }) => {
   );
 };
 
-interface UsersProps extends Omit<React.ComponentProps<"textarea">, "value" | "onChange"> {
+type UsersProps = {
   value?: string;
   children: string;
   onChange(val: string): void;
-}
+} & Omit<React.ComponentProps<"textarea">, "value" | "onChange">;

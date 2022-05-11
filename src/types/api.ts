@@ -22,18 +22,18 @@ declare global {
       res: NextApiResponse<Error | Response<R>>
     ) => Promise<Awaited<API.HandlerResponse<R>> | null>;
 
-    interface Data<S> {
+    type Data<S> = {
       success: S;
       message: `${ReasonPhrases}`;
-    }
+    };
 
-    export interface Response<D> extends Data<true> {
+    export type Response<D> = {
       data: D;
-    }
+    } & Data<true>;
 
-    export interface Error extends Data<false> {
+    export type Error = {
       error: string | Record<string, string | undefined>;
-    }
+    } & Data<false>;
 
     export type Result<D> = Error | Response<D>;
   }
@@ -41,17 +41,17 @@ declare global {
   namespace API {
     namespace Auth {
       namespace POST {
-        export interface Body {
+        export type Body = {
           level: string;
           password: string;
           username: string;
           remember: boolean;
-        }
+        };
 
-        export interface Data {
+        export type Data = {
           token: string;
           expiresIn: number;
-        }
+        };
       }
     }
 
@@ -86,18 +86,18 @@ declare global {
           "_id" | S
         >;
 
-        export interface AllData<S extends keyof ClassDataNoTeacher = keyof ClassDataNoTeacher> {
+        export type AllData<S extends keyof ClassDataNoTeacher = keyof ClassDataNoTeacher> = {
           page?: number;
           pages: number;
           classes: Array<Data<S>>;
-        }
+        };
 
         namespace Students {
-          export interface Data {
+          export type Data = {
             page?: number;
             pages: number;
             students: Schemas.Student.Schema[];
-          }
+          };
 
           export type Count = Record<"count", number>;
         }
@@ -132,13 +132,13 @@ declare global {
         export type Body = GroupBody | BaseBody;
       }
 
-      interface BaseBody extends Omit<Schemas.Subject.BaseSchema, "_id" | "teachers"> {
+      type BaseBody = {
         teachers: string[];
-      }
+      } & Omit<Schemas.Subject.BaseSchema, "_id" | "teachers">;
 
-      interface GroupBody extends Omit<Schemas.Subject.GroupSchema, "_id" | "divisions"> {
+      type GroupBody = {
         divisions: Array<Pick<Schemas.Subject.BaseSchema, "_id" | "name"> & Record<"teachers", string[]>>;
-      }
+      } & Omit<Schemas.Subject.GroupSchema, "_id" | "divisions">;
     }
 
     namespace Session {
@@ -167,9 +167,9 @@ declare global {
       namespace GET {
         export type AllData = Array<Omit<Schemas.Term.Record, "session">>;
 
-        export interface Data extends Omit<Schemas.Term.Record, "session"> {
+        export type Data = {
           session: Omit<Schemas.Session.Record<true>, "terms">;
-        }
+        } & Omit<Schemas.Term.Record, "session">;
       }
     }
 
@@ -177,9 +177,9 @@ declare global {
       namespace POST {
         export type Data = CreateData<Pick<Schemas.Parent.Schema, "schoolMail">>;
 
-        export interface Body extends Omit<Schemas.Parent.Schema, "_id" | "schoolMail" | "password"> {
+        export type Body = {
           password: string;
-        }
+        } & Omit<Schemas.Parent.Schema, "_id" | "schoolMail" | "password">;
       }
     }
 
@@ -187,9 +187,9 @@ declare global {
       namespace POST {
         export type Data = CreateData<Pick<Schemas.Teacher.Schema, "schoolMail">>;
 
-        export interface Body extends Omit<Schemas.Teacher.Schema, "_id" | "schoolMail" | "password"> {
+        export type Body = {
           password: string;
-        }
+        } & Omit<Schemas.Teacher.Schema, "_id" | "schoolMail" | "password">;
       }
     }
 
@@ -197,12 +197,11 @@ declare global {
       namespace POST {
         export type Data = CreateData<Pick<Schemas.Student.Schema, "schoolMail">>;
 
-        export interface Body
-          extends Required<Pick<Schemas.Student.Schema, "dob" | "gender" | "images" | "name" | "contact">> {
+        export type Body = {
           password: string;
           academic: { class: string; subjects: string[] };
           guardians: Array<Record<"mail" | "relation", string>>;
-        }
+        } & Required<Pick<Schemas.Student.Schema, "dob" | "gender" | "images" | "name" | "contact">>;
       }
     }
   }
