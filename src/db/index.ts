@@ -25,14 +25,14 @@ export async function connect(): Promise<typeof mongoose> {
   return (cached.conn ??= await cached.promise);
 }
 
-interface ConnectOptionsExt extends mongoose.ConnectOptions {
+type ConnectOptionsExt = {
   /** False by default. If `true`, this connection will use `createIndex()` instead of `ensureIndex()` for automatic index builds via `Model.init()`. */
   useCreateIndex?: boolean;
   /** false by default. Set to `true` to make all connections set the `useNewUrlParser` option by default */
   useNewUrlParser?: boolean;
   /** false by default. Set to `true` to make all connections set the `useUnifiedTopology` option by default */
   useUnifiedTopology?: boolean;
-}
+} & mongoose.ConnectOptions;
 
 declare const global: {
   mongoose: {

@@ -44,7 +44,7 @@ export const Layout: React.FC<CP<LayoutProps>> = ({ children, hideSidebar }) => 
   );
 };
 
-interface LayoutProps {
+type LayoutProps = {
   /** Hide sidebar in `/login` route */
   hideSidebar: boolean;
-}
+};

@@ -50,7 +50,7 @@ const NavigationLink: React.FC<MenuLink> = ({ title, href }) => {
   );
 };
 
-interface MenuLink {
+type MenuLink = {
   href: string;
   title: string;
-}
+};

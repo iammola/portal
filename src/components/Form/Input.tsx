@@ -51,7 +51,7 @@ export const Input: React.FC<InputProps> = ({ children, id, onChange, validators
   );
 };
 
-interface InputProps extends Omit<React.ComponentProps<"input">, "onChange" | "value"> {
+type InputProps = {
   value?: string;
   children: string;
   onChange(val: string): void;
@@ -59,4 +59,4 @@ interface InputProps extends Omit<React.ComponentProps<"input">, "onChange" | "v
     message: string;
     test: RegExp | ((val: string) => boolean);
   }>;
-}
+} & Omit<React.ComponentProps<"input">, "onChange" | "value">;

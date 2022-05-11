@@ -48,10 +48,10 @@ export const Textarea: React.FC<TextareaProps> = ({ children, id, onChange, ...p
   );
 };
 
-interface TextareaProps extends Omit<React.ComponentProps<"textarea">, "onChange" | "value"> {
+type TextareaProps = {
   value?: string;
   children: string;
   maxLength?: number;
   minLength?: number;
   onChange(val: string): void;
-}
+} & Omit<React.ComponentProps<"textarea">, "onChange" | "value">;

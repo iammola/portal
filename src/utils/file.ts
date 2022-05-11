@@ -68,7 +68,7 @@ export const getImage = (id?: string) => {
   return dataURLRegex.test(id) ? id : `https://drive.google.com/uc?id=${id}&export=download`;
 };
 
-interface GoogleAPICred {
+type GoogleAPICred = {
   private_key: string;
   client_email: string;
-}
+};

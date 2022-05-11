@@ -32,6 +32,6 @@ RadioGroup.Item = function Item({ children, id, ...props }) {
   );
 };
 
-interface RadioGroup extends React.FC<CP<Parameters<typeof RadioGroupPrimitive.Root>[0]>> {
+type RadioGroup = {
   Item: React.FC<CP<Parameters<typeof RadioGroupPrimitive.Item>[0]>>;
-}
+} & React.FC<CP<Parameters<typeof RadioGroupPrimitive.Root>[0]>>;

@@ -75,8 +75,8 @@ export const Password: React.FC<PasswordProps> = ({ children, id, onChange, ...p
   );
 };
 
-interface PasswordProps extends Omit<React.ComponentProps<"input">, "onChange" | "value"> {
+type PasswordProps = {
   value?: string;
   children: string;
   onChange(val: string): void;
-}
+} & Omit<React.ComponentProps<"input">, "onChange" | "value">;

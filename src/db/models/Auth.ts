@@ -70,11 +70,11 @@ export const UserAuthVirtual: [string, mongoose.VirtualTypeOptions] = [
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-interface AuthSchema extends Schemas.User.Password {
+type AuthSchema = {
   userId: Schemas.ObjectId;
   password?: string;
-}
+} & Schemas.User.Password;
 
-interface PreUpdateThis {
+type PreUpdateThis = {
   _update: Partial<AuthSchema>;
-}
+};
