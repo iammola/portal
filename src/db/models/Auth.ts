@@ -1,7 +1,7 @@
 import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
-import { hashPassword } from "utils";
+import { hashPassword } from "db/utils";
 
 const AuthSchema = new mongoose.Schema<AuthSchema>({
   password: {

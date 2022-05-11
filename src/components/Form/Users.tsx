@@ -4,8 +4,9 @@ import { Fragment, useId, useState } from "react";
 import { EyeOpenIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
+import { cx } from "utils";
 import { Avatar, Icons } from "components";
-import { cx, useIsomorphicLayoutEffect } from "utils";
+import { useIsomorphicLayoutEffect } from "hooks";
 
 export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }) => {
   const customId = useId();

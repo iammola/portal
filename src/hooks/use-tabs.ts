@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { useIsomorphicLayoutEffect } from "utils";
+import { useIsomorphicLayoutEffect } from "hooks";
 
 export function useTabs<T extends string>(tabs: T[], defaultIndex = 0) {
   const router = useRouter();

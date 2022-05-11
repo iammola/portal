@@ -2,8 +2,7 @@ import * as mongoose from "mongoose";
 import { parsePhoneNumber } from "awesome-phonenumber";
 
 import { ModelNames } from "db";
-import { generateSchoolMail } from "utils/user";
-import { getImage, uploadImage } from "utils/file";
+import { generateSchoolMail, getImage, uploadImage } from "db/utils";
 
 const emailValidator = (v?: string) => {
   return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");

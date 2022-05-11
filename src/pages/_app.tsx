@@ -4,7 +4,7 @@ import { ThemeProvider } from "next-themes";
 
 import "style.css";
 import { Layout } from "components";
-import { fetchAPIEndpoint } from "utils";
+import { fetchAPIEndpoint } from "api";
 
 import type { AppProps } from "next/app";
 

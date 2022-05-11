@@ -1,7 +1,6 @@
-// can't export from "./file" or "./user" because the googleapis module is directly or indirectly imported
-export * from "./api";
-export * from "./hooks";
-export * from "./password";
+import zxcvbnEnPackage from "@zxcvbn-ts/language-en";
+import { zxcvbn, zxcvbnOptions } from "@zxcvbn-ts/core";
+import zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
 
 export const NETWORK_STATE = {
   online: { emoji: "😄", description: "Found the internet!" },
@@ -35,10 +34,12 @@ export function getFlagEmoji(regionCode: string) {
 
 /**
  * It takes an array of strings, arrays, and objects, and returns a string of all the truthy values
- * @param {CX[]} args - CX[]
+ * @param args - array of strings, arrays, and objects
  * @returns a string of class names.
  */
-export function cx(...args: CX[]) {
+export function cx(
+  ...args: Array<undefined | null | false | string | [unknown, string, string?] | Record<string, unknown>>
+) {
   const classes = args.reduce<Array<string | string[]>>((acc, cur) => {
     let item: string | string[] = [];
 
@@ -54,4 +55,21 @@ export function cx(...args: CX[]) {
   return [...new Set(classes.flat())].join(" ").replace(/\s{2,}/g, " ");
 }
 
-type CX = undefined | null | false | string | [unknown, string, string?] | Record<string, unknown>;
+/**
+ * It sets the options for the zxcvbn library, and then returns a function that calls zxcvbn to check the strength of the password
+ * @returns A function that takes a password and returns a zxcvbn object.
+ */
+export function checkPasswordStrength() {
+  const options = {
+    translations: zxcvbnEnPackage.translations,
+    graphs: zxcvbnCommonPackage.adjacencyGraphs,
+    dictionary: {
+      ...zxcvbnCommonPackage.dictionary,
+      ...zxcvbnEnPackage.dictionary,
+    },
+  };
+
+  zxcvbnOptions.setOptions(options);
+
+  return (password: string) => zxcvbn(password);
+}

@@ -3,8 +3,9 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { Cross2Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 
+import { cx } from "utils";
+import { useOnline } from "hooks";
 import { Avatar } from "components";
-import { cx, useOnline } from "utils";
 
 import { Menu } from "./Menu";
 

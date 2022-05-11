@@ -12,7 +12,8 @@ import {
   ChevronUpIcon,
 } from "@radix-ui/react-icons";
 
-import { cx, useIsomorphicLayoutEffect } from "utils";
+import { cx } from "utils";
+import { useIsomorphicLayoutEffect } from "hooks";
 
 const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
   const customId = useId();
