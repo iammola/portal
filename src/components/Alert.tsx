@@ -1,10 +1,10 @@
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 
-export const AlertDialog = AlertDialogPrimitive.Root;
+export const Root = AlertDialogPrimitive.Root;
 
-export const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
+export const Trigger = AlertDialogPrimitive.Trigger;
 
-export const AlertDialogAction: React.FC<AlertDialogActionProps> = ({ cancelProps, children, ...props }) => {
+export const Action: React.FC<AlertDialogActionProps> = ({ cancelProps, children, ...props }) => {
   return (
     <div className="flex w-full justify-end gap-6">
       <AlertDialogPrimitive.Cancel
@@ -18,10 +18,7 @@ export const AlertDialogAction: React.FC<AlertDialogActionProps> = ({ cancelProp
   );
 };
 
-export const AlertDialogTitle: React.FC<CP<AlertDialogPrimitive.AlertDialogTitleProps, string>> = ({
-  children,
-  ...props
-}) => {
+export const Title: React.FC<CP<AlertDialogPrimitive.AlertDialogTitleProps, string>> = ({ children, ...props }) => {
   return (
     <AlertDialogPrimitive.Title {...props} className="text-lg font-medium text-gray-12">
       {children}
@@ -29,7 +26,7 @@ export const AlertDialogTitle: React.FC<CP<AlertDialogPrimitive.AlertDialogTitle
   );
 };
 
-export const AlertDialogDescription: React.FC<CP<AlertDialogPrimitive.AlertDialogDescriptionProps, string>> = ({
+export const Description: React.FC<CP<AlertDialogPrimitive.AlertDialogDescriptionProps, string>> = ({
   children,
   ...props
 }) => {
@@ -40,10 +37,7 @@ export const AlertDialogDescription: React.FC<CP<AlertDialogPrimitive.AlertDialo
   );
 };
 
-export const AlertDialogContent: React.FC<CP<AlertDialogPrimitive.AlertDialogContentProps>> = ({
-  children,
-  ...contentProps
-}) => {
+export const Content: React.FC<CP<AlertDialogPrimitive.AlertDialogContentProps>> = ({ children, ...contentProps }) => {
   return (
     <AlertDialogPrimitive.Portal>
       <AlertDialogPrimitive.Overlay className="fixed inset-0 bg-black-a-9" />

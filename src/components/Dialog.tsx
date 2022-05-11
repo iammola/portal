@@ -1,13 +1,13 @@
 import { Cross2Icon } from "@radix-ui/react-icons";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 
-export const Dialog = DialogPrimitive.Root;
+export const Root = DialogPrimitive.Root;
 
-export const DialogTrigger = DialogPrimitive.Trigger;
+export const Trigger = DialogPrimitive.Trigger;
 
-export const DialogClose = DialogPrimitive.Close;
+export const Close = DialogPrimitive.Close;
 
-export const DialogTitle: React.FC<CP<DialogPrimitive.DialogTitleProps>> = ({ children, ...props }) => {
+export const Title: React.FC<CP<DialogPrimitive.DialogTitleProps>> = ({ children, ...props }) => {
   return (
     <DialogPrimitive.Title {...props} className="text-lg font-medium text-gray-12">
       {children}
@@ -15,7 +15,7 @@ export const DialogTitle: React.FC<CP<DialogPrimitive.DialogTitleProps>> = ({ ch
   );
 };
 
-export const DialogDescription: React.FC<CP<DialogPrimitive.DialogDescriptionProps>> = ({ children, ...props }) => {
+export const Description: React.FC<CP<DialogPrimitive.DialogDescriptionProps>> = ({ children, ...props }) => {
   return (
     <DialogPrimitive.Description {...props} className="mb-5 text-sm text-gray-11 dark:text-gray-dark-11">
       {children}
@@ -23,7 +23,7 @@ export const DialogDescription: React.FC<CP<DialogPrimitive.DialogDescriptionPro
   );
 };
 
-export const DialogContent: React.FC<CP<DialogPrimitive.DialogContentProps>> = ({ children, ...contentProps }) => {
+export const Content: React.FC<CP<DialogPrimitive.DialogContentProps>> = ({ children, ...contentProps }) => {
   return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className="fixed inset-0 bg-black-a-9" />
