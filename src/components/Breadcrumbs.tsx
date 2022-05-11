@@ -38,7 +38,7 @@ const Home: React.FC = () => {
 
 const Path: React.FC<CP<{ href: string }, string>> = ({ children, href }) => {
   return (
-    <Link href={href} className="flex items-center justify-start gap-2 text-sm text-gray-11">
+    <Link href={href} className="flex items-center justify-start gap-2 text-sm capitalize text-gray-11">
       <CaretRightIcon />
       {children}
     </Link>
