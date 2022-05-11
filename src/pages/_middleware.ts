@@ -1,6 +1,6 @@
 import { NextMiddleware, NextResponse } from "next/server";
 
-import { JWT_COOKIE_TOKEN } from "utils/constants";
+import { JWT_COOKIE_TOKEN } from "utils";
 
 export const middleware: NextMiddleware = (req) => {
   const key = req.cookies[JWT_COOKIE_TOKEN];

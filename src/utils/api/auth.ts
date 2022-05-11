@@ -1,6 +1,6 @@
 import { importSPKI, jwtVerify } from "jose";
 
-import { JWT_ALG, JWT_COOKIE_KEY } from "utils/constants";
+import { JWT_ALG, JWT_COOKIE_KEY } from "utils";
 
 import { UnauthorizedError } from "./error";
 
@@ -12,7 +12,7 @@ import type { NextApiRequest } from "next";
  */
 export async function verifyAuth(request: NextApiRequest) {
   const key = request.cookies[JWT_COOKIE_KEY];
-  const auth = (request.headers.authorization as string)?.split(" ");
+  const auth = request.headers.authorization?.split(" ");
 
   if (!key || !auth) throw new UnauthorizedError("Missing Authentication Token");
 
