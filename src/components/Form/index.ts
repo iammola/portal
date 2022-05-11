@@ -15,3 +15,5 @@ export { Users } from "./Users";
 export { Number } from "./Number";
 
 export { Date } from "./Date";
+
+export { Textarea } from "./Textarea";
