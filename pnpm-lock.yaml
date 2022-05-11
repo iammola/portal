@@ -33,7 +33,6 @@ specifiers:
   awesome-phonenumber: ^2.72.0
   bson: ^4.6.3
   cookies-next: ^2.0.4
-  country-flag-icons: ^1.4.26
   date-fns: ^2.28.0
   eslint: ^8.14.0
   eslint-config-next: ^12.1.6
@@ -43,7 +42,6 @@ specifiers:
   eslint-plugin-react: ^7.29.4
   git-format-staged: ^3.0.0
   http-status-codes: ^2.2.0
-  if-emoji: ^0.1.0
   jose: ^4.8.1
   mongoose: ^6.3.2
   mongoose-lean-getters: 0.3.1
@@ -83,10 +81,8 @@ dependencies:
   "@zxcvbn-ts/language-en": 2.0.1
   awesome-phonenumber: 2.72.0
   cookies-next: 2.0.4
-  country-flag-icons: 1.4.26
   date-fns: 2.28.0
   http-status-codes: 2.2.0
-  if-emoji: 0.1.0
   jose: 4.8.1
   mongoose: 6.3.2
   mongoose-lean-getters: 0.3.1_mongoose@6.3.2
@@ -1621,11 +1617,6 @@ packages:
       { integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ== }
     dev: false
 
-  /country-flag-icons/1.4.26:
-    resolution:
-      { integrity: sha512-fUBQ58zfQsSL12ErkFSfBxnQZapzdC8+5ZKqhD1z0EHqPnOuiFl7nZTv8Gqpms+jvweP+pbCYGp7G4aiO9eiMw== }
-    dev: false
-
   /cross-spawn/7.0.3:
     resolution:
       { integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w== }
@@ -2529,10 +2520,6 @@ packages:
   /ieee754/1.2.1:
     resolution:
       { integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA== }
-
-  /if-emoji/0.1.0:
-    resolution: { integrity: sha1-heGwNsZCWjDySekDT/RADOqjOUc= }
-    dev: false
 
   /ignore/5.2.0:
     resolution:
