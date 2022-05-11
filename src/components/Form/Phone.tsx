@@ -26,9 +26,11 @@ export const Phone: React.FC<PhoneProps> = ({ children, id, onChange, ...props }
   const updateValue = useCallback(
     (value: string) => {
       const phone = value.replace(/(\s|-|\(|\))*/g, "") || null;
-
       setFormatted(formatter.reset(phone as string));
-      onChange(formatter.getPhoneNumber().getNumber() ?? "");
+
+      const formatted = formatter.getPhoneNumber();
+      onChange(formatted.getNumber("e164") ?? "");
+      setRegionCode((region) => formatted.getRegionCode() ?? region);
     },
     [formatter, onChange]
   );
