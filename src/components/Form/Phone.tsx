@@ -76,7 +76,7 @@ export const Phone: React.FC<PhoneProps> = ({ children, id, onChange, ...props }
                 <SelectPrimitive.ItemText>
                   <div className="flex items-center gap-3">
                     <span className="inline-grid place-items-center">{getFlagEmoji(region)}</span>
-                    <span className="text-sm text-gray-11">
+                    <span className="text-sm text-gray-12 dark:text-gray-dark-12">
                       {regionNames.of(region)} (+{PhoneNumber.getCountryCodeForRegionCode(region)})
                     </span>
                   </div>
