@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { Fragment, useState } from "react";
 import Head from "next/head";
 
-import { Input, Password, Select } from "components/Form";
+import { Checkbox, Input, Password, Select } from "components/Form";
 
 const Login: NextPage = () => {
   const [levels] = useState(() => [
@@ -15,6 +15,7 @@ const Login: NextPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [level, setLevel] = useState(levels[0].value);
+  const [remember, setRemember] = useState(false);
 
   return (
     <Fragment>
@@ -51,6 +52,9 @@ const Login: NextPage = () => {
                 </Select.Item>
               ))}
             </Select>
+            <Checkbox checked={remember} onCheckedChange={(e) => setRemember(e as boolean)}>
+              Remember me
+            </Checkbox>
           </div>
           <button
             type="submit"
