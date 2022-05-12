@@ -30,14 +30,14 @@ const Login: NextPage = () => {
           {format(new Date(), "E, do LLLL yyyy")}
         </time>
       </header>
-      <section className="flex grow flex-col items-center justify-center gap-5 py-10 px-6 md:flex-row md:gap-10 md:px-12 lg:px-24">
+      <section className="flex grow flex-col items-center justify-center gap-10 py-10 px-6 md:flex-row md:gap-14 md:px-12 lg:px-24">
         <div className="max-w-lg">
           <p className="text-center text-5xl font-bold leading-relaxed text-gray-12 dark:text-gray-dark-12 md:text-left">
             Log in to your account
           </p>
         </div>
-        <form className="w-full max-w-[350px] space-y-8">
-          <div className="space-y-4">
+        <form className="w-full max-w-[350px] space-y-10">
+          <div className="space-y-7">
             <Input required value={username} onChange={setUsername}>
               Username
             </Input>
