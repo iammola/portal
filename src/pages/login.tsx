@@ -18,6 +18,14 @@ const Login: NextPage = () => {
           {format(new Date(), "E, do LLLL yyyy")}
         </time>
       </header>
+      <section className="flex grow flex-col items-center justify-center gap-5 py-10 px-6 md:flex-row md:gap-10 md:px-12 lg:px-24">
+        <div className="max-w-lg">
+          <p className="text-5xl font-bold leading-relaxed text-gray-12 dark:text-gray-dark-12">
+            Log in to your account
+          </p>
+        </div>
+        <div className="flex h-full flex-col items-center gap-4" />
+      </section>
     </Fragment>
   );
 };
