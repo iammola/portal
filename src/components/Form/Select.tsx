@@ -10,7 +10,7 @@ export const Select: Select = ({ children, label, ...props }) => {
         {!props.required && <span className="text-xs text-gray-11 dark:text-gray-dark-11">Optional</span>}
       </span>
       <SelectPrimitive.Root {...props}>
-        <SelectPrimitive.Trigger className="inline-flex h-[45px] max-w-[250px] select-none items-center justify-center gap-8 rounded bg-gray-3 px-4 text-sm text-gray-11 hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-5 dark:bg-gray-dark-3 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-5">
+        <SelectPrimitive.Trigger className="inline-flex h-[45px] max-w-[250px] select-none items-center justify-between gap-8 rounded bg-gray-3 px-4 text-sm text-gray-11 hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-5 dark:bg-gray-dark-3 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-5">
           <SelectPrimitive.Value />
           <SelectPrimitive.Icon asChild>
             <ChevronDownIcon />

@@ -7,7 +7,7 @@ export const Textarea: React.FC<TextareaProps> = ({ children, id, onChange, ...p
   const customId = useId();
 
   return (
-    <div className="flex flex-col items-start justify-center gap-1">
+    <div className="flex w-full flex-col items-start justify-center gap-1">
       <LabelPrimitive.Root
         htmlFor={id || customId}
         className="flex w-full select-none items-center justify-between gap-4"

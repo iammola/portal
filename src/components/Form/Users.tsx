@@ -28,7 +28,7 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
   }
 
   return (
-    <div className="flex flex-col items-start justify-center gap-2">
+    <div className="flex w-full flex-col items-start justify-center gap-2">
       <LabelPrimitive.Root htmlFor={id || customId} className="flex w-full select-none items-center gap-1.5">
         <span className="grow text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{children}</span>
         {!props.required && <span className="text-xs text-gray-11 dark:text-gray-dark-11">Optional</span>}

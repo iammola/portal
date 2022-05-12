@@ -20,14 +20,14 @@ export const Password: React.FC<PasswordProps> = ({ children, id, onChange, ...p
 
   return (
     <PopoverPrimitive.Root>
-      <div className="relative flex flex-col items-start justify-center gap-1">
+      <div className="relative flex w-full flex-col items-start justify-center gap-1">
         <LabelPrimitive.Root
           htmlFor={id || customId}
           className="flex w-full select-none items-center justify-between gap-4"
         >
           <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{children}</span>
         </LabelPrimitive.Root>
-        <PopoverPrimitive.Anchor className="relative">
+        <PopoverPrimitive.Anchor className="relative w-full">
           <PopoverPrimitive.Trigger asChild>
             <input
               {...props}
