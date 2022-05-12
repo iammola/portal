@@ -1,5 +1,7 @@
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 
+import { cx } from "utils";
+
 export const Root = AlertDialogPrimitive.Root;
 
 export const Trigger = AlertDialogPrimitive.Trigger;
@@ -20,7 +22,7 @@ export const Action: React.FC<AlertDialogActionProps> = ({ cancelProps, children
 
 export const Title: React.FC<CP<AlertDialogPrimitive.AlertDialogTitleProps, string>> = ({ children, ...props }) => {
   return (
-    <AlertDialogPrimitive.Title {...props} className="text-lg font-medium text-gray-12 dark:text-gray-dark-12">
+    <AlertDialogPrimitive.Title {...props} className={cx("text-gray-12 dark:text-gray-dark-12", props.className)}>
       {children}
     </AlertDialogPrimitive.Title>
   );
@@ -31,7 +33,7 @@ export const Description: React.FC<CP<AlertDialogPrimitive.AlertDialogDescriptio
   ...props
 }) => {
   return (
-    <AlertDialogPrimitive.Description {...props} className="mb-5 text-sm text-gray-11 dark:text-gray-dark-11">
+    <AlertDialogPrimitive.Description {...props} className={cx("text-gray-11 dark:text-gray-dark-11", props.className)}>
       {children}
     </AlertDialogPrimitive.Description>
   );
