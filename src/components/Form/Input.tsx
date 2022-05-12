@@ -9,8 +9,9 @@ export const Input: React.FC<InputProps> = ({ children, id, onChange, validators
   useEffect(() => {
     const value = props.value;
     if (!value) return;
+    if (!validators?.length) return setError(undefined);
 
-    const error = validators?.find(({ test: t }) => !(typeof t === "object" ? t.test(value) : t(value)));
+    const error = validators.find(({ test: t }) => !(typeof t === "object" ? t.test(value) : t(value)));
     if (error) setError(error.message);
     else {
       setError(null);
