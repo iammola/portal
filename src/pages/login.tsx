@@ -39,10 +39,10 @@ const Login: NextPage = () => {
         </div>
         <form className="w-full max-w-[350px] space-y-10">
           <div className="space-y-7">
-            <Input required value={username} onChange={setUsername}>
+            <Input required value={username} onChange={setUsername} autoComplete="username">
               Username
             </Input>
-            <Password required value={password} onChange={setPassword}>
+            <Password required value={password} onChange={setPassword} autoComplete="current-password">
               Password
             </Password>
             <Select required label="Access Level" value={level} onValueChange={setLevel}>
