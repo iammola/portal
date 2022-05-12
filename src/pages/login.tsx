@@ -6,9 +6,15 @@ import Head from "next/head";
 import { Input, Password, Select } from "components/Form";
 
 const Login: NextPage = () => {
-  const [level, setLevel] = useState("student");
+  const [levels] = useState(() => [
+    { value: "student", text: "👨‍🎓 Student" },
+    { value: "parent", text: "👨‍👩‍👦 Parent" },
+    { value: "teacher", text: "👨‍🏫 Teacher" },
+  ]);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [level, setLevel] = useState(levels[0].value);
 
   return (
     <Fragment>
@@ -39,9 +45,11 @@ const Login: NextPage = () => {
               Password
             </Password>
             <Select required label="Access level" value={level} onValueChange={setLevel}>
-              <Select.Item value="student">Student</Select.Item>
-              <Select.Item value="parent">Parent</Select.Item>
-              <Select.Item value="teacher">Teacher</Select.Item>
+              {levels.map(({ value, text }) => (
+                <Select.Item key={value} value={value}>
+                  {text}
+                </Select.Item>
+              ))}
             </Select>
           </div>
           <button
