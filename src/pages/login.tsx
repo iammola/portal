@@ -1,11 +1,17 @@
 import { NextPage } from "next";
 import { format } from "date-fns";
+import { useRouter } from "next/router";
+import { setCookies } from "cookies-next";
 import { Fragment, useState } from "react";
 import Head from "next/head";
 
+import { fetchAPIEndpoint } from "api";
+import { JWT_COOKIE_TOKEN, USER_COOKIE } from "utils";
 import { Checkbox, Input, Password, Select } from "components/Form";
 
 const Login: NextPage = () => {
+  const router = useRouter();
+
   const [levels] = useState(() => [
     { value: "student", text: "👨‍🎓 Student" },
     { value: "parent", text: "👨‍👩‍👦 Parent" },
@@ -16,6 +22,28 @@ const Login: NextPage = () => {
   const [password, setPassword] = useState("");
   const [level, setLevel] = useState(levels[0].value);
   const [remember, setRemember] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    try {
+      const result = await fetchAPIEndpoint<API.Auth.POST.Data, API.Auth.POST.Body>("/api/login", {
+        method: "POST",
+        body: { level, remember, password, username },
+      });
+
+      if (result.success) {
+        const { token, expires } = result.data;
+        const options = { expires, path: "/", secure: true, sameSite: true };
+
+        setCookies(USER_COOKIE, level, options);
+        setCookies(JWT_COOKIE_TOKEN, token, options);
+        await router.push("/");
+      } else throw result.error;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <Fragment>
@@ -37,7 +65,7 @@ const Login: NextPage = () => {
             Log in to your account
           </p>
         </div>
-        <form className="w-full max-w-[350px] space-y-10">
+        <form onSubmit={(e) => void handleSubmit(e)} className="w-full max-w-[350px] space-y-10">
           <div className="space-y-7">
             <Input required value={username} onChange={setUsername} autoComplete="username">
               Username
