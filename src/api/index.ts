@@ -22,7 +22,7 @@ export async function routeWrapper<T extends object>(
   let data: API.RouteResponse<T> | null = null;
 
   try {
-    if (req.url !== "/api/auth") await verifyAuth(req);
+    if (req.url !== "/api/login") await verifyAuth(req);
 
     if (methods.includes(req.method ?? "")) {
       data = (await routeHandler(req, res)) as API.RouteResponse<T>;
