@@ -60,7 +60,7 @@ const Login: NextPage = () => {
             type="submit"
             className="w-full rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 dark:text-gray-dark-12"
           >
-            Log in
+            Log In
           </button>
         </form>
       </section>
