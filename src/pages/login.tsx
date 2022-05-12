@@ -1,9 +1,15 @@
 import { NextPage } from "next";
-import { Fragment } from "react";
 import { format } from "date-fns";
+import { Fragment, useState } from "react";
 import Head from "next/head";
 
+import { Input, Password, Select } from "components/Form";
+
 const Login: NextPage = () => {
+  const [level, setLevel] = useState("student");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <Fragment>
       <Head>
@@ -24,7 +30,27 @@ const Login: NextPage = () => {
             Log in to your account
           </p>
         </div>
-        <div className="flex h-full flex-col items-center gap-4" />
+        <form className="w-full max-w-[350px] space-y-8">
+          <div className="space-y-4">
+            <Input required value={username} onChange={setUsername}>
+              Username
+            </Input>
+            <Password required value={password} onChange={setPassword}>
+              Password
+            </Password>
+            <Select required label="Access level" value={level} onValueChange={setLevel}>
+              <Select.Item value="student">Student</Select.Item>
+              <Select.Item value="parent">Parent</Select.Item>
+              <Select.Item value="teacher">Teacher</Select.Item>
+            </Select>
+          </div>
+          <button
+            type="submit"
+            className="w-full rounded-lg bg-black-a-9 p-3 text-white hover:bg-black-a-10 dark:text-gray-dark-12"
+          >
+            Log in
+          </button>
+        </form>
       </section>
     </Fragment>
   );
