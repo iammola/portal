@@ -32,7 +32,7 @@ const Login: NextPage = () => {
         </time>
       </header>
       <section className="flex grow flex-col items-center justify-center gap-10 py-10 px-6 md:flex-row md:gap-14 md:px-12 lg:px-24">
-        <div className="max-w-lg">
+        <div className="max-w-md">
           <p className="text-center text-5xl font-bold leading-relaxed text-gray-12 dark:text-gray-dark-12 md:text-left">
             Log in to your account
           </p>
