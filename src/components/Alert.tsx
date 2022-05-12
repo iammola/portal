@@ -20,7 +20,7 @@ export const Action: React.FC<AlertDialogActionProps> = ({ cancelProps, children
 
 export const Title: React.FC<CP<AlertDialogPrimitive.AlertDialogTitleProps, string>> = ({ children, ...props }) => {
   return (
-    <AlertDialogPrimitive.Title {...props} className="text-lg font-medium text-gray-12">
+    <AlertDialogPrimitive.Title {...props} className="text-lg font-medium text-gray-12 dark:text-gray-dark-12">
       {children}
     </AlertDialogPrimitive.Title>
   );
@@ -40,10 +40,10 @@ export const Description: React.FC<CP<AlertDialogPrimitive.AlertDialogDescriptio
 export const Content: React.FC<CP<AlertDialogPrimitive.AlertDialogContentProps>> = ({ children, ...contentProps }) => {
   return (
     <AlertDialogPrimitive.Portal>
-      <AlertDialogPrimitive.Overlay className="fixed inset-0 bg-black-a-9" />
+      <AlertDialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black-a-10" />
       <AlertDialogPrimitive.Content
         {...contentProps}
-        className="fixed left-1/2 top-1/2 max-h-[85vh] w-[90vw] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-6 sm:max-w-lg"
+        className="fixed left-1/2 top-1/2 z-50 max-h-[85vh] w-[90vw] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-6 dark:bg-gray-dark-2 sm:max-w-lg"
       >
         {children}
       </AlertDialogPrimitive.Content>

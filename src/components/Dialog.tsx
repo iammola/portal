@@ -9,7 +9,7 @@ export const Close = DialogPrimitive.Close;
 
 export const Title: React.FC<CP<DialogPrimitive.DialogTitleProps>> = ({ children, ...props }) => {
   return (
-    <DialogPrimitive.Title {...props} className="text-lg font-medium text-gray-12">
+    <DialogPrimitive.Title {...props} className="text-lg font-medium text-gray-12 dark:text-gray-dark-12">
       {children}
     </DialogPrimitive.Title>
   );
@@ -26,10 +26,10 @@ export const Description: React.FC<CP<DialogPrimitive.DialogDescriptionProps>> =
 export const Content: React.FC<CP<DialogPrimitive.DialogContentProps>> = ({ children, ...contentProps }) => {
   return (
     <DialogPrimitive.Portal>
-      <DialogPrimitive.Overlay className="fixed inset-0 bg-black-a-9" />
+      <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black-a-10" />
       <DialogPrimitive.Content
         {...contentProps}
-        className="fixed left-1/2 top-1/2 max-h-[85vh] w-[90vw] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-6 sm:max-w-lg"
+        className="fixed left-1/2 top-1/2 z-50 max-h-[85vh] w-[90vw] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-6 dark:bg-gray-dark-2 sm:max-w-lg"
       >
         {children}
         <DialogPrimitive.Close
