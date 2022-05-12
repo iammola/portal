@@ -12,11 +12,16 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
   const customId = useId();
   const [preview, setPreview] = useState(false);
   const [raw, setRaw] = useState(() => formatValue(props.value ?? ""));
+  const [formatted, setFormatted] = useState(() => raw.split(" ").filter(Boolean));
 
   useIsomorphicLayoutEffect(() => {
     const timeout = setTimeout(() => onChange(formatValue(raw)), 5e2);
     return () => clearTimeout(timeout);
   }, [raw, onChange]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (preview) setFormatted(formatValue(raw).split(" ").filter(Boolean));
+  }, [preview, raw]);
 
   function formatValue(val: string) {
     return val
@@ -50,12 +55,11 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
         </button>
       </LabelPrimitive.Root>
       {preview ? (
-        <div className="flex min-h-[100px] min-w-[375px] flex-wrap content-start items-start gap-2 rounded-md bg-gray-3 p-4 text-xs tracking-wide dark:bg-gray-dark-3">
-          {formatValue(raw)
-            .split(" ")
-            .map((user, idx) => (
-              <User key={idx} username={user} />
-            ))}
+        <div className="flex min-h-[100px] min-w-[375px] flex-wrap content-start items-start gap-2 rounded-md bg-gray-3 p-4 text-xs tracking-wide text-gray-11 dark:bg-gray-dark-3 dark:text-gray-dark-11">
+          {formatted.map((user, idx) => (
+            <User key={idx} username={user} />
+          ))}
+          {formatted.length < 1 && "Nothing to Preview"}
         </div>
       ) : (
         <textarea
