@@ -44,7 +44,7 @@ const Login: NextPage = () => {
             <Password required value={password} onChange={setPassword}>
               Password
             </Password>
-            <Select required label="Access level" value={level} onValueChange={setLevel}>
+            <Select required label="Access Level" value={level} onValueChange={setLevel}>
               {levels.map(({ value, text }) => (
                 <Select.Item key={value} value={value}>
                   {text}
