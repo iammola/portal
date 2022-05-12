@@ -1,11 +1,19 @@
 import { NextPage } from "next";
 import { format } from "date-fns";
+import { useRouter } from "next/router";
+import { setCookies } from "cookies-next";
 import { Fragment, useState } from "react";
 import Head from "next/head";
 
+import { useToast } from "components";
+import { fetchAPIEndpoint } from "api";
+import { JWT_COOKIE_TOKEN, USER_COOKIE } from "utils";
 import { Checkbox, Input, Password, Select } from "components/Form";
 
 const Login: NextPage = () => {
+  const toasts = useToast();
+  const router = useRouter();
+
   const [levels] = useState(() => [
     { value: "student", text: "👨‍🎓 Student" },
     { value: "parent", text: "👨‍👩‍👦 Parent" },
@@ -16,6 +24,38 @@ const Login: NextPage = () => {
   const [password, setPassword] = useState("");
   const [level, setLevel] = useState(levels[0].value);
   const [remember, setRemember] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    let toastID: number;
+
+    try {
+      toastID = toasts.add({ kind: "loading", description: "Authenticating request..." });
+
+      const result = await fetchAPIEndpoint<API.Auth.POST.Data, API.Auth.POST.Body>("/api/login", {
+        method: "POST",
+        body: { level, remember, password, username },
+      });
+
+      toasts.remove(toastID);
+      if (result.success) {
+        const { token, expires } = result.data;
+        const options = { expires, path: "/", secure: true, sameSite: true };
+
+        setCookies(USER_COOKIE, level, options);
+        setCookies(JWT_COOKIE_TOKEN, token, options);
+
+        toastID = toasts.add({ kind: "success", description: "Success!!" });
+        await router.push("/");
+
+        toasts.remove(toastID);
+      } else throw result.error;
+    } catch (error) {
+      console.error(error);
+      if (typeof error === "string") toasts.add({ kind: "error", description: error });
+      if (typeof error === "object") toasts.add({ kind: "error", description: "Couldn't complete request" });
+    }
+  }
 
   return (
     <Fragment>
@@ -37,7 +77,7 @@ const Login: NextPage = () => {
             Log in to your account
           </p>
         </div>
-        <form className="w-full max-w-[350px] space-y-10">
+        <form onSubmit={(e) => void handleSubmit(e)} className="w-full max-w-[350px] space-y-10">
           <div className="space-y-7">
             <Input required value={username} onChange={setUsername} autoComplete="username">
               Username

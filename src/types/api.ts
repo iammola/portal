@@ -50,7 +50,7 @@ declare global {
 
         export type Data = {
           token: string;
-          expiresIn: number;
+          expires?: Date;
         };
       }
     }
