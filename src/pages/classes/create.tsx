@@ -31,8 +31,11 @@ const CreateClass: NextPage = () => {
       setIsLoading(false);
       toasts.remove(toastID);
 
-      if (result.success) toasts.add({ kind: "success", description: "Created successfully!!" });
-      else throw result.error;
+      if (result.success) {
+        setTeachers("");
+        setName({ long: "", short: "", special: "" });
+        toasts.add({ kind: "success", description: "Created successfully!!" });
+      } else throw result.error;
     } catch (error) {
       console.error(error);
       if (typeof error === "string") toasts.add({ kind: "error", description: error });
