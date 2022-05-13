@@ -1,27 +1,37 @@
 import Head from "next/head";
 import { Fragment, useState } from "react";
 
+import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
 import { Input, Users } from "components/Form";
 
 import type { NextPage } from "next";
 
 const CreateClass: NextPage = () => {
+  const toasts = useToast();
   const [teachers, setTeachers] = useState("");
   const [name, setName] = useState({ long: "", short: "", special: "" });
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    let toastID: number;
 
     try {
+      toastID = toasts.add({ kind: "loading", description: "Creating class..." });
+
       const result = await fetchAPIEndpoint<API.Class.POST.Data, API.Class.POST.Body>("/api/classes", {
         method: "POST",
         body: { name, teachers: teachers.split(" ") },
       });
 
-      if (!result.success) throw result.error;
+      toasts.remove(toastID);
+
+      if (result.success) toasts.add({ kind: "success", description: "Created successfully!!" });
+      else throw result.error;
     } catch (error) {
       console.error(error);
+      if (typeof error === "string") toasts.add({ kind: "error", description: error });
+      if (typeof error === "object") toasts.add({ kind: "error", description: "Couldn't complete request" });
     }
   }
 
