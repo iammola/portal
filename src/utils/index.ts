@@ -15,6 +15,8 @@ export const JWT_COOKIE_TOKEN = "grs-jwt-t";
 
 export const USER_COOKIE = "grs-user";
 
+export const REDIRECT_QUERY = "to";
+
 export const PaginationLimit = 20;
 
 /**
