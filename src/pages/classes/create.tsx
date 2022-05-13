@@ -3,12 +3,15 @@ import { Fragment, useState } from "react";
 
 import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
+import { LoadingIcon } from "components/Icons";
 import { Input, Users } from "components/Form";
 
 import type { NextPage } from "next";
 
 const CreateClass: NextPage = () => {
   const toasts = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+
   const [teachers, setTeachers] = useState("");
   const [name, setName] = useState({ long: "", short: "", special: "" });
 
@@ -17,6 +20,7 @@ const CreateClass: NextPage = () => {
     let toastID: number;
 
     try {
+      setIsLoading(true);
       toastID = toasts.add({ kind: "loading", description: "Creating class..." });
 
       const result = await fetchAPIEndpoint<API.Class.POST.Data, API.Class.POST.Body>("/api/classes", {
@@ -24,6 +28,7 @@ const CreateClass: NextPage = () => {
         body: { name, teachers: teachers.split(" ") },
       });
 
+      setIsLoading(false);
       toasts.remove(toastID);
 
       if (result.success) toasts.add({ kind: "success", description: "Created successfully!!" });
@@ -59,9 +64,16 @@ const CreateClass: NextPage = () => {
           </div>
           <button
             type="submit"
-            className="w-full rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 dark:text-gray-dark-12"
+            className="inline-flex w-full items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 dark:text-gray-dark-12"
           >
-            Create Class
+            {isLoading ? (
+              <Fragment>
+                <LoadingIcon className="h-[15px] w-[15px] animate-spin" />
+                Processing...
+              </Fragment>
+            ) : (
+              "Create Class"
+            )}
           </button>
         </form>
       </div>
