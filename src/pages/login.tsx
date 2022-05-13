@@ -8,7 +8,7 @@ import Head from "next/head";
 import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
 import { Checkbox, Input, Password, Select } from "components/Form";
-import { JWT_COOKIE_TOKEN, REDIRECT_QUERY, USER_COOKIE } from "utils";
+import { JWT_COOKIE_TOKEN, REDIRECT_QUERY, USER_LEVEL_COOKIE } from "utils";
 
 const Login: NextPage = () => {
   const toasts = useToast();
@@ -42,7 +42,7 @@ const Login: NextPage = () => {
         const { token, expires } = result.data;
         const options = { expires, path: "/", secure: true, sameSite: true };
 
-        setCookies(USER_COOKIE, level, options);
+        setCookies(USER_LEVEL_COOKIE, level, options);
         setCookies(JWT_COOKIE_TOKEN, token, options);
 
         toastID = toasts.add({ kind: "success", description: "Success!!" });

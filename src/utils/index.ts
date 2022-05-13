@@ -9,11 +9,11 @@ export const NETWORK_STATE = {
 
 export const JWT_ALG = "PS256";
 
-export const JWT_COOKIE_KEY = "grs-jwt-k";
+export const JWT_COOKIE_KEY = "jwt-k";
 
-export const JWT_COOKIE_TOKEN = "grs-jwt-t";
+export const JWT_COOKIE_TOKEN = "jwt-t";
 
-export const USER_COOKIE = "grs-user";
+export const USER_LEVEL_COOKIE = "user-level";
 
 export const REDIRECT_QUERY = "to";
 
