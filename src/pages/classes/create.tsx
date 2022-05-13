@@ -24,7 +24,7 @@ const CreateClass: NextPage = () => {
             <Input required value={name.short} onChange={(short) => setName((name) => ({ ...name, short }))}>
               Alias
             </Input>
-            <Input required value={name.special} onChange={(special) => setName((name) => ({ ...name, special }))}>
+            <Input value={name.special} onChange={(special) => setName((name) => ({ ...name, special }))}>
               Special name
             </Input>
             <Users value={teachers} onChange={setTeachers}>
