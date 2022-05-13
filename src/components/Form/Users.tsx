@@ -114,7 +114,9 @@ const User: React.FC<{ username: string }> = ({ username }) => {
             </div>
           </Fragment>
         )}
-        {isUser === null && <Icons.LoadingIcon className="h-6 w-6 animate-spin fill-gray-9 dark:fill-gray-dark-9" />}
+        {isUser === null && (
+          <Icons.LoadingIcon className="h-6 w-6 animate-spin stroke-gray-9 dark:stroke-gray-dark-9" />
+        )}
         {isUser === false && <span className="text-sm text-gray-11 dark:text-gray-dark-11">Username not found</span>}
         <HoverCardPrimitive.Arrow className="fill-white dark:fill-gray-dark-2" />
       </HoverCardPrimitive.Content>

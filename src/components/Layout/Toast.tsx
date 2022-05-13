@@ -59,7 +59,7 @@ const LoadingToast: React.FC<Toast.LoadingProps> = ({ description, ...toastProps
       {...toastProps}
       className="flex h-12 w-full items-center justify-start gap-2 rounded-md bg-white py-2.5 pl-4 pr-2 ring-1 ring-gray-6 dark:bg-gray-dark-3 dark:ring-gray-dark-6"
     >
-      <LoadingIcon className="mr-1 h-5 w-5 animate-spin fill-gray-11 dark:fill-gray-dark-11" />
+      <LoadingIcon className="mr-1 h-5 w-5 animate-spin stroke-gray-11 dark:stroke-gray-dark-11" />
       <ToastPrimitive.Description className="grow truncate text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">
         {description}
       </ToastPrimitive.Description>
