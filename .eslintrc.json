@@ -55,7 +55,7 @@
 
     "react/prop-types": 0,
     "react/display-name": 0,
-    "react/react-in-jsx-scope": 0,
+    "react/button-has-type": "warn",
     "react/self-closing-comp": ["error", { "component": true }],
 
     "react-hooks/exhaustive-deps": ["warn", { "additionalHooks": "useIsomorphicLayoutEffect" }],
