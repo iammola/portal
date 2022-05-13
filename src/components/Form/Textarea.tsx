@@ -20,7 +20,7 @@ export const Textarea: React.FC<TextareaProps> = ({ children, id, onChange, ...p
         id={id || customId}
         onChange={(e) => onChange(e.target.value)}
         maxLength={undefined} // So the user can trim the text manually
-        className="min-h-[100px] min-w-[375px] rounded-md bg-gray-3 p-4 text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-gray-7 dark:bg-gray-dark-3 dark:focus:ring-gray-dark-7"
+        className="min-h-[100px] w-full rounded-md bg-gray-3 p-4 text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-gray-7 dark:bg-gray-dark-3 dark:focus:ring-gray-dark-7"
       />
       <div className="mt-1 flex items-center justify-start gap-2 text-xs text-gray-11 empty:hidden dark:text-gray-dark-11">
         {(props.maxLength || props.minLength) && (
