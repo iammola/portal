@@ -49,22 +49,37 @@ const CreateClass: NextPage = () => {
         <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Class</h3>
         <form onSubmit={(e) => void handleSubmit(e)} className="w-full max-w-xs space-y-10">
           <div className="space-y-7">
-            <Input required value={name.long} onChange={(long) => setName((name) => ({ ...name, long }))}>
+            <Input
+              required
+              value={name.long}
+              disabled={isLoading}
+              onChange={(long) => setName((name) => ({ ...name, long }))}
+            >
               Name
             </Input>
-            <Input required value={name.short} onChange={(short) => setName((name) => ({ ...name, short }))}>
+            <Input
+              required
+              value={name.short}
+              disabled={isLoading}
+              onChange={(short) => setName((name) => ({ ...name, short }))}
+            >
               Alias
             </Input>
-            <Input value={name.special} onChange={(special) => setName((name) => ({ ...name, special }))}>
+            <Input
+              value={name.special}
+              disabled={isLoading}
+              onChange={(special) => setName((name) => ({ ...name, special }))}
+            >
               Special name
             </Input>
-            <Users value={teachers} onChange={setTeachers}>
+            <Users value={teachers} disabled={isLoading} onChange={setTeachers}>
               Teachers
             </Users>
           </div>
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 dark:text-gray-dark-12"
+            disabled={isLoading}
+            className="inline-flex w-full items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
           >
             {isLoading ? (
               <Fragment>
