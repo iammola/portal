@@ -49,7 +49,7 @@ const CreateStudent: NextPage = () => {
       <Head>
         <title>Create a Student Account &middot; Portal</title>
       </Head>
-      <div className="flex w-full grow flex-col items-center justify-center gap-8 py-10 px-6">
+      <div className="flex w-full grow flex-col items-center justify-center gap-8 py-10 px-8">
         <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Student Account</h3>
         <form className="flex w-full grow flex-col items-center justify-start gap-7">
           <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
