@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import Head from "next/head";
 
-import { Date, Input, Select } from "components/Form";
+import { Date, Input, Phone, Select, Textarea } from "components/Form";
 
 import type { NextPage } from "next";
 
@@ -18,6 +18,11 @@ const CreateStudent: NextPage = () => {
     initials: "",
     username: "",
     title: studentTitles[0],
+  });
+  const [contact, setContact] = useState<Schemas.Student.Schema["contact"]>({
+    email: { primary: "" },
+    phone: { primary: "" },
+    address: { primary: "" },
   });
 
   return (
@@ -103,6 +108,69 @@ const CreateStudent: NextPage = () => {
                     </Select.Item>
                   ))}
                 </Select>
+              </div>
+            </div>
+          </section>
+          <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
+            <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
+              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">
+                Contact Information
+              </h3>
+              <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
+            </div>
+            <div className="w-full min-w-0 space-y-7">
+              <div className="grid gap-6 sm:grid-cols-2">
+                <Input
+                  required
+                  value={contact.email.primary}
+                  onChange={(primary) =>
+                    setContact((contact) => ({ ...contact, email: { ...contact.email, primary } }))
+                  }
+                >
+                  Email Address
+                </Input>
+                <Input
+                  value={contact.email.other}
+                  onChange={(other) => setContact((contact) => ({ ...contact, email: { ...contact.email, other } }))}
+                >
+                  Email Address (other)
+                </Input>
+              </div>
+              <div className="grid gap-6 sm:grid-cols-2">
+                <Phone
+                  required
+                  value={contact.phone.primary}
+                  onChange={(primary) =>
+                    setContact((contact) => ({ ...contact, phone: { ...contact.phone, primary } }))
+                  }
+                >
+                  Phone Number
+                </Phone>
+                <Phone
+                  value={contact.phone.other}
+                  onChange={(other) => setContact((contact) => ({ ...contact, phone: { ...contact.phone, other } }))}
+                >
+                  Phone Number (other)
+                </Phone>
+              </div>
+              <div className="grid gap-6 sm:grid-cols-2">
+                <Textarea
+                  required
+                  value={contact.address.primary}
+                  onChange={(primary) =>
+                    setContact((contact) => ({ ...contact, address: { ...contact.address, primary } }))
+                  }
+                >
+                  Home Address
+                </Textarea>
+                <Textarea
+                  value={contact.address.other}
+                  onChange={(other) =>
+                    setContact((contact) => ({ ...contact, address: { ...contact.address, other } }))
+                  }
+                >
+                  Address (other)
+                </Textarea>
               </div>
             </div>
           </section>
