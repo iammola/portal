@@ -1,13 +1,15 @@
 import { Fragment, useState } from "react";
+import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
 import Head from "next/head";
 
-import { Date, Input, Phone, Select, Textarea } from "components/Form";
+import { Date, Input, Phone, Select, Textarea, Users } from "components/Form";
 
 import type { NextPage } from "next";
 
 const CreateStudent: NextPage = () => {
   const [studentTitles] = useState(() => ["Master", "Miss"]);
   const [studentGenders] = useState(() => ["Male", "Female"]);
+  const [studentRelatives] = useState(() => ["father", "mother", "other"]);
 
   const [dob, setDob] = useState<Date>();
   const [gender, setGender] = useState(studentGenders[0]);
@@ -24,6 +26,23 @@ const CreateStudent: NextPage = () => {
     phone: { primary: "" },
     address: { primary: "" },
   });
+  const [relatives, setRelatives] = useState<Array<Record<"guardian" | "relation", string>>>([]);
+
+  function updateRelatives(action: "add"): void;
+  function updateRelatives(action: "remove", idx: number): void;
+  function updateRelatives(action: "update", idx: number, update: Utils.OneKey<typeof relatives[0]>): void;
+  function updateRelatives(
+    action: "add" | "update" | "remove",
+    idx?: number,
+    update?: Utils.OneKey<typeof relatives[0]>
+  ) {
+    if (action === "add") setRelatives((relatives) => [...relatives, { guardian: "", relation: studentRelatives[0] }]);
+    if (action === "remove") setRelatives((relatives) => relatives.filter((_, relativeIdx) => relativeIdx !== idx));
+    if (action === "update")
+      setRelatives((relatives) =>
+        relatives.map((relative, relativeIdx) => Object.assign(relative, relativeIdx === idx && update))
+      );
+  }
 
   return (
     <Fragment>
@@ -172,6 +191,54 @@ const CreateStudent: NextPage = () => {
                   Address (other)
                 </Textarea>
               </div>
+            </div>
+          </section>
+          <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
+            <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
+              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Relatives</h3>
+              <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
+            </div>
+            <div className="w-full min-w-0 space-y-7">
+              {relatives.map((item, idx) => (
+                <div key={idx} className="grid grid-cols-[minmax(0,1fr),max-content] gap-3 md:gap-6">
+                  <div className="grid min-w-0 grid-cols-none grid-rows-2 gap-3 md:grid-cols-2 md:grid-rows-none md:gap-6">
+                    <Select
+                      required
+                      label="Relative"
+                      value={item.relation}
+                      onValueChange={(relation) => updateRelatives("update", idx, { relation })}
+                    >
+                      {studentRelatives.map((relation) => (
+                        <Select.Item key={relation} value={relation}>
+                          {relation}
+                        </Select.Item>
+                      ))}
+                    </Select>
+                    <Users
+                      required
+                      value={item.guardian}
+                      onChange={(guardian) => updateRelatives("update", idx, { guardian })}
+                    >
+                      Guardian
+                    </Users>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => updateRelatives("remove", idx)}
+                    className="shrink-0 self-center rounded-full p-1 hover:bg-gray-4 dark:hover:bg-gray-dark-4 md:p-2 "
+                  >
+                    <Cross2Icon className="text-gray-12 dark:text-gray-dark-12" />
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => updateRelatives("add")}
+                className="inline-flex w-full max-w-[175px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
+              >
+                <PlusIcon />
+                Add Relative
+              </button>
             </div>
           </section>
           <button
