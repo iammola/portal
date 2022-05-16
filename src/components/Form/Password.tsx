@@ -35,7 +35,7 @@ export const Password: React.FC<PasswordProps> = ({ children, id, onChange, ...p
               value={props.value ?? ""}
               type={isVisible ? "text" : "password"}
               onChange={(e) => onChange(e.target.value)}
-              className="inline-flex h-[45px] w-full min-w-[150px] items-center justify-center rounded bg-gray-3 px-2.5 text-sm text-gray-12 focus:outline-none focus:ring-2 focus:ring-gray-7 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:focus:ring-gray-dark-7"
+              className="inline-flex h-[45px] w-full items-center justify-center rounded bg-gray-3 px-2.5 text-sm text-gray-12 focus:outline-none focus:ring-2 focus:ring-gray-7 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:focus:ring-gray-dark-7"
             />
           </PopoverPrimitive.Trigger>
           <div

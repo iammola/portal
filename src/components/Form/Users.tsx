@@ -56,7 +56,7 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
         </button>
       </LabelPrimitive.Root>
       {preview ? (
-        <div className="flex min-h-[100px] w-full flex-wrap content-start items-start gap-2 rounded-md bg-gray-3 p-4 text-xs tracking-wide text-gray-11 dark:bg-gray-dark-3 dark:text-gray-dark-11">
+        <div className="flex w-full flex-wrap content-start items-start gap-2 rounded-md bg-gray-3 p-4 text-xs tracking-wide text-gray-11 dark:bg-gray-dark-3 dark:text-gray-dark-11">
           {formatted.map((user, idx) => (
             <User key={idx} username={user} />
           ))}
@@ -69,7 +69,7 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
           id={id || customId}
           onChange={(e) => setRaw(e.target.value)}
           placeholder="Use @username to mention a user"
-          className="min-h-[100px] w-full rounded-md bg-gray-3 p-4 text-xs tracking-wide placeholder:text-gray-11 focus:outline-none focus:ring-2 focus:ring-gray-7 dark:bg-gray-dark-3 dark:placeholder:text-gray-dark-11 dark:focus:ring-gray-dark-7"
+          className="w-full rounded-md bg-gray-3 p-4 text-xs tracking-wide placeholder:text-gray-11 focus:outline-none focus:ring-2 focus:ring-gray-7 dark:bg-gray-dark-3 dark:placeholder:text-gray-dark-11 dark:focus:ring-gray-dark-7"
         />
       )}
     </div>
