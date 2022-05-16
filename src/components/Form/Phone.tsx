@@ -10,6 +10,7 @@ import {
 } from "awesome-phonenumber";
 
 import { getFlagEmoji } from "utils";
+import { useIsomorphicLayoutEffect } from "hooks";
 
 export const Phone: React.FC<PhoneProps> = ({ children, id, onChange, ...props }) => {
   const customId = useId();
@@ -39,6 +40,10 @@ export const Phone: React.FC<PhoneProps> = ({ children, id, onChange, ...props }
     },
     [formatter, onChange]
   );
+
+  useIsomorphicLayoutEffect(() => {
+    if (!props.value) setFormatted("");
+  }, [props.value]);
 
   return (
     <div className="flex w-full flex-col items-start justify-center gap-1">

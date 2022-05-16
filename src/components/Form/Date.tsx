@@ -81,6 +81,10 @@ const Component: React.FC<DateProps> = ({ children, id, onChange, ...props }) =>
     onChange(result);
   }, [onChange, value]);
 
+  useEffect(() => {
+    if (props.value == undefined) setValue({ date: "", month: "", year: "" });
+  }, [props.value]);
+
   return (
     <div className="flex flex-col items-start justify-center gap-1">
       <LabelPrimitive.Root
