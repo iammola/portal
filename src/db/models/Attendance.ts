@@ -20,7 +20,7 @@ AttendanceSchema.static(
     userId: string | string[],
     ...args: [mongoose.ProjectionType<Schemas.Attendance.Record>?, mongoose.QueryOptions?]
   ) {
-    if (Array.isArray(userId)) return this.find({ userId }, ...args);
+    if (Array.isArray(userId)) return this.find({ userId: { $in: userId } }, ...args);
     return this.findOne({ userId }, ...args);
   }
 );

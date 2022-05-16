@@ -80,7 +80,7 @@ export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose
       schoolMail: string | string[],
       ...args: [mongoose.ProjectionType<Schemas.User.Base>?, mongoose.QueryOptions?]
     ) {
-      if (Array.isArray(schoolMail)) return this.find({ schoolMail }, ...args);
+      if (Array.isArray(schoolMail)) return this.find({ schoolMail: { $in: schoolMail } }, ...args);
       return this.findOne({ schoolMail }, ...args);
     }
   );
