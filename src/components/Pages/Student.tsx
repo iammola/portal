@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { useIsomorphicLayoutEffect } from "hooks";
 import { Checkbox, Select } from "components/Form";
 
-export const AcademicRecord: React.FC<AcademicRecordProps> = ({ updateSubjects, updateTerm, ...props }) => {
+export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, updateSubjects, updateTerm, ...props }) => {
   // Fetch data from API
   const terms: API.Term.GET.AllData = [];
   const classes: API.Class.GET.AllData["classes"] = [];
@@ -40,6 +40,7 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ updateSubjects, 
       <div className="flex flex-wrap items-center justify-start gap-5">
         {subjects.map((item) => (
           <Checkbox
+            disabled={disabled}
             key={String(item._id)}
             checked={props.subjects.includes(String(item._id))}
             onCheckedChange={(checked) =>
@@ -61,6 +62,7 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ updateSubjects, 
 type AcademicRecordProps = {
   term: string;
   class: string;
+  disabled: boolean;
   subjects: string[];
   updateTerm(value: string): void;
   updateClass(value: string): void;

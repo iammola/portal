@@ -158,9 +158,10 @@ const CreateStudent: NextPage = () => {
                   ))}
                 </Select>
                 <Input
-                  autoComplete="name"
                   required
                   value={name.full}
+                  autoComplete="name"
+                  disabled={isLoading}
                   onChange={(full) => setName((name) => ({ ...name, full }))}
                 >
                   Full name
@@ -169,6 +170,7 @@ const CreateStudent: NextPage = () => {
               <div className="grid gap-6 sm:grid-cols-[100px_repeat(2,_minmax(0,1fr))]">
                 <Input
                   required
+                  disabled={isLoading}
                   value={name.initials}
                   onChange={(initials) => setName((name) => ({ ...name, initials }))}
                 >
@@ -177,6 +179,7 @@ const CreateStudent: NextPage = () => {
                 <Input
                   required
                   value={name.first}
+                  disabled={isLoading}
                   autoComplete="given-name"
                   onChange={(first) => setName((name) => ({ ...name, first }))}
                 >
@@ -185,6 +188,7 @@ const CreateStudent: NextPage = () => {
                 <Input
                   required
                   value={name.last}
+                  disabled={isLoading}
                   autoComplete="family-name"
                   onChange={(last) => setName((name) => ({ ...name, last }))}
                 >
@@ -194,6 +198,7 @@ const CreateStudent: NextPage = () => {
               <div className="w-full sm:w-[75%]">
                 <Input
                   value={name.other}
+                  disabled={isLoading}
                   autoComplete="additional-name"
                   onChange={(other) => setName((name) => ({ ...name, other }))}
                 >
@@ -201,7 +206,7 @@ const CreateStudent: NextPage = () => {
                 </Input>
               </div>
               <div className="grid gap-6 xs:grid-cols-[max-content_minmax(max-content,200px)]">
-                <Date required value={dob} onChange={setDob} autoComplete="bday">
+                <Date required disabled={isLoading} value={dob} onChange={setDob} autoComplete="bday">
                   Date of Birth
                 </Date>
                 <Select required label="Gender" value={gender} onValueChange={setGender}>
@@ -225,6 +230,7 @@ const CreateStudent: NextPage = () => {
               <div className="grid gap-6 sm:grid-cols-2">
                 <Input
                   required
+                  disabled={isLoading}
                   value={contact.email.primary}
                   onChange={(primary) =>
                     setContact((contact) => ({ ...contact, email: { ...contact.email, primary } }))
@@ -233,6 +239,7 @@ const CreateStudent: NextPage = () => {
                   Email Address
                 </Input>
                 <Input
+                  disabled={isLoading}
                   value={contact.email.other}
                   onChange={(other) => setContact((contact) => ({ ...contact, email: { ...contact.email, other } }))}
                 >
@@ -242,6 +249,7 @@ const CreateStudent: NextPage = () => {
               <div className="grid gap-6 sm:grid-cols-2">
                 <Phone
                   required
+                  disabled={isLoading}
                   value={contact.phone.primary}
                   onChange={(primary) =>
                     setContact((contact) => ({ ...contact, phone: { ...contact.phone, primary } }))
@@ -250,6 +258,7 @@ const CreateStudent: NextPage = () => {
                   Phone Number
                 </Phone>
                 <Phone
+                  disabled={isLoading}
                   value={contact.phone.other}
                   onChange={(other) => setContact((contact) => ({ ...contact, phone: { ...contact.phone, other } }))}
                 >
@@ -259,6 +268,7 @@ const CreateStudent: NextPage = () => {
               <div className="grid gap-6 sm:grid-cols-2">
                 <Textarea
                   required
+                  disabled={isLoading}
                   value={contact.address.primary}
                   onChange={(primary) =>
                     setContact((contact) => ({ ...contact, address: { ...contact.address, primary } }))
@@ -267,6 +277,7 @@ const CreateStudent: NextPage = () => {
                   Home Address
                 </Textarea>
                 <Textarea
+                  disabled={isLoading}
                   value={contact.address.other}
                   onChange={(other) =>
                     setContact((contact) => ({ ...contact, address: { ...contact.address, other } }))
@@ -300,6 +311,7 @@ const CreateStudent: NextPage = () => {
                     </Select>
                     <Users
                       required
+                      disabled={isLoading}
                       value={item.guardian}
                       onChange={(guardian) => updateGuardians("update", idx, { guardian })}
                     >
@@ -308,6 +320,7 @@ const CreateStudent: NextPage = () => {
                   </div>
                   <button
                     type="button"
+                    disabled={isLoading}
                     onClick={() => updateGuardians("remove", idx)}
                     className="shrink-0 self-center rounded-full p-1 hover:bg-gray-4 dark:hover:bg-gray-dark-4 md:p-2 "
                   >
@@ -317,6 +330,7 @@ const CreateStudent: NextPage = () => {
               ))}
               <button
                 type="button"
+                disabled={isLoading}
                 onClick={() => updateGuardians("add")}
                 className="inline-flex w-full max-w-[175px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
               >
@@ -335,6 +349,7 @@ const CreateStudent: NextPage = () => {
                 <div key={idx} className="grid grid-rows-[minmax(0,1fr),max-content] gap-6 md:gap-3">
                   <AcademicRecord
                     {...item}
+                    disabled={isLoading}
                     updateTerm={(term) => updateAcademic("update", idx, { term })}
                     updateClass={(value) => updateAcademic("update", idx, { class: value })}
                     updateSubjects={(subjects) => updateAcademic("update", idx, { subjects })}
@@ -343,6 +358,7 @@ const CreateStudent: NextPage = () => {
               ))}
               <button
                 type="button"
+                disabled={isLoading}
                 onClick={() => updateAcademic("add")}
                 className="inline-flex w-full min-w-max max-w-[250px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
               >
@@ -360,6 +376,7 @@ const CreateStudent: NextPage = () => {
               <div className="w-full sm:w-2/3 lg:w-1/2 xl:w-2/5">
                 <Input
                   required
+                  disabled={isLoading}
                   value={name.username}
                   onChange={(username) => setName((name) => ({ ...name, username }))}
                 >
@@ -367,7 +384,7 @@ const CreateStudent: NextPage = () => {
                 </Input>
               </div>
               <div className="w-full sm:w-2/3 lg:w-1/2 xl:w-2/5">
-                <Password required value={password} onChange={setPassword}>
+                <Password required disabled={isLoading} value={password} onChange={setPassword}>
                   Password
                 </Password>
               </div>
@@ -375,7 +392,8 @@ const CreateStudent: NextPage = () => {
           </section>
           <button
             type="submit"
-            className="w-full max-w-xs rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 dark:text-gray-dark-12"
+            disabled={isLoading}
+            className="inline-flex w-full max-w-xs items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
           >
             {isLoading ? (
               <Fragment>
