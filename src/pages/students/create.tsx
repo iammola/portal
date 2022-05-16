@@ -234,7 +234,7 @@ const CreateStudent: NextPage = () => {
           </section>
           <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
             <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
-              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Relatives</h3>
+              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Guardians</h3>
               <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
             </div>
             <div className="w-full min-w-0 space-y-7">
@@ -243,7 +243,7 @@ const CreateStudent: NextPage = () => {
                   <div className="grid min-w-0 grid-cols-none grid-rows-2 gap-3 md:grid-cols-2 md:grid-rows-none md:gap-6">
                     <Select
                       required
-                      label="Relative"
+                      label="Guardian"
                       value={item.relation}
                       onValueChange={(relation) => updateRelatives("update", idx, { relation })}
                     >
@@ -276,7 +276,7 @@ const CreateStudent: NextPage = () => {
                 className="inline-flex w-full max-w-[175px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
               >
                 <PlusIcon />
-                Add Relative
+                Add Guardian
               </button>
             </div>
           </section>
