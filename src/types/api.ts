@@ -198,10 +198,13 @@ declare global {
         export type Data = CreateData<Pick<Schemas.Student.Schema, "schoolMail">>;
 
         export type Body = {
+          dob: Date;
+          gender: string;
+          username: string;
           password: string;
-          academic: { class: string; subjects: string[] };
-          guardians: Array<Record<"mail" | "relation", string>>;
-        } & Required<Pick<Schemas.Student.Schema, "dob" | "gender" | "images" | "name" | "contact">>;
+          guardians: Array<Record<"guardian" | "relation", string>>;
+          academic: Array<{ subjects: string[] } & Record<"term" | "class", string>>;
+        } & Required<Pick<Schemas.Student.Schema, "images" | "name" | "contact">>;
       }
     }
   }
