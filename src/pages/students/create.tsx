@@ -38,6 +38,7 @@ const CreateStudent: NextPage = () => {
   const [studentGuardians] = useState(() => ["father", "mother", "other"]);
 
   const [dob, setDob] = useState<Date>();
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState(studentGenders[0]);
   const [name, setName] = useState<Schemas.Student.Schema["name"]>({
@@ -45,7 +46,6 @@ const CreateStudent: NextPage = () => {
     last: "",
     first: "",
     initials: "",
-    username: "",
     title: studentTitles[0],
   });
   const [contact, setContact] = useState<Schemas.Student.Schema["contact"]>({
@@ -98,10 +98,10 @@ const CreateStudent: NextPage = () => {
       setIsLoading(true);
       toastID = toasts.add({ kind: "loading", description: "Processing request..." });
 
-      const body = { name, contact, dob, password, academic, guardians, images: {} };
+      const body = { name, contact, dob, username, password, academic, guardians, images: {} };
       const result = await fetchAPIEndpoint<API.Student.POST.Data, API.Student.POST.Body>("/api/students", {
         method: "POST",
-        body: { ...body, gender: gender[0] as "M" | "F" },
+        body: { ...body, gender: gender[0] },
       });
 
       setIsLoading(false);
@@ -110,13 +110,14 @@ const CreateStudent: NextPage = () => {
       if (result.success) {
         toasts.add({ kind: "success", description: "Created successfully!!" });
 
+        setUsername("");
         setPassword("");
         setAcademic([]);
         setGuardians([]);
         setDob(undefined);
         setGender(studentGenders[0]);
+        setName({ full: "", last: "", first: "", initials: "", title: studentTitles[0] });
         setContact({ email: { primary: "" }, phone: { primary: "" }, address: { primary: "" } });
-        setName({ full: "", last: "", first: "", initials: "", username: "", title: studentTitles[0] });
       } else throw result.error;
     } catch (error) {
       console.error(error);
@@ -374,12 +375,7 @@ const CreateStudent: NextPage = () => {
             </div>
             <div className="w-full min-w-0 space-y-7">
               <div className="w-full sm:w-2/3 lg:w-1/2 xl:w-2/5">
-                <Input
-                  required
-                  disabled={isLoading}
-                  value={name.username}
-                  onChange={(username) => setName((name) => ({ ...name, username }))}
-                >
+                <Input required value={username} disabled={isLoading} onChange={setUsername}>
                   Username
                 </Input>
               </div>

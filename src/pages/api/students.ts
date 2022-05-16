@@ -18,12 +18,12 @@ async function POST(body: unknown): API.HandlerResponse<API.Student.POST.Data> {
   const data = JSON.parse(body as string) as API.Student.POST.Body;
 
   const check = await Promise.all([
-    StudentModel.exists({ "name.username": data.name.username }),
-    TeacherModel.exists({ "name.username": data.name.username }),
-    ParentModel.exists({ "name.username": data.name.username }),
+    StudentModel.exists({ username: data.username }),
+    TeacherModel.exists({ username: data.username }),
+    ParentModel.exists({ username: data.username }),
   ]);
 
-  if (check.every((_) => _ != null)) throw new Error(`A user with the username ${data.name.username} already exists`);
+  if (check.every((_) => _ != null)) throw new Error(`A user with the username ${data.username} already exists`);
 
   if (isNaN(new Date(data.dob).getTime())) throw new Error("Invalid Date of Birth");
 
@@ -62,7 +62,7 @@ async function POST(body: unknown): API.HandlerResponse<API.Student.POST.Data> {
     data.guardians = data.guardians.map((_) => ({
       relation: _.relation,
       guardian: parents.reduce<string>(
-        (acc, cur) => (_.guardian.split(" ", 1)[0] === cur.name.username ? String(cur._id) : acc),
+        (acc, cur) => (_.guardian.split(" ", 1)[0] === cur.username ? String(cur._id) : acc),
         ""
       ),
     }));
