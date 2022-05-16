@@ -11,15 +11,15 @@ import type { NextPage } from "next";
 const AcademicRecord = dynamic(() => import("components/Pages/Student").then((_) => _.AcademicRecord), {
   loading: ({ error, retry }) =>
     error == null ? (
-      <div className="flex flex-col items-center justify-center gap-4 py-2 text-xs text-gray-11 dark:text-gray-dark-11">
-        <LoadingIcon className="animate-spin" />
+      <div className="flex flex-col items-center justify-center gap-2 text-gray-11 dark:text-gray-dark-11">
+        <LoadingIcon className="h-[15px] w-[15px] animate-spin" />
         Loading...
       </div>
     ) : (
       <button
         type="button"
         onClick={retry}
-        className="text=xs flex items-center justify-center gap-1 text-gray-11 dark:text-gray-dark-11"
+        className="flex items-center justify-center gap-2 text-gray-11 dark:text-gray-dark-11"
       >
         Try again
         <ReloadIcon />
