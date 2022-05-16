@@ -2,7 +2,7 @@ import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { eachDayOfInterval, endOfMonth, subDays } from "date-fns";
-import { Fragment, useId, useRef, useState } from "react";
+import { Fragment, useEffect, useId, useRef, useState } from "react";
 import {
   CalendarIcon,
   CheckIcon,
@@ -15,7 +15,7 @@ import {
 import { cx } from "utils";
 import { useIsomorphicLayoutEffect } from "hooks";
 
-const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
+const Component: React.FC<DateProps> = ({ children, id, onChange, ...props }) => {
   const customId = useId();
 
   const dateRef = useRef<HTMLInputElement>(null);
@@ -72,6 +72,14 @@ const Component: React.FC<DateProps> = ({ children, id, ...props }) => {
 
     updateValue(year.padStart(4, "0"), "year");
   }
+
+  useEffect(() => {
+    const { date, month, year } = value;
+    if (+date === 0 || +month === 0 || +year === 0) return onChange(undefined);
+
+    const result = new Date(+year, +month - 1, +date);
+    onChange(result);
+  }, [onChange, value]);
 
   return (
     <div className="flex flex-col items-start justify-center gap-1">
