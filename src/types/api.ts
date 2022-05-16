@@ -199,8 +199,8 @@ declare global {
 
         export type Body = {
           password: string;
-          academic: { class: string; subjects: string[] };
           guardians: Array<Record<"mail" | "relation", string>>;
+          academic: Array<{ subjects: string[] } & Record<"term" | "class", string>>;
         } & Required<Pick<Schemas.Student.Schema, "dob" | "gender" | "images" | "name" | "contact">>;
       }
     }
