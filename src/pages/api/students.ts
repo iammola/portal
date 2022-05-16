@@ -15,7 +15,7 @@ const handler: API.Handler<API.Student.POST.Data> = async (req) => {
 };
 
 async function POST(body: unknown): API.HandlerResponse<API.Student.POST.Data> {
-  const { guardians, ...data } = JSON.parse(body as string) as API.Student.POST.Body;
+  const data = JSON.parse(body as string) as API.Student.POST.Body;
 
   const check = await Promise.all([
     StudentModel.exists({ "name.username": data.name.username }),
@@ -49,6 +49,21 @@ async function POST(body: unknown): API.HandlerResponse<API.Student.POST.Data> {
 
     if (subjects.length != academicData.subjects.length)
       throw new Error("One or more subjects in the academic section does not exist");
+  }
+
+  if (data.guardians.length > 0) {
+    const parents = await ParentModel.findByUsername(
+      data.guardians.map((_) => _.guardian.split(" ", 1)).flat(),
+      "name.username"
+    ).lean();
+
+    data.guardians = data.guardians.map((_) => ({
+      relation: _.relation,
+      guardian: parents.reduce<string>(
+        (acc, cur) => (_.guardian.split(" ", 1)[0] === cur.name.username ? String(cur._id) : acc),
+        ""
+      ),
+    }));
   }
 
   const response = await createUser("student", data);

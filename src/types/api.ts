@@ -199,7 +199,7 @@ declare global {
 
         export type Body = {
           password: string;
-          guardians: Array<Record<"mail" | "relation", string>>;
+          guardians: Array<Record<"guardian" | "relation", string>>;
           academic: Array<{ subjects: string[] } & Record<"term" | "class", string>>;
         } & Required<Pick<Schemas.Student.Schema, "dob" | "gender" | "images" | "name" | "contact">>;
       }
