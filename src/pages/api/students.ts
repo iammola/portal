@@ -73,4 +73,4 @@ async function POST(body: unknown): API.HandlerResponse<API.Student.POST.Data> {
   return [{ data: response, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
-export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, []);
+export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["POST"]);
