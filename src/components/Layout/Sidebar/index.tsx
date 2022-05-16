@@ -1,11 +1,11 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { Cross2Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 
 import { cx } from "utils";
-import { useOnline } from "hooks";
 import { Avatar } from "components";
+import { useIsomorphicLayoutEffect, useOnline } from "hooks";
 
 import { Menu } from "./Menu";
 
@@ -13,12 +13,8 @@ export const Sidebar: React.FC = () => {
   const { online } = useOnline();
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    /** Opens the sidebar if the window width is more than 1024px (lg/desktop), closes it otherwise */
-    function handleResize() {
-      const md = window.matchMedia("(min-width: 1024px)").matches;
-      setIsOpen((open) => (md ? true : open));
-    }
+  useIsomorphicLayoutEffect(() => {
+    const handleResize = () => setIsOpen(matchMedia("(min-width: 1024px)").matches);
 
     handleResize();
     addEventListener("resize", handleResize);
