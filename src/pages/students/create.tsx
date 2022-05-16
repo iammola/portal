@@ -4,7 +4,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import { LoadingIcon } from "components/Icons";
-import { Date, Input, Phone, Select, Textarea, Users } from "components/Form";
+import { Date, Input, Password, Phone, Select, Textarea, Users } from "components/Form";
 
 import type { NextPage } from "next";
 
@@ -33,6 +33,7 @@ const CreateStudent: NextPage = () => {
   const [studentRelatives] = useState(() => ["father", "mother", "other"]);
 
   const [dob, setDob] = useState<Date>();
+  const [password, setPassword] = useState("");
   const [gender, setGender] = useState(studentGenders[0]);
   const [name, setName] = useState<Schemas.Student.Schema["name"]>({
     full: "",
@@ -303,6 +304,28 @@ const CreateStudent: NextPage = () => {
                 <PlusIcon className="shrink-0" />
                 Add Academic History
               </button>
+            </div>
+          </section>
+          <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
+            <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
+              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Profile</h3>
+              <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
+            </div>
+            <div className="w-full min-w-0 space-y-7">
+              <div className="w-full sm:w-2/3 lg:w-1/2 xl:w-2/5">
+                <Input
+                  required
+                  value={name.username}
+                  onChange={(username) => setName((name) => ({ ...name, username }))}
+                >
+                  Username
+                </Input>
+              </div>
+              <div className="w-full sm:w-2/3 lg:w-1/2 xl:w-2/5">
+                <Password required value={password} onChange={setPassword}>
+                  Password
+                </Password>
+              </div>
             </div>
           </section>
           <button
