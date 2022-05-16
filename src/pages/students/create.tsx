@@ -1,10 +1,13 @@
 import { Fragment, useState } from "react";
 import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
 import { Date, Input, Phone, Select, Textarea, Users } from "components/Form";
 
 import type { NextPage } from "next";
+
+const AcademicRecord = dynamic(() => import("components/Pages/Student").then((d) => d.AcademicRecord));
 
 const CreateStudent: NextPage = () => {
   const [studentTitles] = useState(() => ["Master", "Miss"]);
@@ -27,6 +30,7 @@ const CreateStudent: NextPage = () => {
     address: { primary: "" },
   });
   const [relatives, setRelatives] = useState<Array<Record<"guardian" | "relation", string>>>([]);
+  const [academic, setAcademic] = useState<Array<Record<"term" | "class", string> & { subjects: string[] }>>([]);
 
   function updateRelatives(action: "add"): void;
   function updateRelatives(action: "remove", idx: number): void;
@@ -41,6 +45,22 @@ const CreateStudent: NextPage = () => {
     if (action === "update")
       setRelatives((relatives) =>
         relatives.map((relative, relativeIdx) => Object.assign(relative, relativeIdx === idx && update))
+      );
+  }
+
+  function updateAcademic(action: "add"): void;
+  function updateAcademic(action: "remove", idx: number): void;
+  function updateAcademic(action: "update", idx: number, update: Utils.OneKey<typeof academic[0]>): void;
+  function updateAcademic(
+    action: "add" | "remove" | "update",
+    idx?: number,
+    update?: Utils.OneKey<typeof academic[0]>
+  ) {
+    if (action === "add") setAcademic((academic) => [...academic, { term: "", class: "", subjects: [] }]);
+    if (action === "remove") setAcademic((academic) => academic.filter((_, academicIdx) => academicIdx !== idx));
+    if (action === "update")
+      setAcademic((academic) =>
+        academic.map((academic, academicIdx) => Object.assign(academic, academicIdx === idx && update))
       );
   }
 
@@ -238,6 +258,32 @@ const CreateStudent: NextPage = () => {
               >
                 <PlusIcon />
                 Add Relative
+              </button>
+            </div>
+          </section>
+          <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
+            <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
+              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Academic History</h3>
+              <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
+            </div>
+            <div className="w-full min-w-0 space-y-7">
+              {academic.map((item, idx) => (
+                <div key={idx} className="grid grid-rows-[minmax(0,1fr),max-content] gap-6 md:gap-3">
+                  <AcademicRecord
+                    {...item}
+                    updateTerm={(term) => updateAcademic("update", idx, { term })}
+                    updateClass={(value) => updateAcademic("update", idx, { class: value })}
+                    updateSubjects={(subjects) => updateAcademic("update", idx, { subjects })}
+                  />
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => updateAcademic("add")}
+                className="inline-flex w-full min-w-max max-w-[250px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
+              >
+                <PlusIcon className="shrink-0" />
+                Add Academic History
               </button>
             </div>
           </section>
