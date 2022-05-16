@@ -25,6 +25,8 @@ async function POST(body: unknown): API.HandlerResponse<API.Student.POST.Data> {
 
   if (check.every((_) => _ != null)) throw new Error(`A user with the username ${data.name.username} already exists`);
 
+  if (isNaN(new Date(data.dob).getTime())) throw new Error("Invalid Date of Birth");
+
   if (data.academic.length > 0) {
     const academicData = data.academic.reduce<Record<"term" | "class" | "subjects", string[]>>(
       (acc, cur) => ({
