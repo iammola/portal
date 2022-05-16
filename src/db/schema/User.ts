@@ -15,6 +15,11 @@ export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose
       type: UserName,
       required: [true, "Name required"],
     },
+    username: {
+      unique: true,
+      immutable: true,
+      ...userSubName("User name required"),
+    },
     contact: {
       type: UserContact,
       required: [true, "Contact required"],
@@ -45,7 +50,7 @@ export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose
   });
 
   schema.pre("save", function (next) {
-    this.set("schoolMail", generateSchoolMail(this.name.username));
+    this.set("schoolMail", generateSchoolMail(this.username));
     next();
   });
 
@@ -89,11 +94,6 @@ const UserName = new mongoose.Schema<Schemas.User.Name>(
     full: userSubName("Full name required"),
     first: userSubName("First name required"),
     initials: userSubName("Initials required"),
-    username: {
-      unique: true,
-      immutable: true,
-      ...userSubName("User name required"),
-    },
   },
   { _id: false }
 );

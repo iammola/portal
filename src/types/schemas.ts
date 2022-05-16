@@ -195,7 +195,6 @@ declare global {
 
       export type Name = {
         other?: string;
-        readonly username: string;
       } & Record<"initials" | "title" | "full" | "first" | "last", string>;
 
       export type Password = {
@@ -223,6 +222,7 @@ declare global {
         images: Images;
         gender: Gender;
         contact: Contact;
+        readonly username: string;
         readonly schoolMail: string;
       } & DocumentId;
 
