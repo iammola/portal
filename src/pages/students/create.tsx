@@ -1,13 +1,31 @@
 import { Fragment, useState } from "react";
-import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
+import { Cross2Icon, PlusIcon, ReloadIcon } from "@radix-ui/react-icons";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
+import { LoadingIcon } from "components/Icons";
 import { Date, Input, Phone, Select, Textarea, Users } from "components/Form";
 
 import type { NextPage } from "next";
 
-const AcademicRecord = dynamic(() => import("components/Pages/Student").then((d) => d.AcademicRecord));
+const AcademicRecord = dynamic(() => import("components/Pages/Student").then((_) => _.AcademicRecord), {
+  loading: ({ error, retry }) =>
+    error == null ? (
+      <div className="flex flex-col items-center justify-center gap-4 py-2 text-xs text-gray-11 dark:text-gray-dark-11">
+        <LoadingIcon className="animate-spin" />
+        Loading...
+      </div>
+    ) : (
+      <button
+        type="button"
+        onClick={retry}
+        className="text=xs flex items-center justify-center gap-1 text-gray-11 dark:text-gray-dark-11"
+      >
+        Try again
+        <ReloadIcon />
+      </button>
+    ),
+});
 
 const CreateStudent: NextPage = () => {
   const [studentTitles] = useState(() => ["Master", "Miss"]);
