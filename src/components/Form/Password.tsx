@@ -13,7 +13,7 @@ export const Password: React.FC<PasswordProps> = ({ children, id, onChange, ...p
   const strength = useMemo(() => {
     const value = props.value as string;
     const { score = -1 } = value ? check(value) : {};
-    const title = ["Poor", "Weak", "Good", "Strong"][score] ?? "No";
+    const title = ["Bad", "Poor", "Weak", "Good", "Strong"][score] ?? "No";
 
     return { score, title };
   }, [check, props.value]);
@@ -52,7 +52,7 @@ export const Password: React.FC<PasswordProps> = ({ children, id, onChange, ...p
         >
           <h4 className="font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{strength.title} Password</h4>
           <div className="flex w-full justify-start gap-1">
-            {Array.from({ length: 4 }).map((_, idx) => (
+            {Array.from({ length: 5 }).map((_, idx) => (
               <div
                 key={idx}
                 className={cx(
