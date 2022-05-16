@@ -3,6 +3,7 @@ import { Cross2Icon, PlusIcon, ReloadIcon } from "@radix-ui/react-icons";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
+import { fetchAPIEndpoint } from "api";
 import { LoadingIcon } from "components/Icons";
 import { Date, Input, Password, Phone, Select, Textarea, Users } from "components/Form";
 
@@ -83,6 +84,32 @@ const CreateStudent: NextPage = () => {
       );
   }
 
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (dob == undefined) return (e.target as HTMLFormElement).reportValidity();
+
+    try {
+      const body = { name, contact, dob, password, academic, guardians, images: {} };
+      const result = await fetchAPIEndpoint<API.Student.POST.Data, API.Student.POST.Body>("/api/students", {
+        method: "POST",
+        body: { ...body, gender: gender[0] as "M" | "F" },
+      });
+
+      if (result.success) {
+        setPassword("");
+        setAcademic([]);
+        setGuardians([]);
+        setDob(undefined);
+        setGender(studentGenders[0]);
+        setContact({ email: { primary: "" }, phone: { primary: "" }, address: { primary: "" } });
+        setName({ full: "", last: "", first: "", initials: "", username: "", title: studentTitles[0] });
+      } else throw result.error;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <Fragment>
       <Head>
@@ -90,7 +117,10 @@ const CreateStudent: NextPage = () => {
       </Head>
       <div className="flex w-full grow flex-col items-center justify-center gap-8 py-10 px-8">
         <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Student Account</h3>
-        <form className="flex w-full grow flex-col items-center justify-start gap-7">
+        <form
+          onSubmit={(e) => void handleSubmit(e)}
+          className="flex w-full grow flex-col items-center justify-start gap-7"
+        >
           <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
             <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
               <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">
