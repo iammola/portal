@@ -31,6 +31,7 @@ const AcademicRecord = dynamic(() => import("components/Pages/Student").then((_)
 
 const CreateStudent: NextPage = () => {
   const toasts = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [studentTitles] = useState(() => ["Master", "Miss"]);
   const [studentGenders] = useState(() => ["Male", "Female"]);
@@ -94,6 +95,7 @@ const CreateStudent: NextPage = () => {
     if (dob == undefined) return (e.target as HTMLFormElement).reportValidity();
 
     try {
+      setIsLoading(true);
       toastID = toasts.add({ kind: "loading", description: "Processing request..." });
 
       const body = { name, contact, dob, password, academic, guardians, images: {} };
@@ -102,6 +104,7 @@ const CreateStudent: NextPage = () => {
         body: { ...body, gender: gender[0] as "M" | "F" },
       });
 
+      setIsLoading(false);
       toasts.remove(toastID);
 
       if (result.success) {
@@ -374,7 +377,14 @@ const CreateStudent: NextPage = () => {
             type="submit"
             className="w-full max-w-xs rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 dark:text-gray-dark-12"
           >
-            Create Student
+            {isLoading ? (
+              <Fragment>
+                <LoadingIcon className="h-[15px] w-[15px] animate-spin" />
+                Processing...
+              </Fragment>
+            ) : (
+              "Create Student"
+            )}
           </button>
         </form>
       </div>
