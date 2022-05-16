@@ -3,7 +3,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { routeWrapper } from "api";
 import { createUser } from "db/utils";
-import { ParentModel, StudentModel, TeacherModel } from "db/models";
+import { ClassModel, ParentModel, StudentModel, SubjectModel, TeacherModel, TermModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -15,7 +15,7 @@ const handler: API.Handler<API.Student.POST.Data> = async (req) => {
 };
 
 async function POST(body: unknown): API.HandlerResponse<API.Student.POST.Data> {
-  const { academic, guardians, ...data } = JSON.parse(body as string) as API.Student.POST.Body;
+  const { guardians, ...data } = JSON.parse(body as string) as API.Student.POST.Body;
 
   const check = await Promise.all([
     StudentModel.exists({ "name.username": data.name.username }),
@@ -24,6 +24,32 @@ async function POST(body: unknown): API.HandlerResponse<API.Student.POST.Data> {
   ]);
 
   if (check.every((_) => _ != null)) throw new Error(`A user with the username ${data.name.username} already exists`);
+
+  if (data.academic.length > 0) {
+    const academicData = data.academic.reduce<Record<"term" | "class" | "subjects", string[]>>(
+      (acc, cur) => ({
+        term: [...acc.term, cur.term],
+        class: [...acc.class, cur.class],
+        subjects: [...acc.subjects, ...cur.subjects],
+      }),
+      { term: [], class: [], subjects: [] }
+    );
+
+    const [terms, classes, subjects] = await Promise.all([
+      TermModel.find({ _id: { $in: academicData.term } }, "_id").lean(),
+      ClassModel.find({ _id: { $in: academicData.class } }, "_id").lean(),
+      SubjectModel.find({ _id: { $in: academicData.subjects } }, "_id").lean(),
+    ]);
+
+    if (terms.length != academicData.term.length)
+      throw new Error("One or more terms in the academic section does not exist");
+
+    if (classes.length != academicData.class.length)
+      throw new Error("One or more classes in the academic section does not exist");
+
+    if (subjects.length != academicData.subjects.length)
+      throw new Error("One or more subjects in the academic section does not exist");
+  }
 
   const response = await createUser("student", data);
 
