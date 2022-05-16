@@ -67,8 +67,10 @@ export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose
       username: string | string[],
       ...args: [mongoose.ProjectionType<Schemas.User.Base>?, mongoose.QueryOptions?]
     ) {
-      if (Array.isArray(username)) return this.find({ username }, ...args);
-      return this.findOne({ username }, ...args);
+      const format = (str: string) => str.replace(/^@?/, "");
+
+      if (Array.isArray(username)) return this.find({ username: { $in: username.map((u) => format(u)) } }, ...args);
+      return this.findOne({ username: format(username) }, ...args);
     }
   );
 
