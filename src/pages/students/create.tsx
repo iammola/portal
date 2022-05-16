@@ -3,6 +3,7 @@ import { Cross2Icon, PlusIcon, ReloadIcon } from "@radix-ui/react-icons";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
+import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
 import { LoadingIcon } from "components/Icons";
 import { Date, Input, Password, Phone, Select, Textarea, Users } from "components/Form";
@@ -29,6 +30,8 @@ const AcademicRecord = dynamic(() => import("components/Pages/Student").then((_)
 });
 
 const CreateStudent: NextPage = () => {
+  const toasts = useToast();
+
   const [studentTitles] = useState(() => ["Master", "Miss"]);
   const [studentGenders] = useState(() => ["Male", "Female"]);
   const [studentGuardians] = useState(() => ["father", "mother", "other"]);
@@ -86,17 +89,24 @@ const CreateStudent: NextPage = () => {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    let toastID: number;
 
     if (dob == undefined) return (e.target as HTMLFormElement).reportValidity();
 
     try {
+      toastID = toasts.add({ kind: "loading", description: "Processing request..." });
+
       const body = { name, contact, dob, password, academic, guardians, images: {} };
       const result = await fetchAPIEndpoint<API.Student.POST.Data, API.Student.POST.Body>("/api/students", {
         method: "POST",
         body: { ...body, gender: gender[0] as "M" | "F" },
       });
 
+      toasts.remove(toastID);
+
       if (result.success) {
+        toasts.add({ kind: "success", description: "Created successfully!!" });
+
         setPassword("");
         setAcademic([]);
         setGuardians([]);
@@ -107,6 +117,8 @@ const CreateStudent: NextPage = () => {
       } else throw result.error;
     } catch (error) {
       console.error(error);
+      if (typeof error === "string") toasts.add({ kind: "error", description: error });
+      if (typeof error === "object") toasts.add({ kind: "error", description: "Couldn't complete request" });
     }
   }
 
