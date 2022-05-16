@@ -30,7 +30,7 @@ const AcademicRecord = dynamic(() => import("components/Pages/Student").then((_)
 const CreateStudent: NextPage = () => {
   const [studentTitles] = useState(() => ["Master", "Miss"]);
   const [studentGenders] = useState(() => ["Male", "Female"]);
-  const [studentRelatives] = useState(() => ["father", "mother", "other"]);
+  const [studentGuardians] = useState(() => ["father", "mother", "other"]);
 
   const [dob, setDob] = useState<Date>();
   const [password, setPassword] = useState("");
@@ -48,22 +48,22 @@ const CreateStudent: NextPage = () => {
     phone: { primary: "" },
     address: { primary: "" },
   });
-  const [relatives, setRelatives] = useState<Array<Record<"guardian" | "relation", string>>>([]);
+  const [guardians, setGuardians] = useState<Array<Record<"guardian" | "relation", string>>>([]);
   const [academic, setAcademic] = useState<Array<Record<"term" | "class", string> & { subjects: string[] }>>([]);
 
-  function updateRelatives(action: "add"): void;
-  function updateRelatives(action: "remove", idx: number): void;
-  function updateRelatives(action: "update", idx: number, update: Utils.OneKey<typeof relatives[0]>): void;
-  function updateRelatives(
+  function updateGuardians(action: "add"): void;
+  function updateGuardians(action: "remove", idx: number): void;
+  function updateGuardians(action: "update", idx: number, update: Utils.OneKey<typeof guardians[0]>): void;
+  function updateGuardians(
     action: "add" | "update" | "remove",
     idx?: number,
-    update?: Utils.OneKey<typeof relatives[0]>
+    update?: Utils.OneKey<typeof guardians[0]>
   ) {
-    if (action === "add") setRelatives((relatives) => [...relatives, { guardian: "", relation: studentRelatives[0] }]);
-    if (action === "remove") setRelatives((relatives) => relatives.filter((_, relativeIdx) => relativeIdx !== idx));
+    if (action === "add") setGuardians((guardians) => [...guardians, { guardian: "", relation: studentGuardians[0] }]);
+    if (action === "remove") setGuardians((guardians) => guardians.filter((_, guardianIdx) => guardianIdx !== idx));
     if (action === "update")
-      setRelatives((relatives) =>
-        relatives.map((relative, relativeIdx) => Object.assign(relative, relativeIdx === idx && update))
+      setGuardians((guardians) =>
+        guardians.map((guardian, guardianIdx) => Object.assign(guardian, guardianIdx === idx && update))
       );
   }
 
@@ -238,16 +238,16 @@ const CreateStudent: NextPage = () => {
               <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
             </div>
             <div className="w-full min-w-0 space-y-7">
-              {relatives.map((item, idx) => (
+              {guardians.map((item, idx) => (
                 <div key={idx} className="grid grid-cols-[minmax(0,1fr),max-content] gap-3 md:gap-6">
                   <div className="grid min-w-0 grid-cols-none grid-rows-2 gap-3 md:grid-cols-2 md:grid-rows-none md:gap-6">
                     <Select
                       required
                       label="Guardian"
                       value={item.relation}
-                      onValueChange={(relation) => updateRelatives("update", idx, { relation })}
+                      onValueChange={(relation) => updateGuardians("update", idx, { relation })}
                     >
-                      {studentRelatives.map((relation) => (
+                      {studentGuardians.map((relation) => (
                         <Select.Item key={relation} value={relation}>
                           {relation}
                         </Select.Item>
@@ -256,14 +256,14 @@ const CreateStudent: NextPage = () => {
                     <Users
                       required
                       value={item.guardian}
-                      onChange={(guardian) => updateRelatives("update", idx, { guardian })}
+                      onChange={(guardian) => updateGuardians("update", idx, { guardian })}
                     >
                       Guardian
                     </Users>
                   </div>
                   <button
                     type="button"
-                    onClick={() => updateRelatives("remove", idx)}
+                    onClick={() => updateGuardians("remove", idx)}
                     className="shrink-0 self-center rounded-full p-1 hover:bg-gray-4 dark:hover:bg-gray-dark-4 md:p-2 "
                   >
                     <Cross2Icon className="text-gray-12 dark:text-gray-dark-12" />
@@ -272,7 +272,7 @@ const CreateStudent: NextPage = () => {
               ))}
               <button
                 type="button"
-                onClick={() => updateRelatives("add")}
+                onClick={() => updateGuardians("add")}
                 className="inline-flex w-full max-w-[175px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
               >
                 <PlusIcon />
