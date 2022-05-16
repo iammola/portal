@@ -6,7 +6,7 @@ import { ClassModel, TeacherModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const handler: API.Handler<object> = async (req) => {
+const handler: API.Handler<API.Class.POST.Data> = async (req) => {
   await connect();
   if (req.method === "POST") return POST(req.body);
 
@@ -35,4 +35,5 @@ async function POST(body: unknown): API.HandlerResponse<API.Class.POST.Data> {
   return [{ data: { _id, createdAt }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
-export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper<object>(req, res, handler, []);
+export default async (req: NextApiRequest, res: NextApiResponse) =>
+  routeWrapper<API.Class.POST.Data>(req, res, handler, []);
