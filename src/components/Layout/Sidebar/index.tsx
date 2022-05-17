@@ -11,7 +11,7 @@ import { Menu } from "./Menu";
 
 export const Sidebar: React.FC = () => {
   const { online } = useOnline();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   useIsomorphicLayoutEffect(() => {
     const handleResize = () => setIsOpen(matchMedia("(min-width: 1024px)").matches);
