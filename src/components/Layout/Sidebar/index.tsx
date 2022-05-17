@@ -33,7 +33,7 @@ export const Sidebar: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsOpen(false)}
-            className="m-3 inline-flex items-center gap-2 justify-self-end rounded-full bg-gray-3 px-4 py-2 text-xs tracking-wide text-gray-12 shadow-md hover:bg-gray-4 active:bg-gray-5  dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:hover:bg-gray-dark-4 dark:active:bg-gray-dark-5 lg:hidden"
+            className="m-3 inline-flex items-center gap-2 justify-self-end rounded-full bg-gray-3 px-4 py-2 text-xs tracking-wide text-gray-12 shadow-md hover:bg-gray-4 focus:outline-none active:bg-gray-5  dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:hover:bg-gray-dark-4 dark:active:bg-gray-dark-5 lg:hidden"
           >
             Close
             <Cross2Icon />
@@ -55,7 +55,7 @@ export const Sidebar: React.FC = () => {
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className="fixed bottom-4 left-4 z-[9999] grid place-items-center rounded-full bg-gray-3 p-3 text-gray-12 ring-1 ring-gray-7 hover:bg-gray-4 hover:ring-gray-8 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:ring-gray-dark-7 dark:hover:bg-gray-dark-4 dark:hover:ring-gray-dark-8"
+              className="fixed bottom-4 left-4 z-[9999] grid place-items-center rounded-full bg-gray-3 p-3 text-gray-12 ring-1 ring-gray-7 hover:bg-gray-4 hover:ring-gray-8 focus:outline-none dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:ring-gray-dark-7 dark:hover:bg-gray-dark-4 dark:hover:ring-gray-dark-8"
             >
               <HamburgerMenuIcon className="h-6 w-6" />
             </button>

@@ -82,7 +82,7 @@ const CreateClass: NextPage = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="inline-flex w-full items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
+            className="inline-flex w-full items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
           >
             {isLoading ? (
               <Fragment>

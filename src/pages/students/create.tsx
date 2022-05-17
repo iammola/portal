@@ -21,7 +21,7 @@ const AcademicRecord = dynamic(() => import("components/Pages/Student").then((_)
       <button
         type="button"
         onClick={retry}
-        className="flex items-center justify-center gap-2 text-gray-11 dark:text-gray-dark-11"
+        className="flex items-center justify-center gap-2 text-gray-11 focus:outline-none dark:text-gray-dark-11"
       >
         Try again
         <ReloadIcon />
@@ -323,7 +323,7 @@ const CreateStudent: NextPage = () => {
                     type="button"
                     disabled={isLoading}
                     onClick={() => updateGuardians("remove", idx)}
-                    className="shrink-0 self-center rounded-full p-1 hover:bg-gray-4 dark:hover:bg-gray-dark-4 md:p-2 "
+                    className="shrink-0 self-center rounded-full p-1 hover:bg-gray-4 focus:outline-none dark:hover:bg-gray-dark-4 md:p-2 "
                   >
                     <Cross2Icon className="text-gray-12 dark:text-gray-dark-12" />
                   </button>
@@ -333,7 +333,7 @@ const CreateStudent: NextPage = () => {
                 type="button"
                 disabled={isLoading}
                 onClick={() => updateGuardians("add")}
-                className="inline-flex w-full max-w-[175px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
+                className="inline-flex w-full max-w-[175px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
               >
                 <PlusIcon />
                 Add Guardian
@@ -361,7 +361,7 @@ const CreateStudent: NextPage = () => {
                 type="button"
                 disabled={isLoading}
                 onClick={() => updateAcademic("add")}
-                className="inline-flex w-full min-w-max max-w-[250px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
+                className="inline-flex w-full min-w-max max-w-[250px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
               >
                 <PlusIcon className="shrink-0" />
                 Add Academic History
@@ -389,7 +389,7 @@ const CreateStudent: NextPage = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="inline-flex w-full max-w-xs items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
+            className="inline-flex w-full max-w-xs items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
           >
             {isLoading ? (
               <Fragment>
