@@ -29,7 +29,7 @@ const ClassTeacher = dynamic(() => import("components/Pages/Teacher").then((_) =
     ),
 });
 
-const CreateStudent: NextPage = () => {
+const CreateTeacher: NextPage = () => {
   const toasts = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,7 +40,7 @@ const CreateStudent: NextPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [classes, setClasses] = useState<string[]>();
-  const [gender, setGender] = useState(teacherTitles[0]);
+  const [gender, setGender] = useState(teacherGenders[0]);
   const [name, setName] = useState<Schemas.Teacher.Schema["name"]>({
     full: "",
     last: "",
@@ -306,4 +306,4 @@ const CreateStudent: NextPage = () => {
   );
 };
 
-export default CreateStudent;
+export default CreateTeacher;
