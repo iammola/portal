@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import Head from "next/head";
 
+import { fetchAPIEndpoint } from "api";
 import { Date, Input, Password, Phone, Select, Textarea } from "components/Form";
 
 import type { NextPage } from "next";
@@ -26,6 +27,29 @@ const CreateStudent: NextPage = () => {
     address: { primary: "" },
   });
 
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    try {
+      const body = { name, contact, dob, username, password, images: {} };
+      const result = await fetchAPIEndpoint<API.Teacher.POST.Data, API.Teacher.POST.Body>("/api/teachers", {
+        method: "POST",
+        body: { ...body, gender: gender[0] },
+      });
+
+      if (result.success) {
+        setUsername("");
+        setPassword("");
+        setDob(undefined);
+        setGender(teacherGenders[0]);
+        setName({ full: "", last: "", first: "", initials: "", title: teacherTitles[0] });
+        setContact({ email: { primary: "" }, phone: { primary: "" }, address: { primary: "" } });
+      } else throw result.error;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <Fragment>
       <Head>
@@ -33,7 +57,10 @@ const CreateStudent: NextPage = () => {
       </Head>
       <div className="flex w-full grow flex-col items-center justify-center gap-8 py-10 px-8">
         <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Teacher Account</h3>
-        <form className="flex w-full grow flex-col items-center justify-start gap-7">
+        <form
+          onSubmit={(e) => void handleSubmit(e)}
+          className="flex w-full grow flex-col items-center justify-start gap-7"
+        >
           <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
             <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
               <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">
