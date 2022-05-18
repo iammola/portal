@@ -9,7 +9,7 @@ export const middleware: NextMiddleware = (req) => {
   if (!authRoutes.includes(req.nextUrl.pathname) && !key) {
     const url = req.nextUrl.clone();
     url.pathname = "/login";
-    url.searchParams.set(REDIRECT_QUERY, req.nextUrl.pathname);
+    if (req.nextUrl.pathname !== "/") url.searchParams.set(REDIRECT_QUERY, req.nextUrl.pathname);
 
     return NextResponse.redirect(url);
   }
