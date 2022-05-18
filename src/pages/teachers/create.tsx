@@ -71,6 +71,8 @@ const CreateTeacher: NextPage = () => {
       toasts.remove(toastID);
 
       if (result.success) {
+        toasts.add({ kind: "success", description: "Created successfully!!" });
+
         setUsername("");
         setPassword("");
         setDob(undefined);
