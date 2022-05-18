@@ -1,15 +1,20 @@
-import { startSession } from "mongoose";
+import { ClientSession, startSession } from "mongoose";
 
 import { connect } from "db";
 import { AuthModel, ParentModel, StudentModel, TeacherModel } from "db/models";
 
 /**
- * It creates a user of type T, with the body B, and returns the user's id and schoolMail
- * @param {T} type - The type of user to create.
+ * It creates a user of type T, with the given `body` and calls `sessionCallback` with the session and the user's `_id` if it's defined
+ * @param {T} type - The type of user you want to create.
  * @param {B} body - The body of the request.
+ * @param [sessionCallback] - This is a function that will be called after the user is created. It will be passed the session and the user's _id and is useful if you want to do something else in the same transaction.
  * @returns a Promise that resolves to an object with the keys _id and schoolMail.
  */
-export async function createUser<T extends User, B extends { password: string }>(type: T, body: B) {
+export async function createUser<T extends User, B extends { password: string }>(
+  type: T,
+  body: B,
+  sessionCallback?: (session: ClientSession, _id?: Schemas.ObjectId) => Promise<void>
+) {
   await connect();
   const session = await startSession();
   let res: Partial<API.CreateData<Record<"schoolMail", string>>> = {};
@@ -24,7 +29,7 @@ export async function createUser<T extends User, B extends { password: string }>
     if (type === "teacher") [doc] = await TeacherModel.create([obj], opts);
 
     const { _id, schoolMail } = doc ?? {};
-    await AuthModel.create([{ password, userId: _id }], opts);
+    await Promise.all([AuthModel.create([{ password, userId: _id }], opts), sessionCallback?.(session, _id)]);
 
     res = { _id, schoolMail };
   });
