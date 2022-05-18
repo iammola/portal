@@ -188,8 +188,9 @@ declare global {
         export type Data = CreateData<Pick<Schemas.Teacher.Schema, "schoolMail">>;
 
         export type Body = {
+          gender: string;
           password: string;
-        } & Omit<Schemas.Teacher.Schema, "_id" | "schoolMail" | "password">;
+        } & Omit<Schemas.Teacher.Schema, "_id" | "schoolMail" | "password" | "gender">;
       }
     }
 
