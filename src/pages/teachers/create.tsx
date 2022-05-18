@@ -1,5 +1,7 @@
 import { Fragment, useState } from "react";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
 import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
@@ -7,6 +9,25 @@ import { LoadingIcon } from "components/Icons";
 import { Date, Input, Password, Phone, Select, Textarea } from "components/Form";
 
 import type { NextPage } from "next";
+
+const ClassTeacher = dynamic(() => import("components/Pages/Teacher").then((_) => _.ClassTeacher), {
+  loading: ({ error, retry }) =>
+    error == null ? (
+      <div className="flex flex-col items-center justify-center gap-2 text-gray-11 dark:text-gray-dark-11">
+        <LoadingIcon className="h-[15px] w-[15px] animate-spin" />
+        Loading...
+      </div>
+    ) : (
+      <button
+        type="button"
+        onClick={retry}
+        className="flex items-center justify-center gap-2 text-gray-11 focus:outline-none dark:text-gray-dark-11"
+      >
+        <ReloadIcon />
+        Try again
+      </button>
+    ),
+});
 
 const CreateStudent: NextPage = () => {
   const toasts = useToast();
@@ -18,6 +39,7 @@ const CreateStudent: NextPage = () => {
   const [dob, setDob] = useState<Date>();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [classes, setClasses] = useState<string[]>();
   const [gender, setGender] = useState(teacherTitles[0]);
   const [name, setName] = useState<Schemas.Teacher.Schema["name"]>({
     full: "",
@@ -224,6 +246,26 @@ const CreateStudent: NextPage = () => {
                   Address (other)
                 </Textarea>
               </div>
+            </div>
+          </section>
+          <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
+            <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
+              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Classes</h3>
+              <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
+            </div>
+            <div className="w-full min-w-0 space-y-7">
+              {classes === undefined ? (
+                <button
+                  type="button"
+                  disabled={isLoading}
+                  onClick={() => setClasses([])}
+                  className="inline-flex w-full min-w-max max-w-[250px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
+                >
+                  Load Classes
+                </button>
+              ) : (
+                <ClassTeacher selected={classes} updateSelected={setClasses} />
+              )}
             </div>
           </section>
           <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
