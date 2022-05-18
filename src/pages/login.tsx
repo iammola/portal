@@ -40,7 +40,12 @@ const Login: NextPage = () => {
       toasts.remove(toastID);
       if (result.success) {
         const { token, expires } = result.data;
-        const options = { expires, path: "/", secure: true, sameSite: true };
+        const options = {
+          path: "/",
+          secure: true,
+          sameSite: true,
+          expires: expires ? new Date(expires) : undefined,
+        };
 
         setCookies(USER_LEVEL_COOKIE, level, options);
         setCookies(JWT_COOKIE_TOKEN, token, options);
