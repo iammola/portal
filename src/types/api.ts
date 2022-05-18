@@ -190,6 +190,7 @@ declare global {
         export type Body = {
           gender: string;
           password: string;
+          classes?: string[];
         } & Omit<Schemas.Teacher.Schema, "_id" | "schoolMail" | "password" | "gender">;
       }
     }
