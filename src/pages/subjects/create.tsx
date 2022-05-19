@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import Head from "next/head";
 
-import { Checkbox, Input, RadioGroup, Select } from "components/Form";
+import { Checkbox, Input, RadioGroup, Select, Users } from "components/Form";
 
 import type { NextPage } from "next";
 
@@ -12,6 +12,9 @@ const CreateSubject: NextPage = () => {
   const [selectedClass, setSelectedClass] = useState("");
   const [__type, setType] = useState("base" as Schemas.Subject.Record["__type"]);
   const [name, setName] = useState<Schemas.Subject.Record["name"]>({ long: "", short: "" });
+
+  /* Base `__type` */
+  const [teachers, setTeachers] = useState("");
 
   return (
     <Fragment>
@@ -59,6 +62,11 @@ const CreateSubject: NextPage = () => {
                 </RadioGroup.Item>
               </RadioGroup>
             </div>
+            {__type === "base" && (
+              <Users required value={teachers} onChange={setTeachers}>
+                Teachers
+              </Users>
+            )}
           </div>
           <button
             type="submit"
