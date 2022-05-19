@@ -137,7 +137,7 @@ declare global {
       } & Omit<Schemas.Subject.BaseSchema, "_id" | "teachers">;
 
       type GroupBody = {
-        divisions: Array<Pick<Schemas.Subject.BaseSchema, "_id" | "name"> & Record<"teachers", string[]>>;
+        divisions: Array<{ teachers: string[]; name: Schemas.Subject.DivisionSchema["name"] }>;
       } & Omit<Schemas.Subject.GroupSchema, "_id" | "divisions">;
     }
 
