@@ -45,7 +45,7 @@ const CreateSubject: NextPage = () => {
         <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Subject</h3>
         <form className="w-full max-w-md space-y-10">
           <div className="space-y-7">
-            <Select label="Class" value={selectedClass} onValueChange={setSelectedClass}>
+            <Select required label="Class" value={selectedClass} onValueChange={setSelectedClass}>
               {classes.map((item, idx) => (
                 <Select.Item key={idx} value={String(item._id)}>
                   {item.name.long}
