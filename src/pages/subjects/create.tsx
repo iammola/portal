@@ -52,12 +52,18 @@ const CreateSubject: NextPage = () => {
                 </Select.Item>
               ))}
             </Select>
-            <Input required value={name.long} onChange={(long) => setName((name) => ({ ...name, long }))}>
-              Name
-            </Input>
-            <Input required value={name.short} onChange={(short) => setName((name) => ({ ...name, short }))}>
-              Alias
-            </Input>
+            <div className="flex items-center justify-start gap-4">
+              <div className="w-2/3">
+                <Input required value={name.long} onChange={(long) => setName((name) => ({ ...name, long }))}>
+                  Name
+                </Input>
+              </div>
+              <div className="w-1/3">
+                <Input required value={name.short} onChange={(short) => setName((name) => ({ ...name, short }))}>
+                  Alias
+                </Input>
+              </div>
+            </div>
             <Checkbox checked={mandatory} onCheckedChange={(c) => setMandatory(c as boolean)}>
               Is this subject mandatory?
             </Checkbox>
