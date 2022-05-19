@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import Head from "next/head";
 
-import { Checkbox, Input, Select } from "components/Form";
+import { Checkbox, Input, RadioGroup, Select } from "components/Form";
 
 import type { NextPage } from "next";
 
@@ -38,6 +38,27 @@ const CreateSubject: NextPage = () => {
             <Checkbox checked={mandatory} onCheckedChange={(c) => setMandatory(c as boolean)}>
               Is this subject mandatory?
             </Checkbox>
+            <div className="w-full space-y-2">
+              <span className="font-medium text-gray-12 dark:text-gray-dark-12">Choose a subject type</span>
+              <RadioGroup value={__type} onValueChange={(e) => setType(e as typeof __type)}>
+                <RadioGroup.Item value="base">
+                  <div className="cursor-pointer space-y-1 py-3 px-5">
+                    <h4 className="font-medium text-gray-12 dark:text-gray-dark-12">Base</h4>
+                    <p className="text-sm text-gray-11 dark:text-gray-dark-11">
+                      This subject doesn&apos;t have divisions. It is a standalone subject.
+                    </p>
+                  </div>
+                </RadioGroup.Item>
+                <RadioGroup.Item value="group">
+                  <div className="cursor-pointer space-y-1 py-3 px-5">
+                    <h4 className="font-medium text-gray-12 dark:text-gray-dark-12">Group</h4>
+                    <p className="text-sm text-gray-11 dark:text-gray-dark-11">
+                      This subject has divisions. It is grouped with a collective name.
+                    </p>
+                  </div>
+                </RadioGroup.Item>
+              </RadioGroup>
+            </div>
           </div>
           <button
             type="submit"
