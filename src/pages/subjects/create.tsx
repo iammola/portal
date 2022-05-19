@@ -1,10 +1,16 @@
+import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { Fragment, useState } from "react";
+import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
 import { Checkbox, Input, RadioGroup, Select, Users } from "components/Form";
 
 import type { NextPage } from "next";
 
+const DivisionSubject = dynamic(() => import("components/Pages/Subject").then((_) => _.DivisionSubjectFields));
+
+type Division = { teachers: string; name: Schemas.Subject.DivisionSchema["name"] };
 const CreateSubject: NextPage = () => {
   const classes: API.Class.GET.AllData["classes"] = [];
 
@@ -15,6 +21,20 @@ const CreateSubject: NextPage = () => {
 
   /* Base `__type` */
   const [teachers, setTeachers] = useState("");
+  /* Group `__type` */
+  const [divisions, setDivisions] = useState<Division[]>([]);
+
+  function updateDivision(action: "add"): void;
+  function updateDivision(action: "remove", idx: number): void;
+  function updateDivision(action: "update", idx: number, update: Utils.OneKey<Division>): void;
+  function updateDivision(action: "add" | "remove" | "update", idx?: number, update?: Utils.OneKey<Division>) {
+    if (action === "add") setDivisions((divisions) => [...divisions, { name: { long: "", short: "" }, teachers: "" }]);
+    if (action === "remove") setDivisions((divisions) => divisions.filter((_, divisionIdx) => divisionIdx !== idx));
+    if (action === "update")
+      setDivisions((divisions) =>
+        divisions.map((division, divisionIdx) => Object.assign(division, divisionIdx === idx && update))
+      );
+  }
 
   return (
     <Fragment>
@@ -62,10 +82,48 @@ const CreateSubject: NextPage = () => {
                 </RadioGroup.Item>
               </RadioGroup>
             </div>
-            {__type === "base" && (
+            {__type === "base" ? (
               <Users required value={teachers} onChange={setTeachers}>
                 Teachers
               </Users>
+            ) : (
+              <div className="flex w-full flex-col items-start justify-center gap-4">
+                <span className="select-none text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">
+                  Divisions
+                </span>
+                <div className="space-y-7">
+                  {divisions.map((division, idx) => (
+                    <div key={idx} className="space-y-3">
+                      <SeparatorPrimitive.Root className="h-px w-full bg-gray-6 px-6 dark:bg-gray-dark-6" />
+                      <div className="flex flex-col items-start justify-start space-y-2">
+                        <div className="flex w-full select-none items-center justify-between gap-1.5">
+                          <span className="text-sm text-gray-11 dark:text-gray-dark-11">Division {idx + 1}</span>
+                          <button
+                            type="button"
+                            onClick={() => updateDivision("remove", idx)}
+                            className="rounded p-2 text-gray-11 hover:bg-gray-4 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4"
+                          >
+                            <Cross2Icon />
+                          </button>
+                        </div>
+                        <DivisionSubject
+                          {...division}
+                          removeDivision={() => updateDivision("remove", idx)}
+                          updateDivision={(update) => updateDivision("update", idx, update)}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => updateDivision("add")}
+                  className="inline-flex w-full max-w-[175px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
+                >
+                  <PlusIcon />
+                  Add Division
+                </button>
+              </div>
             )}
           </div>
           <button

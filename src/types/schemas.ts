@@ -124,8 +124,10 @@ declare global {
         teachersCount: number;
       };
 
+      export type DivisionSchema = Pick<BaseSchema, "_id" | "name" | "teachers">;
+
       export type GroupSchema = {
-        divisions: Array<Pick<BaseSchema, "_id" | "name" | "teachers">>;
+        divisions: DivisionSchema[];
       } & Schema<ModelNames.G_SUBJECT>;
 
       export type GroupVirtuals = {
