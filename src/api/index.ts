@@ -17,14 +17,14 @@ export async function routeWrapper<T extends object>(
   req: NextApiRequest,
   res: NextApiResponse,
   routeHandler: API.Handler<T>,
-  methods: string[]
+  methods: [METHOD, ...METHOD[]]
 ) {
   let data: API.RouteResponse<T> | null = null;
 
   try {
     if (req.url !== "/api/login") await verifyAuth(req);
 
-    if (methods.includes(req.method ?? "")) {
+    if (methods.includes(req.method as METHOD)) {
       data = (await routeHandler(req, res)) as API.RouteResponse<T>;
       if (data) data[0] = { ...data[0], success: true } as API.RouteResponse<T>[0];
     }
@@ -57,6 +57,8 @@ export async function routeWrapper<T extends object>(
       }
     );
 }
+
+type METHOD = "GET" | "POST" | "PUT" | "DELETE" | "SEARCH";
 
 export { NotFoundError, UnauthorizedError };
 export { fetchAPIEndpoint } from "./endpoint";
