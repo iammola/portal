@@ -26,6 +26,11 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
     props.updateClass(String(classes.data[0]._id));
   }, [classes, props]);
 
+  useIsomorphicLayoutEffect(() => {
+    if (subjects?.data == undefined) return;
+    updateSubjects(subjects.data.filter((d) => d.mandatory).map((subject) => String(subject._id)));
+  }, [subjects, updateSubjects]);
+
   return (
     <Fragment>
       <div className="grid w-full gap-[inherit] md:grid-cols-[repeat(2,max-content)]">
@@ -47,9 +52,9 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
       <div className="flex flex-wrap items-center justify-start gap-5">
         {subjects?.data.map((item) => (
           <Checkbox
-            disabled={disabled}
             key={String(item._id)}
-            checked={props.subjects.includes(String(item._id))}
+            disabled={item.mandatory || disabled}
+            checked={item.mandatory || props.subjects.includes(String(item._id))}
             onCheckedChange={(checked) =>
               updateSubjects(
                 checked
