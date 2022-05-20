@@ -1,12 +1,14 @@
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { Fragment, useState } from "react";
 import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
+import useSWR from "swr";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
 import { LoadingIcon } from "components/Icons";
+import { useIsomorphicLayoutEffect } from "hooks";
 import { Checkbox, Input, RadioGroup, Select, Users } from "components/Form";
 
 import type { NextPage } from "next";
@@ -15,7 +17,7 @@ const DivisionSubject = dynamic(() => import("components/Pages/Subject").then((_
 
 type Division = { teachers: string; name: Schemas.Subject.DivisionSchema["name"] };
 const CreateSubject: NextPage = () => {
-  const classes: API.Class.GET.AllData["classes"] = [];
+  const { data: classes } = useSWR<API.Response<API.Class.GET.AllData>>("/api/classes");
 
   const toasts = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -89,6 +91,11 @@ const CreateSubject: NextPage = () => {
     }
   }
 
+  useIsomorphicLayoutEffect(() => {
+    if (selectedClass || classes == undefined || classes.data.length < 1) return;
+    setSelectedClass(String(classes.data[0]._id));
+  }, [classes, selectedClass]);
+
   return (
     <Fragment>
       <Head>
@@ -99,7 +106,7 @@ const CreateSubject: NextPage = () => {
         <form onSubmit={(e) => void handleSubmit(e)} className="w-full max-w-md space-y-10">
           <div className="space-y-7">
             <Select required label="Class" value={selectedClass} onValueChange={setSelectedClass}>
-              {classes.map((item, idx) => (
+              {classes?.data.map((item, idx) => (
                 <Select.Item key={idx} value={String(item._id)}>
                   {item.name.long}
                 </Select.Item>

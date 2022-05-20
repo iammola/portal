@@ -86,23 +86,15 @@ declare global {
           "_id" | S
         >;
 
-        export type AllData<S extends keyof ClassDataNoTeacher = keyof ClassDataNoTeacher> = {
-          page?: number;
-          pages: number;
-          classes: Array<Data<S>>;
-        };
+        export type AllData<S extends keyof ClassDataNoTeacher = keyof ClassDataNoTeacher> = Array<Data<S>>;
 
         namespace Students {
-          export type Data = {
-            page?: number;
-            pages: number;
-            students: Schemas.Student.Schema[];
-          };
+          export type Data = Schemas.Student.Schema[];
 
           export type Count = Record<"count", number>;
         }
 
-        export type Subjects = Record<"subjects", Array<Schemas.Subject.Record<true>>>;
+        export type Subjects = Array<Schemas.Subject.Record<true>>;
 
         export type Teachers = Record<"teachers", Schemas.Teacher.Schema[]>;
       }

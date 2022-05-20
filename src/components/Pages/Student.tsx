@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import useSWR from "swr";
 
 import { useIsomorphicLayoutEffect } from "hooks";
 import { Checkbox, Select } from "components/Form";
@@ -6,8 +7,10 @@ import { Checkbox, Select } from "components/Form";
 export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, updateSubjects, updateTerm, ...props }) => {
   // Fetch data from API
   const terms: API.Term.GET.AllData = [];
-  const classes: API.Class.GET.AllData["classes"] = [];
-  const subjects: API.Class.GET.Subjects["subjects"] = [];
+  const { data: classes } = useSWR<API.Response<API.Class.GET.AllData>>("/api/classes");
+  const { data: subjects } = useSWR<API.Response<API.Class.GET.Subjects>>(
+    props.class && `/api/classes/${props.class}/subjects`
+  );
 
   function classChange(val: string) {
     props.updateClass(val);
@@ -16,8 +19,12 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
 
   useIsomorphicLayoutEffect(() => {
     if (!props.term && terms.length) updateTerm(String(terms[0]._id));
-    if (!props.class && classes.length) props.updateClass(String(classes[0]._id));
-  }, [classes, props, terms, updateTerm]);
+  }, [props.term, terms, updateTerm]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (props.class || classes === undefined || classes.data.length < 0) return;
+    props.updateClass(String(classes.data[0]._id));
+  }, [classes, props]);
 
   return (
     <Fragment>
@@ -30,7 +37,7 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
           ))}
         </Select>
         <Select required label="Class" value={props.class} onValueChange={classChange}>
-          {classes.map((item) => (
+          {classes?.data.map((item) => (
             <Select.Item key={String(item._id)} value={String(item._id)}>
               {item.name.long}
             </Select.Item>
@@ -38,7 +45,7 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
         </Select>
       </div>
       <div className="flex flex-wrap items-center justify-start gap-5">
-        {subjects.map((item) => (
+        {subjects?.data.map((item) => (
           <Checkbox
             disabled={disabled}
             key={String(item._id)}

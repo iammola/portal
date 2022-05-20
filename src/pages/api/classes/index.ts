@@ -6,12 +6,23 @@ import { ClassModel, TeacherModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const handler: API.Handler<API.Class.POST.Data> = async (req) => {
+const handler: API.Handler<API.Class.POST.Data | API.Class.GET.AllData> = async (req) => {
   await connect();
+
   if (req.method === "POST") return POST(req.body);
+  if (req.method === "GET") return GET();
 
   return null;
 };
+
+async function GET(): API.HandlerResponse<API.Class.GET.AllData> {
+  const classes = await ClassModel.find({})
+    .populate<{ subjectsCount: number }>("subjectsCount")
+    .sort({ order: "asc" })
+    .lean();
+
+  return [{ data: classes, message: ReasonPhrases.OK }, StatusCodes.OK];
+}
 
 async function POST(body: unknown): API.HandlerResponse<API.Class.POST.Data> {
   const { teachers, name } = JSON.parse(body as string) as API.Class.POST.Body;
@@ -35,4 +46,4 @@ async function POST(body: unknown): API.HandlerResponse<API.Class.POST.Data> {
   return [{ data: { _id, createdAt }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
-export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, []);
+export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["GET", "POST"]);
