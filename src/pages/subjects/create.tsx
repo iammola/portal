@@ -15,7 +15,7 @@ const DivisionSubject = dynamic(() => import("components/Pages/Subject").then((_
 
 type Division = { teachers: string; name: Schemas.Subject.DivisionSchema["name"] };
 const CreateSubject: NextPage = () => {
-  const classes: API.Class.GET.AllData["classes"] = [];
+  const classes: API.Class.GET.AllData = [];
 
   const toasts = useToast();
   const [isLoading, setIsLoading] = useState(false);

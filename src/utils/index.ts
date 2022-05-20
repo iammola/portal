@@ -17,8 +17,6 @@ export const USER_LEVEL_COOKIE = "user-level";
 
 export const REDIRECT_QUERY = "to";
 
-export const PaginationLimit = 20;
-
 /**
  * It takes a country code, converts it to uppercase, splits it into an array of characters, maps each
  * character to its corresponding code point, and then returns a string of the code points

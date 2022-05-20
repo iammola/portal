@@ -2,7 +2,7 @@ import { Checkbox } from "components/Form";
 
 export const ClassTeacher: React.FC<ClassTeacherProps> = (props) => {
   // Import data from API
-  const classes: API.Class.GET.AllData["classes"] = [];
+  const classes: API.Class.GET.AllData = [];
 
   return (
     <div className="flex flex-wrap items-center justify-start gap-5">

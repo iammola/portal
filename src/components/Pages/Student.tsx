@@ -6,7 +6,7 @@ import { Checkbox, Select } from "components/Form";
 export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, updateSubjects, updateTerm, ...props }) => {
   // Fetch data from API
   const terms: API.Term.GET.AllData = [];
-  const classes: API.Class.GET.AllData["classes"] = [];
+  const classes: API.Class.GET.AllData = [];
   const subjects: API.Class.GET.Subjects["subjects"] = [];
 
   function classChange(val: string) {
