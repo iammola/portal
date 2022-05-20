@@ -4,6 +4,7 @@ import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
+import { fetchAPIEndpoint } from "api";
 import { Checkbox, Input, RadioGroup, Select, Users } from "components/Form";
 
 import type { NextPage } from "next";
@@ -36,6 +37,42 @@ const CreateSubject: NextPage = () => {
       );
   }
 
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    try {
+      if (__type === "group") {
+        const divisionNames = divisions.map((div) => [div.name.long, div.name.short]).flat();
+
+        // TODO: Use a better method to communicate to the user
+        if (divisionNames.length !== new Set(divisionNames).size) return alert("Duplicate division names found");
+      }
+
+      const result = await fetchAPIEndpoint<API.Subject.POST.Data, API.Subject.POST.Body>("/api/subjects", {
+        method: "POST",
+        body: {
+          name,
+          __type,
+          class: selectedClass,
+          mandatory: mandatory ? true : undefined,
+          teachers: __type === "base" ? teachers.split(" ") : [],
+          divisions: __type === "group" ? divisions.map((div) => ({ ...div, teachers: div.teachers.split(" ") })) : [],
+        },
+      });
+
+      if (result.success) {
+        setTeachers("");
+        setDivisions([]);
+        setMandatory(false);
+        setSelectedClass("");
+        setName({ long: "", short: "" });
+        setType((t) => "base" as typeof t);
+      } else throw result.error;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <Fragment>
       <Head>
@@ -43,7 +80,7 @@ const CreateSubject: NextPage = () => {
       </Head>
       <div className="flex w-full grow flex-col items-center justify-center gap-8 py-10 px-8">
         <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Subject</h3>
-        <form className="w-full max-w-md space-y-10">
+        <form onSubmit={(e) => void handleSubmit(e)} className="w-full max-w-md space-y-10">
           <div className="space-y-7">
             <Select required label="Class" value={selectedClass} onValueChange={setSelectedClass}>
               {classes.map((item, idx) => (

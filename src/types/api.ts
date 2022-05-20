@@ -133,12 +133,14 @@ declare global {
       }
 
       type BaseBody = {
+        class: string;
         teachers: string[];
-      } & Omit<Schemas.Subject.BaseSchema, "_id" | "teachers">;
+      } & Omit<Schemas.Subject.BaseSchema, "_id" | "class" | "order" | "teachers">;
 
       type GroupBody = {
+        class: string;
         divisions: Array<{ teachers: string[]; name: Schemas.Subject.DivisionSchema["name"] }>;
-      } & Omit<Schemas.Subject.GroupSchema, "_id" | "divisions">;
+      } & Omit<Schemas.Subject.GroupSchema, "_id" | "class" | "divisions" | "order">;
     }
 
     namespace Session {
