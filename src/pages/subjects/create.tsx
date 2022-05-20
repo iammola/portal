@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 
 import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
+import { LoadingIcon } from "components/Icons";
 import { Checkbox, Input, RadioGroup, Select, Users } from "components/Form";
 
 import type { NextPage } from "next";
@@ -17,6 +18,7 @@ const CreateSubject: NextPage = () => {
   const classes: API.Class.GET.AllData["classes"] = [];
 
   const toasts = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [mandatory, setMandatory] = useState(false);
   const [selectedClass, setSelectedClass] = useState("");
@@ -51,6 +53,8 @@ const CreateSubject: NextPage = () => {
         // TODO: Use a better method to communicate to the user
         if (divisionNames.length !== new Set(divisionNames).size) return alert("Duplicate division names found");
       }
+
+      setIsLoading(true);
       toastID = toasts.add({ kind: "loading", description: "Processing request..." });
 
       const result = await fetchAPIEndpoint<API.Subject.POST.Data, API.Subject.POST.Body>("/api/subjects", {
@@ -65,6 +69,7 @@ const CreateSubject: NextPage = () => {
         },
       });
 
+      setIsLoading(false);
       toasts.remove(toastID);
 
       if (result.success) {
@@ -184,7 +189,14 @@ const CreateSubject: NextPage = () => {
             type="submit"
             className="inline-flex w-full items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
           >
-            Create Subject
+            {isLoading ? (
+              <Fragment>
+                <LoadingIcon className="h-[15px] w-[15px] animate-spin" />
+                Processing...
+              </Fragment>
+            ) : (
+              "Create Subject"
+            )}
           </button>
         </form>
       </div>
