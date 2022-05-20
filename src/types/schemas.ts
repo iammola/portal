@@ -104,29 +104,31 @@ declare global {
     }
 
     namespace Subject {
-      type Schema = {
+      type Subject = {
         class: ObjectId;
         order: number;
         mandatory?: true;
         sessions?: ObjectId[];
       };
 
-      type Subject<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT> = DocumentId & {
+      type Schema<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT> = DocumentId & {
         __type: T;
         name: ThingName;
-      } & Schema;
+      } & Subject;
 
       export type BaseSchema = {
         teachers: ObjectId[];
-      } & Subject<ModelNames.B_SUBJECT>;
+      } & Schema<ModelNames.B_SUBJECT>;
 
       export type BaseVirtuals = {
         teachersCount: number;
       };
 
+      export type DivisionSchema = Pick<BaseSchema, "_id" | "name" | "teachers">;
+
       export type GroupSchema = {
-        divisions: Array<Pick<BaseSchema, "_id" | "name" | "teachers">>;
-      } & Subject<ModelNames.G_SUBJECT>;
+        divisions: DivisionSchema[];
+      } & Schema<ModelNames.G_SUBJECT>;
 
       export type GroupVirtuals = {
         divisionsCount: number;
