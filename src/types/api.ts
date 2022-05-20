@@ -203,5 +203,14 @@ declare global {
         } & Required<Pick<Schemas.Student.Schema, "images" | "name" | "contact">>;
       }
     }
+
+    namespace User {
+      namespace GET {
+        export type Data = {
+          images?: Pick<Schemas.User.Base["images"], "avatar">;
+          name: Pick<Schemas.User.Base["name"], "full" | "initials">;
+        };
+      }
+    }
   }
 }
