@@ -94,7 +94,7 @@ declare global {
           export type Count = Record<"count", number>;
         }
 
-        export type Subjects = Record<"subjects", Array<Schemas.Subject.Record<true>>>;
+        export type Subjects = Array<Schemas.Subject.Record<true>>;
 
         export type Teachers = Record<"teachers", Schemas.Teacher.Schema[]>;
       }
