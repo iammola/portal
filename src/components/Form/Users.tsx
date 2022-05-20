@@ -2,6 +2,7 @@ import * as LabelPrimitive from "@radix-ui/react-label";
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 import { Fragment, useId, useState } from "react";
 import { EyeOpenIcon, Pencil1Icon } from "@radix-ui/react-icons";
+import useSWR from "swr";
 import Link from "next/link";
 
 import { cx } from "utils";
@@ -77,10 +78,24 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
 };
 
 const User: React.FC<{ username: string }> = ({ username }) => {
-  // `true` - User Exists; `false` - User does not exist; `null` - Checking user
-  const [isUser] = useState<boolean | null>(null);
-  /* Use `SWR` hook to fetch user data. */
-  const [user] = useState({ image: { portrait: "LinkedUserImage" }, name: "Linked User Name", initials: "LUN" });
+  const [user, setUser] = useState<Record<"name" | "image" | "initials", string> | null | false>();
+  const { data, error } = useSWR<API.Result<API.User.GET.Data>, unknown>(`/api/${username}`);
+
+  useIsomorphicLayoutEffect(() => {
+    if (error) return setUser(false);
+    if (!data) return setUser(undefined);
+
+    if (data.success) {
+      const { name, images } = data.data;
+      return setUser({
+        name: name.full,
+        initials: name.initials,
+        image: images?.avatar ?? "",
+      });
+    }
+
+    if (data.message === "Not Found") return setUser(null);
+  }, [data, error]);
 
   return (
     <HoverCardPrimitive.Root>
@@ -89,11 +104,15 @@ const User: React.FC<{ username: string }> = ({ username }) => {
           target="_blank"
           rel="noopener noreferrer"
           href={`/link/to/${username}`}
-          className={cx([
-            isUser !== false,
-            "font-medium tracking-wider text-gray-12 underline-offset-1 hover:underline dark:text-gray-dark-12",
-            "text-red-11 dark:text-red-dark-11",
-          ])}
+          className={
+            user !== false
+              ? cx([
+                  user !== null,
+                  "font-medium tracking-wider text-gray-12 underline-offset-1 hover:underline dark:text-gray-dark-12",
+                  "text-red-11 dark:text-red-dark-11",
+                ])
+              : undefined
+          }
         >
           {username}
         </Link>
@@ -101,24 +120,24 @@ const User: React.FC<{ username: string }> = ({ username }) => {
       <HoverCardPrimitive.Content
         sideOffset={3}
         className={cx("flex items-center rounded-md bg-white shadow-md dark:bg-gray-dark-2", [
-          !isUser,
+          !user,
           "justify-center p-3",
           "justify-start gap-3 p-5",
         ])}
       >
-        {isUser && (
+        {user && (
           <Fragment>
-            <Avatar {...user} src={user.image.portrait} />
+            <Avatar {...user} src={user.image} />
             <div className="flex flex-col items-start justify-center gap-1">
               <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{user.name}</span>
               <span className="text-xs text-gray-11 dark:text-gray-dark-11">{username}</span>
             </div>
           </Fragment>
         )}
-        {isUser === null && (
+        {user === undefined && (
           <Icons.LoadingIcon className="h-6 w-6 animate-spin stroke-gray-9 dark:stroke-gray-dark-9" />
         )}
-        {isUser === false && <span className="text-sm text-gray-11 dark:text-gray-dark-11">Username not found</span>}
+        {user === null && <span className="text-sm text-gray-11 dark:text-gray-dark-11">User does not exist</span>}
         <HoverCardPrimitive.Arrow className="fill-white dark:fill-gray-dark-2" />
       </HoverCardPrimitive.Content>
     </HoverCardPrimitive.Root>
