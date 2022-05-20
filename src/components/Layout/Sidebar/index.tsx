@@ -40,7 +40,7 @@ export const Sidebar: React.FC = () => {
           </button>
         )}
         <Menu />
-        <SeparatorPrimitive.Root className="h-px w-full bg-gray-6" />
+        <SeparatorPrimitive.Root className="h-px w-full bg-gray-6 dark:bg-gray-dark-6" />
         <Footer online={online} />
         {isOpen && (
           <div
