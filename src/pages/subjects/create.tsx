@@ -4,6 +4,7 @@ import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
+import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
 import { Checkbox, Input, RadioGroup, Select, Users } from "components/Form";
 
@@ -14,6 +15,8 @@ const DivisionSubject = dynamic(() => import("components/Pages/Subject").then((_
 type Division = { teachers: string; name: Schemas.Subject.DivisionSchema["name"] };
 const CreateSubject: NextPage = () => {
   const classes: API.Class.GET.AllData["classes"] = [];
+
+  const toasts = useToast();
 
   const [mandatory, setMandatory] = useState(false);
   const [selectedClass, setSelectedClass] = useState("");
@@ -39,6 +42,7 @@ const CreateSubject: NextPage = () => {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    let toastID: number;
 
     try {
       if (__type === "group") {
@@ -47,6 +51,7 @@ const CreateSubject: NextPage = () => {
         // TODO: Use a better method to communicate to the user
         if (divisionNames.length !== new Set(divisionNames).size) return alert("Duplicate division names found");
       }
+      toastID = toasts.add({ kind: "loading", description: "Processing request..." });
 
       const result = await fetchAPIEndpoint<API.Subject.POST.Data, API.Subject.POST.Body>("/api/subjects", {
         method: "POST",
@@ -60,7 +65,11 @@ const CreateSubject: NextPage = () => {
         },
       });
 
+      toasts.remove(toastID);
+
       if (result.success) {
+        toasts.add({ kind: "success", description: "Created successfully!!" });
+
         setTeachers("");
         setDivisions([]);
         setMandatory(false);
@@ -70,6 +79,8 @@ const CreateSubject: NextPage = () => {
       } else throw result.error;
     } catch (error) {
       console.error(error);
+      if (typeof error === "string") toasts.add({ kind: "error", description: error });
+      if (typeof error === "object") toasts.add({ kind: "error", description: "Couldn't complete request" });
     }
   }
 
