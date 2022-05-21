@@ -1,18 +1,21 @@
 import { NextMiddleware, NextResponse } from "next/server";
 
-import { JWT_COOKIE_TOKEN, REDIRECT_QUERY } from "utils";
+import { JWT_COOKIE_TOKEN, REDIRECT_QUERY, USER_LEVEL_COOKIE } from "utils";
 
 export const middleware: NextMiddleware = (req) => {
+  const url = req.nextUrl.clone();
   const key = req.cookies[JWT_COOKIE_TOKEN];
-  const authRoutes = ["/login", "/api/login"];
+  const level = req.cookies[USER_LEVEL_COOKIE];
 
-  if (!authRoutes.includes(req.nextUrl.pathname) && !key) {
-    const url = req.nextUrl.clone();
+  // Allow `/login`, API routes and Public files
+  if (/^\/login$|^\/api\/|\.(.*)$/.test(url.pathname)) return NextResponse.next();
+
+  if (!key || !level) {
+    if (url.pathname !== "/") url.searchParams.set(REDIRECT_QUERY, url.pathname);
     url.pathname = "/login";
-    if (req.nextUrl.pathname !== "/") url.searchParams.set(REDIRECT_QUERY, req.nextUrl.pathname);
-
     return NextResponse.redirect(url);
   }
 
-  return NextResponse.next();
+  url.pathname = `/${level}${url.pathname}`;
+  return NextResponse.rewrite(url);
 };
