@@ -299,5 +299,28 @@ declare global {
 
       export type Model = Mongoose.Model<Schema, unknown, unknown, User.Virtuals> & User.StaticMethods<Schema>;
     }
+
+    namespace Result {
+      type Score = {
+        score: number;
+        fieldId: ObjectId;
+      };
+
+      type Scores = {
+        data?: Score[];
+        subject: ObjectId;
+        forcedTotal?: number;
+      };
+
+      export type Schema = {
+        term: ObjectId;
+        scores: Scores[];
+        studentId: ObjectId;
+      } & DocumentId;
+
+      export type Record = ModelRecord<Schema>;
+
+      export type Model = Mongoose.Model<Schema>;
+    }
   }
 }

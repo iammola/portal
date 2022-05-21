@@ -3,6 +3,7 @@ export enum ModelNames {
   TERM = "Term",
   CLASS = "Class",
   PARENT = "Parent",
+  RESULT = "RESULT",
   B_SUBJECT = "base",
   STUDENT = "Student",
   TEACHER = "Teacher",
