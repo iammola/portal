@@ -26,7 +26,7 @@ async function POST(body: unknown): API.HandlerResponse<API.Subject.POST.Data> {
   if (classExists == null) throw new Error("Specified class does not exists");
 
   const getTeachers = (teachers: string[]) =>
-    teachers.map((username) => teacherIds.find((teacher) => teacher.username === username)?._id).filter(Boolean);
+    teachers.map((username) => teacherIds.find((teacher) => `@${teacher.username}` === username)?._id).filter(Boolean);
 
   const { _id } =
     data.__type === "base"
