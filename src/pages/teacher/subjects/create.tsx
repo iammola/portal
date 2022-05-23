@@ -165,13 +165,15 @@ const CreateSubject: NextPage = () => {
                       <div className="flex flex-col items-start justify-start space-y-2">
                         <div className="flex w-full select-none items-center justify-between gap-1.5">
                           <span className="text-sm text-gray-11 dark:text-gray-dark-11">Division {idx + 1}</span>
-                          <button
-                            type="button"
-                            onClick={() => updateDivision("remove", idx)}
-                            className="rounded p-2 text-gray-11 hover:bg-gray-4 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4"
-                          >
-                            <Cross2Icon />
-                          </button>
+                          {divisions.length > 2 && (
+                            <button
+                              type="button"
+                              onClick={() => updateDivision("remove", idx)}
+                              className="rounded p-2 text-gray-11 hover:bg-gray-4 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4"
+                            >
+                              <Cross2Icon />
+                            </button>
+                          )}
                         </div>
                         <DivisionSubject
                           {...division}
