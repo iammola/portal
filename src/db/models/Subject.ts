@@ -25,10 +25,8 @@ const SubjectSchema = new mongoose.Schema<Schemas.Subject.Record>(
 export const SubjectModel = (mongoose.models[ModelNames.SUBJECT] ??
   mongoose.model(ModelNames.SUBJECT, SubjectSchema)) as Schemas.Subject.Model;
 
-export const BaseSubjectModel =
-  (SubjectModel.discriminators?.[ModelNames.B_SUBJECT] as Schemas.Subject.BaseModel) ??
-  SubjectModel.discriminator(ModelNames.B_SUBJECT, BaseSubjectSchema);
+export const BaseSubjectModel = (SubjectModel.discriminators?.[ModelNames.B_SUBJECT] ??
+  SubjectModel.discriminator(ModelNames.B_SUBJECT, BaseSubjectSchema)) as Schemas.Subject.BaseModel;
 
-export const GroupSubjectModel =
-  (SubjectModel.discriminators?.[ModelNames.G_SUBJECT] as Schemas.Subject.GroupModel) ??
-  SubjectModel.discriminator(ModelNames.G_SUBJECT, GroupSubjectSchema);
+export const GroupSubjectModel = (SubjectModel.discriminators?.[ModelNames.G_SUBJECT] ??
+  SubjectModel.discriminator(ModelNames.G_SUBJECT, GroupSubjectSchema)) as Schemas.Subject.GroupModel;
