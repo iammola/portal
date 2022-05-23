@@ -56,7 +56,7 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
 
   setCookies(JWT_COOKIE_KEY, await exportSPKI(publicKey), options);
 
-  return [{ data: { token, expires }, message: ReasonPhrases.OK }, StatusCodes.OK];
+  return [{ data: { token, expires, _id: user._id }, message: ReasonPhrases.OK }, StatusCodes.OK];
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) =>
