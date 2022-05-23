@@ -7,8 +7,8 @@ import { Checkbox, Select } from "components/Form";
 export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, updateSubjects, updateTerm, ...props }) => {
   // Fetch data from API
   const terms: API.Term.GET.AllData = [];
-  const { data: classes } = useSWR<API.Response<API.Class.GET.AllData>>("/api/classes");
-  const { data: subjects } = useSWR<API.Response<API.Class.GET.Subjects>>(
+  const { data: classes } = useSWR<API.Result<API.Class.GET.AllData>>("/api/classes");
+  const { data: subjects } = useSWR<API.Result<API.Class.GET.Subjects>>(
     props.class && `/api/classes/${props.class}/subjects`
   );
 
@@ -22,12 +22,12 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
   }, [props.term, terms, updateTerm]);
 
   useIsomorphicLayoutEffect(() => {
-    if (props.class || classes === undefined || classes.data.length < 0) return;
+    if (props.class || !classes?.success || classes.data.length < 0) return;
     props.updateClass(String(classes.data[0]._id));
   }, [classes, props]);
 
   useIsomorphicLayoutEffect(() => {
-    if (subjects?.data == undefined) return;
+    if (!subjects?.success) return;
     updateSubjects(subjects.data.filter((d) => d.mandatory).map((subject) => String(subject._id)));
   }, [subjects, updateSubjects]);
 
@@ -42,30 +42,32 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
           ))}
         </Select>
         <Select required label="Class" value={props.class} onValueChange={classChange}>
-          {classes?.data.map((item) => (
-            <Select.Item key={String(item._id)} value={String(item._id)}>
-              {item.name.long}
-            </Select.Item>
-          ))}
+          {classes?.success &&
+            classes.data.map((item) => (
+              <Select.Item key={String(item._id)} value={String(item._id)}>
+                {item.name.long}
+              </Select.Item>
+            ))}
         </Select>
       </div>
       <div className="flex flex-wrap items-center justify-start gap-5">
-        {subjects?.data.map((item) => (
-          <Checkbox
-            key={String(item._id)}
-            disabled={item.mandatory || disabled}
-            checked={item.mandatory || props.subjects.includes(String(item._id))}
-            onCheckedChange={(checked) =>
-              updateSubjects(
-                checked
-                  ? [...new Set([...props.subjects, String(item._id)])]
-                  : props.subjects.filter((subject) => subject !== String(item._id))
-              )
-            }
-          >
-            {item.name.long}
-          </Checkbox>
-        ))}
+        {subjects?.success &&
+          subjects.data.map((item) => (
+            <Checkbox
+              key={String(item._id)}
+              disabled={item.mandatory || disabled}
+              checked={item.mandatory || props.subjects.includes(String(item._id))}
+              onCheckedChange={(checked) =>
+                updateSubjects(
+                  checked
+                    ? [...new Set([...props.subjects, String(item._id)])]
+                    : props.subjects.filter((subject) => subject !== String(item._id))
+                )
+              }
+            >
+              {item.name.long}
+            </Checkbox>
+          ))}
       </div>
     </Fragment>
   );

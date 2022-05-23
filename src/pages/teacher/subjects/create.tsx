@@ -17,7 +17,7 @@ const DivisionSubject = dynamic(() => import("components/Pages/Subject").then((_
 
 type Division = { teachers: string; name: Schemas.Subject.DivisionSchema["name"] };
 const CreateSubject: NextPage = () => {
-  const { data: classes } = useSWR<API.Response<API.Class.GET.AllData>>("/api/classes");
+  const { data: classes } = useSWR<API.Result<API.Class.GET.AllData>>("/api/classes");
 
   const toasts = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -92,7 +92,7 @@ const CreateSubject: NextPage = () => {
   }
 
   useIsomorphicLayoutEffect(() => {
-    if (selectedClass || classes == undefined || classes.data.length < 1) return;
+    if (selectedClass || !classes?.success || classes.data.length < 1) return;
     setSelectedClass(String(classes.data[0]._id));
   }, [classes, selectedClass]);
 
@@ -106,11 +106,12 @@ const CreateSubject: NextPage = () => {
         <form onSubmit={(e) => void handleSubmit(e)} className="w-full max-w-md space-y-10">
           <div className="space-y-7">
             <Select required label="Class" value={selectedClass} onValueChange={setSelectedClass}>
-              {classes?.data.map((item, idx) => (
-                <Select.Item key={idx} value={String(item._id)}>
-                  {item.name.long}
-                </Select.Item>
-              ))}
+              {classes?.success &&
+                classes.data.map((item, idx) => (
+                  <Select.Item key={idx} value={String(item._id)}>
+                    {item.name.long}
+                  </Select.Item>
+                ))}
             </Select>
             <div className="flex items-center justify-start gap-4">
               <div className="w-2/3">
