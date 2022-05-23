@@ -1,6 +1,6 @@
 export { Avatar } from "./Avatar";
+export { useToast } from "./Layout/Toast";
 export { Breadcrumbs } from "./Breadcrumbs";
-export { Layout, useToast } from "./Layout";
 
 export * as AlertDialog from "./Alert";
 export * as Dialog from "./Dialog";

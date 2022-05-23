@@ -7,8 +7,6 @@ import { Sidebar } from "./Sidebar";
 import { ThemePicker } from "./Theme";
 import { ToastProvider } from "./Toast";
 
-export { useToast } from "./Toast";
-
 export const Layout: React.FC<CP<LayoutProps>> = ({ children, hideSidebar }) => {
   const router = useRouter();
   const [key, setKey] = useState(0);
