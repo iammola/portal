@@ -16,6 +16,8 @@ const handler: API.Handler<API.Subject.POST.Data> = async (req) => {
 async function POST(body: unknown): API.HandlerResponse<API.Subject.POST.Data> {
   const data = JSON.parse(body as string) as API.Subject.POST.Body;
 
+  if (data.__type === "group" && data.divisions.length < 2) throw new Error("At least 2 divisions are required");
+
   const teachers = data.__type === "base" ? data.teachers : data.divisions.map((div) => div.teachers).flat();
 
   const [classExists, teacherIds] = await Promise.all([
