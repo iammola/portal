@@ -101,6 +101,12 @@ const CreateSubject: NextPage = () => {
     setDivisions([]);
   }, [__type]);
 
+  useIsomorphicLayoutEffect(() => {
+    if (divisions.length > 0 || __type === "base") return;
+    updateDivision("add");
+    updateDivision("add");
+  }, [__type, divisions.length, updateDivision]);
+
   return (
     <Fragment>
       <Head>
