@@ -14,7 +14,7 @@ const handler: API.Handler<API.Class.GET.Subjects> = async (req) => {
 };
 
 async function GET(id: unknown): API.HandlerResponse<API.Class.GET.Subjects> {
-  const data = await SubjectModel.find({ class: id }, { teachers: 0, "divisions.teachers": 0 })
+  const data = await SubjectModel.find({ class: id }, { class: 0, teachers: 0, "divisions.teachers": 0 })
     .sort({ order: "asc" })
     .lean<API.Class.GET.Subjects>({ getters: true });
 
