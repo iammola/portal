@@ -9,22 +9,26 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Teacher.GET.Students> = async (req) => {
   await connect();
-  if (req.method === "GET") return GET(req.query.id);
+  if (req.method === "GET") return GET(req.query.id, req.query.filter);
 
   return null;
 };
 
-async function GET(id: unknown): API.HandlerResponse<API.Teacher.GET.Students> {
-  const [termId, classIDs, subjectIDs] = await Promise.all([
-    TermModel.findCurrent("_id").lean(),
-    ClassModel.find({ teachers: id }, "_id").lean(),
-    SubjectModel.find({ $or: [{ teachers: id }, { divisions: { teachers: id } }] }, "class").lean(),
-  ]);
+async function GET(id: unknown, filter: unknown): API.HandlerResponse<API.Teacher.GET.Students> {
+  let students: Schemas.Student.Schema[];
+  const projection = "name.full username schoolMail dob images.avatar gender academic.class.$";
 
-  if (termId == null) throw new Error("Current Term is not defined");
+  if (filter === "all") students = await StudentModel.find({}, projection).lean();
+  else {
+    const [termId, classIDs, subjectIDs] = await Promise.all([
+      TermModel.findCurrent("_id").lean(),
+      ClassModel.find({ teachers: id }, "_id").lean(),
+      SubjectModel.find({ $or: [{ teachers: id }, { divisions: { teachers: id } }] }, "class").lean(),
+    ]);
 
-  const students = await StudentModel.find(
-    {
+    if (termId == null) throw new Error("Current Term is not defined");
+
+    students = await StudentModel.find({
       academic: {
         $elemMatch: {
           term: termId._id,
@@ -34,11 +38,12 @@ async function GET(id: unknown): API.HandlerResponse<API.Teacher.GET.Students> {
           ],
         },
       },
-    },
-    "name.full username schoolMail dob images.avatar gender academic.class.$"
-  ).lean();
+      projection,
+    }).lean();
+  }
 
   const classes = await ClassModel.find({ _id: students.map((s) => s.academic[0].class) }, "name.long").lean();
+
   const data = students.map(({ academic, dob, name, images, ...rest }) => ({
     ...rest,
     name: name.full,
