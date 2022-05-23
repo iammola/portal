@@ -196,6 +196,7 @@ declare global {
             name: string;
             class?: string;
             avatar?: string;
+            initials: string;
           }
         >;
       }

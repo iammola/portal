@@ -16,7 +16,7 @@ const handler: API.Handler<API.Teacher.GET.Students> = async (req) => {
 
 async function GET(id: unknown, filter: unknown): API.HandlerResponse<API.Teacher.GET.Students> {
   let students: Schemas.Student.Schema[];
-  const projection = "name.full username schoolMail dob images.avatar gender academic.class.$";
+  const projection = "name.full name.initials username schoolMail dob images.avatar gender academic.class.$";
 
   if (filter === "all") students = await StudentModel.find({}, projection).lean();
   else {
@@ -48,6 +48,7 @@ async function GET(id: unknown, filter: unknown): API.HandlerResponse<API.Teache
     ...rest,
     name: name.full,
     avatar: images.avatar,
+    initials: name.initials,
     age: dob ? formatDistanceToNowStrict(new Date(dob)) : undefined,
     class: classes.find((item) => item._id.equals(academic[0].class))?.name.long,
   }));
