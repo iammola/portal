@@ -96,6 +96,11 @@ const CreateSubject: NextPage = () => {
     setSelectedClass(String(classes.data[0]._id));
   }, [classes, selectedClass]);
 
+  useIsomorphicLayoutEffect(() => {
+    setTeachers("");
+    setDivisions([]);
+  }, [__type]);
+
   return (
     <Fragment>
       <Head>
