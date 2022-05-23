@@ -4,7 +4,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer");
 
 /** @type {import('next').NextConfig} */
 module.exports = {
-  // swcMinify: true,
+  swcMinify: true,
   reactStrictMode: true,
   images: { domains: ["drive.google.com"] },
   experimental: { newNextLinkBehavior: true },
