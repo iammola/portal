@@ -22,7 +22,7 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
   }, [props.term, terms, updateTerm]);
 
   useIsomorphicLayoutEffect(() => {
-    if (props.class || !classes?.success || classes.data.length < 0) return;
+    if (props.class || !classes?.success || classes.data.length < 1) return;
     props.updateClass(String(classes.data[0]._id));
   }, [classes, props]);
 
