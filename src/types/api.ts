@@ -188,6 +188,17 @@ declare global {
           classes?: string[];
         } & Omit<Schemas.Teacher.Schema, "_id" | "schoolMail" | "password" | "gender">;
       }
+
+      namespace GET {
+        export type Students = Array<
+          Pick<Schemas.Student.Record, "_id" | "gender" | "username" | "schoolMail"> & {
+            age?: string;
+            name: string;
+            class?: string;
+            avatar?: string;
+          }
+        >;
+      }
     }
 
     namespace Student {
