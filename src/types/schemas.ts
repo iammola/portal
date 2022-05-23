@@ -108,7 +108,6 @@ declare global {
         class: ObjectId;
         order: number;
         mandatory?: true;
-        sessions?: ObjectId[];
       };
 
       type Schema<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT> = DocumentId & {

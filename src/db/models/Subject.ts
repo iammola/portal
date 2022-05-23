@@ -14,11 +14,6 @@ const SubjectSchema = new mongoose.Schema<Schemas.Subject.Record>(
       type: Boolean,
       default: undefined,
     },
-    sessions: {
-      // TODO: Sort out ref Model
-      default: undefined,
-      type: [mongoose.Schema.Types.ObjectId],
-    },
     order: {
       type: Number,
       min: [1, "Order cannot be less than 1"],
