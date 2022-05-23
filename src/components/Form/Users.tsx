@@ -24,6 +24,13 @@ export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }
     if (preview) setFormatted(formatValue(raw).split(" ").filter(Boolean));
   }, [preview, raw]);
 
+  useIsomorphicLayoutEffect(() => {
+    if (props.value === "") {
+      setRaw("");
+      setFormatted([]);
+    }
+  }, [props.value]);
+
   function formatValue(val: string) {
     return val
       .toLowerCase()
