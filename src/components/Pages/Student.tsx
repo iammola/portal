@@ -1,61 +1,61 @@
-import { Fragment, useMemo } from "react";
+import { Fragment, useState } from "react";
 import useSWR from "swr";
 
 import { useIsomorphicLayoutEffect } from "hooks";
 import { Checkbox, Select } from "components/Form";
 
-export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, updateSubjects, updateTerm, ...props }) => {
+export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, updateTerm, ...props }) => {
   // Fetch data from API
   const terms: API.Term.GET.AllData = [];
-  const { data: classes } = useSWR<API.Result<API.Class.GET.AllData>>("/api/classes");
-  const { data: rawSubjects } = useSWR<API.Result<API.Class.GET.Subjects>>(
-    props.class && `/api/classes/${props.class}/subjects`
-  );
+  const [classes, setClasses] = useState<Option[]>([]);
+  const [subjects, setSubjects] = useState<SubjectOption[]>([]);
 
-  const subjects = useMemo(() => {
-    if (!rawSubjects?.success || rawSubjects.data.length < 1) return [];
+  useSWR<API.Result<API.Class.GET.AllData>>("/api/classes", {
+    onSuccess(result) {
+      if (!result.success) return;
 
-    return rawSubjects.data
-      .map((subject) => {
-        if (subject.__type === "base")
-          return {
-            _id: subject._id,
-            name: subject.name.long,
-            mandatory: subject.mandatory,
-          };
+      const classes = result.data.map((obj) => ({
+        _id: obj._id,
+        name: obj.name.long,
+      }));
 
-        return subject.divisions.map((division) => ({
-          _id: division._id,
-          name: `${subject.name.long}  (${division.name.long})`,
-          mandatory: subject.mandatory,
-        }));
-      })
-      .flat();
-  }, [rawSubjects]);
+      setClasses(classes);
+      if (classes.length > 0) props.updateClass(String(classes[0]._id));
+    },
+  });
+  useSWR<API.Result<API.Class.GET.Subjects>>(props.class && `/api/classes/${props.class}/subjects`, {
+    onSuccess(result) {
+      if (!result.success) return setSubjects([]);
+
+      const subjectDetails = (obj: Pick<Schemas.Subject.Record, "_id" | "mandatory" | "name">) => ({
+        _id: obj._id,
+        name: obj.name.long,
+        mandatory: obj.mandatory,
+      });
+
+      const subjects = result.data.reduce<SubjectOption[]>((acc, subject) => {
+        const result = subject.__type === "base" ? [subjectDetails(subject)] : subject.divisions.map(subjectDetails);
+        return [...acc, ...result];
+      }, []);
+
+      setSubjects(subjects);
+      props.updateSubjects(subjects.filter((d) => d.mandatory).map((subject) => String(subject._id)));
+    },
+  });
 
   function classChange(val: string) {
     props.updateClass(val);
-    updateSubjects([]);
+    props.updateSubjects([]);
   }
 
   function checkedChange(checked: boolean, id: string) {
-    if (checked) return updateSubjects([...props.subjects, id]);
-    updateSubjects(props.subjects.filter((sub) => sub !== id));
+    if (checked) return props.updateSubjects([...props.subjects, id]);
+    props.updateSubjects(props.subjects.filter((sub) => sub !== id));
   }
 
   useIsomorphicLayoutEffect(() => {
     if (!props.term && terms.length) updateTerm(String(terms[0]._id));
   }, [props.term, terms, updateTerm]);
-
-  useIsomorphicLayoutEffect(() => {
-    if (props.class || !classes?.success || classes.data.length < 1) return;
-    props.updateClass(String(classes.data[0]._id));
-  }, [classes, props]);
-
-  useIsomorphicLayoutEffect(() => {
-    if (props.subjects.length > 0) return;
-    updateSubjects(subjects.filter((d) => d.mandatory).map((subject) => String(subject._id)));
-  }, [props.subjects.length, subjects, updateSubjects]);
 
   return (
     <Fragment>
@@ -68,12 +68,11 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
           ))}
         </Select>
         <Select required label="Class" value={props.class} onValueChange={classChange}>
-          {classes?.success &&
-            classes.data.map((item) => (
-              <Select.Item key={String(item._id)} value={String(item._id)}>
-                {item.name.long}
-              </Select.Item>
-            ))}
+          {classes.map((item) => (
+            <Select.Item key={String(item._id)} value={String(item._id)}>
+              {item.name}
+            </Select.Item>
+          ))}
         </Select>
       </div>
       <div className="flex flex-wrap items-center justify-start gap-5">
@@ -91,6 +90,15 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
     </Fragment>
   );
 };
+
+type Option = {
+  _id: Schemas.ObjectId;
+  name: string;
+};
+
+type SubjectOption = {
+  mandatory?: true;
+} & Option;
 
 type AcademicRecordProps = {
   term: string;
