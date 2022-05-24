@@ -10,7 +10,7 @@ import { JWT_COOKIE_TOKEN } from "utils";
  */
 export async function fetchAPIEndpoint<ResponseData>(
   endpoint: RequestInfo,
-  init?: Omit<RequestInit, "body"> & { body: never; method: "GET" | "DELETE" }
+  init?: Omit<RequestInit, "body"> & { body?: never; method: "GET" | "DELETE" }
 ): Promise<API.Result<ResponseData>>;
 export async function fetchAPIEndpoint<ResponseData, Body>(
   endpoint: RequestInfo,
