@@ -74,37 +74,34 @@ const Students: NextPage = () => {
           </Select>
         </div>
       </div>
-      <div className="space-y-3">
+      <div className="space-y-3 p-5">
         {groupData().map(([groupKey, students]) => (
           <Fragment key={groupKey}>
             {groupKey && <h3 className="py-2 font-bold text-gray-11 dark:text-gray-dark-11">{groupKey}</h3>}
             {students.map((student) => (
               <div
                 key={student.username}
-                className="flex items-center gap-2 text-sm text-gray-12 dark:text-gray-dark-12"
+                className="flex items-center gap-2 rounded bg-gray-4 p-4 text-sm text-gray-12 shadow dark:bg-gray-dark-4 dark:text-gray-dark-12"
               >
                 <div className="flex items-center justify-start gap-1">
                   <Avatar name={student.name} src={student.avatar ?? ""} initials={student.initials} />
                 </div>
-                <span className="text-base text-gray-11 dark:text-gray-dark-11">&middot;</span>
-                <div className="flex items-center justify-start gap-1">
-                  <span className="font-medium">Name:</span> <span>{student.name}</span>
-                </div>
-                <span className="text-base text-gray-11 dark:text-gray-dark-11">&middot;</span>
-                <div className="flex items-center justify-start gap-1">
-                  <span className="font-medium">Age:</span> <span>{student.age}</span>
-                </div>
-                <span className="text-base text-gray-11 dark:text-gray-dark-11">&middot;</span>
-                <div className="flex items-center justify-start gap-1">
-                  <span className="font-medium">Class:</span> <span>{student.class}</span>
-                </div>
-                <span className="text-base text-gray-11 dark:text-gray-dark-11">&middot;</span>
-                <div className="flex items-center justify-start gap-1">
-                  <span className="font-medium">Sex:</span> <span>{student.gender === "M" ? "Male" : "Female"}</span>
-                </div>
-                <span className="text-base text-gray-11 dark:text-gray-dark-11">&middot;</span>
-                <div className="flex items-center justify-start gap-1">
-                  <span className="font-medium">Username:</span> <span>{student.username}</span>
+                <div className="space-y-1 text-gray-12 dark:text-gray-dark-12">
+                  <div title="Name" className="text-sm font-medium">
+                    {student.name}
+                  </div>
+                  <div title="Age" className="text-xs">
+                    {student.age}
+                  </div>
+                  <div title="Class" className="text-xs">
+                    {student.class}
+                  </div>
+                  <div title="Sex" className="text-xs">
+                    {student.gender === "M" ? "Male" : "Female"}
+                  </div>
+                  <div title="Username" className="text-xs">
+                    {student.username}
+                  </div>
                 </div>
               </div>
             ))}
