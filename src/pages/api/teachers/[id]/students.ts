@@ -15,25 +15,28 @@ const handler: API.Handler<API.Teacher.GET.Students> = async (req) => {
 };
 
 async function GET(id: unknown, filter: unknown): API.HandlerResponse<API.Teacher.GET.Students> {
-  let query = {};
+  const termId = await TermModel.findCurrent("_id").lean();
+  if (termId == null) throw new Error("Current Term is not defined");
+
+  const query = {
+    academic: {
+      $elemMatch: {
+        term: termId._id,
+        $or: [] as unknown[],
+      },
+    },
+  };
 
   if (filter !== "all") {
-    const [termId, classIDs, subjectIDs] = await Promise.all([
-      TermModel.findCurrent("_id").lean(),
+    const [classIDs, subjectIDs] = await Promise.all([
       ClassModel.find({ teachers: id }, "_id").lean(),
       SubjectModel.find({ $or: [{ teachers: id }, { divisions: { teachers: id } }] }, "class").lean(),
     ]);
 
-    if (termId == null) throw new Error("Current Term is not defined");
-
-    query = {
-      academic: {
-        $elemMatch: {
-          term: termId._id,
-          $or: [{ class: { $in: classIDs.map((_) => _._id) } }, { subjects: { $in: subjectIDs.map((_) => _._id) } }],
-        },
-      },
-    };
+    query.academic.$elemMatch.$or = [
+      { class: { $in: classIDs.map((_) => _._id) } },
+      { subjects: { $in: subjectIDs.map((_) => _._id) } },
+    ];
   }
 
   const students = await StudentModel.find(
