@@ -42,7 +42,7 @@ async function GET(id: unknown, filter: unknown): API.HandlerResponse<API.Teache
     }).lean();
   }
 
-  const classes = await ClassModel.find({ _id: students.map((s) => s.academic[0].class) }, "name.long").lean();
+  const classes = await ClassModel.find({ _id: { $in: students.map((s) => s.academic[0].class) } }, "name.long").lean();
 
   const data = students.map(({ academic, dob, name, images, ...rest }) => ({
     ...rest,
