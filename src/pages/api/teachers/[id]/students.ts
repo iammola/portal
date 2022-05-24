@@ -32,10 +32,7 @@ async function GET(id: unknown, filter: unknown): API.HandlerResponse<API.Teache
       academic: {
         $elemMatch: {
           term: termId._id,
-          $or: [
-            [{ class: { $in: classIDs.map((_) => _._id) } }],
-            [{ subjects: { $in: subjectIDs.map((_) => _._id) } }],
-          ],
+          $or: [{ class: { $in: classIDs.map((_) => _._id) } }, { subjects: { $in: subjectIDs.map((_) => _._id) } }],
         },
       },
       projection,
