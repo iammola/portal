@@ -105,7 +105,7 @@ const Students: NextPage = () => {
             {students.map((student) => (
               <div
                 key={student.username}
-                className="flex items-center gap-2 rounded bg-gray-4 p-4 text-sm text-gray-12 shadow dark:bg-gray-dark-4 dark:text-gray-dark-12"
+                className="flex items-center gap-6 rounded bg-gray-4 p-4 text-sm text-gray-12 shadow dark:bg-gray-dark-4 dark:text-gray-dark-12"
               >
                 <div className="flex items-center justify-start gap-1">
                   <Avatar name={student.name} src={student.avatar ?? ""} initials={student.initials} />
@@ -130,7 +130,7 @@ const Students: NextPage = () => {
                 <button
                   type="button"
                   onClick={() => void deleteStudent(String(student._id))}
-                  className="rounded-ull p-2 text-red-12 hover:bg-gray-4 focus:ring-1 focus:ring-gray-6 dark:text-red-dark-12 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-6"
+                  className="rounded-full p-3 text-red-12 hover:bg-gray-5 focus:ring-1 focus:ring-gray-6 dark:text-red-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-6"
                 >
                   <TrashIcon />
                 </button>
