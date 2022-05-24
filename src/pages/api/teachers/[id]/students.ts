@@ -15,11 +15,9 @@ const handler: API.Handler<API.Teacher.GET.Students> = async (req) => {
 };
 
 async function GET(id: unknown, filter: unknown): API.HandlerResponse<API.Teacher.GET.Students> {
-  let students: Schemas.Student.Schema[];
-  const projection = "name.full name.initials username schoolMail dob images.avatar gender academic.class.$";
+  let query = {};
 
-  if (filter === "all") students = await StudentModel.find({}, projection).lean();
-  else {
+  if (filter !== "all") {
     const [termId, classIDs, subjectIDs] = await Promise.all([
       TermModel.findCurrent("_id").lean(),
       ClassModel.find({ teachers: id }, "_id").lean(),
@@ -28,17 +26,20 @@ async function GET(id: unknown, filter: unknown): API.HandlerResponse<API.Teache
 
     if (termId == null) throw new Error("Current Term is not defined");
 
-    students = await StudentModel.find({
+    query = {
       academic: {
         $elemMatch: {
           term: termId._id,
           $or: [{ class: { $in: classIDs.map((_) => _._id) } }, { subjects: { $in: subjectIDs.map((_) => _._id) } }],
         },
       },
-      projection,
-    }).lean();
+    };
   }
 
+  const students = await StudentModel.find(
+    query,
+    "name.full name.initials username schoolMail dob images.avatar gender academic.class.$"
+  ).lean();
   const classes = await ClassModel.find({ _id: { $in: students.map((s) => s.academic[0].class) } }, "name.long").lean();
 
   const data = students.map(({ academic, dob, name, images, ...rest }) => ({
