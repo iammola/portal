@@ -45,7 +45,7 @@ async function GET(id: unknown, filter: unknown): API.HandlerResponse<API.Teache
   const data = students.map(({ academic, dob, name, images, ...rest }) => ({
     ...rest,
     name: name.full,
-    avatar: images.avatar,
+    avatar: images?.avatar,
     initials: name.initials,
     age: dob ? formatDistanceToNowStrict(new Date(dob)) : undefined,
     class: classes.find((item) => item._id.equals(academic[0].class))?.name.long,
