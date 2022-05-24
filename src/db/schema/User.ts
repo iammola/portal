@@ -103,20 +103,23 @@ const UserName = new mongoose.Schema<Schemas.User.Name>(
 const UserContact = new mongoose.Schema<Schemas.User.Contact>(
   {
     email: {
-      required: [true, "Email required"],
       type: userSubContact("Email required", {
         lowercase: true,
-        validate: [emailValidator, "Invalid email address"],
+        validate: {
+          validator: emailValidator,
+          msg: "Invalid email address",
+        },
       }),
     },
     phone: {
-      required: [true, "Phone required"],
       type: userSubContact("Phone required", {
-        validate: [(v?: string) => parsePhoneNumber(v ?? "").isValid(), "Invalid phone number"],
+        validate: {
+          msg: "Invalid phone number",
+          validator: (v?: string) => parsePhoneNumber(v ?? "").isValid(),
+        },
       }),
     },
     address: {
-      required: [true, "Address required"],
       type: userSubContact("Address required"),
     },
   },
@@ -172,7 +175,7 @@ function userSubContact(
         ...opts,
         trim: true,
         type: String,
-        required: [true, required],
+        default: undefined,
       },
     },
     { _id: false }

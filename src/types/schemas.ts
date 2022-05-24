@@ -213,14 +213,18 @@ declare global {
         other?: string;
       };
 
-      export type Contact = Record<"email" | "phone" | "address", Utils.FlattenIntersection<SubContact>>;
+      export type Contact = {
+        email: SubContact;
+        phone?: Partial<SubContact>;
+        address?: Partial<SubContact>;
+      };
 
       export type Gender = "M" | "F";
 
       export type Base = {
         dob?: Date;
         name: Name;
-        images: Images;
+        images?: Images;
         gender: Gender;
         contact: Contact;
         readonly username: string;
