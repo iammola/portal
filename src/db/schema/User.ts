@@ -4,10 +4,6 @@ import { parsePhoneNumber } from "awesome-phonenumber";
 import { ModelNames } from "db";
 import { generateSchoolMail, getImage, uploadImage } from "db/utils";
 
-const emailValidator = (v?: string) => {
-  return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v ?? "");
-};
-
 export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose.Model<D>>(obj: Def<D>) => {
   const schema = new mongoose.Schema<Schemas.User.Base, M>({
     ...obj,
@@ -34,10 +30,6 @@ export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose
       unique: true,
       lowercase: true,
       immutable: true,
-      validate: {
-        validator: emailValidator,
-        msg: "Invalid email address",
-      },
     },
     dob: {
       type: Date,
@@ -106,8 +98,8 @@ const UserContact = new mongoose.Schema<Schemas.User.Contact>(
       type: userSubContact("Email required", {
         lowercase: true,
         validate: {
-          validator: emailValidator,
           msg: "Invalid email address",
+          validator: (v?: string) => (v ? /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(v) : true),
         },
       }),
     },
@@ -115,7 +107,7 @@ const UserContact = new mongoose.Schema<Schemas.User.Contact>(
       type: userSubContact("Phone required", {
         validate: {
           msg: "Invalid phone number",
-          validator: (v?: string) => parsePhoneNumber(v ?? "").isValid(),
+          validator: (v?: string) => (v ? parsePhoneNumber(v).isValid() : true),
         },
       }),
     },
