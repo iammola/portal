@@ -42,34 +42,38 @@ const Students: NextPage = () => {
       <Head>
         <title>Students &middot; Portal</title>
       </Head>
-      <div className="flex items-center justify-start gap-2">
-        <button
-          type="button"
-          onClick={() => setFilter("")}
-          className={cx("rounded p-3 ring-1 ring-gray-6 dark:ring-gray-dark-6", [
-            filter === "",
-            "bg-gray-9 text-white hover:bg-gray-10 dark:bg-gray-dark-9 dark:hover:bg-gray-dark-10",
-            "bg-gray-3 text-gray-12 hover:bg-gray-4 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:hover:bg-gray-dark-4",
-          ])}
-        >
-          My Students
-        </button>
-        <button
-          type="button"
-          onClick={() => setFilter("all")}
-          className={cx("rounded p-3 ring-1 ring-gray-6 dark:ring-gray-dark-6", [
-            filter === "all",
-            "bg-gray-9 text-white hover:bg-gray-10 dark:bg-gray-dark-9 dark:hover:bg-gray-dark-10",
-            "bg-gray-3 text-gray-12 hover:bg-gray-4 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:hover:bg-gray-dark-4",
-          ])}
-        >
-          All Students
-        </button>
+      <div className="flex items-center justify-start gap-7 p-5">
+        <div className="flex items-center justify-start gap-2">
+          <button
+            type="button"
+            onClick={() => setFilter("")}
+            className={cx("rounded-full px-4 py-1 text-sm tracking-wide focus:outline-none", [
+              filter === "",
+              "bg-black-a-9 text-white",
+              "bg-gray-3 text-gray-12 hover:bg-gray-4 focus:ring-1 focus:ring-gray-6 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-6",
+            ])}
+          >
+            Mine
+          </button>
+          <button
+            type="button"
+            onClick={() => setFilter("all")}
+            className={cx("rounded-full px-4 py-1 text-sm tracking-wide focus:outline-none", [
+              filter === "all",
+              "bg-black-a-9 text-white",
+              "bg-gray-3 text-gray-12 hover:bg-gray-4 focus:ring-1 focus:ring-gray-6 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-6",
+            ])}
+          >
+            All
+          </button>
+        </div>
+        <div className="w-40">
+          <Select required label="Group By" value={group} onValueChange={(v) => setGroup(v as typeof group)}>
+            <Select.Item value="none">None</Select.Item>
+            <Select.Item value="class">Class</Select.Item>
+          </Select>
+        </div>
       </div>
-      <Select label="Group By" value={group} onValueChange={(v) => setGroup(v as typeof group)}>
-        <Select.Item value="none">None</Select.Item>
-        <Select.Item value="class">Class</Select.Item>
-      </Select>
       <div className="space-y-3">
         {groupData().map(([groupKey, students]) => (
           <Fragment key={groupKey}>
