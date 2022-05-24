@@ -48,11 +48,7 @@ const CreateTeacher: NextPage = () => {
     initials: "",
     title: teacherTitles[0],
   });
-  const [contact, setContact] = useState<Schemas.Teacher.Schema["contact"]>({
-    email: { primary: "" },
-    phone: { primary: "" },
-    address: { primary: "" },
-  });
+  const [contact, setContact] = useState<Schemas.Teacher.Schema["contact"]>({ email: { primary: "" } });
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -210,39 +206,39 @@ const CreateTeacher: NextPage = () => {
               </div>
               <div className="grid gap-6 sm:grid-cols-2">
                 <Phone
-                  required
                   disabled={isLoading}
-                  value={contact.phone.primary}
+                  value={contact.phone?.primary}
                   onChange={(primary) =>
-                    setContact((contact) => ({ ...contact, phone: { ...contact.phone, primary } }))
+                    setContact((contact) => ({ ...contact, phone: { ...(contact.phone ?? {}), primary } }))
                   }
                 >
                   Phone Number
                 </Phone>
                 <Phone
                   disabled={isLoading}
-                  value={contact.phone.other}
-                  onChange={(other) => setContact((contact) => ({ ...contact, phone: { ...contact.phone, other } }))}
+                  value={contact.phone?.other}
+                  onChange={(other) =>
+                    setContact((contact) => ({ ...contact, phone: { ...(contact.phone ?? {}), other } }))
+                  }
                 >
                   Phone Number (other)
                 </Phone>
               </div>
               <div className="grid gap-6 sm:grid-cols-2">
                 <Textarea
-                  required
                   disabled={isLoading}
-                  value={contact.address.primary}
+                  value={contact.address?.primary}
                   onChange={(primary) =>
-                    setContact((contact) => ({ ...contact, address: { ...contact.address, primary } }))
+                    setContact((contact) => ({ ...contact, address: { ...(contact.address ?? {}), primary } }))
                   }
                 >
                   Home Address
                 </Textarea>
                 <Textarea
                   disabled={isLoading}
-                  value={contact.address.other}
+                  value={contact.address?.other}
                   onChange={(other) =>
-                    setContact((contact) => ({ ...contact, address: { ...contact.address, other } }))
+                    setContact((contact) => ({ ...contact, address: { ...(contact.address ?? {}), other } }))
                   }
                 >
                   Address (other)
