@@ -60,9 +60,9 @@ const Login: NextPage = () => {
             if (g1 === "&" && g2 === "&") return g2;
             return "";
           });
-        await router.push(toURL);
 
         toasts.remove(toastID);
+        await router.push(toURL);
       } else throw result.error;
     } catch (error) {
       console.error(error);
