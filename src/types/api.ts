@@ -214,6 +214,10 @@ declare global {
           academic: Array<{ subjects: string[] } & Record<"term" | "class", string>>;
         } & Required<Pick<Schemas.Student.Schema, "images" | "name" | "contact">>;
       }
+
+      namespace DELETE {
+        export type Data = DeleteData;
+      }
     }
 
     namespace User {

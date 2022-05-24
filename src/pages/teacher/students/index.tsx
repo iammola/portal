@@ -1,20 +1,24 @@
-import { Fragment, useState } from "react";
 import { getCookies } from "cookies-next";
+import { Fragment, useState } from "react";
+import { TrashIcon } from "@radix-ui/react-icons";
 import useSWR from "swr";
 import Head from "next/head";
 
-import { Avatar } from "components";
+import { fetchAPIEndpoint } from "api";
 import { Select } from "components/Form";
 import { cx, USER_ID_COOKIE } from "utils";
+import { Avatar, useToast } from "components";
 
 import type { NextPage } from "next";
 
 const Students: NextPage = () => {
+  const toasts = useToast();
+
   const cookies = getCookies();
   const [filter, setFilter] = useState<"" | "all">("");
   const [group, setGroup] = useState<"none" | "class">("none");
 
-  const { data: students } = useSWR<API.Result<API.Teacher.GET.Students>>(
+  const { data: students, mutate } = useSWR<API.Result<API.Teacher.GET.Students>>(
     `/api/teachers/${cookies[USER_ID_COOKIE]}/students?filter=${filter}`
   );
 
@@ -35,6 +39,26 @@ const Students: NextPage = () => {
     }, {} as Record<string, typeof students.data>);
 
     return Object.entries(data);
+  }
+
+  async function deleteStudent(id: string) {
+    const toastID = toasts.add({ kind: "loading", description: "Deleting student..." });
+
+    try {
+      const result = await fetchAPIEndpoint<API.Student.DELETE.Data>(`/api/students/${id}`, { method: "DELETE" });
+
+      toasts.remove(toastID);
+
+      if (result.success) {
+        void mutate();
+        toasts.add({ kind: "success", description: "Successfully deleted" });
+      } else throw result.error;
+    } catch (error) {
+      console.error(error);
+      toasts.remove(toastID);
+      if (typeof error === "string") toasts.add({ kind: "error", description: error });
+      if (typeof error === "object") toasts.add({ kind: "error", description: "Couldn't complete request" });
+    }
   }
 
   return (
@@ -103,6 +127,13 @@ const Students: NextPage = () => {
                     {student.username}
                   </div>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => void deleteStudent(String(student._id))}
+                  className="rounded-ull p-2 text-red-12 hover:bg-gray-4 focus:ring-1 focus:ring-gray-6 dark:text-red-dark-12 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-6"
+                >
+                  <TrashIcon />
+                </button>
               </div>
             ))}
           </Fragment>
