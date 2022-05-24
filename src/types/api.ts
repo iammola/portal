@@ -6,8 +6,7 @@ declare global {
     export type UpdateData = Record<"success", boolean>;
     export type CreateData<O = unknown> = Schemas.DocumentId & O;
     export type DeleteData = {
-      // TODO: Add a count property to return number of records deleted
-      // TODO: count: number;
+      count: number;
       success: boolean;
     };
 
