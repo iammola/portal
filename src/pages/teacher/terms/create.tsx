@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import useSWR from "swr";
 import Head from "next/head";
 
-import { Checkbox, Input, Select } from "components/Form";
+import { Checkbox, Date as FormDate, Input, Select } from "components/Form";
 
 import type { NextPage } from "next";
 
@@ -10,6 +10,7 @@ const CreateTerm: NextPage = () => {
   const [session, setSession] = useState("");
   const [current, setCurrent] = useState(false);
   const [name, setName] = useState({ long: "", short: "" });
+  const [start, setStart] = useState<Date | undefined>(new Date());
 
   const [sessions, setSessions] = useState<Array<Record<"_id" | "name", string>>>([]);
 
@@ -55,6 +56,9 @@ const CreateTerm: NextPage = () => {
                 </Input>
               </div>
             </div>
+            <FormDate required value={start} onChange={setStart}>
+              Start Date
+            </FormDate>
             <Checkbox checked={current} onCheckedChange={(c) => setCurrent(c as boolean)}>
               Mark as current term?
             </Checkbox>
