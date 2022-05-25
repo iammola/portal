@@ -4,6 +4,7 @@ import Head from "next/head";
 
 import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
+import { LoadingIcon } from "components/Icons";
 import { Checkbox, Date as FormDate, Input, Select } from "components/Form";
 
 import type { NextPage } from "next";
@@ -106,7 +107,14 @@ const CreateTerm: NextPage = () => {
             disabled={isLoading}
             className="inline-flex w-full items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
           >
-            Create Term
+            {isLoading ? (
+              <Fragment>
+                <LoadingIcon className="h-[15px] w-[15px] animate-spin" />
+                Processing...
+              </Fragment>
+            ) : (
+              "Create Term"
+            )}
           </button>
         </form>
       </div>
