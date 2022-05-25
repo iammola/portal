@@ -139,7 +139,7 @@ declare global {
       namespace POST {
         export type Data = CreateData;
 
-        export type Body = Omit<Schemas.Session.Record<true>, "terms">;
+        export type Body = Pick<Schemas.Session.Record, "name">;
       }
 
       namespace GET {
