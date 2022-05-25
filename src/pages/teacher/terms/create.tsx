@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 import useSWR from "swr";
 import Head from "next/head";
 
+import { fetchAPIEndpoint } from "api";
 import { Checkbox, Date as FormDate, Input, Select } from "components/Form";
 
 import type { NextPage } from "next";
@@ -28,6 +29,30 @@ const CreateTerm: NextPage = () => {
     },
   });
 
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (start === undefined) return;
+
+    try {
+      const result = await fetchAPIEndpoint<API.Session.POST.Terms.Data, API.Session.POST.Terms.Body>(
+        `/api/sessions/${session}/terms`,
+        {
+          method: "POST",
+          body: { current, name, start },
+        }
+      );
+
+      if (result.success) {
+        setCurrent(false);
+        setStart(new Date());
+        setName({ long: "", short: "" });
+      } else throw result.error;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <Fragment>
       <Head>
@@ -35,7 +60,7 @@ const CreateTerm: NextPage = () => {
       </Head>
       <div className="flex w-full grow flex-col items-center justify-center gap-8 py-10 px-6">
         <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Term</h3>
-        <form className="w-full max-w-xs space-y-10">
+        <form onSubmit={(e) => void handleSubmit(e)} className="w-full max-w-xs space-y-10">
           <div className="space-y-7">
             <Select required label="Session" value={session} onValueChange={setSession}>
               {sessions.map((session) => (
