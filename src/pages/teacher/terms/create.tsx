@@ -2,12 +2,16 @@ import { Fragment, useState } from "react";
 import useSWR from "swr";
 import Head from "next/head";
 
+import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
 import { Checkbox, Date as FormDate, Input, Select } from "components/Form";
 
 import type { NextPage } from "next";
 
 const CreateTerm: NextPage = () => {
+  const toasts = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+
   const [session, setSession] = useState("");
   const [current, setCurrent] = useState(false);
   const [name, setName] = useState({ long: "", short: "" });
@@ -34,6 +38,9 @@ const CreateTerm: NextPage = () => {
 
     if (start === undefined) return;
 
+    setIsLoading(true);
+    const toastID = toasts.add({ kind: "loading", description: "Processing Request..." });
+
     try {
       const result = await fetchAPIEndpoint<API.Session.POST.Terms.Data, API.Session.POST.Terms.Body>(
         `/api/sessions/${session}/terms`,
@@ -47,10 +54,16 @@ const CreateTerm: NextPage = () => {
         setCurrent(false);
         setStart(new Date());
         setName({ long: "", short: "" });
+
+        toasts.add({ kind: "success", description: "Created Successfully!!" });
       } else throw result.error;
     } catch (error) {
       console.error(error);
+      if (typeof error === "string") toasts.add({ kind: "error", description: error });
+      if (typeof error === "object") toasts.add({ kind: "error", description: "Couldn't complete request" });
     }
+
+    toasts.remove(toastID);
   }
 
   return (
@@ -90,6 +103,7 @@ const CreateTerm: NextPage = () => {
           </div>
           <button
             type="submit"
+            disabled={isLoading}
             className="inline-flex w-full items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
           >
             Create Term
