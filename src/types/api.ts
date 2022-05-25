@@ -140,6 +140,12 @@ declare global {
         export type Data = CreateData;
 
         export type Body = Pick<Schemas.Session.Record, "name">;
+
+        namespace Terms {
+          export type Data = CreateData;
+
+          export type Body = Omit<Schemas.Term.Record, "_id" | "session" | "end">;
+        }
       }
 
       namespace GET {
@@ -152,12 +158,6 @@ declare global {
     }
 
     namespace Term {
-      namespace POST {
-        export type Data = CreateData;
-
-        export type Body = Schemas.Term.Record;
-      }
-
       namespace GET {
         export type AllData = Array<Omit<Schemas.Term.Record, "session">>;
 
