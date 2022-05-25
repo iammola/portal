@@ -64,6 +64,7 @@ const CreateTerm: NextPage = () => {
       if (typeof error === "object") toasts.add({ kind: "error", description: "Couldn't complete request" });
     }
 
+    setIsLoading(false);
     toasts.remove(toastID);
   }
 
