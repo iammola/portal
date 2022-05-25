@@ -24,7 +24,9 @@ async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.
     SessionModel.findById(sessionId, "current"),
     TermModel.exists({ session: sessionId, "name.long": name.long }),
     TermModel.exists({ session: sessionId, "name.short": name.short }),
-    TermModel.exists({ session: sessionId, start }),
+    TermModel.exists({ start }),
+    TermModel.exists({ end: start }),
+    TermModel.exists({ start: { $gte: start }, end: { $lte: start } }),
   ]);
 
   if (checks[0] == null) throw new NotFoundError("Session not found");
@@ -32,10 +34,13 @@ async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.
     throw new NotFoundError(`A term with name ${name.long} in the specified session already exists`);
   if (checks[2] != null)
     throw new NotFoundError(`A term with alias ${name.short} in the specified session already exists`);
-  if (checks[3] != null)
-    throw new NotFoundError(
-      `A term with start date ${format(start, "dd/MM/yyyy")} in the specified session already exists`
-    );
+
+  const formattedDate = format(new Date(start), "dd/MM/yyyy");
+  if (checks[3] != null) throw new NotFoundError(`A term with start date ${formattedDate} already exists`);
+  if (checks[4] != null)
+    throw new NotFoundError(`A term with start date ${formattedDate} cannot start on the same day another term ends`);
+  if (checks[5] != null)
+    throw new Error(`A term with start date ${formattedDate} will fall in the constraints of another term`);
 
   const session = await startSession();
   let _id: Schemas.ObjectId | undefined = undefined;
