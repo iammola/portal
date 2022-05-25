@@ -145,7 +145,7 @@ declare global {
       namespace GET {
         export type AllData = Data[];
 
-        export type Data = Schemas.Session.Record;
+        export type Data = Schemas.Session.Record<true>;
 
         export type Terms = Pick<Schemas.Session.Record<true>, "_id" | "terms">;
       }
