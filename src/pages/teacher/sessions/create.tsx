@@ -3,14 +3,18 @@ import Head from "next/head";
 
 import { fetchAPIEndpoint } from "api";
 import { Input } from "components/Form";
+import { LoadingIcon } from "components/Icons";
 
 import type { NextPage } from "next";
 
 const CreateSession: NextPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [name, setName] = useState({ long: "", short: "" });
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const result = await fetchAPIEndpoint<API.Session.POST.Data, API.Session.POST.Body>("/api/sessions", {
@@ -24,6 +28,8 @@ const CreateSession: NextPage = () => {
     } catch (error) {
       console.error(error);
     }
+
+    setIsLoading(false);
   }
 
   return (
@@ -44,9 +50,17 @@ const CreateSession: NextPage = () => {
           </div>
           <button
             type="submit"
+            disabled={isLoading}
             className="inline-flex w-full items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
           >
-            Create Session
+            {isLoading ? (
+              <Fragment>
+                <LoadingIcon className="h-[15px] w-[15px] animate-spin" />
+                Processing...
+              </Fragment>
+            ) : (
+              "Create Session"
+            )}
           </button>
         </form>
       </div>
