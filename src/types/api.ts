@@ -97,7 +97,7 @@ declare global {
 
         export type Subjects = Array<Schemas.Subject.Record<true>>;
 
-        export type Teachers = Record<"teachers", Schemas.Teacher.Schema[]>;
+        export type Teachers = Record<"teachers", Schemas.Staff.TeacherSchema[]>;
       }
 
       namespace DELETE {
@@ -183,13 +183,13 @@ declare global {
 
     namespace Teacher {
       namespace POST {
-        export type Data = CreateData<Pick<Schemas.Teacher.Schema, "schoolMail">>;
+        export type Data = CreateData<Pick<Schemas.Staff.Record, "schoolMail">>;
 
         export type Body = {
           gender: string;
           password: string;
           classes?: string[];
-        } & Omit<Schemas.Teacher.Schema, "_id" | "schoolMail" | "password" | "gender">;
+        } & Omit<Schemas.Staff.Record, "_id" | "schoolMail" | "password" | "gender">;
       }
 
       namespace GET {
