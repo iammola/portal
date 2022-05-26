@@ -165,7 +165,7 @@ declare global {
         }>;
 
         export type Data = {
-          session: Omit<Schemas.Session.Record<true>, "terms">;
+          session: Pick<Schemas.Session.Record, "name">;
         } & Omit<Schemas.Term.Record, "session">;
       }
     }
