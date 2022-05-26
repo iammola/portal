@@ -86,17 +86,17 @@ const CreateTerm: NextPage = () => {
             </Select>
             <div className="flex w-full items-start justify-start gap-3">
               <div className="w-2/3">
-                <Input required value={name.long} onChange={(long) => setName((name) => ({ ...name, long }))}>
+                <Input required value={name.long} onValueChange={(long) => setName((name) => ({ ...name, long }))}>
                   Name
                 </Input>
               </div>
               <div className="w-1/3">
-                <Input required value={name.short} onChange={(short) => setName((name) => ({ ...name, short }))}>
+                <Input required value={name.short} onValueChange={(short) => setName((name) => ({ ...name, short }))}>
                   Alias
                 </Input>
               </div>
             </div>
-            <FormDate required value={start} onChange={setStart}>
+            <FormDate required value={start} onValueChange={setStart}>
               Start Date
             </FormDate>
             <Checkbox checked={current} onCheckedChange={(c) => setCurrent(c as boolean)}>

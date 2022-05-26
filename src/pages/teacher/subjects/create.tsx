@@ -126,12 +126,12 @@ const CreateSubject: NextPage = () => {
             </Select>
             <div className="flex items-center justify-start gap-4">
               <div className="w-2/3">
-                <Input required value={name.long} onChange={(long) => setName((name) => ({ ...name, long }))}>
+                <Input required value={name.long} onValueChange={(long) => setName((name) => ({ ...name, long }))}>
                   Name
                 </Input>
               </div>
               <div className="w-1/3">
-                <Input required value={name.short} onChange={(short) => setName((name) => ({ ...name, short }))}>
+                <Input required value={name.short} onValueChange={(short) => setName((name) => ({ ...name, short }))}>
                   Alias
                 </Input>
               </div>
@@ -161,7 +161,7 @@ const CreateSubject: NextPage = () => {
               </RadioGroup>
             </div>
             {__type === "base" ? (
-              <Users required value={teachers} onChange={setTeachers}>
+              <Users required value={teachers} onValueChange={setTeachers}>
                 Teachers
               </Users>
             ) : (

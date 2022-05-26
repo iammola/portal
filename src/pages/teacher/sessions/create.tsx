@@ -48,10 +48,10 @@ const CreateSession: NextPage = () => {
         <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Session</h3>
         <form onSubmit={(e) => void handleSubmit(e)} className="w-full max-w-xs space-y-10">
           <div className="space-y-7">
-            <Input required value={name.long} onChange={(long) => setName((name) => ({ ...name, long }))}>
+            <Input required value={name.long} onValueChange={(long) => setName((name) => ({ ...name, long }))}>
               Name
             </Input>
-            <Input required value={name.short} onChange={(short) => setName((name) => ({ ...name, short }))}>
+            <Input required value={name.short} onValueChange={(short) => setName((name) => ({ ...name, short }))}>
               Alias
             </Input>
           </div>

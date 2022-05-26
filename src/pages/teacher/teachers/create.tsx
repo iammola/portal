@@ -119,7 +119,7 @@ const CreateTeacher: NextPage = () => {
                   required
                   value={name.full}
                   autoComplete="name"
-                  onChange={(full) => setName((name) => ({ ...name, full }))}
+                  onValueChange={(full) => setName((name) => ({ ...name, full }))}
                 >
                   Full name
                 </Input>
@@ -128,7 +128,7 @@ const CreateTeacher: NextPage = () => {
                 <Input
                   required
                   value={name.initials}
-                  onChange={(initials) => setName((name) => ({ ...name, initials }))}
+                  onValueChange={(initials) => setName((name) => ({ ...name, initials }))}
                 >
                   Initials
                 </Input>
@@ -136,7 +136,7 @@ const CreateTeacher: NextPage = () => {
                   required
                   value={name.first}
                   autoComplete="given-name"
-                  onChange={(first) => setName((name) => ({ ...name, first }))}
+                  onValueChange={(first) => setName((name) => ({ ...name, first }))}
                 >
                   First name
                 </Input>
@@ -144,7 +144,7 @@ const CreateTeacher: NextPage = () => {
                   required
                   value={name.last}
                   autoComplete="family-name"
-                  onChange={(last) => setName((name) => ({ ...name, last }))}
+                  onValueChange={(last) => setName((name) => ({ ...name, last }))}
                 >
                   Last name
                 </Input>
@@ -153,13 +153,13 @@ const CreateTeacher: NextPage = () => {
                 <Input
                   value={name.other}
                   autoComplete="additional-name"
-                  onChange={(other) => setName((name) => ({ ...name, other }))}
+                  onValueChange={(other) => setName((name) => ({ ...name, other }))}
                 >
                   Other name(s)
                 </Input>
               </div>
               <div className="grid gap-6 xs:grid-cols-[max-content_minmax(max-content,200px)]">
-                <Date value={dob} onChange={setDob} autoComplete="bday">
+                <Date value={dob} onValueChange={setDob} autoComplete="bday">
                   Date of Birth
                 </Date>
                 <Select required label="Gender" value={gender} onValueChange={setGender}>
@@ -184,7 +184,7 @@ const CreateTeacher: NextPage = () => {
                 <Input
                   required
                   value={contact.email.primary}
-                  onChange={(primary) =>
+                  onValueChange={(primary) =>
                     setContact((contact) => ({ ...contact, email: { ...contact.email, primary } }))
                   }
                 >
@@ -192,7 +192,9 @@ const CreateTeacher: NextPage = () => {
                 </Input>
                 <Input
                   value={contact.email.other}
-                  onChange={(other) => setContact((contact) => ({ ...contact, email: { ...contact.email, other } }))}
+                  onValueChange={(other) =>
+                    setContact((contact) => ({ ...contact, email: { ...contact.email, other } }))
+                  }
                 >
                   Email Address (other)
                 </Input>
@@ -200,7 +202,7 @@ const CreateTeacher: NextPage = () => {
               <div className="grid gap-6 sm:grid-cols-2">
                 <Phone
                   value={contact.phone?.primary}
-                  onChange={(primary) =>
+                  onValueChange={(primary) =>
                     setContact((contact) => ({ ...contact, phone: { ...(contact.phone ?? {}), primary } }))
                   }
                 >
@@ -208,7 +210,7 @@ const CreateTeacher: NextPage = () => {
                 </Phone>
                 <Phone
                   value={contact.phone?.other}
-                  onChange={(other) =>
+                  onValueChange={(other) =>
                     setContact((contact) => ({ ...contact, phone: { ...(contact.phone ?? {}), other } }))
                   }
                 >
@@ -218,7 +220,7 @@ const CreateTeacher: NextPage = () => {
               <div className="grid gap-6 sm:grid-cols-2">
                 <Textarea
                   value={contact.address?.primary}
-                  onChange={(primary) =>
+                  onValueChange={(primary) =>
                     setContact((contact) => ({ ...contact, address: { ...(contact.address ?? {}), primary } }))
                   }
                 >
@@ -226,7 +228,7 @@ const CreateTeacher: NextPage = () => {
                 </Textarea>
                 <Textarea
                   value={contact.address?.other}
-                  onChange={(other) =>
+                  onValueChange={(other) =>
                     setContact((contact) => ({ ...contact, address: { ...(contact.address ?? {}), other } }))
                   }
                 >
@@ -261,12 +263,12 @@ const CreateTeacher: NextPage = () => {
             </div>
             <div className="w-full min-w-0 space-y-7">
               <div className="w-full sm:w-2/3 lg:w-1/2 xl:w-2/5">
-                <Input required value={username} onChange={setUsername}>
+                <Input required value={username} onValueChange={setUsername}>
                   Username
                 </Input>
               </div>
               <div className="w-full sm:w-2/3 lg:w-1/2 xl:w-2/5">
-                <Password required value={password} onChange={setPassword}>
+                <Password required value={password} onValueChange={setPassword}>
                   Password
                 </Password>
               </div>

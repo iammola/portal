@@ -3,7 +3,7 @@ import { useId } from "react";
 
 import { cx } from "utils";
 
-export const Textarea: React.FC<TextareaProps> = ({ children, id, onChange, ...props }) => {
+export const Textarea: React.FC<TextareaProps> = ({ children, id, onValueChange, ...props }) => {
   const customId = useId();
 
   return (
@@ -18,7 +18,7 @@ export const Textarea: React.FC<TextareaProps> = ({ children, id, onChange, ...p
       <textarea
         {...props}
         id={id || customId}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onValueChange(e.target.value)}
         maxLength={undefined} // So the user can trim the text manually
         className="w-full rounded-md bg-gray-3 p-4 text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-gray-7 dark:bg-gray-dark-3 dark:focus:ring-gray-dark-7"
       />
@@ -53,5 +53,5 @@ type TextareaProps = {
   children: string;
   maxLength?: number;
   minLength?: number;
-  onChange(val: string): void;
-} & Omit<React.ComponentProps<"textarea">, "onChange" | "value">;
+  onValueChange(val: string): void;
+} & Omit<React.ComponentProps<"textarea">, "value">;

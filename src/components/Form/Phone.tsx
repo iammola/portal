@@ -12,7 +12,7 @@ import {
 import { getFlagEmoji } from "utils";
 import { useIsomorphicLayoutEffect } from "hooks";
 
-export const Phone: React.FC<PhoneProps> = ({ children, id, onChange, ...props }) => {
+export const Phone: React.FC<PhoneProps> = ({ children, id, onValueChange, ...props }) => {
   const customId = useId();
   const [formatted, setFormatted] = useState("");
   const [regions] = useState(getSupportedRegionCodes());
@@ -22,11 +22,11 @@ export const Phone: React.FC<PhoneProps> = ({ children, id, onChange, ...props }
 
   const updateRegion = useCallback(
     (regionCode: string) => {
-      onChange("");
+      onValueChange("");
       setFormatted("");
       setRegionCode(regionCode);
     },
-    [onChange]
+    [onValueChange]
   );
 
   const updateValue = useCallback(
@@ -35,10 +35,10 @@ export const Phone: React.FC<PhoneProps> = ({ children, id, onChange, ...props }
       setFormatted(formatter.reset(phone as string));
 
       const formatted = formatter.getPhoneNumber();
-      onChange(formatted.getNumber("e164") ?? "");
+      onValueChange(formatted.getNumber("e164") ?? "");
       setRegionCode((region) => formatted.getRegionCode() ?? region);
     },
-    [formatter, onChange]
+    [formatter, onValueChange]
   );
 
   useIsomorphicLayoutEffect(() => {
@@ -109,5 +109,5 @@ export const Phone: React.FC<PhoneProps> = ({ children, id, onChange, ...props }
 type PhoneProps = {
   value?: string;
   children: string;
-  onChange(val: string): void;
-} & Omit<React.ComponentProps<"input">, "onChange" | "value">;
+  onValueChange(val: string): void;
+} & Omit<React.ComponentProps<"input">, "value">;

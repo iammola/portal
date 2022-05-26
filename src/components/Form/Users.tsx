@@ -9,16 +9,16 @@ import { cx } from "utils";
 import { Avatar, Icons } from "components";
 import { useIsomorphicLayoutEffect } from "hooks";
 
-export const Users: React.FC<UsersProps> = ({ children, id, onChange, ...props }) => {
+export const Users: React.FC<UsersProps> = ({ children, id, onValueChange, ...props }) => {
   const customId = useId();
   const [preview, setPreview] = useState(false);
   const [raw, setRaw] = useState(() => formatValue(props.value ?? ""));
   const [formatted, setFormatted] = useState(() => raw.split(" ").filter(Boolean));
 
   useIsomorphicLayoutEffect(() => {
-    const timeout = setTimeout(() => onChange(formatValue(raw)), 5e2);
+    const timeout = setTimeout(() => onValueChange(formatValue(raw)), 5e2);
     return () => clearTimeout(timeout);
-  }, [raw, onChange]);
+  }, [raw, onValueChange]);
 
   useIsomorphicLayoutEffect(() => {
     if (preview) setFormatted(formatValue(raw).split(" ").filter(Boolean));
@@ -154,5 +154,5 @@ const User: React.FC<{ username: string }> = ({ username }) => {
 type UsersProps = {
   value?: string;
   children: string;
-  onChange(val: string): void;
-} & Omit<React.ComponentProps<"textarea">, "value" | "onChange">;
+  onValueChange(val: string): void;
+} & Omit<React.ComponentProps<"textarea">, "value">;

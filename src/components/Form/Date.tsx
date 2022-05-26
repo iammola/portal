@@ -15,7 +15,7 @@ import {
 import { cx } from "utils";
 import { useIsomorphicLayoutEffect } from "hooks";
 
-const Component: React.FC<DateProps> = ({ children, id, onChange, ...props }) => {
+const Component: React.FC<DateProps> = ({ children, id, onValueChange, ...props }) => {
   const customId = useId();
 
   const dateRef = useRef<HTMLInputElement>(null);
@@ -75,11 +75,11 @@ const Component: React.FC<DateProps> = ({ children, id, onChange, ...props }) =>
 
   useEffect(() => {
     const { date, month, year } = value;
-    if (+date === 0 || +month === 0 || +year === 0) return onChange(undefined);
+    if (+date === 0 || +month === 0 || +year === 0) return onValueChange(undefined);
 
     const result = new Date(+year, +month - 1, +date);
-    onChange(result);
-  }, [onChange, value]);
+    onValueChange(result);
+  }, [onValueChange, value]);
 
   useEffect(() => {
     if (props.value == undefined) setValue({ date: "", month: "", year: "" });
@@ -155,7 +155,7 @@ const Component: React.FC<DateProps> = ({ children, id, onChange, ...props }) =>
         >
           <Calendar
             {...value}
-            onChange={(val, key) => {
+            onValueChange={(val, key) => {
               if (key === "date") setDate(val);
               if (key === "month") setMonth(val);
               if (key === "year") setYear(val);
@@ -169,7 +169,7 @@ const Component: React.FC<DateProps> = ({ children, id, onChange, ...props }) =>
 
 export { Component as Date };
 
-const Calendar: React.FC<CalendarProps> = ({ date, month, year, onChange }) => {
+const Calendar: React.FC<CalendarProps> = ({ date, month, year, onValueChange }) => {
   const [activeMonth, setActiveMonth] = useState(String(month === "" ? new Date().getMonth() + 1 : +month));
   const [textYear, setTextYear] = useState(() => String(year === "" ? new Date().getFullYear() : +year));
   const [{ days, months }] = useState(() => ({
@@ -190,7 +190,7 @@ const Calendar: React.FC<CalendarProps> = ({ date, month, year, onChange }) => {
     return year.padStart(4, "0");
   }
 
-  const handleChange = (val: string, key: keyof Omit<CalendarProps, "onChange">) => onChange(val, key);
+  const handleChange = (val: string, key: "date" | "month" | "year") => onValueChange(val, key);
 
   return (
     <Fragment>
@@ -329,11 +329,11 @@ function useMonthDates(month: string, year: string) {
 type DateProps = {
   value?: Date;
   children: string;
-  onChange(val?: Date): void;
-} & Omit<React.ComponentProps<"input">, "onChange" | "value">;
+  onValueChange(val?: Date): void;
+} & Omit<React.ComponentProps<"input">, "value">;
 
 type CalendarProps = {
-  onChange(val: string, key: "date" | "month" | "year"): void;
+  onValueChange(val: string, key: "date" | "month" | "year"): void;
 } & Record<"date" | "month" | "year", string>;
 
 type MonthDate = {

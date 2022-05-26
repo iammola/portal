@@ -2,7 +2,7 @@ import * as LabelPrimitive from "@radix-ui/react-label";
 import { useId, useState, useEffect } from "react";
 import { Cross2Icon, CheckIcon } from "@radix-ui/react-icons";
 
-export const Input: React.FC<InputProps> = ({ children, id, onChange, validators, ...props }) => {
+export const Input: React.FC<InputProps> = ({ children, id, onValueChange, validators, ...props }) => {
   const customId = useId();
   const [error, setError] = useState<string | null>(); // `string` - Error; `null` - No Error; `undefined` - Nothing
 
@@ -33,7 +33,7 @@ export const Input: React.FC<InputProps> = ({ children, id, onChange, validators
         type="text"
         id={id || customId}
         value={props.value ?? ""}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onValueChange(e.target.value)}
         className="inline-flex h-[45px] w-full items-center justify-center rounded bg-gray-3 px-2.5 text-sm text-gray-12 focus:outline-none focus:ring-2 focus:ring-gray-7 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:focus:ring-gray-dark-7"
       />
       {error && (
@@ -55,9 +55,9 @@ export const Input: React.FC<InputProps> = ({ children, id, onChange, validators
 type InputProps = {
   value?: string;
   children: string;
-  onChange(val: string): void;
+  onValueChange(val: string): void;
   validators?: Array<{
     message: string;
     test: RegExp | ((val: string) => boolean);
   }>;
-} & Omit<React.ComponentProps<"input">, "onChange" | "value">;
+} & Omit<React.ComponentProps<"input">, "value">;

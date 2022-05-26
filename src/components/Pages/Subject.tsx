@@ -5,17 +5,17 @@ export const DivisionSubjectFields: React.FC<DivisionSubjectFieldsProps> = ({ na
     <div className="space-y-4">
       <div className="flex w-full items-start justify-start gap-3">
         <div className="w-2/3">
-          <Input required value={name.long} onChange={(long) => updateDivision({ name: { ...name, long } })}>
+          <Input required value={name.long} onValueChange={(long) => updateDivision({ name: { ...name, long } })}>
             Name
           </Input>
         </div>
         <div className="w-1/3">
-          <Input required value={name.short} onChange={(short) => updateDivision({ name: { ...name, short } })}>
+          <Input required value={name.short} onValueChange={(short) => updateDivision({ name: { ...name, short } })}>
             Alias
           </Input>
         </div>
       </div>
-      <Users required value={teachers} onChange={(teachers) => updateDivision({ teachers })}>
+      <Users required value={teachers} onValueChange={(teachers) => updateDivision({ teachers })}>
         Teachers
       </Users>
     </div>

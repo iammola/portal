@@ -1,29 +1,29 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { useId, useState } from "react";
 
-export const Number: React.FC<NumberProps> = ({ children, id, onChange, ...props }) => {
+export const Number: React.FC<NumberProps> = ({ children, id, onValueChange, ...props }) => {
   const customId = useId();
   const [value, setValue] = useState(props.value ?? "");
 
   function handleChange(val: string) {
     // negative or empty
     if (/^-?$/.test(val)) {
-      onChange(0);
+      onValueChange(0);
       setValue(val);
     }
     // decimal
     else if (/\.$/.test(val)) {
       setValue(val.padStart(2, "0"));
-      onChange(val === "." ? 0 : +val);
+      onValueChange(val === "." ? 0 : +val);
     }
     // trailing 0
     else if (+val === +value) {
       setValue(val);
-      onChange(+val);
+      onValueChange(+val);
     }
     // number
     else if (!isNaN(+val)) {
-      onChange(+val);
+      onValueChange(+val);
       setValue(+val);
     }
   }
@@ -54,6 +54,6 @@ export const Number: React.FC<NumberProps> = ({ children, id, onChange, ...props
 type NumberProps = {
   value?: number;
   children: string;
-  onChange(val: number): void;
+  onValueChange(val: number): void;
   inputMode?: "numeric" | "decimal";
-} & Omit<React.ComponentProps<"input">, "onChange" | "value">;
+} & Omit<React.ComponentProps<"input">, "value">;
