@@ -115,12 +115,7 @@ const CreateTeacher: NextPage = () => {
                     </Select.Item>
                   ))}
                 </Select>
-                <Input
-                  required
-                  value={name.full}
-                  autoComplete="name"
-                  onValueChange={(full) => setName((name) => ({ ...name, full }))}
-                >
+                <Input required value={name.full} onValueChange={(full) => setName((name) => ({ ...name, full }))}>
                   Full name
                 </Input>
               </div>
@@ -132,34 +127,20 @@ const CreateTeacher: NextPage = () => {
                 >
                   Initials
                 </Input>
-                <Input
-                  required
-                  value={name.first}
-                  autoComplete="given-name"
-                  onValueChange={(first) => setName((name) => ({ ...name, first }))}
-                >
+                <Input required value={name.first} onValueChange={(first) => setName((name) => ({ ...name, first }))}>
                   First name
                 </Input>
-                <Input
-                  required
-                  value={name.last}
-                  autoComplete="family-name"
-                  onValueChange={(last) => setName((name) => ({ ...name, last }))}
-                >
+                <Input required value={name.last} onValueChange={(last) => setName((name) => ({ ...name, last }))}>
                   Last name
                 </Input>
               </div>
               <div className="w-full sm:w-[75%]">
-                <Input
-                  value={name.other}
-                  autoComplete="additional-name"
-                  onValueChange={(other) => setName((name) => ({ ...name, other }))}
-                >
+                <Input value={name.other} onValueChange={(other) => setName((name) => ({ ...name, other }))}>
                   Other name(s)
                 </Input>
               </div>
               <div className="grid gap-6 xs:grid-cols-[max-content_minmax(max-content,200px)]">
-                <Date value={dob} onValueChange={setDob} autoComplete="bday">
+                <Date value={dob} onValueChange={setDob}>
                   Date of Birth
                 </Date>
                 <Select required label="Gender" value={gender} onValueChange={setGender}>
