@@ -41,14 +41,15 @@ const CreateTeacher: NextPage = () => {
   const [password, setPassword] = useState("");
   const [classes, setClasses] = useState<string[]>();
   const [gender, setGender] = useState(teacherGenders[0]);
-  const [name, setName] = useState<Schemas.Teacher.Schema["name"]>({
+  const [__type] = useState("teacher" as Schemas.Staff.Record["__type"]);
+  const [name, setName] = useState<Schemas.Staff.Base["name"]>({
     full: "",
     last: "",
     first: "",
     initials: "",
     title: teacherTitles[0],
   });
-  const [contact, setContact] = useState<Schemas.Teacher.Schema["contact"]>({ email: { primary: "" } });
+  const [contact, setContact] = useState<Schemas.Staff.Base["contact"]>({ email: { primary: "" } });
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -57,7 +58,7 @@ const CreateTeacher: NextPage = () => {
     try {
       setIsLoading(true);
       toastID = toasts.add({ kind: "loading", description: "Processing request..." });
-      const body = { name, contact, dob, username, password, classes, images: {} };
+      const body = { __type, name, contact, dob, username, password, classes, images: {}, privileges: [] };
       const result = await fetchAPIEndpoint<API.Teacher.POST.Data, API.Teacher.POST.Body>("/api/teachers", {
         method: "POST",
         body: { ...body, gender: gender[0] },
@@ -218,25 +219,27 @@ const CreateTeacher: NextPage = () => {
               </div>
             </div>
           </section>
-          <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
-            <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
-              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Classes</h3>
-              <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
-            </div>
-            <div className="w-full min-w-0 space-y-7">
-              {classes === undefined ? (
-                <button
-                  type="button"
-                  onClick={() => setClasses([])}
-                  className="inline-flex w-full min-w-max max-w-[250px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
-                >
-                  Load Classes
-                </button>
-              ) : (
-                <ClassTeacher selected={classes} updateSelected={setClasses} />
-              )}
-            </div>
-          </section>
+          {__type === "teacher" && (
+            <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
+              <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
+                <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Classes</h3>
+                <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
+              </div>
+              <div className="w-full min-w-0 space-y-7">
+                {classes === undefined ? (
+                  <button
+                    type="button"
+                    onClick={() => setClasses([])}
+                    className="inline-flex w-full min-w-max max-w-[250px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
+                  >
+                    Load Classes
+                  </button>
+                ) : (
+                  <ClassTeacher selected={classes} updateSelected={setClasses} />
+                )}
+              </div>
+            </section>
+          )}
           <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
             <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
               <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Profile</h3>
