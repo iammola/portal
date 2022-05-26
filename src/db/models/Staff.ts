@@ -4,7 +4,7 @@ import { ModelNames } from "db";
 import { createUserSchema } from "db/schema/User";
 import { TeacherStaffSchema } from "db/schema/Staff";
 
-const StaffSchema = createUserSchema<Schemas.Staff.Record, Schemas.Staff.Model>({}, { discriminatorKey: "__type" });
+const StaffSchema = createUserSchema<Schemas.Staff.Base>({}, { discriminatorKey: "__type" });
 
 export const StaffModel = (mongoose.models[ModelNames.STAFF] ??
   mongoose.model(ModelNames.STAFF, StaffSchema)) as Schemas.Staff.Model;

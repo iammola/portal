@@ -4,7 +4,7 @@ import { parsePhoneNumber } from "awesome-phonenumber";
 import { ModelNames } from "db";
 import { generateSchoolMail, getImage, uploadImage } from "db/utils";
 
-export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose.Model<D>>(
+export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose.Model<D> = mongoose.Model<D>>(
   obj: Def<D>,
   options?: mongoose.SchemaOptions
 ) => {

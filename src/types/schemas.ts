@@ -288,10 +288,12 @@ declare global {
     }
 
     namespace Staff {
-      type Schema<T, P = never> = User.Base & {
+      type Base = User.Base;
+
+      type Schema<T, P = never> = {
         __type: T;
         privileges: P[];
-      };
+      } & Base;
 
       export type TeacherSchema = Schema<ModelNames.T_STAFF>;
 
