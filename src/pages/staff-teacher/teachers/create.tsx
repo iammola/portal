@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
 import { LoadingIcon } from "components/Icons";
-import { Date, Input, Password, Phone, Select, Textarea } from "components/Form";
+import { Date, Input, Password, Phone, RadioGroup, Select, Textarea } from "components/Form";
 
 import type { NextPage } from "next";
 
@@ -41,7 +41,7 @@ const CreateTeacher: NextPage = () => {
   const [password, setPassword] = useState("");
   const [classes, setClasses] = useState<string[]>();
   const [gender, setGender] = useState(teacherGenders[0]);
-  const [__type] = useState("teacher" as Schemas.Staff.Record["__type"]);
+  const [__type, setType] = useState("teacher" as Schemas.Staff.Record["__type"]);
   const [name, setName] = useState<Schemas.Staff.Base["name"]>({
     full: "",
     last: "",
@@ -219,6 +219,18 @@ const CreateTeacher: NextPage = () => {
               </div>
             </div>
           </section>
+          <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
+            <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
+              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Staff Type</h3>
+              <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
+            </div>
+            <div className="w-full min-w-0 space-y-7">
+              <RadioGroup value={__type} onValueChange={(v) => setType(v as typeof __type)}>
+                <RadioGroup.Item value="teacher">Teacher</RadioGroup.Item>
+              </RadioGroup>
+            </div>
+          </section>
+
           {__type === "teacher" && (
             <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
               <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
