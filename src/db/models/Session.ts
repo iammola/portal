@@ -1,7 +1,7 @@
 import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
-import { ThingName } from "db/schema/Thing";
+import { SessionName } from "db/schema/Session";
 
 const SessionSchema = new mongoose.Schema<Schemas.Session.Record, Schemas.Session.Model>({
   current: {
@@ -9,7 +9,7 @@ const SessionSchema = new mongoose.Schema<Schemas.Session.Record, Schemas.Sessio
     default: undefined,
   },
   name: {
-    type: ThingName(),
+    type: SessionName,
     required: [true, "Session name required"],
   },
 });

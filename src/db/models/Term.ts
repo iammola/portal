@@ -1,7 +1,7 @@
 import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
-import { ThingName } from "db/schema/Thing";
+import { TermName } from "db/schema/Term";
 
 const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>({
   current: {
@@ -9,7 +9,7 @@ const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>(
     default: undefined,
   },
   name: {
-    type: ThingName(),
+    type: TermName,
     required: [true, "Term name required"],
   },
   session: {

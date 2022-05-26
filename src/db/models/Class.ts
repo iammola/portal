@@ -1,11 +1,11 @@
 import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
-import { ThingName } from "db/schema/Thing";
+import { ClassName } from "db/schema/Class";
 
 const ClassSchema = new mongoose.Schema<Schemas.Class.Record, Schemas.Class.Model>({
   name: {
-    type: ThingName(true),
+    type: ClassName,
     required: [true, "Class name required"],
   },
   createdAt: {
