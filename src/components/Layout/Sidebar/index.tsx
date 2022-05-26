@@ -17,7 +17,7 @@ export const Sidebar: React.FC = () => {
     <Fragment>
       <aside
         className={cx(
-          "fixed inset-0 z-50 grid h-screen shrink-0 grid-rows-[max-content_minmax(0,_1fr)_repeat(2,max-content)] overflow-x-auto overflow-y-auto bg-gray-2 dark:bg-gray-dark-2 xs:max-w-[20rem] lg:relative",
+          "fixed inset-0 z-50 grid h-screen shrink-0 grid-rows-[max-content_minmax(0,_1fr)_repeat(2,max-content)] overflow-x-auto overflow-y-auto bg-gray-2 dark:bg-gray-dark-2 xs:max-w-[20rem] xl:relative",
           [isOpen, "w-screen", "w-0"]
         )}
       >
@@ -37,7 +37,7 @@ export const Sidebar: React.FC = () => {
         {isOpen && (
           <div
             onClick={() => setIsOpen(false)}
-            className="fixed right-0 top-0 z-[-1] hidden h-screen w-[calc(100vw-20rem)] bg-transparent backdrop-blur xs:block lg:hidden"
+            className="fixed right-0 top-0 z-[-1] hidden h-screen w-[calc(100vw-20rem)] bg-transparent backdrop-blur xs:block xl:hidden"
           />
         )}
       </aside>
