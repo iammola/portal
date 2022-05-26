@@ -5,11 +5,32 @@ import { useIsomorphicLayoutEffect } from "hooks";
 import { Checkbox, Select } from "components/Form";
 
 export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, updateTerm, ...props }) => {
-  // Fetch data from API
-  const terms: API.Term.GET.AllData = [];
+  const [terms, setTerms] = useState<Option[]>([]);
   const [classes, setClasses] = useState<Option[]>([]);
   const [subjects, setSubjects] = useState<SubjectOption[]>([]);
 
+  useSWR<API.Result<API.Term.GET.AllData>>("/api/terms", {
+    onSuccess(result) {
+      if (!result.success) return;
+
+      let activeTerm = "";
+      const terms = result.data
+        .map(({ session, terms }) =>
+          terms.map((term) => {
+            if (term.current) activeTerm = String(term._id);
+
+            return {
+              _id: term._id,
+              name: `${session.name.long} ${term.name.long} Term`,
+            };
+          })
+        )
+        .flat();
+
+      setTerms(terms);
+      updateTerm(activeTerm);
+    },
+  });
   useSWR<API.Result<API.Class.GET.AllData>>("/api/classes", {
     onSuccess(result) {
       if (!result.success) return;
@@ -63,7 +84,7 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
         <Select required label="Term" value={props.term} onValueChange={updateTerm}>
           {terms.map((item) => (
             <Select.Item key={String(item._id)} value={String(item._id)}>
-              {item.name.long}
+              {item.name}
             </Select.Item>
           ))}
         </Select>
