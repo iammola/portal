@@ -12,7 +12,7 @@ import { ParentModel, StaffModel, StudentModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function getUser(level: string, username: string) {
+async function getUser(level: string, username: string): Promise<User | null | undefined> {
   await connect();
 
   if (level === "student")
@@ -20,8 +20,8 @@ async function getUser(level: string, username: string) {
       .populate<Schemas.User.Virtuals>("password")
       .lean({ virtuals: ["password"] });
 
-  if (level === "teacher")
-    return await StaffModel.findByUsername(username, "password")
+  if (level === "staff")
+    return await StaffModel.findByUsername(username, "password __type")
       .populate<Schemas.User.Virtuals>("password")
       .lean({ virtuals: ["password"] });
 
@@ -38,7 +38,8 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
   if (!username) throw new Error("Username required");
 
   const user = await getUser(level, username);
-  if (user == null) throw new NotFoundError("User not found");
+  if (user === null) throw new NotFoundError("User not found");
+  if (user === undefined) throw new Error("Invalid user level");
 
   if (!comparePassword(password, user.password)) throw new Error("Invalid password");
 
@@ -56,8 +57,16 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
 
   setCookies(JWT_COOKIE_KEY, await exportSPKI(publicKey), options);
 
-  return [{ data: { token, expires, _id: user._id }, message: ReasonPhrases.OK }, StatusCodes.OK];
+  return [
+    {
+      message: ReasonPhrases.OK,
+      data: { token, expires, _id: user._id, level: level !== "staff" ? level : `${level}-${user.__type ?? ""}` },
+    },
+    StatusCodes.OK,
+  ];
 };
+
+type User = { _id: Schemas.ObjectId; __type?: string } & Pick<Schemas.User.Virtuals, "password">;
 
 export default async (req: NextApiRequest, res: NextApiResponse) =>
   routeWrapper<API.Auth.POST.Data>(req, res, handler, ["POST"]);

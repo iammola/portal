@@ -50,6 +50,7 @@ declare global {
         export type Data = {
           token: string;
           expires?: Date;
+          level: string;
           _id: Schemas.ObjectId;
         };
       }
