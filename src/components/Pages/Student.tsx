@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { useIsomorphicLayoutEffect } from "hooks";
 import { Checkbox, RadioGroup, Select } from "components/Form";
 
-export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, updateTerm, ...props }) => {
+export const AcademicRecord: React.FC<AcademicRecordProps> = ({ updateTerm, ...props }) => {
   const [terms, setTerms] = useState<Option[]>([]);
   const [classes, setClasses] = useState<Option[]>([]);
   const [subjects, setSubjects] = useState<SubjectOptions[]>([]);
@@ -119,8 +119,8 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
             <Checkbox
               key={item.name}
               required={item.mandatory}
+              disabled={item.mandatory}
               checked={item.mandatory || !!checked}
-              disabled={item.mandatory || disabled}
               onCheckedChange={(c) => baseCheckedChange(String(item._id), c as boolean)}
             >
               {item.name}
@@ -167,7 +167,6 @@ type SubjectOptions =
 type AcademicRecordProps = {
   term: string;
   class: string;
-  disabled: boolean;
   subjects: string[];
   updateTerm(value: string): void;
   updateClass(value: string): void;

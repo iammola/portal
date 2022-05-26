@@ -52,30 +52,16 @@ const CreateClass: NextPage = () => {
         <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Class</h3>
         <form onSubmit={(e) => void handleSubmit(e)} className="w-full max-w-xs space-y-10">
           <div className="space-y-7">
-            <Input
-              required
-              value={name.long}
-              disabled={isLoading}
-              onChange={(long) => setName((name) => ({ ...name, long }))}
-            >
+            <Input required value={name.long} onChange={(long) => setName((name) => ({ ...name, long }))}>
               Name
             </Input>
-            <Input
-              required
-              value={name.short}
-              disabled={isLoading}
-              onChange={(short) => setName((name) => ({ ...name, short }))}
-            >
+            <Input required value={name.short} onChange={(short) => setName((name) => ({ ...name, short }))}>
               Alias
             </Input>
-            <Input
-              value={name.special}
-              disabled={isLoading}
-              onChange={(special) => setName((name) => ({ ...name, special }))}
-            >
+            <Input value={name.special} onChange={(special) => setName((name) => ({ ...name, special }))}>
               Special name
             </Input>
-            <Users value={teachers} disabled={isLoading} onChange={setTeachers}>
+            <Users value={teachers} onChange={setTeachers}>
               Teachers
             </Users>
           </div>
