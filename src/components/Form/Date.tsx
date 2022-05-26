@@ -144,7 +144,7 @@ const Component: React.FC<DateProps> = ({ children, id, onValueChange, ...props 
               autoComplete={props.autoComplete?.includes("bday") ? "bday-year" : undefined}
             />
           </div>
-          <PopoverPrimitive.Trigger className="rounded-full p-2.5 hover:bg-gray-5 dark:hover:bg-gray-dark-5">
+          <PopoverPrimitive.Trigger className="shrink-0 rounded-full p-2.5 hover:bg-gray-5 dark:hover:bg-gray-dark-5">
             <CalendarIcon />
           </PopoverPrimitive.Trigger>
         </PopoverPrimitive.Anchor>
