@@ -107,7 +107,7 @@ declare global {
       type Subject = {
         class: ObjectId;
         order: number;
-        mandatory?: true;
+        mandatory?: boolean;
       };
 
       type Schema<T extends ModelNames.B_SUBJECT | ModelNames.G_SUBJECT> = DocumentId & {
@@ -153,7 +153,7 @@ declare global {
 
     namespace Session {
       export type Schema = {
-        current?: true;
+        current?: boolean;
         name: ThingName;
       } & DocumentId;
 
@@ -175,7 +175,7 @@ declare global {
 
     namespace Term {
       export type Schema = {
-        current?: true;
+        current?: boolean;
         name: ThingName;
         session: ObjectId;
         end?: Date;

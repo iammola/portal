@@ -97,7 +97,7 @@ type Option = {
 };
 
 type SubjectOption = {
-  mandatory?: true;
+  mandatory?: boolean;
 } & Option;
 
 type AcademicRecordProps = {
