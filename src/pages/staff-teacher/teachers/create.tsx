@@ -90,7 +90,7 @@ const CreateTeacher: NextPage = () => {
         <title>Create a Teacher Account &middot; Portal</title>
       </Head>
       <div className="flex w-full grow flex-col items-center justify-center gap-8 py-10 px-8">
-        <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Teacher Account</h3>
+        <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Staff Account</h3>
         <form
           onSubmit={(e) => void handleSubmit(e)}
           className="flex w-full grow flex-col items-center justify-start gap-7"
@@ -269,7 +269,7 @@ const CreateTeacher: NextPage = () => {
                 Processing...
               </Fragment>
             ) : (
-              "Create Teacher"
+              "Create Staff"
             )}
           </button>
         </form>
