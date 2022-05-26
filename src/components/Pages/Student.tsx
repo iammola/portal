@@ -138,7 +138,7 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
                     {div.name}
                   </RadioGroup.Item>
                 ))}
-                {!item.mandatory && <RadioGroup.Item value="none">None</RadioGroup.Item>}
+                {checked && !item.mandatory && <RadioGroup.Item value="none">None</RadioGroup.Item>}
               </RadioGroup>
             </div>
           );
