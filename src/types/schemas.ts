@@ -78,7 +78,7 @@ declare global {
 
       export type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
 
-      type PopulatedTeachers = { teachers: Teacher.Schema[] };
+      type PopulatedTeachers = { teachers: Staff.TeacherSchema[] };
 
       export type Model = {
         /** Find a class by any of it's long, short or special names */
@@ -287,12 +287,23 @@ declare global {
       export type Model = Mongoose.Model<Schema, unknown, unknown, User.Virtuals> & User.StaticMethods<Schema>;
     }
 
-    namespace Teacher {
-      export type Schema = User.Base;
+    namespace Staff {
+      type Schema<T, P = never> = User.Base & {
+        __type: T;
+        privileges: P[];
+      };
 
-      export type Record<V extends boolean | keyof User.Virtuals = false> = ModelRecord<Schema, User.Virtuals, V>;
+      export type TeacherSchema = Schema<ModelNames.T_STAFF>;
 
-      export type Model = Mongoose.Model<Schema, unknown, unknown, User.Virtuals> & User.StaticMethods<Schema>;
+      export type Model = Mongoose.Model<TeacherSchema> & User.StaticMethods<TeacherSchema>;
+      export type Record<V extends boolean | keyof User.Virtuals = false> = ModelRecord<
+        TeacherRecord,
+        User.Virtuals,
+        V
+      >;
+
+      export type TeacherModel = Mongoose.Model<TeacherSchema> & User.StaticMethods<TeacherSchema>;
+      export type TeacherRecord = ModelRecord<TeacherSchema>;
     }
 
     namespace Parent {

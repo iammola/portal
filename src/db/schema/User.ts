@@ -4,42 +4,48 @@ import { parsePhoneNumber } from "awesome-phonenumber";
 import { ModelNames } from "db";
 import { generateSchoolMail, getImage, uploadImage } from "db/utils";
 
-export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose.Model<D>>(obj: Def<D>) => {
-  const schema = new mongoose.Schema<Schemas.User.Base, M>({
-    ...obj,
-    name: {
-      type: UserName,
-      required: [true, "Name required"],
+export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose.Model<D>>(
+  obj: Def<D>,
+  options?: mongoose.SchemaOptions
+) => {
+  const schema = new mongoose.Schema<Schemas.User.Base, M>(
+    {
+      ...obj,
+      name: {
+        type: UserName,
+        required: [true, "Name required"],
+      },
+      username: {
+        unique: true,
+        immutable: true,
+        ...userSubName("User name required"),
+      },
+      contact: {
+        type: UserContact,
+        required: [true, "Contact required"],
+      },
+      gender: {
+        type: String,
+        required: [true, "Gender required"],
+      },
+      schoolMail: {
+        trim: true,
+        type: String,
+        unique: true,
+        lowercase: true,
+        immutable: true,
+      },
+      dob: {
+        type: Date,
+        default: undefined,
+      },
+      images: {
+        type: UserImages,
+        default: undefined,
+      },
     },
-    username: {
-      unique: true,
-      immutable: true,
-      ...userSubName("User name required"),
-    },
-    contact: {
-      type: UserContact,
-      required: [true, "Contact required"],
-    },
-    gender: {
-      type: String,
-      required: [true, "Gender required"],
-    },
-    schoolMail: {
-      trim: true,
-      type: String,
-      unique: true,
-      lowercase: true,
-      immutable: true,
-    },
-    dob: {
-      type: Date,
-      default: undefined,
-    },
-    images: {
-      type: UserImages,
-      default: undefined,
-    },
-  });
+    options
+  );
 
   schema.pre("save", function (next) {
     this.set("schoolMail", generateSchoolMail(this.username));

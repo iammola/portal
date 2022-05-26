@@ -14,7 +14,7 @@ const ClassSchema = new mongoose.Schema<Schemas.Class.Record, Schemas.Class.Mode
   },
   teachers: {
     default: undefined,
-    ref: ModelNames.TEACHER,
+    ref: ModelNames.STAFF,
     type: [mongoose.Schema.Types.ObjectId],
   },
   order: {

@@ -8,7 +8,7 @@ import { connect } from "db";
 import { comparePassword } from "db/utils";
 import { JWT_ALG, JWT_COOKIE_KEY } from "utils";
 import { NotFoundError, routeWrapper } from "api";
-import { TeacherModel, ParentModel, StudentModel } from "db/models";
+import { ParentModel, StaffModel, StudentModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -21,7 +21,7 @@ async function getUser(level: string, username: string) {
       .lean({ virtuals: ["password"] });
 
   if (level === "teacher")
-    return await TeacherModel.findByUsername(username, "password")
+    return await StaffModel.findByUsername(username, "password")
       .populate<Schemas.User.Virtuals>("password")
       .lean({ virtuals: ["password"] });
 

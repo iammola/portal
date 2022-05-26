@@ -3,7 +3,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { routeWrapper } from "api";
 import { createUser } from "db/utils";
-import { ClassModel, StudentModel, TeacherModel, ParentModel } from "db/models";
+import { ClassModel, StudentModel, StaffModel, ParentModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -19,7 +19,7 @@ async function POST(body: unknown): API.HandlerResponse<API.Teacher.POST.Data> {
 
   const check = await Promise.all([
     StudentModel.exists({ username: data.username }),
-    TeacherModel.exists({ username: data.username }),
+    StaffModel.exists({ username: data.username }),
     ParentModel.exists({ username: data.username }),
   ]);
 
