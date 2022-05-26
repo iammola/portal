@@ -85,16 +85,17 @@ export const Users: React.FC<UsersProps> = ({ children, id, onValueChange, ...pr
 };
 
 const User: React.FC<{ username: string }> = ({ username }) => {
-  const [user, setUser] = useState<Record<"name" | "image" | "initials", string> | null | false>();
   const { data, error } = useSWR<API.Result<API.User.GET.Data>, unknown>(`/api/${username}`);
+  const [user, setUser] = useState<Record<"name" | "image" | "initials" | "level", string> | null | false>();
 
   useIsomorphicLayoutEffect(() => {
     if (error) return setUser(false);
     if (!data) return setUser(undefined);
 
     if (data.success) {
-      const { name, images } = data.data;
+      const { name, images, level } = data.data;
       return setUser({
+        level,
         name: name.full,
         initials: name.initials,
         image: images?.avatar ?? "",
@@ -137,7 +138,9 @@ const User: React.FC<{ username: string }> = ({ username }) => {
             <Avatar {...user} src={user.image} />
             <div className="flex flex-col items-start justify-center gap-1">
               <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{user.name}</span>
-              <span className="text-xs text-gray-11 dark:text-gray-dark-11">{username}</span>
+              <span className="text-xs text-gray-11 dark:text-gray-dark-11">
+                {username} - ${user.level}
+              </span>
             </div>
           </Fragment>
         )}
