@@ -17,6 +17,20 @@ const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>(
     type: mongoose.Schema.Types.ObjectId,
     required: [true, "Term session required"],
   },
+  start: {
+    type: Date,
+    required: [true, "Term start date required"],
+  },
+  end: {
+    type: Date,
+    default: undefined,
+    validate: {
+      message: "End date must be after start date",
+      validator: function (this: Schemas.Term.Record, end?: Date) {
+        return end === undefined ? true : new Date(end).getTime() > new Date(this.start).getTime();
+      },
+    },
+  },
 });
 
 TermSchema.static(

@@ -178,6 +178,8 @@ declare global {
         current?: true;
         name: ThingName;
         session: ObjectId;
+        end?: Date;
+        start: Date;
       } & DocumentId;
 
       export type Record = ModelRecord<Schema>;

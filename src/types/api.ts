@@ -139,30 +139,33 @@ declare global {
       namespace POST {
         export type Data = CreateData;
 
-        export type Body = Omit<Schemas.Session.Record<true>, "terms">;
+        export type Body = Pick<Schemas.Session.Record, "name">;
+
+        namespace Terms {
+          export type Data = CreateData;
+
+          export type Body = Omit<Schemas.Term.Record, "_id" | "session" | "end">;
+        }
       }
 
       namespace GET {
         export type AllData = Data[];
 
-        export type Data = Schemas.Session.Record;
+        export type Data = Schemas.Session.Record<"termsCount">;
 
         export type Terms = Pick<Schemas.Session.Record<true>, "_id" | "terms">;
       }
     }
 
     namespace Term {
-      namespace POST {
-        export type Data = CreateData;
-
-        export type Body = Schemas.Term.Record;
-      }
-
       namespace GET {
-        export type AllData = Array<Omit<Schemas.Term.Record, "session">>;
+        export type AllData = Array<{
+          session: Pick<Schemas.Session.Record, "name">;
+          terms: Array<Omit<Schemas.Term.Record, "session">>;
+        }>;
 
         export type Data = {
-          session: Omit<Schemas.Session.Record<true>, "terms">;
+          session: Pick<Schemas.Session.Record, "name">;
         } & Omit<Schemas.Term.Record, "session">;
       }
     }
