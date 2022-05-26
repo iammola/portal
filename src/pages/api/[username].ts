@@ -17,7 +17,7 @@ const handler: API.Handler<API.User.GET.Data> = async (req) => {
 };
 
 async function GETUser(username: string): API.HandlerResponse<API.User.GET.Data> {
-  const args = [username, "name.full name.initials images.avatar"] as const;
+  const args = [username, "name.full name.initials images.avatar __type"] as const;
 
   const result = await Promise.all([
     StudentModel.findByUsername(...args).lean(),
@@ -25,7 +25,17 @@ async function GETUser(username: string): API.HandlerResponse<API.User.GET.Data>
     ParentModel.findByUsername(...args).lean(),
   ]);
 
-  const user = result.filter(Boolean)[0];
+  const levels = ["student", "staff", "parent"];
+  const user = result.reduce<(API.User.GET.Data & { __type?: string }) | null>((acc, user, idx) => {
+    if (user == null) return acc;
+
+    const { __type, ...cur } = user as unknown as API.User.GET.Data & { __type?: string };
+    return {
+      ...cur,
+      level: __type ? `Staff (${__type})` : levels[idx],
+    };
+  }, null);
+
   if (user == null) throw new NotFoundError("A user with the specified username does not exist");
 
   return [{ data: user, message: ReasonPhrases.OK }, StatusCodes.OK];

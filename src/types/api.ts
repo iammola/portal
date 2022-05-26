@@ -227,6 +227,7 @@ declare global {
     namespace User {
       namespace GET {
         export type Data = {
+          level: string;
           images?: Pick<NonNullable<Schemas.User.Base["images"]>, "avatar">;
           name: Pick<Schemas.User.Base["name"], "full" | "initials">;
         };
