@@ -4,8 +4,8 @@ import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { Cross2Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 
 import { cx } from "utils";
+import { useOnline } from "hooks";
 import { Avatar } from "components";
-import { useIsomorphicLayoutEffect, useOnline } from "hooks";
 
 import { Menu } from "./Menu";
 
@@ -13,27 +13,19 @@ export const Sidebar: React.FC = () => {
   const { online } = useOnline();
   const [isOpen, setIsOpen] = useState(false);
 
-  useIsomorphicLayoutEffect(() => {
-    const handleResize = () => setIsOpen(matchMedia("(min-width: 1024px)").matches);
-
-    handleResize();
-    addEventListener("resize", handleResize);
-    return () => removeEventListener("resize", handleResize);
-  }, []);
-
   return (
     <Fragment>
       <aside
         className={cx(
-          "fixed inset-0 z-50 grid h-screen w-screen shrink-0 grid-rows-[max-content_minmax(0,_1fr)_repeat(2,max-content)] overflow-x-auto overflow-y-auto bg-gray-2 dark:bg-gray-dark-2 xs:max-w-[20rem] lg:relative lg:grid-rows-[minmax(0,_1fr)_repeat(2,max-content)]",
-          [!isOpen, "w-0"]
+          "fixed inset-0 z-50 grid h-screen shrink-0 grid-rows-[max-content_minmax(0,_1fr)_repeat(2,max-content)] overflow-x-auto overflow-y-auto bg-gray-2 dark:bg-gray-dark-2 xs:max-w-[20rem] lg:relative",
+          [isOpen, "w-screen", "w-0"]
         )}
       >
         {isOpen && (
           <button
             type="button"
             onClick={() => setIsOpen(false)}
-            className="m-3 inline-flex items-center gap-2 justify-self-end rounded-full bg-gray-3 px-4 py-2 text-xs tracking-wide text-gray-12 shadow-md hover:bg-gray-4 focus:outline-none active:bg-gray-5  dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:hover:bg-gray-dark-4 dark:active:bg-gray-dark-5 lg:hidden"
+            className="m-3 inline-flex items-center gap-2 justify-self-end rounded-full bg-gray-3 px-4 py-2 text-xs tracking-wide text-gray-12 shadow-md hover:bg-gray-4 focus:outline-none active:bg-gray-5  dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:hover:bg-gray-dark-4 dark:active:bg-gray-dark-5"
           >
             Close
             <Cross2Icon />
