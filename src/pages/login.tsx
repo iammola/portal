@@ -17,7 +17,7 @@ const Login: NextPage = () => {
   const [levels] = useState(() => [
     { value: "student", emoji: "👨‍🎓", text: "Student" },
     { value: "parent", emoji: "👨‍👩‍👦", text: "Parent" },
-    { value: "teacher", emoji: "👨‍🏫", text: "Teacher" },
+    { value: "staff", emoji: "👨‍🏫", xt: "Staff" },
   ]);
 
   const [username, setUsername] = useState("");
@@ -39,7 +39,7 @@ const Login: NextPage = () => {
 
       toasts.remove(toastID);
       if (result.success) {
-        const { _id, token, expires } = result.data;
+        const { _id, expires, level, token } = result.data;
         const options = {
           path: "/",
           secure: true,

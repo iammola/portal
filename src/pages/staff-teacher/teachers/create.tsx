@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
 import { LoadingIcon } from "components/Icons";
-import { Date, Input, Password, Phone, Select, Textarea } from "components/Form";
+import { Date, Input, Password, Phone, RadioGroup, Select, Textarea } from "components/Form";
 
 import type { NextPage } from "next";
 
@@ -41,14 +41,15 @@ const CreateTeacher: NextPage = () => {
   const [password, setPassword] = useState("");
   const [classes, setClasses] = useState<string[]>();
   const [gender, setGender] = useState(teacherGenders[0]);
-  const [name, setName] = useState<Schemas.Teacher.Schema["name"]>({
+  const [__type, setType] = useState("teacher" as Schemas.Staff.Record["__type"]);
+  const [name, setName] = useState<Schemas.Staff.Base["name"]>({
     full: "",
     last: "",
     first: "",
     initials: "",
     title: teacherTitles[0],
   });
-  const [contact, setContact] = useState<Schemas.Teacher.Schema["contact"]>({ email: { primary: "" } });
+  const [contact, setContact] = useState<Schemas.Staff.Base["contact"]>({ email: { primary: "" } });
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -57,7 +58,7 @@ const CreateTeacher: NextPage = () => {
     try {
       setIsLoading(true);
       toastID = toasts.add({ kind: "loading", description: "Processing request..." });
-      const body = { name, contact, dob, username, password, classes, images: {} };
+      const body = { __type, name, contact, dob, username, password, classes, images: {}, privileges: [] };
       const result = await fetchAPIEndpoint<API.Teacher.POST.Data, API.Teacher.POST.Body>("/api/teachers", {
         method: "POST",
         body: { ...body, gender: gender[0] },
@@ -89,7 +90,7 @@ const CreateTeacher: NextPage = () => {
         <title>Create a Teacher Account &middot; Portal</title>
       </Head>
       <div className="flex w-full grow flex-col items-center justify-center gap-8 py-10 px-8">
-        <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Teacher Account</h3>
+        <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Staff Account</h3>
         <form
           onSubmit={(e) => void handleSubmit(e)}
           className="flex w-full grow flex-col items-center justify-start gap-7"
@@ -220,23 +221,37 @@ const CreateTeacher: NextPage = () => {
           </section>
           <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
             <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
-              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Classes</h3>
+              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Staff Type</h3>
               <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
             </div>
             <div className="w-full min-w-0 space-y-7">
-              {classes === undefined ? (
-                <button
-                  type="button"
-                  onClick={() => setClasses([])}
-                  className="inline-flex w-full min-w-max max-w-[250px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
-                >
-                  Load Classes
-                </button>
-              ) : (
-                <ClassTeacher selected={classes} updateSelected={setClasses} />
-              )}
+              <RadioGroup value={__type} onValueChange={(v) => setType(v as typeof __type)}>
+                <RadioGroup.Item value="teacher">Teacher</RadioGroup.Item>
+              </RadioGroup>
             </div>
           </section>
+
+          {__type === "teacher" && (
+            <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
+              <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
+                <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Classes</h3>
+                <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
+              </div>
+              <div className="w-full min-w-0 space-y-7">
+                {classes === undefined ? (
+                  <button
+                    type="button"
+                    onClick={() => setClasses([])}
+                    className="inline-flex w-full min-w-max max-w-[250px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
+                  >
+                    Load Classes
+                  </button>
+                ) : (
+                  <ClassTeacher selected={classes} updateSelected={setClasses} />
+                )}
+              </div>
+            </section>
+          )}
           <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
             <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
               <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Profile</h3>
@@ -266,7 +281,7 @@ const CreateTeacher: NextPage = () => {
                 Processing...
               </Fragment>
             ) : (
-              "Create Teacher"
+              "Create Staff"
             )}
           </button>
         </form>

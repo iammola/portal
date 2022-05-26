@@ -1,7 +1,7 @@
 import { ClientSession, startSession } from "mongoose";
 
 import { connect } from "db";
-import { AuthModel, ParentModel, StudentModel, TeacherModel } from "db/models";
+import { AuthModel, ParentModel, StudentModel, TeacherStaffModel } from "db/models";
 
 /**
  * It creates a user of type T, with the given `body` and calls `sessionCallback` with the session and the user's `_id` if it's defined
@@ -26,7 +26,7 @@ export async function createUser<T extends User, B extends { password: string }>
 
     if (type === "parent") [doc] = await ParentModel.create([obj], opts);
     if (type === "student") [doc] = await StudentModel.create([obj], opts);
-    if (type === "teacher") [doc] = await TeacherModel.create([obj], opts);
+    if (type === "staff-teacher") [doc] = await TeacherStaffModel.create([obj], opts);
 
     const { _id, schoolMail } = doc ?? {};
     await Promise.all([AuthModel.create([{ password, userId: _id }], opts), sessionCallback?.(session, _id)]);
@@ -48,4 +48,4 @@ export function generateSchoolMail(username: string) {
   return `${username}@${DOMAIN}`;
 }
 
-type User = "parent" | "student" | "teacher";
+type User = "parent" | "student" | "staff-teacher";

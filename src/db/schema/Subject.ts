@@ -26,7 +26,7 @@ export const BaseSubjectSchema = new mongoose.Schema<Schemas.Subject.BaseRecord>
   },
   teachers: {
     default: undefined,
-    ref: ModelNames.TEACHER,
+    ref: ModelNames.STAFF,
     type: [mongoose.Schema.Types.ObjectId],
   },
 });

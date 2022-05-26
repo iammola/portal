@@ -2,7 +2,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { routeWrapper, NotFoundError } from "api";
-import { ParentModel, StudentModel, TeacherModel } from "db/models";
+import { ParentModel, StudentModel, StaffModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -21,7 +21,7 @@ async function GETUser(username: string): API.HandlerResponse<API.User.GET.Data>
 
   const result = await Promise.all([
     StudentModel.findByUsername(...args).lean(),
-    TeacherModel.findByUsername(...args).lean(),
+    StaffModel.findByUsername(...args).lean(),
     ParentModel.findByUsername(...args).lean(),
   ]);
 

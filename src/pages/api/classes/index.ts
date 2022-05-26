@@ -2,7 +2,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { routeWrapper } from "api";
-import { ClassModel, TeacherModel } from "db/models";
+import { ClassModel, TeacherStaffModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -37,7 +37,7 @@ async function POST(body: unknown): API.HandlerResponse<API.Class.POST.Data> {
   if (checks[1] != null) throw new Error(`A class with alias ${name.short} already exists`);
   if (name.special && checks[2] != null) throw new Error(`A class with special name ${name.special} already exists`);
 
-  const teacherIDs = await TeacherModel.findByUsername(teachers, "_id").lean();
+  const teacherIDs = await TeacherStaffModel.findByUsername(teachers, "_id").lean();
   const { _id, createdAt } = await ClassModel.create({
     name,
     teachers: teacherIDs.map((t) => t._id),
