@@ -2,7 +2,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { routeWrapper } from "api";
-import { BaseSubjectModel, ClassModel, GroupSubjectModel, StaffModel } from "db/models";
+import { BaseSubjectModel, ClassModel, GroupSubjectModel, TeacherStaffModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -22,7 +22,7 @@ async function POST(body: unknown): API.HandlerResponse<API.Subject.POST.Data> {
 
   const [classExists, teacherIds] = await Promise.all([
     ClassModel.exists({ _id: data.class }),
-    StaffModel.findByUsername(teachers, "username").lean(),
+    TeacherStaffModel.findByUsername(teachers, "username").lean(),
   ]);
 
   if (classExists == null) throw new Error("Specified class does not exists");
