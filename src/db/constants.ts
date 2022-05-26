@@ -11,7 +11,8 @@ export enum ModelNames {
 
   STUDENT = "Student",
 
-  TEACHER = "Teacher",
+  STAFF = "staff",
+  T_STAFF = "teacher",
 
   SUBJECT = "Subject",
   B_SUBJECT = "base",
