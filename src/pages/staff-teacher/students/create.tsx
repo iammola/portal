@@ -127,7 +127,7 @@ const CreateStudent: NextPage = () => {
       <Head>
         <title>Create a Student Account &middot; Portal</title>
       </Head>
-      <div className="flex w-full grow flex-col items-center justify-center gap-8 py-10 px-8">
+      <div className="mx-auto flex w-full grow flex-col items-center justify-center gap-8 py-10 px-8 xl:max-w-5xl">
         <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Student Account</h3>
         <form
           onSubmit={(e) => void handleSubmit(e)}
