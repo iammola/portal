@@ -26,7 +26,7 @@ async function GET(): API.HandlerResponse<API.Term.GET.AllData> {
       ...acc,
       [key]: {
         ...(acc[key] ?? { session }),
-        terms: [...acc[key].terms, cur],
+        terms: [...(acc[key]?.terms ?? []), cur],
       },
     };
   }, {} as Record<string, API.Term.GET.AllData[number]>);
