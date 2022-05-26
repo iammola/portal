@@ -338,12 +338,12 @@ const CreateStudent: NextPage = () => {
             </div>
             <div className="w-full min-w-0 space-y-7">
               <div className="w-full sm:w-2/3 lg:w-1/2 xl:w-2/5">
-                <Input required value={username} onValueChange={setUsername}>
+                <Input required value={username} onValueChange={setUsername} autoComplete="off">
                   Username
                 </Input>
               </div>
               <div className="w-full sm:w-2/3 lg:w-1/2 xl:w-2/5">
-                <Password required value={password} onValueChange={setPassword}>
+                <Password required value={password} onValueChange={setPassword} autoComplete="new-password">
                   Password
                 </Password>
               </div>
