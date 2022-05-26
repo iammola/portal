@@ -129,7 +129,7 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ disabled, update
             <div key={item.name} className="w-full space-y-1.5">
               <span className="text-xs font-medium text-gray-11 dark:text-gray-dark-11">{item.name}</span>
               <RadioGroup
-                value={checked}
+                value={checked ?? ""}
                 required={item.mandatory}
                 onValueChange={(value) => groupCheckedChange(value, checked)}
               >
