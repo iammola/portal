@@ -159,7 +159,10 @@ declare global {
 
     namespace Term {
       namespace GET {
-        export type AllData = Array<Omit<Schemas.Term.Record, "session">>;
+        export type AllData = Array<{
+          session: Pick<Schemas.Session.Record, "name">;
+          terms: Array<Omit<Schemas.Term.Record, "session">>;
+        }>;
 
         export type Data = {
           session: Omit<Schemas.Session.Record<true>, "terms">;
