@@ -1,4 +1,5 @@
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
+import { add } from "date-fns";
 import { Fragment, useState } from "react";
 import useSWR from "swr";
 import Head from "next/head";
@@ -21,7 +22,7 @@ const CreateTerm: NextPage = () => {
 
   const [session, setSession] = useState("");
   const [name, setName] = useState({ long: "", short: "" });
-  const [start, setStart] = useState<Date | undefined>(new Date());
+  const [start, setStart] = useState<Date | undefined>(add(new Date(), { months: 1 }));
 
   const [sessions, setSessions] = useState<Array<Record<"_id" | "name", string>>>([]);
 
