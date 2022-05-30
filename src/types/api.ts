@@ -145,7 +145,9 @@ declare global {
         namespace Terms {
           export type Data = CreateData;
 
-          export type Body = Omit<Schemas.Term.Record, "_id" | "session" | "end">;
+          export type Body = {
+            session?: Pick<Schemas.Session.Record, "name">;
+          } & Omit<Schemas.Term.Record, "_id" | "session">;
         }
       }
 
