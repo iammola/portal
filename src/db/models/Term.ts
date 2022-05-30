@@ -29,6 +29,13 @@ const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>(
   },
 });
 
+TermSchema.virtual("current").get(function () {
+  const start = new Date(this.start).getTime();
+  const end = new Date(this.end).getTime();
+
+  return Date.now() >= start && Date.now() <= end;
+});
+
 TermSchema.static(
   "findCurrent",
   function (...args: [mongoose.ProjectionType<Schemas.Term.Record>?, mongoose.QueryOptions?]) {

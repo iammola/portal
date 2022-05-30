@@ -180,7 +180,11 @@ declare global {
         start: Date;
       } & DocumentId;
 
-      export type Record = ModelRecord<Schema>;
+      type Virtuals = {
+        current: boolean;
+      };
+
+      export type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
 
       export type Model = {
         /** Find the term record where `{ current: true }` */
