@@ -31,7 +31,7 @@ export async function routeWrapper<T extends object>(
         /*  */
       }
 
-      data = (await routeHandler(req, res)) as API.RouteResponse<T>;
+      data = (await routeHandler(req as never, res)) as API.RouteResponse<T>;
       if (data) data[0] = { ...data[0], success: true } as API.RouteResponse<T>[0];
     }
   } catch (error: unknown) {
