@@ -3,7 +3,7 @@ import { add, format, isAfter } from "date-fns";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { routeWrapper } from "api";
+import { NotFoundError, routeWrapper } from "api";
 import { SessionModel, TermModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -20,6 +20,8 @@ async function GET(sessionId: unknown): API.HandlerResponse<API.Session.GET.Term
   const data = await SessionModel.findById(sessionId, "terms")
     .populate<Pick<Schemas.Session.Virtuals, "terms">>("terms")
     .lean();
+
+  if (data === null) throw new NotFoundError("Session does not exist");
 
   return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
