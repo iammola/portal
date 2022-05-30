@@ -3,27 +3,30 @@ import * as mongoose from "mongoose";
 import { ModelNames } from "db";
 import { ClassName } from "db/schema/Class";
 
-const ClassSchema = new mongoose.Schema<Schemas.Class.Record, Schemas.Class.Model>({
-  name: {
-    type: ClassName,
-    required: [true, "Class name required"],
+const ClassSchema = new mongoose.Schema<Schemas.Class.Record, Schemas.Class.Model>(
+  {
+    name: {
+      type: ClassName,
+      required: [true, "Class name required"],
+    },
+    createdAt: {
+      type: Date,
+      default: new Date(),
+    },
+    teachers: {
+      default: undefined,
+      ref: ModelNames.STAFF,
+      type: [mongoose.Schema.Types.ObjectId],
+    },
+    order: {
+      type: Number,
+      unique: true,
+      required: true,
+      min: [1, "Order cannot be less than 1"],
+    },
   },
-  createdAt: {
-    type: Date,
-    default: new Date(),
-  },
-  teachers: {
-    default: undefined,
-    ref: ModelNames.STAFF,
-    type: [mongoose.Schema.Types.ObjectId],
-  },
-  order: {
-    type: Number,
-    unique: true,
-    required: true,
-    min: [1, "Order cannot be less than 1"],
-  },
-});
+  { versionKey: false }
+);
 
 ClassSchema.virtual("subjectsCount", {
   count: true,

@@ -19,7 +19,7 @@ const SubjectSchema = new mongoose.Schema<Schemas.Subject.Record>(
       min: [1, "Order cannot be less than 1"],
     },
   },
-  { discriminatorKey: "__type" }
+  { discriminatorKey: "__type", versionKey: false }
 );
 
 export const SubjectModel = (mongoose.models[ModelNames.SUBJECT] ??
