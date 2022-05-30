@@ -15,7 +15,7 @@ const handler: API.Handler<API.Session.GET.AllData> = async (req) => {
 
 async function GET(): API.HandlerResponse<API.Session.GET.AllData> {
   const [current, data] = await Promise.all([
-    SessionModel.findCurrent("_id").lean(),
+    SessionModel.findCurrent("_id"),
     SessionModel.find({})
       .populate<Pick<Schemas.Session.Virtuals, "termsCount">>("termsCount")
       .lean({ virtuals: ["termsCount"] }),
