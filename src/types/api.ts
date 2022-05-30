@@ -157,7 +157,7 @@ declare global {
           current: boolean;
         } & Schemas.Session.Record<"termsCount">;
 
-        export type Terms = Pick<Schemas.Session.Record<true>, "_id" | "terms"> | null;
+        export type Terms = Pick<Schemas.Session.Record<true>, "_id" | "terms">;
       }
     }
 
