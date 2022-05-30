@@ -9,28 +9,26 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Teacher.POST.Data> = async (req) => {
   await connect();
-  if (req.method === "POST") return POST(req.body);
+  if (req.method === "POST") return POST(req.body as API.Teacher.POST.Body);
 
   return null;
 };
 
-async function POST(body: unknown): API.HandlerResponse<API.Teacher.POST.Data> {
-  const { classes = [], __type, ...data } = JSON.parse(body as string) as API.Teacher.POST.Body;
-
+async function POST({ classes, __type, ...body }: API.Teacher.POST.Body): API.HandlerResponse<API.Teacher.POST.Data> {
   const check = await Promise.all([
-    StudentModel.exists({ username: data.username }),
-    StaffModel.exists({ username: data.username }),
-    ParentModel.exists({ username: data.username }),
+    StudentModel.exists({ username: body.username }),
+    StaffModel.exists({ username: body.username }),
+    ParentModel.exists({ username: body.username }),
   ]);
 
-  if (check.every((_) => _ != null)) throw new Error(`A user with the username ${data.username} already exists`);
+  if (check.every((_) => _ != null)) throw new Error(`A user with the username ${body.username} already exists`);
 
   const validStaffType = ["teacher"] as Array<typeof __type>;
   if (!validStaffType.includes(__type)) throw new Error("Invalid Staff Type");
 
-  const response = await createUser(`staff-${__type}`, data, async (session, _id) => {
+  const response = await createUser(`staff-${__type}`, body, async (session, _id) => {
     if (!_id) return;
-    await ClassModel.updateMany({ _id: { $in: classes } }, { $addToSet: { teachers: _id } }, { session });
+    await ClassModel.updateMany({ _id: { $in: classes ?? [] } }, { $addToSet: { teachers: _id } }, { session });
   });
 
   return [{ data: response, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];

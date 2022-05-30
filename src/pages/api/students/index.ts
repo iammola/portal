@@ -9,26 +9,24 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Student.POST.Data> = async (req) => {
   await connect();
-  if (req.method === "POST") return POST(req.body);
+  if (req.method === "POST") return POST(req.body as API.Student.POST.Body);
 
   return null;
 };
 
-async function POST(body: unknown): API.HandlerResponse<API.Student.POST.Data> {
-  const data = JSON.parse(body as string) as API.Student.POST.Body;
-
+async function POST(body: API.Student.POST.Body): API.HandlerResponse<API.Student.POST.Data> {
   const check = await Promise.all([
-    StudentModel.exists({ username: data.username }),
-    StaffModel.exists({ username: data.username }),
-    ParentModel.exists({ username: data.username }),
+    StudentModel.exists({ username: body.username }),
+    StaffModel.exists({ username: body.username }),
+    ParentModel.exists({ username: body.username }),
   ]);
 
-  if (check.every((_) => _ != null)) throw new Error(`A user with the username ${data.username} already exists`);
+  if (check.every((_) => _ != null)) throw new Error(`A user with the username ${body.username} already exists`);
 
-  if (isNaN(new Date(data.dob).getTime())) throw new Error("Invalid Date of Birth");
+  if (isNaN(new Date(body.dob).getTime())) throw new Error("Invalid Date of Birth");
 
-  if (data.academic.length > 0) {
-    const academicData = data.academic.reduce<Record<"term" | "class" | "subjects", string[]>>(
+  if (body.academic.length > 0) {
+    const academicData = body.academic.reduce<Record<"term" | "class" | "subjects", string[]>>(
       (acc, cur) => ({
         term: [...acc.term, cur.term],
         class: [...acc.class, cur.class],
@@ -53,13 +51,13 @@ async function POST(body: unknown): API.HandlerResponse<API.Student.POST.Data> {
       throw new Error("One or more subjects in the academic section does not exist");
   }
 
-  if (data.guardians.length > 0) {
+  if (body.guardians.length > 0) {
     const parents = await ParentModel.findByUsername(
-      data.guardians.map((_) => _.guardian.split(" ", 1)).flat(),
+      body.guardians.map((_) => _.guardian.split(" ", 1)).flat(),
       "name.username"
     ).lean();
 
-    data.guardians = data.guardians.map((_) => ({
+    body.guardians = body.guardians.map((_) => ({
       relation: _.relation,
       guardian: parents.reduce<string>(
         (acc, cur) => (_.guardian.split(" ", 1)[0] === cur.username ? String(cur._id) : acc),
@@ -68,7 +66,7 @@ async function POST(body: unknown): API.HandlerResponse<API.Student.POST.Data> {
     }));
   }
 
-  const response = await createUser("student", data);
+  const response = await createUser("student", body);
 
   return [{ data: response, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }

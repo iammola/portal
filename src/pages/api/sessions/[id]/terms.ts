@@ -11,7 +11,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 const handler: API.Handler<API.Session.POST.Terms.Data | API.Session.GET.Terms> = async (req) => {
   await connect();
   if (req.method === "GET") return GET(req.query.id);
-  if (req.method === "POST") return POST(req.query.id, req.body);
+  if (req.method === "POST") return POST(req.query.id, req.body as API.Session.POST.Terms.Body);
 
   return null;
 };
@@ -26,11 +26,12 @@ async function GET(sessionId: unknown): API.HandlerResponse<API.Session.GET.Term
   return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
-async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.Session.POST.Terms.Data> {
-  const { end, name, start, ...requestBody } = JSON.parse(body as string) as API.Session.POST.Terms.Body;
-
+async function POST(
+  sessionId: unknown,
+  { end, name, start, ...body }: API.Session.POST.Terms.Body
+): API.HandlerResponse<API.Session.POST.Terms.Data> {
   if (sessionId === "new") {
-    const { session } = requestBody;
+    const { session } = body;
     if (!session) throw new Error("Session details required");
 
     const checks = await Promise.all([
@@ -81,7 +82,7 @@ async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.
 
   await session.withTransaction(async () => {
     if (sessionId === "new") {
-      const [{ _id }] = await SessionModel.create([requestBody.session], { session });
+      const [{ _id }] = await SessionModel.create([body.session], { session });
       sessionId = _id;
     }
 
