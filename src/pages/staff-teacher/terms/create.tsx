@@ -1,6 +1,6 @@
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
-import { add, format } from "date-fns";
 import { Fragment, useState } from "react";
+import { add, differenceInCalendarWeeks, format } from "date-fns";
 import useSWR from "swr";
 import Head from "next/head";
 import dynamic from "next/dynamic";
@@ -126,18 +126,29 @@ const CreateTerm: NextPage = () => {
                   </Input>
                 </div>
               </div>
-              <div className="flex flex-wrap items-center justify-start gap-2 xs:flex-nowrap">
-                <FormDate required value={start} onValueChange={setStart}>
-                  Start Date
-                </FormDate>
-                <FormDate
-                  required
-                  value={end}
-                  onValueChange={setEnd}
-                  min={start ? format(add(start, { weeks: 1 }), "yyyy-MM-dd") : undefined}
-                >
-                  End Date
-                </FormDate>
+              <div className="w-full space-y-3">
+                <div className="flex flex-wrap items-center justify-start gap-2 xs:flex-nowrap">
+                  <FormDate required value={start} onValueChange={setStart}>
+                    Start Date
+                  </FormDate>
+                  <FormDate
+                    required
+                    value={end}
+                    onValueChange={setEnd}
+                    min={start ? format(add(start, { weeks: 1 }), "yyyy-MM-dd") : undefined}
+                  >
+                    End Date
+                  </FormDate>
+                </div>
+                <span className="text-xs font-light tracking-wide text-gray-11 dark:text-gray-dark-11">
+                  {(() => {
+                    let unit = "week";
+                    const weeks = start && end ? differenceInCalendarWeeks(end, start) : 0;
+                    if (weeks !== 1) unit += "s";
+
+                    return `${weeks} ${unit} in the time frame above`;
+                  })()}
+                </span>
               </div>
             </div>
           </div>
