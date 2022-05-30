@@ -1,71 +1,90 @@
-import { format } from "date-fns";
 import { startSession } from "mongoose";
+import { add, format, isAfter } from "date-fns";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { routeWrapper, NotFoundError } from "api";
+import { routeWrapper } from "api";
 import { SessionModel, TermModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Session.POST.Terms.Data> = async (req) => {
   await connect();
+  if (req.method === "GET") return GET(req.query.id);
   if (req.method === "POST") return POST(req.query.id, req.body);
 
   return null;
 };
 
-async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.Session.POST.Terms.Data> {
-  const { current, name, start } = JSON.parse(body as string) as API.Session.POST.Terms.Body;
+async function GET(sessionId: unknown): API.HandlerResponse<API.Session.GET.Terms> {
+  const data = await SessionModel.findById(sessionId, "terms")
+    .populate<Pick<Schemas.Session.Virtuals, "terms">>("terms")
+    .lean();
 
-  if (isNaN(new Date(start).getTime())) throw new Error("Invalid Start Date");
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
+}
+
+async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.Session.POST.Terms.Data> {
+  const { end, name, start, ...requestBody } = JSON.parse(body as string) as API.Session.POST.Terms.Body;
+
+  if (sessionId === "new") {
+    const { session } = requestBody;
+    if (!session) throw new Error("Session details required");
+
+    const checks = await Promise.all([
+      SessionModel.exists({ "name.long": session.name.long }),
+      SessionModel.exists({ "name.short": session.name.short }),
+    ]);
+
+    if (checks[0]) throw new Error(`A session with name ${name.long} already exists`);
+    if (checks[1]) throw new Error(`A session with alias ${name.short} already exists`);
+  } else {
+    const checks = await Promise.all([
+      TermModel.exists({ session: sessionId, "name.long": name.long }),
+      TermModel.exists({ session: sessionId, "name.short": name.short }),
+    ]);
+
+    if (checks[0]) throw new Error(`A term with name ${name.long} in the specified session already exists`);
+    if (checks[1]) throw new Error(`A term with alias ${name.short} in the specified session already exists`);
+  }
+
+  if (!start || !end) throw new Error("Start and End dates are required");
+  if (isAfter(add(new Date(start), { weeks: 1 }), new Date(end)))
+    throw new Error("End Date must be at least a week after the specified start");
 
   const checks = await Promise.all([
-    SessionModel.findById(sessionId, "current"),
-    TermModel.exists({ session: sessionId, "name.long": name.long }),
-    TermModel.exists({ session: sessionId, "name.short": name.short }),
-    TermModel.exists({ start }),
-    TermModel.exists({ end: start }),
-    TermModel.exists({ start: { $gte: start }, end: { $lte: start } }),
+    await TermModel.exists({ start }),
+    await TermModel.exists({ end }),
+    await TermModel.exists({ end: start }),
+    await TermModel.exists({ start: end }),
+    await TermModel.exists({
+      $or: [
+        { start: { $lte: start }, end: { $gte: start } },
+        { start: { $lte: end }, end: { $gte: end } },
+      ],
+    }),
   ]);
 
-  if (checks[0] == null) throw new NotFoundError("Session not found");
-  if (checks[1] != null)
-    throw new NotFoundError(`A term with name ${name.long} in the specified session already exists`);
-  if (checks[2] != null)
-    throw new NotFoundError(`A term with alias ${name.short} in the specified session already exists`);
+  const formatEnd = format(new Date(end), "dd/MM/yyyy");
+  const formatStart = format(new Date(start), "dd/MM/yyyy");
 
-  const formattedDate = format(new Date(start), "dd/MM/yyyy");
-  if (checks[3] != null) throw new NotFoundError(`A term with start date ${formattedDate} already exists`);
-  if (checks[4] != null)
-    throw new NotFoundError(`A term with start date ${formattedDate} cannot start on the same day another term ends`);
-  if (checks[5] != null)
-    throw new Error(`A term with start date ${formattedDate} will fall in the constraints of another term`);
+  if (checks[0]) throw new Error(`A term that starts on ${formatStart} already exists`);
+  if (checks[1]) throw new Error(`A term that ends on ${formatEnd} already exists`);
+  if (checks[2]) throw new Error(`A term cannot start on the same day another one ends ${formatStart}`);
+  if (checks[3]) throw new Error(`A term cannot end on the same day another one starts ${formatEnd}`);
+  if (checks[4]) throw new Error(`A term's dates cannot fall in the dates of another term ${formatStart}-${formatEnd}`);
 
   const session = await startSession();
   let _id: Schemas.ObjectId | undefined = undefined;
 
   await session.withTransaction(async () => {
-    const [term] = await TermModel.create([{ name, start, current, session: sessionId }], { session });
-    _id = term._id;
-
-    if (current) {
-      const queries: unknown[] = [
-        // Remove `current` from other terms with `{ current: true }`
-        TermModel.updateMany({ _id: { $ne: _id }, current: true }, { $unset: { current: "" } }, { session }),
-      ];
-
-      if (!checks[0]?.current) {
-        queries.push(
-          // Remove `current` from other Sessions with `{ current: true }`
-          SessionModel.updateMany({ _id: { $ne: sessionId }, current: true }, { $unset: { current: "" } }, { session }),
-          // Set specified session's `current` to `true`
-          SessionModel.updateOne({ _id: sessionId }, { current: true }, { session })
-        );
-      }
-
-      await Promise.all(queries);
+    if (sessionId === "new") {
+      const [{ _id }] = await SessionModel.create([requestBody.session], { session });
+      sessionId = _id;
     }
+
+    const [term] = await TermModel.create([{ name, start, end, session: sessionId }], { session });
+    _id = term._id;
   });
 
   await session.endSession();
@@ -75,4 +94,4 @@ async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.
   return [{ data: { _id }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
-export default (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["POST"]);
+export default (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["GET", "POST"]);

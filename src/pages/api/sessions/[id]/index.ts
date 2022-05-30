@@ -14,13 +14,16 @@ const handler: API.Handler<API.Session.GET.Data> = async (req) => {
 };
 
 async function GET(id: unknown): API.HandlerResponse<API.Session.GET.Data> {
-  const data = await SessionModel.findById(id)
-    .populate<Pick<Schemas.Session.Virtuals, "termsCount">>("termsCount")
-    .lean({ virtuals: ["termsCount"] });
+  const [current, data] = await Promise.all([
+    SessionModel.findCurrent("_id"),
+    SessionModel.findById(id)
+      .populate<Pick<Schemas.Session.Virtuals, "termsCount">>("termsCount")
+      .lean({ virtuals: ["termsCount"] }),
+  ]);
 
   if (data == null) throw new NotFoundError("Session not found");
 
-  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
+  return [{ data: { ...data, current: current !== null }, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 export default (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["GET"]);

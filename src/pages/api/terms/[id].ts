@@ -16,7 +16,7 @@ const handler: API.Handler<object> = async (req) => {
 async function GET(id: unknown): API.HandlerResponse<API.Term.GET.Data> {
   const data = await TermModel.findById(id)
     .populate<{ session: Pick<Schemas.Session.Record, "name"> }>("session", "name")
-    .lean();
+    .lean<API.Term.GET.Data>({ virtuals: ["current"] });
 
   if (data == null) throw new NotFoundError("Term not found");
 

@@ -4,10 +4,6 @@ import { ModelNames } from "db";
 import { TermName } from "db/schema/Term";
 
 const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>({
-  current: {
-    type: Boolean,
-    default: undefined,
-  },
   name: {
     type: TermName,
     required: [true, "Term name required"],
@@ -23,7 +19,7 @@ const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>(
   },
   end: {
     type: Date,
-    default: undefined,
+    required: [true, "Term end date required"],
     validate: {
       message: "End date must be after start date",
       validator: function (this: Schemas.Term.Record, end?: Date) {
@@ -33,10 +29,17 @@ const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>(
   },
 });
 
+TermSchema.virtual("current").get(function () {
+  const start = new Date(this.start).getTime();
+  const end = new Date(this.end).getTime();
+
+  return Date.now() >= start && Date.now() <= end;
+});
+
 TermSchema.static(
   "findCurrent",
   function (...args: [mongoose.ProjectionType<Schemas.Term.Record>?, mongoose.QueryOptions?]) {
-    return this.findOne({ current: true }, ...args);
+    return TermModel.findOne({ start: { $lte: new Date() }, end: { $gte: new Date() } }, ...args);
   }
 );
 

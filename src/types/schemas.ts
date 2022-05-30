@@ -153,7 +153,6 @@ declare global {
 
     namespace Session {
       export type Schema = {
-        current?: boolean;
         name: ThingName;
       } & DocumentId;
 
@@ -165,27 +164,30 @@ declare global {
       export type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
 
       export type Model = {
-        /** Find the term record where `{ current: true }` */
+        /** It's a static method that finds the session with the current term. */
         findCurrent(
           projection?: Mongoose.ProjectionType<Schema> | null,
           options?: Mongoose.QueryOptions
-        ): SQuery<Schema, Schema, unknown, Virtuals>;
+        ): Promise<Schema | null>;
       } & Mongoose.Model<Schema, unknown, unknown, Virtuals>;
     }
 
     namespace Term {
       export type Schema = {
-        current?: boolean;
         name: ThingName;
         session: ObjectId;
-        end?: Date;
+        end: Date;
         start: Date;
       } & DocumentId;
 
-      export type Record = ModelRecord<Schema>;
+      type Virtuals = {
+        current: boolean;
+      };
+
+      export type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
 
       export type Model = {
-        /** Find the term record where `{ current: true }` */
+        /** It's a static method that finds the current term. */
         findCurrent(
           projection?: Mongoose.ProjectionType<Schema> | null,
           options?: Mongoose.QueryOptions
