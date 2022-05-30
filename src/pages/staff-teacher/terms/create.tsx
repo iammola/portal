@@ -1,5 +1,5 @@
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
-import { add } from "date-fns";
+import { add, format } from "date-fns";
 import { Fragment, useState } from "react";
 import useSWR from "swr";
 import Head from "next/head";
@@ -23,6 +23,7 @@ const CreateTerm: NextPage = () => {
   const [session, setSession] = useState("");
   const [name, setName] = useState({ long: "", short: "" });
   const [start, setStart] = useState<Date | undefined>(add(new Date(), { months: 1 }));
+  const [end, setEnd] = useState<Date | undefined>(add(new Date(), { weeks: 1, months: 1 }));
 
   const [sessions, setSessions] = useState<Array<Record<"_id" | "name", string>>>([]);
 
@@ -80,7 +81,7 @@ const CreateTerm: NextPage = () => {
       </Head>
       <div className="flex w-full grow flex-col items-center justify-center gap-8 py-10 px-6">
         <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Term</h3>
-        <form onSubmit={(e) => void handleSubmit(e)} className="w-full max-w-xs space-y-10">
+        <form onSubmit={(e) => void handleSubmit(e)} className="w-full max-w-md space-y-10">
           <div className="space-y-5">
             {newSession ? (
               <div className="space-y-2">
@@ -125,9 +126,19 @@ const CreateTerm: NextPage = () => {
                   </Input>
                 </div>
               </div>
-              <FormDate required value={start} onValueChange={setStart}>
-                Start Date
-              </FormDate>
+              <div className="flex flex-wrap items-center justify-start gap-2 xs:flex-nowrap">
+                <FormDate required value={start} onValueChange={setStart}>
+                  Start Date
+                </FormDate>
+                <FormDate
+                  required
+                  value={end}
+                  onValueChange={setEnd}
+                  min={start ? format(add(start, { weeks: 1 }), "yyyy-MM-dd") : undefined}
+                >
+                  End Date
+                </FormDate>
+              </div>
             </div>
           </div>
           <button
