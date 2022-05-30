@@ -19,7 +19,7 @@ const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>(
   },
   end: {
     type: Date,
-    default: undefined,
+    required: [true, "Term end date required"],
     validate: {
       message: "End date must be after start date",
       validator: function (this: Schemas.Term.Record, end?: Date) {

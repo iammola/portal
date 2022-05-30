@@ -176,7 +176,7 @@ declare global {
       export type Schema = {
         name: ThingName;
         session: ObjectId;
-        end?: Date;
+        end: Date;
         start: Date;
       } & DocumentId;
 
