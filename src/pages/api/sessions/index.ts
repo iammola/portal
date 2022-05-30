@@ -15,11 +15,14 @@ const handler: API.Handler<API.Session.POST.Data | API.Session.GET.AllData> = as
 };
 
 async function GET(): API.HandlerResponse<API.Session.GET.AllData> {
-  const data = await SessionModel.find({})
-    .populate<Pick<Schemas.Session.Virtuals, "termsCount">>("termsCount")
-    .lean({ virtuals: ["termsCount"] });
+  const [current, data] = await Promise.all([
+    SessionModel.findCurrent("_id").lean(),
+    SessionModel.find({})
+      .populate<Pick<Schemas.Session.Virtuals, "termsCount">>("termsCount")
+      .lean({ virtuals: ["termsCount"] }),
+  ]);
 
-  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
+  return [{ data: { current, data }, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 async function POST(body: unknown): API.HandlerResponse<API.Session.POST.Data> {

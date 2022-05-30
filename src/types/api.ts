@@ -150,9 +150,14 @@ declare global {
       }
 
       namespace GET {
-        export type AllData = Data[];
+        export type AllData = {
+          current: Schemas.DocumentId | null;
+          data: Array<Omit<Data, "current">>;
+        };
 
-        export type Data = Schemas.Session.Record<"termsCount">;
+        export type Data = {
+          current: boolean;
+        } & Schemas.Session.Record<"termsCount">;
 
         export type Terms = Pick<Schemas.Session.Record<true>, "_id" | "terms">;
       }
@@ -160,12 +165,16 @@ declare global {
 
     namespace Term {
       namespace GET {
-        export type AllData = Array<{
-          session: Pick<Schemas.Session.Record, "name">;
-          terms: Array<Omit<Schemas.Term.Record, "session">>;
-        }>;
+        export type AllData = {
+          current: Schemas.DocumentId | null;
+          data: Array<{
+            session: Pick<Schemas.Session.Record, "name">;
+            terms: Array<Omit<Schemas.Term.Record, "session">>;
+          }>;
+        };
 
         export type Data = {
+          current: boolean;
           session: Pick<Schemas.Session.Record, "name">;
         } & Omit<Schemas.Term.Record, "session">;
       }
