@@ -30,7 +30,7 @@ SessionSchema.static(
     const term = await TermModel.findCurrent("session", args[1]).lean();
     if (term == null) return null;
 
-    return await this.findById(term.session, ...args);
+    return await this.findById(term.session, ...args).lean();
   }
 );
 

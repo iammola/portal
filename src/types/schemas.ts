@@ -168,7 +168,7 @@ declare global {
         findCurrent(
           projection?: Mongoose.ProjectionType<Schema> | null,
           options?: Mongoose.QueryOptions
-        ): SQuery<Schema, Schema, unknown, Virtuals>;
+        ): Promise<Schema | null>;
       } & Mongoose.Model<Schema, unknown, unknown, Virtuals>;
     }
 
