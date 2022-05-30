@@ -9,7 +9,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 const handler: API.Handler<API.Class.POST.Data | API.Class.GET.AllData> = async (req) => {
   await connect();
 
-  if (req.method === "POST") return POST(req.body);
+  if (req.method === "POST") return POST(req.body as API.Class.POST.Body);
   if (req.method === "GET") return GET();
 
   return null;
@@ -24,9 +24,7 @@ async function GET(): API.HandlerResponse<API.Class.GET.AllData> {
   return [{ data: classes, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
-async function POST(body: unknown): API.HandlerResponse<API.Class.POST.Data> {
-  const { teachers, name } = JSON.parse(body as string) as API.Class.POST.Body;
-
+async function POST({ teachers, name }: API.Class.POST.Body): API.HandlerResponse<API.Class.POST.Data> {
   const checks = await Promise.all([
     ClassModel.exists({ "name.long": name.long }),
     ClassModel.exists({ "name.short": name.short }),

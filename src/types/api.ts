@@ -3,6 +3,8 @@ import { StatusCodes, ReasonPhrases } from "http-status-codes";
 
 declare global {
   namespace API {
+    type METHOD = "GET" | "POST" | "PUT" | "DELETE" | "SEARCH";
+
     export type UpdateData = Record<"success", boolean>;
     export type CreateData<O = unknown> = Schemas.DocumentId & O;
     export type DeleteData = {
@@ -17,7 +19,7 @@ declare global {
     export type HandlerResponse<D> = Promise<[Omit<Response<D>, "success">, ResponseCodes]>;
 
     export type Handler<R extends object> = (
-      req: NextApiRequest,
+      req: Omit<NextApiRequest, "body"> & { method?: METHOD; body: Record<string, unknown> },
       res: NextApiResponse<Error | Response<R>>
     ) => Promise<Awaited<API.HandlerResponse<R>> | null>;
 

@@ -8,20 +8,18 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Subject.POST.Data> = async (req) => {
   await connect();
-  if (req.method === "POST") return POST(req.body);
+  if (req.method === "POST") return POST(req.body as API.Subject.POST.Body);
 
   return null;
 };
 
-async function POST(body: unknown): API.HandlerResponse<API.Subject.POST.Data> {
-  const data = JSON.parse(body as string) as API.Subject.POST.Body;
+async function POST(body: API.Subject.POST.Body): API.HandlerResponse<API.Subject.POST.Data> {
+  if (body.__type === "group" && body.divisions.length < 2) throw new Error("At least 2 divisions are required");
 
-  if (data.__type === "group" && data.divisions.length < 2) throw new Error("At least 2 divisions are required");
-
-  const teachers = data.__type === "base" ? data.teachers : data.divisions.map((div) => div.teachers).flat();
+  const teachers = body.__type === "base" ? body.teachers : body.divisions.map((div) => div.teachers).flat();
 
   const [classExists, teacherIds] = await Promise.all([
-    ClassModel.exists({ _id: data.class }),
+    ClassModel.exists({ _id: body.class }),
     TeacherStaffModel.findByUsername(teachers, "username").lean(),
   ]);
 
@@ -31,14 +29,14 @@ async function POST(body: unknown): API.HandlerResponse<API.Subject.POST.Data> {
     teachers.map((username) => teacherIds.find((teacher) => `@${teacher.username}` === username)?._id).filter(Boolean);
 
   const { _id } =
-    data.__type === "base"
+    body.__type === "base"
       ? await BaseSubjectModel.create({
-          ...data,
+          ...body,
           teachers: getTeachers(teachers),
         })
       : await GroupSubjectModel.create({
-          ...data,
-          divisions: data.divisions.map((div) => ({ ...div, teachers: getTeachers(div.teachers) })),
+          ...body,
+          divisions: body.divisions.map((div) => ({ ...div, teachers: getTeachers(div.teachers) })),
         });
 
   return [{ data: { _id }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];

@@ -11,21 +11,27 @@ import type { NextApiRequest, NextApiResponse } from "next";
  * @param {NextApiRequest} req - NextApiRequest - The request object from Next.js
  * @param {NextApiResponse} res - NextApiResponse - The response object from Next.js
  * @param routeHandler - The function that will be called when the route is hit.
- * @param {string[]} methods - An array of HTTP methods that the route supports.
+ * @param {API.METHOD[]} methods - An array of HTTP methods that the route supports.
  */
 export async function routeWrapper<T extends object>(
   req: NextApiRequest,
   res: NextApiResponse,
   routeHandler: API.Handler<T>,
-  methods: [METHOD, ...METHOD[]]
+  methods: [API.METHOD, ...API.METHOD[]]
 ) {
   let data: API.RouteResponse<T> | null = null;
 
   try {
     if (req.url !== "/api/login") await verifyAuth(req);
 
-    if (methods.includes(req.method as METHOD)) {
-      data = (await routeHandler(req, res)) as API.RouteResponse<T>;
+    if (methods.includes(req.method as API.METHOD)) {
+      try {
+        if (req.body && typeof req.body === "string") req.body = JSON.parse(req.body) as Record<string, unknown>;
+      } catch (error) {
+        /*  */
+      }
+
+      data = (await routeHandler(req as never, res)) as API.RouteResponse<T>;
       if (data) data[0] = { ...data[0], success: true } as API.RouteResponse<T>[0];
     }
   } catch (error: unknown) {
@@ -57,8 +63,6 @@ export async function routeWrapper<T extends object>(
       }
     );
 }
-
-type METHOD = "GET" | "POST" | "PUT" | "DELETE" | "SEARCH";
 
 export { NotFoundError, UnauthorizedError };
 export { fetchAPIEndpoint } from "./endpoint";
