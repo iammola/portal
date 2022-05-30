@@ -50,8 +50,8 @@ async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.
     await TermModel.exists({ start: end }),
     await TermModel.exists({
       $or: [
-        { start: { $gte: start }, end: { $lte: start } },
-        { start: { $gte: end }, end: { $lte: end } },
+        { start: { $lte: start }, end: { $gte: start } },
+        { start: { $lte: end }, end: { $gte: end } },
       ],
     }),
   ]);
