@@ -32,7 +32,7 @@ const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>(
 TermSchema.static(
   "findCurrent",
   function (...args: [mongoose.ProjectionType<Schemas.Term.Record>?, mongoose.QueryOptions?]) {
-    return this.findOne({ current: true }, ...args);
+    return TermModel.find({ start: { $gte: new Date() }, end: { $lte: new Date() } }, ...args);
   }
 );
 

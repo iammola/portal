@@ -1,6 +1,7 @@
 import * as mongoose from "mongoose";
 
 import { ModelNames } from "db";
+import { TermModel } from "db/models/Term";
 import { SessionName } from "db/schema/Session";
 
 const SessionSchema = new mongoose.Schema<Schemas.Session.Record, Schemas.Session.Model>({
@@ -25,8 +26,11 @@ SessionSchema.virtual("termsCount", {
 
 SessionSchema.static(
   "findCurrent",
-  function (...args: [mongoose.ProjectionType<Schemas.Session.Record>?, mongoose.QueryOptions?]) {
-    return this.findOne({ current: true }, ...args);
+  function ([proj, opts]: [mongoose.ProjectionType<Schemas.Session.Record>?, mongoose.QueryOptions?]) {
+    return TermModel.find({ start: { $gte: new Date() }, end: { $lte: new Date() } }, "session", opts).populate(
+      "session",
+      proj
+    );
   }
 );
 
