@@ -138,10 +138,6 @@ declare global {
 
     namespace Session {
       namespace POST {
-        export type Data = CreateData;
-
-        export type Body = Pick<Schemas.Session.Record, "name">;
-
         namespace Terms {
           export type Data = CreateData;
 
