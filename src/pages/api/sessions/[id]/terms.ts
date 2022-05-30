@@ -3,7 +3,7 @@ import { add, format, isAfter } from "date-fns";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { routeWrapper, NotFoundError } from "api";
+import { routeWrapper } from "api";
 import { SessionModel, TermModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -35,8 +35,8 @@ async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.
       TermModel.exists({ session: sessionId, "name.short": name.short }),
     ]);
 
-    if (checks[0]) throw new NotFoundError(`A term with name ${name.long} in the specified session already exists`);
-    if (checks[1]) throw new NotFoundError(`A term with alias ${name.short} in the specified session already exists`);
+    if (checks[0]) throw new Error(`A term with name ${name.long} in the specified session already exists`);
+    if (checks[1]) throw new Error(`A term with alias ${name.short} in the specified session already exists`);
   }
 
   if (!start || !end) throw new Error("Start and End dates are required");
@@ -59,14 +59,12 @@ async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.
   const formattedEnd = format(new Date(end), "dd/MM/yyyy");
   const formattedStart = format(new Date(start), "dd/MM/yyyy");
 
-  if (checks[0]) throw new NotFoundError(`A term that starts on ${formattedStart} already exists`);
-  if (checks[1]) throw new NotFoundError(`A term that ends on ${formattedEnd} already exists`);
-  if (checks[2]) throw new NotFoundError(`A term cannot start on the same day another one ends ${formattedStart}`);
-  if (checks[3]) throw new NotFoundError(`A term cannot end on the same day another one starts ${formattedEnd}`);
+  if (checks[0]) throw new Error(`A term that starts on ${formattedStart} already exists`);
+  if (checks[1]) throw new Error(`A term that ends on ${formattedEnd} already exists`);
+  if (checks[2]) throw new Error(`A term cannot start on the same day another one ends ${formattedStart}`);
+  if (checks[3]) throw new Error(`A term cannot end on the same day another one starts ${formattedEnd}`);
   if (checks[4])
-    throw new NotFoundError(
-      `A term's dates cannot fall in the dates of another term ${formattedStart}-${formattedEnd}`
-    );
+    throw new Error(`A term's dates cannot fall in the dates of another term ${formattedStart}-${formattedEnd}`);
 
   const session = await startSession();
   let _id: Schemas.ObjectId | undefined = undefined;
