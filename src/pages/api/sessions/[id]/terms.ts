@@ -31,12 +31,12 @@ async function POST(
   { end, name, start, ...body }: API.Session.POST.Terms.Body
 ): API.HandlerResponse<API.Session.POST.Terms.Data> {
   if (sessionId === "new") {
-    const { session } = body;
-    if (!session) throw new Error("Session details required");
+    if (!body.session) throw new Error("Session details required");
 
+    const { name } = body.session;
     const checks = await Promise.all([
-      SessionModel.exists({ "name.long": session.name.long }),
-      SessionModel.exists({ "name.short": session.name.short }),
+      SessionModel.exists({ "name.long": name.long }),
+      SessionModel.exists({ "name.short": name.short }),
     ]);
 
     if (checks[0]) throw new Error(`A session with name ${name.long} already exists`);
