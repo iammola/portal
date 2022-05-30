@@ -164,7 +164,7 @@ declare global {
       export type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
 
       export type Model = {
-        /** Find the term record where `{ current: true }` */
+        /** It's a static method that finds the session with the current term. */
         findCurrent(
           projection?: Mongoose.ProjectionType<Schema> | null,
           options?: Mongoose.QueryOptions
@@ -187,7 +187,7 @@ declare global {
       export type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
 
       export type Model = {
-        /** Find the term record where `{ current: true }` */
+        /** It's a static method that finds the current term. */
         findCurrent(
           projection?: Mongoose.ProjectionType<Schema> | null,
           options?: Mongoose.QueryOptions
