@@ -10,10 +10,19 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Session.POST.Terms.Data> = async (req) => {
   await connect();
+  if (req.method === "GET") return GET(req.query.id);
   if (req.method === "POST") return POST(req.query.id, req.body);
 
   return null;
 };
+
+async function GET(sessionId: unknown): API.HandlerResponse<API.Session.GET.Terms> {
+  const data = await SessionModel.findById(sessionId, "terms")
+    .populate<Pick<Schemas.Session.Virtuals, "terms">>("terms")
+    .lean();
+
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
+}
 
 async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.Session.POST.Terms.Data> {
   const { end, name, start, ...requestBody } = JSON.parse(body as string) as API.Session.POST.Terms.Body;
@@ -85,4 +94,4 @@ async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.
   return [{ data: { _id }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
-export default (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["POST"]);
+export default (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["GET", "POST"]);
