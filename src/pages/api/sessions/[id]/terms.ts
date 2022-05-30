@@ -56,15 +56,14 @@ async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.
     }),
   ]);
 
-  const formattedEnd = format(new Date(end), "dd/MM/yyyy");
-  const formattedStart = format(new Date(start), "dd/MM/yyyy");
+  const formatEnd = format(new Date(end), "dd/MM/yyyy");
+  const formatStart = format(new Date(start), "dd/MM/yyyy");
 
-  if (checks[0]) throw new Error(`A term that starts on ${formattedStart} already exists`);
-  if (checks[1]) throw new Error(`A term that ends on ${formattedEnd} already exists`);
-  if (checks[2]) throw new Error(`A term cannot start on the same day another one ends ${formattedStart}`);
-  if (checks[3]) throw new Error(`A term cannot end on the same day another one starts ${formattedEnd}`);
-  if (checks[4])
-    throw new Error(`A term's dates cannot fall in the dates of another term ${formattedStart}-${formattedEnd}`);
+  if (checks[0]) throw new Error(`A term that starts on ${formatStart} already exists`);
+  if (checks[1]) throw new Error(`A term that ends on ${formatEnd} already exists`);
+  if (checks[2]) throw new Error(`A term cannot start on the same day another one ends ${formatStart}`);
+  if (checks[3]) throw new Error(`A term cannot end on the same day another one starts ${formatEnd}`);
+  if (checks[4]) throw new Error(`A term's dates cannot fall in the dates of another term ${formatStart}-${formatEnd}`);
 
   const session = await startSession();
   let _id: Schemas.ObjectId | undefined = undefined;
