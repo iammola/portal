@@ -19,7 +19,7 @@ declare global {
     export type HandlerResponse<D> = Promise<[Omit<Response<D>, "success">, ResponseCodes]>;
 
     export type Handler<R extends object> = (
-      req: NextApiRequest,
+      req: Omit<NextApiRequest, "body"> & { method?: METHOD; body: Record<string, unknown> },
       res: NextApiResponse<Error | Response<R>>
     ) => Promise<Awaited<API.HandlerResponse<R>> | null>;
 
