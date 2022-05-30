@@ -45,17 +45,17 @@ const CreateTerm: NextPage = () => {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (start === undefined) return;
+    if (!start || !end) return;
 
     setIsLoading(true);
     const toastID = toasts.add({ kind: "loading", description: "Processing Request..." });
 
     try {
       const result = await fetchAPIEndpoint<API.Session.POST.Terms.Data, API.Session.POST.Terms.Body>(
-        `/api/sessions/${session}/terms`,
+        `/api/sessions/${newSession ? "new" : session}/terms`,
         {
           method: "POST",
-          body: { name, start },
+          body: Object.assign({ name, end, start }, newSession && { session: { name: newSession } }),
         }
       );
 
