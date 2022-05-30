@@ -63,7 +63,10 @@ async function POST(sessionId: unknown, body: unknown): API.HandlerResponse<API.
   if (checks[1]) throw new NotFoundError(`A term that ends on ${formattedEnd} already exists`);
   if (checks[2]) throw new NotFoundError(`A term cannot start on the same day another one ends ${formattedStart}`);
   if (checks[3]) throw new NotFoundError(`A term cannot end on the same day another one starts ${formattedEnd}`);
-  if (checks[4]) throw new NotFoundError(`A term's dates cannot fall in the dates of another term ${formattedEnd}`);
+  if (checks[4])
+    throw new NotFoundError(
+      `A term's dates cannot fall in the dates of another term ${formattedStart}-${formattedEnd}`
+    );
 
   const session = await startSession();
   let _id: Schemas.ObjectId | undefined = undefined;
