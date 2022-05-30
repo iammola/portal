@@ -3,6 +3,8 @@ import { StatusCodes, ReasonPhrases } from "http-status-codes";
 
 declare global {
   namespace API {
+    type METHOD = "GET" | "POST" | "PUT" | "DELETE" | "SEARCH";
+
     export type UpdateData = Record<"success", boolean>;
     export type CreateData<O = unknown> = Schemas.DocumentId & O;
     export type DeleteData = {
