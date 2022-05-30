@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
 import { LoadingIcon } from "components/Icons";
-import { Checkbox, Date as FormDate, Input, Select } from "components/Form";
+import { Date as FormDate, Input, Select } from "components/Form";
 
 import type { NextPage } from "next";
 
@@ -20,7 +20,6 @@ const CreateTerm: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [session, setSession] = useState("");
-  const [current, setCurrent] = useState(false);
   const [name, setName] = useState({ long: "", short: "" });
   const [start, setStart] = useState<Date | undefined>(new Date());
 
@@ -53,12 +52,11 @@ const CreateTerm: NextPage = () => {
         `/api/sessions/${session}/terms`,
         {
           method: "POST",
-          body: { current, name, start },
+          body: { name, start },
         }
       );
 
       if (result.success) {
-        setCurrent(false);
         setStart(new Date());
         setName({ long: "", short: "" });
 
@@ -84,7 +82,7 @@ const CreateTerm: NextPage = () => {
         <form onSubmit={(e) => void handleSubmit(e)} className="w-full max-w-xs space-y-10">
           <div className="space-y-5">
             {newSession ? (
-              <div className="space-y-1">
+              <div className="space-y-2">
                 <CreateSession name={newSession} onValueChange={setNewSession} />
                 <button
                   type="button"
@@ -95,7 +93,7 @@ const CreateTerm: NextPage = () => {
                 </button>
               </div>
             ) : (
-              <div className="w-full space-y-1">
+              <div className="w-full space-y-2">
                 <Select required label="Session" value={session} onValueChange={setSession}>
                   {sessions.map((session) => (
                     <Select.Item key={session._id} value={session._id}>
@@ -129,9 +127,6 @@ const CreateTerm: NextPage = () => {
               <FormDate required value={start} onValueChange={setStart}>
                 Start Date
               </FormDate>
-              <Checkbox checked={current} onCheckedChange={(c) => setCurrent(c as boolean)}>
-                Mark as current term?
-              </Checkbox>
             </div>
           </div>
           <button
