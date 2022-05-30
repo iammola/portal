@@ -153,7 +153,6 @@ declare global {
 
     namespace Session {
       export type Schema = {
-        current?: boolean;
         name: ThingName;
       } & DocumentId;
 
@@ -175,7 +174,6 @@ declare global {
 
     namespace Term {
       export type Schema = {
-        current?: boolean;
         name: ThingName;
         session: ObjectId;
         end?: Date;

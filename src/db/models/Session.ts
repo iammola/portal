@@ -4,10 +4,6 @@ import { ModelNames } from "db";
 import { SessionName } from "db/schema/Session";
 
 const SessionSchema = new mongoose.Schema<Schemas.Session.Record, Schemas.Session.Model>({
-  current: {
-    type: Boolean,
-    default: undefined,
-  },
   name: {
     type: SessionName,
     required: [true, "Session name required"],

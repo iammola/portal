@@ -4,10 +4,6 @@ import { ModelNames } from "db";
 import { TermName } from "db/schema/Term";
 
 const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>({
-  current: {
-    type: Boolean,
-    default: undefined,
-  },
   name: {
     type: TermName,
     required: [true, "Term name required"],
