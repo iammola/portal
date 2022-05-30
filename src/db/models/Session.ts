@@ -26,11 +26,11 @@ SessionSchema.virtual("termsCount", {
 
 SessionSchema.static(
   "findCurrent",
-  async function ([proj, opts]: [mongoose.ProjectionType<Schemas.Session.Record>?, mongoose.QueryOptions?]) {
-    const term = await TermModel.findCurrent("session", opts).lean();
+  async function (...args: [mongoose.ProjectionType<Schemas.Session.Record>?, mongoose.QueryOptions?]) {
+    const term = await TermModel.findCurrent("session", args[1]).lean();
     if (term == null) return null;
 
-    return await this.findById(term.session, proj, opts);
+    return await this.findById(term.session, ...args);
   }
 );
 
