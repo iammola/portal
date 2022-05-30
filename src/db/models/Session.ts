@@ -27,7 +27,7 @@ SessionSchema.virtual("termsCount", {
 SessionSchema.static(
   "findCurrent",
   function ([proj, opts]: [mongoose.ProjectionType<Schemas.Session.Record>?, mongoose.QueryOptions?]) {
-    return TermModel.find({ start: { $gte: new Date() }, end: { $lte: new Date() } }, "session", opts).populate(
+    return TermModel.findOne({ start: { $gte: new Date() }, end: { $lte: new Date() } }, "session", opts).populate(
       "session",
       proj
     );
