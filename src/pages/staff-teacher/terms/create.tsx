@@ -31,13 +31,14 @@ const CreateTerm: NextPage = () => {
     onSuccess(result) {
       if (!result.success) return;
 
-      const sessions = result.data.map((session) => ({
+      const { current, data } = result.data;
+      const sessions = data.map((session) => ({
         _id: String(session._id),
         name: session.name.long,
       }));
 
       setSessions(sessions);
-      setSession((session) => String(result.data.find((session) => session.current)?._id ?? session));
+      if (current) setSession(String(current._id));
     },
   });
 

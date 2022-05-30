@@ -13,22 +13,16 @@ export const AcademicRecord: React.FC<AcademicRecordProps> = ({ updateTerm, ...p
     onSuccess(result) {
       if (!result.success) return;
 
-      let activeTerm = "";
-      const terms = result.data
-        .map(({ session, terms }) =>
-          terms.map((term) => {
-            if (term.current) activeTerm = String(term._id);
+      const { current, data } = result.data;
+      const terms = data.map(({ session, terms }) =>
+        terms.map((term) => ({
+          _id: term._id,
+          name: `${session.name.long} ${term.name.long} Term`,
+        }))
+      );
 
-            return {
-              _id: term._id,
-              name: `${session.name.long} ${term.name.long} Term`,
-            };
-          })
-        )
-        .flat();
-
-      setTerms(terms);
-      updateTerm(activeTerm);
+      setTerms(terms.flat());
+      if (current) updateTerm(String(current._id));
     },
   });
   useSWR<API.Result<API.Class.GET.AllData>>("/api/classes", {
