@@ -4,12 +4,15 @@ import { ModelNames } from "db";
 import { TermModel } from "db/models/Term";
 import { SessionName } from "db/schema/Session";
 
-const SessionSchema = new mongoose.Schema<Schemas.Session.Record, Schemas.Session.Model>({
-  name: {
-    type: SessionName,
-    required: [true, "Session name required"],
+const SessionSchema = new mongoose.Schema<Schemas.Session.Record, Schemas.Session.Model>(
+  {
+    name: {
+      type: SessionName,
+      required: [true, "Session name required"],
+    },
   },
-});
+  { versionKey: false }
+);
 
 SessionSchema.virtual("terms", {
   ref: ModelNames.TERM,

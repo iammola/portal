@@ -3,16 +3,19 @@ import * as mongoose from "mongoose";
 import { ModelNames } from "db";
 import { DateSchema } from "db/schema/Attendance";
 
-const AttendanceSchema = new mongoose.Schema<Schemas.Attendance.Record, Schemas.Attendance.Model>({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    immutable: true,
+const AttendanceSchema = new mongoose.Schema<Schemas.Attendance.Record, Schemas.Attendance.Model>(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      immutable: true,
+    },
+    dates: {
+      type: [DateSchema],
+      default: undefined,
+    },
   },
-  dates: {
-    type: [DateSchema],
-    default: undefined,
-  },
-});
+  { versionKey: false }
+);
 
 AttendanceSchema.static(
   "findUser",

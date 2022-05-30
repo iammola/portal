@@ -3,26 +3,29 @@ import * as mongoose from "mongoose";
 import { ModelNames } from "db";
 import { hashPassword } from "db/utils";
 
-const AuthSchema = new mongoose.Schema<AuthSchema>({
-  password: {
-    type: String,
-    default: undefined,
+const AuthSchema = new mongoose.Schema<AuthSchema>(
+  {
+    password: {
+      type: String,
+      default: undefined,
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      unique: true,
+      immutable: true,
+    },
+    hash: {
+      type: String,
+      required: [requireHashSalt, "Password Hash required"],
+    },
+    salt: {
+      type: String,
+      required: [requireHashSalt, "Password Salt required"],
+    },
   },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    unique: true,
-    immutable: true,
-  },
-  hash: {
-    type: String,
-    required: [requireHashSalt, "Password Hash required"],
-  },
-  salt: {
-    type: String,
-    required: [requireHashSalt, "Password Salt required"],
-  },
-});
+  { versionKey: false }
+);
 
 const getHash = (p: string) => ({
   ...hashPassword(p),

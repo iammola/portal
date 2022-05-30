@@ -44,7 +44,7 @@ export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose
         default: undefined,
       },
     },
-    options
+    { ...options, versionKey: false }
   );
 
   schema.pre("save", function (next) {
