@@ -77,13 +77,21 @@ const CreateTerm: NextPage = () => {
         <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Term</h3>
         <form onSubmit={(e) => void handleSubmit(e)} className="w-full max-w-xs space-y-10">
           <div className="space-y-7">
-            <Select required label="Session" value={session} onValueChange={setSession}>
-              {sessions.map((session) => (
-                <Select.Item key={session._id} value={session._id}>
-                  {session.name}
-                </Select.Item>
-              ))}
-            </Select>
+            <div className="w-full space-y-1">
+              <Select required label="Session" value={session} onValueChange={setSession}>
+                {sessions.map((session) => (
+                  <Select.Item key={session._id} value={session._id}>
+                    {session.name}
+                  </Select.Item>
+                ))}
+              </Select>
+              <button
+                type="button"
+                className="text-xs text-gray-11 hover:underline hover:underline-offset-1 focus:outline-none dark:text-gray-dark-11"
+              >
+                Create a new session
+              </button>
+            </div>
             <div className="flex w-full items-start justify-start gap-3">
               <div className="w-2/3">
                 <Input required value={name.long} onValueChange={(long) => setName((name) => ({ ...name, long }))}>
