@@ -7,14 +7,14 @@ import { ClassModel, StudentModel, StaffModel, ParentModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const handler: API.Handler<API.Teacher.POST.Data> = async (req) => {
+const handler: API.Handler<API.Staff.POST.Data> = async (req) => {
   await connect();
-  if (req.method === "POST") return POST(req.body as API.Teacher.POST.Body);
+  if (req.method === "POST") return POST(req.body as API.Staff.POST.Body);
 
   return null;
 };
 
-async function POST({ classes, __type, ...body }: API.Teacher.POST.Body): API.HandlerResponse<API.Teacher.POST.Data> {
+async function POST({ classes, __type, ...body }: API.Staff.POST.Body): API.HandlerResponse<API.Staff.POST.Data> {
   const check = await Promise.all([
     StudentModel.exists({ username: body.username }),
     StaffModel.exists({ username: body.username }),
