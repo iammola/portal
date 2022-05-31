@@ -187,7 +187,7 @@ declare global {
       }
     }
 
-    namespace Teacher {
+    namespace Staff {
       namespace POST {
         type Data = CreateData<Pick<Schemas.Staff.Record, "schoolMail">>;
 
@@ -197,7 +197,9 @@ declare global {
           classes?: string[];
         } & Omit<Schemas.Staff.Record, "_id" | "schoolMail" | "password" | "gender">;
       }
+    }
 
+    namespace Teacher {
       namespace GET {
         type Students = Array<
           Pick<Schemas.Student.Record, "_id" | "gender" | "username" | "schoolMail"> & {

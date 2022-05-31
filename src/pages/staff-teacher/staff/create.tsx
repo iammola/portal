@@ -59,7 +59,7 @@ const CreateTeacher: NextPage = () => {
       setIsLoading(true);
       toastID = toasts.add({ kind: "loading", description: "Processing request..." });
       const body = { __type, name, contact, dob, username, password, classes, images: {}, privileges: [] };
-      const result = await fetchAPIEndpoint<API.Teacher.POST.Data, API.Teacher.POST.Body>("/api/teachers", {
+      const result = await fetchAPIEndpoint<API.Staff.POST.Data, API.Staff.POST.Body>("/api/staff", {
         method: "POST",
         body: { ...body, gender: gender[0] },
       });
