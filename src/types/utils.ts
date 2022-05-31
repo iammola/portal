@@ -10,7 +10,7 @@ declare global {
       ? R
       : RangeUnion<N, [...R, R["length"]]>;
 
-    export type FilterNumber<S extends string, R extends number = RangeUnion<999>[number]> = R extends unknown
+    type FilterNumber<S extends string, R extends number = RangeUnion<999>[number]> = R extends unknown
       ? `${R}` extends S
         ? R
         : never
@@ -22,9 +22,9 @@ declare global {
      */
     type UnionToIntersection<U> = (U extends unknown ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 
-    export type FlattenIntersection<U> = UnionToIntersection<U> extends infer O ? { [K in keyof O]: O[K] } : never;
+    type FlattenIntersection<U> = UnionToIntersection<U> extends infer O ? { [K in keyof O]: O[K] } : never;
 
-    export type OneKey<V, K extends keyof V = keyof V> = {
+    type OneKey<V, K extends keyof V = keyof V> = {
       [P in K]: FlattenIntersection<Record<P, V[P]> & Partial<Record<Exclude<K, P>, never>>>;
     }[K];
   }

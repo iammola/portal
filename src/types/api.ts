@@ -5,20 +5,20 @@ declare global {
   namespace API {
     type METHOD = "GET" | "POST" | "PUT" | "DELETE" | "SEARCH";
 
-    export type UpdateData = Record<"success", boolean>;
-    export type CreateData<O = unknown> = Schemas.DocumentId & O;
-    export type DeleteData = {
+    type UpdateData = Record<"success", boolean>;
+    type CreateData<O = unknown> = Schemas.DocumentId & O;
+    type DeleteData = {
       count: number;
       success: boolean;
     };
 
     type ResponseCodes = Utils.FilterNumber<`${StatusCodes}`>;
 
-    export type RouteResponse<D> = [Error, ResponseCodes] | [Response<D>, ResponseCodes];
+    type RouteResponse<D> = [Error, ResponseCodes] | [Response<D>, ResponseCodes];
 
-    export type HandlerResponse<D> = Promise<[Omit<Response<D>, "success">, ResponseCodes]>;
+    type HandlerResponse<D> = Promise<[Omit<Response<D>, "success">, ResponseCodes]>;
 
-    export type Handler<R extends object> = (
+    type Handler<R extends object> = (
       req: Omit<NextApiRequest, "body"> & { method?: METHOD; body: Record<string, unknown> },
       res: NextApiResponse<Error | Response<R>>
     ) => Promise<Awaited<API.HandlerResponse<R>> | null>;
@@ -28,28 +28,28 @@ declare global {
       message: `${ReasonPhrases}`;
     };
 
-    export type Response<D> = {
+    type Response<D> = {
       data: D;
     } & Data<true>;
 
-    export type Error = {
+    type Error = {
       error: string | Record<string, string | undefined>;
     } & Data<false>;
 
-    export type Result<D> = Error | Response<D>;
+    type Result<D> = Error | Response<D>;
   }
 
   namespace API {
     namespace Auth {
       namespace POST {
-        export type Body = {
+        type Body = {
           level: string;
           password: string;
           username: string;
           remember: boolean;
         };
 
-        export type Data = {
+        type Data = {
           token: string;
           expires?: Date;
           level: string;
@@ -60,71 +60,68 @@ declare global {
 
     namespace Attendance {
       namespace POST {
-        export type Body = Schemas.Attendance.Date;
+        type Body = Schemas.Attendance.Date;
 
-        export type Data = CreateData & UpdateData;
+        type Data = CreateData & UpdateData;
       }
     }
 
     namespace Class {
       namespace POST {
-        export type Data = CreateData<Pick<Schemas.Class.Record, "createdAt">>;
+        type Data = CreateData<Pick<Schemas.Class.Record, "createdAt">>;
 
-        export type Body = Pick<Schemas.Class.Record, "name"> & Record<"teachers", string[]>;
+        type Body = Pick<Schemas.Class.Record, "name"> & Record<"teachers", string[]>;
       }
 
       namespace PUT {
         namespace Teachers {
-          export type Data = UpdateData;
+          type Data = UpdateData;
 
-          export type Body = Record<"teachers", string[]>;
+          type Body = Record<"teachers", string[]>;
         }
       }
 
       namespace GET {
         type ClassDataNoTeacher = Omit<Schemas.Class.Record<true>, "teachers">;
 
-        export type Data<S extends keyof ClassDataNoTeacher = keyof ClassDataNoTeacher> = Pick<
-          ClassDataNoTeacher,
-          "_id" | S
-        >;
+        type Data<S extends keyof ClassDataNoTeacher = keyof ClassDataNoTeacher> = Pick<ClassDataNoTeacher, "_id" | S>;
 
-        export type AllData<S extends keyof ClassDataNoTeacher = keyof ClassDataNoTeacher> = Array<Data<S>>;
+        type AllData<S extends keyof ClassDataNoTeacher = keyof ClassDataNoTeacher> = Array<Data<S>>;
 
         namespace Students {
-          export type Data = Schemas.Student.Schema[];
+          type Data = Schemas.Student.Schema[];
 
-          export type Count = Record<"count", number>;
+          type Count = Record<"count", number>;
         }
 
-        export type Subjects = Array<Schemas.Subject.Record<true>>;
+        type Subjects = Array<Schemas.Subject.Record<true>>;
 
-        export type Teachers = Record<"teachers", Schemas.Staff.TeacherSchema[]>;
+        type Teachers = Record<"teachers", Schemas.Staff.TeacherSchema[]>;
       }
 
       namespace DELETE {
-        export type Teachers = DeleteData & Record<"message", string>;
+        type Teachers = DeleteData & Record<"message", string>;
       }
     }
 
     namespace Subject {
       namespace DELETE {
-        export type Data = DeleteData;
+        type Data = DeleteData;
       }
 
       namespace PUT {
-        export type Data = UpdateData;
+        type Data = UpdateData;
 
-        export type Body = SubjectKeys<BaseBody | GroupBody>;
+        type Body = SubjectKeys<BaseBody | GroupBody>;
 
         type K = "__type";
         type SubjectKeys<T extends BaseBody | GroupBody> = Utils.OneKey<Omit<T, K>> & Pick<T, K>;
       }
 
       namespace POST {
-        export type Data = CreateData;
+        type Data = CreateData;
 
-        export type Body = GroupBody | BaseBody;
+        type Body = GroupBody | BaseBody;
       }
 
       type BaseBody = {
@@ -141,31 +138,31 @@ declare global {
     namespace Session {
       namespace POST {
         namespace Terms {
-          export type Data = CreateData;
+          type Data = CreateData;
 
-          export type Body = {
+          type Body = {
             session?: Pick<Schemas.Session.Record, "name">;
           } & Omit<Schemas.Term.Record, "_id" | "session">;
         }
       }
 
       namespace GET {
-        export type AllData = {
+        type AllData = {
           current: Schemas.DocumentId | null;
           data: Array<Omit<Data, "current">>;
         };
 
-        export type Data = {
+        type Data = {
           current: boolean;
         } & Schemas.Session.Record<"termsCount">;
 
-        export type Terms = Pick<Schemas.Session.Record<true>, "_id" | "terms">;
+        type Terms = Pick<Schemas.Session.Record<true>, "_id" | "terms">;
       }
     }
 
     namespace Term {
       namespace GET {
-        export type AllData = {
+        type AllData = {
           current: Schemas.DocumentId | null;
           data: Array<{
             session: Pick<Schemas.Session.Record, "name">;
@@ -173,7 +170,7 @@ declare global {
           }>;
         };
 
-        export type Data = {
+        type Data = {
           current: boolean;
           session: Pick<Schemas.Session.Record, "name">;
         } & Omit<Schemas.Term.Record, "session">;
@@ -182,9 +179,9 @@ declare global {
 
     namespace Parent {
       namespace POST {
-        export type Data = CreateData<Pick<Schemas.Parent.Schema, "schoolMail">>;
+        type Data = CreateData<Pick<Schemas.Parent.Schema, "schoolMail">>;
 
-        export type Body = {
+        type Body = {
           password: string;
         } & Omit<Schemas.Parent.Schema, "_id" | "schoolMail" | "password">;
       }
@@ -192,9 +189,9 @@ declare global {
 
     namespace Teacher {
       namespace POST {
-        export type Data = CreateData<Pick<Schemas.Staff.Record, "schoolMail">>;
+        type Data = CreateData<Pick<Schemas.Staff.Record, "schoolMail">>;
 
-        export type Body = {
+        type Body = {
           gender: string;
           password: string;
           classes?: string[];
@@ -202,7 +199,7 @@ declare global {
       }
 
       namespace GET {
-        export type Students = Array<
+        type Students = Array<
           Pick<Schemas.Student.Record, "_id" | "gender" | "username" | "schoolMail"> & {
             age?: string;
             name: string;
@@ -216,9 +213,9 @@ declare global {
 
     namespace Student {
       namespace POST {
-        export type Data = CreateData<Pick<Schemas.Student.Schema, "schoolMail">>;
+        type Data = CreateData<Pick<Schemas.Student.Schema, "schoolMail">>;
 
-        export type Body = {
+        type Body = {
           dob: Date;
           gender: string;
           username: string;
@@ -229,13 +226,13 @@ declare global {
       }
 
       namespace DELETE {
-        export type Data = DeleteData;
+        type Data = DeleteData;
       }
     }
 
     namespace User {
       namespace GET {
-        export type Data = {
+        type Data = {
           level: string;
           images?: Pick<NonNullable<Schemas.User.Base["images"]>, "avatar">;
           name: Pick<Schemas.User.Base["name"], "full" | "initials">;

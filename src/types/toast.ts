@@ -15,7 +15,7 @@ declare global {
       };
     };
 
-    export type Hook = {
+    type Hook = {
       remove(id: number): void;
       add(toast: Omit<Props, "open">): number;
       update(id: number, toast: Omit<Props, "open">): void;
@@ -25,10 +25,10 @@ declare global {
     type Success = ToastPrimitiveProps.ToastProps & DefaultProps<"success"> & OtherProps;
     type Error = ToastPrimitiveProps.ToastProps & DefaultProps<"error"> & OtherProps;
 
-    export type LoadingProps = Omit<Loading, "kind">;
-    export type SuccessProps = Omit<Success, "kind">;
-    export type ErrorProps = Omit<Error, "kind">;
+    type LoadingProps = Omit<Loading, "kind">;
+    type SuccessProps = Omit<Success, "kind">;
+    type ErrorProps = Omit<Error, "kind">;
 
-    export type Props = Loading | Success | Error;
+    type Props = Loading | Success | Error;
   }
 }

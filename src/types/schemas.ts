@@ -5,42 +5,42 @@ import { ModelNames } from "db";
 
 declare global {
   namespace Schemas {
-    export type DocumentId = Record<"_id", ObjectId>;
-    export type ObjectId = bson.ObjectId & Mongoose.Schema.Types.ObjectId;
+    type DocumentId = Record<"_id", ObjectId>;
+    type ObjectId = bson.ObjectId & Mongoose.Schema.Types.ObjectId;
 
-    export type AQuery<R> = Mongoose.Aggregate<R[]>;
-    export type SQuery<S, R = S, M = unknown, V = unknown> = Mongoose.Query<
+    type AQuery<R> = Mongoose.Aggregate<R[]>;
+    type SQuery<S, R = S, M = unknown, V = unknown> = Mongoose.Query<
       S extends Array<infer A> ? Array<Mongoose.HydratedDocument<A, M, V>> : Mongoose.HydratedDocument<S, M, V> | null,
       Mongoose.HydratedDocument<S, M, V>,
       unknown,
       R
     >;
 
-    export type ModelRecord<S, V = unknown, K extends boolean | keyof V = false> = S &
+    type ModelRecord<S, V = unknown, K extends boolean | keyof V = false> = S &
       (K extends true ? V : Utils.FlattenIntersection<K extends keyof V ? Pick<V, K> : unknown>);
 
-    // Todo: Get a better name than "Thing" for this type. Meant to group classes or subjects or terms or sessions
-    export type ThingName = {
+    // Todo: Get a better neame than "Thing" for this type. Meant to group classes or subjects or terms or sessions
+    type ThingName = {
       special?: string;
     } & Record<"long" | "short", string>;
   }
 
   namespace Schemas {
     namespace Attendance {
-      export type Schema = {
+      type Schema = {
         userId: ObjectId;
         dates: Date[];
       } & DocumentId;
 
-      export type Date = {
+      type Date = {
         readonly in: Date;
         readonly out: Date;
         readonly state: "present" | "late";
       };
 
-      export type Record = ModelRecord<Schema>;
+      type Record = ModelRecord<Schema>;
 
-      export type Model = {
+      type Model = {
         /** Find one user's attendance records by userId */
         findUser(
           userId: string,
@@ -64,7 +64,7 @@ declare global {
     }
 
     namespace Class {
-      export type Schema = {
+      type Schema = {
         /** The class order. How it'll be sorted when fetched from DB */
         order: number;
         name: ThingName;
@@ -72,15 +72,15 @@ declare global {
         teachers: ObjectId[];
       } & DocumentId;
 
-      export type Virtuals = {
+      type Virtuals = {
         subjectsCount: number;
       };
 
-      export type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
+      type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
 
       type PopulatedTeachers = { teachers: Staff.TeacherSchema[] };
 
-      export type Model = {
+      type Model = {
         /** Find a class by any of it's long, short or special names */
         findByName(
           name: string,
@@ -115,44 +115,40 @@ declare global {
         name: ThingName;
       } & Subject;
 
-      export type BaseSchema = {
+      type BaseSchema = {
         teachers: ObjectId[];
       } & Schema<ModelNames.B_SUBJECT>;
 
-      export type BaseVirtuals = {
+      type BaseVirtuals = {
         teachersCount: number;
       };
 
-      export type DivisionSchema = Pick<BaseSchema, "_id" | "name" | "teachers">;
+      type DivisionSchema = Pick<BaseSchema, "_id" | "name" | "teachers">;
 
-      export type GroupSchema = {
+      type GroupSchema = {
         divisions: DivisionSchema[];
       } & Schema<ModelNames.G_SUBJECT>;
 
-      export type GroupVirtuals = {
+      type GroupVirtuals = {
         divisionsCount: number;
       };
 
-      export type Model = Mongoose.Model<BaseSchema | GroupSchema>;
-      export type Record<V extends boolean = false> = ModelRecord<
+      type Model = Mongoose.Model<BaseSchema | GroupSchema>;
+      type Record<V extends boolean = false> = ModelRecord<
         BaseRecord<V> | GroupRecord<V>,
         Partial<BaseVirtuals & GroupVirtuals>,
         V
       >;
 
-      export type BaseModel = Mongoose.Model<BaseSchema>;
-      export type BaseRecord<V extends boolean | keyof BaseVirtuals = false> = ModelRecord<BaseSchema, BaseVirtuals, V>;
+      type BaseModel = Mongoose.Model<BaseSchema>;
+      type BaseRecord<V extends boolean | keyof BaseVirtuals = false> = ModelRecord<BaseSchema, BaseVirtuals, V>;
 
-      export type GroupModel = Mongoose.Model<GroupSchema>;
-      export type GroupRecord<V extends boolean | keyof GroupVirtuals = false> = ModelRecord<
-        GroupSchema,
-        GroupVirtuals,
-        V
-      >;
+      type GroupModel = Mongoose.Model<GroupSchema>;
+      type GroupRecord<V extends boolean | keyof GroupVirtuals = false> = ModelRecord<GroupSchema, GroupVirtuals, V>;
     }
 
     namespace Session {
-      export type Schema = {
+      type Schema = {
         name: ThingName;
       } & DocumentId;
 
@@ -161,9 +157,9 @@ declare global {
         terms: Array<Omit<Term.Schema, "session">>;
       };
 
-      export type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
+      type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
 
-      export type Model = {
+      type Model = {
         /** It's a static method that finds the session with the current term. */
         findCurrent(
           projection?: Mongoose.ProjectionType<Schema> | null,
@@ -173,7 +169,7 @@ declare global {
     }
 
     namespace Term {
-      export type Schema = {
+      type Schema = {
         name: ThingName;
         session: ObjectId;
         end: Date;
@@ -184,9 +180,9 @@ declare global {
         current: boolean;
       };
 
-      export type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
+      type Record<V extends boolean | keyof Virtuals = false> = ModelRecord<Schema, Virtuals, V>;
 
-      export type Model = {
+      type Model = {
         /** It's a static method that finds the current term. */
         findCurrent(
           projection?: Mongoose.ProjectionType<Schema> | null,
@@ -196,36 +192,36 @@ declare global {
     }
 
     namespace User {
-      export type Type = "parent" | "teacher" | "student";
+      type Type = "parent" | "teacher" | "student";
 
-      export type Name = {
+      type Name = {
         other?: string;
       } & Record<"initials" | "title" | "full" | "first" | "last", string>;
 
-      export type Password = {
+      type Password = {
         hash: string;
         salt: string;
       };
 
-      export type Images = {
+      type Images = {
         cover?: string;
         avatar?: string;
       };
 
-      export type SubContact = {
+      type SubContact = {
         primary: string;
         other?: string;
       };
 
-      export type Contact = {
+      type Contact = {
         email: SubContact;
         phone?: Partial<SubContact>;
         address?: Partial<SubContact>;
       };
 
-      export type Gender = "M" | "F";
+      type Gender = "M" | "F";
 
-      export type Base = {
+      type Base = {
         dob?: Date;
         name: Name;
         images?: Images;
@@ -235,11 +231,11 @@ declare global {
         readonly schoolMail: string;
       } & DocumentId;
 
-      export type Virtuals = {
+      type Virtuals = {
         password: Password;
       };
 
-      export type StaticMethods<S> = {
+      type StaticMethods<S> = {
         /** Find a user by username */
         findByUsername(
           username: string,
@@ -268,25 +264,25 @@ declare global {
     }
 
     namespace Student {
-      export type Guardian = {
+      type Guardian = {
         guardian: ObjectId;
         relation: "father" | "mother" | "other";
       };
 
-      export type Academic = {
+      type Academic = {
         term: ObjectId;
         class: ObjectId;
         subjects: ObjectId[];
       };
 
-      export type Schema = {
+      type Schema = {
         academic: Academic[];
         guardians: Guardian[];
       } & User.Base;
 
-      export type Record<V extends boolean | keyof User.Virtuals = false> = ModelRecord<Schema, User.Virtuals, V>;
+      type Record<V extends boolean | keyof User.Virtuals = false> = ModelRecord<Schema, User.Virtuals, V>;
 
-      export type Model = Mongoose.Model<Schema, unknown, unknown, User.Virtuals> & User.StaticMethods<Schema>;
+      type Model = Mongoose.Model<Schema, unknown, unknown, User.Virtuals> & User.StaticMethods<Schema>;
     }
 
     namespace Staff {
@@ -297,27 +293,23 @@ declare global {
         privileges: P[];
       } & Base;
 
-      export type TeacherSchema = Schema<ModelNames.T_STAFF>;
+      type TeacherSchema = Schema<ModelNames.T_STAFF>;
 
-      export type Model = Mongoose.Model<TeacherSchema> & User.StaticMethods<TeacherSchema>;
-      export type Record<V extends boolean | keyof User.Virtuals = false> = ModelRecord<
-        TeacherRecord,
-        User.Virtuals,
-        V
-      >;
+      type Model = Mongoose.Model<TeacherSchema> & User.StaticMethods<TeacherSchema>;
+      type Record<V extends boolean | keyof User.Virtuals = false> = ModelRecord<TeacherRecord, User.Virtuals, V>;
 
-      export type TeacherModel = Mongoose.Model<TeacherSchema> & User.StaticMethods<TeacherSchema>;
-      export type TeacherRecord = ModelRecord<TeacherSchema>;
+      type TeacherModel = Mongoose.Model<TeacherSchema> & User.StaticMethods<TeacherSchema>;
+      type TeacherRecord = ModelRecord<TeacherSchema>;
     }
 
     namespace Parent {
-      export type Schema = {
+      type Schema = {
         occupation: string;
       } & User.Base;
 
-      export type Record<V extends boolean | keyof User.Virtuals = false> = ModelRecord<Schema, User.Virtuals, V>;
+      type Record<V extends boolean | keyof User.Virtuals = false> = ModelRecord<Schema, User.Virtuals, V>;
 
-      export type Model = Mongoose.Model<Schema, unknown, unknown, User.Virtuals> & User.StaticMethods<Schema>;
+      type Model = Mongoose.Model<Schema, unknown, unknown, User.Virtuals> & User.StaticMethods<Schema>;
     }
 
     namespace Result {
@@ -332,15 +324,15 @@ declare global {
         forcedTotal?: number;
       };
 
-      export type Schema = {
+      type Schema = {
         term: ObjectId;
         scores: Scores[];
         studentId: ObjectId;
       } & DocumentId;
 
-      export type Record = ModelRecord<Schema>;
+      type Record = ModelRecord<Schema>;
 
-      export type Model = Mongoose.Model<Schema>;
+      type Model = Mongoose.Model<Schema>;
     }
   }
 }
