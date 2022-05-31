@@ -21,7 +21,7 @@ const handler: API.Handler<API.Event.POST.Data> = async (req) => {
   return null;
 };
 
-async function POST({ invitees, ...body }: API.Event.POST.Body): API.HandlerResponse<API.Event.POST.Data> {
+async function POST({ invitees = {}, ...body }: API.Event.POST.Body): API.HandlerResponse<API.Event.POST.Data> {
   if (new Date(body.start) > new Date(body.ends)) throw new Error("Start date cannot be after specified end");
 
   const inviteIDs: Partial<Record<"staff" | "parents" | "students", Schemas.ObjectId[]>> = {};

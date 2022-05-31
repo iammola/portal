@@ -363,10 +363,10 @@ declare global {
         title: string;
         start: Date;
         ends: Date;
-        invitees: {
-          staff: ObjectId[];
-          parents: ObjectId[];
-          students: ObjectId[];
+        invitees?: {
+          staff?: ObjectId[];
+          parents?: ObjectId[];
+          students?: ObjectId[];
         };
       };
 

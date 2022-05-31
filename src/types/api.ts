@@ -199,16 +199,11 @@ declare global {
 
         type Invitee = "all" | string[];
         export type Body = Omit<Schemas.Calendar.EventSchema, "invitees" | "__type"> & {
-          invitees: {
-            parents?: Invitee;
-          } & (
-            | { classes: Invitee; students: undefined; staff: undefined }
-            | {
-                classes?: undefined;
-                students: Invitee;
-                staff: Invitee | { teachers: Invitee /* Other Staff Types */ };
-              }
-          );
+          invitees?: { parents?: Invitee } & Partial<{
+            classes: Invitee;
+            students: Invitee;
+            staff: Invitee | Partial<{ teachers: Invitee /* Other Staff Types */ }>;
+          }>;
         };
       }
     }

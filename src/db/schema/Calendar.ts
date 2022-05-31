@@ -7,14 +7,17 @@ const EventInviteesSchema = new mongoose.Schema<Schemas.Calendar.EventSchema["in
     parents: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "", // TODO: Parent Model
+      default: undefined,
     },
     staff: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: ModelNames.STAFF,
+      default: undefined,
     },
     students: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: ModelNames.STUDENT,
+      default: undefined,
     },
   },
   { _id: false }
@@ -105,6 +108,7 @@ export const EventSchema = new mongoose.Schema<Schemas.Calendar.EventSchema>({
   },
   invitees: {
     type: EventInviteesSchema,
+    default: undefined,
   },
 });
 
