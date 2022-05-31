@@ -36,7 +36,7 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
   const settings = await SettingsModel.findOne({}, "locked");
   if (settings?.locked !== false) throw new Error("Could not complete request");
 
-  const { level, password, remember, username } = JSON.parse(req.body) as API.Auth.POST.Body;
+  const { level, password, remember, username } = req.body as API.Auth.POST.Body;
   if (!username) throw new Error("Username required");
 
   const user = await getUser(level, username);
