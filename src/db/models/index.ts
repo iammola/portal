@@ -19,3 +19,5 @@ export { AttendanceModel } from "./Attendance";
 export { StaffModel, TeacherStaffModel } from "./Staff";
 
 export { BaseSubjectModel, GroupSubjectModel, SubjectModel } from "./Subject";
+
+export { CalendarModel, EventCalendarModel, TimetableCalendarModel } from "./Calendar";
