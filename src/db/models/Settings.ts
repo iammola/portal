@@ -11,5 +11,5 @@ const SettingsSchema = new mongoose.Schema<Schemas.Settings.Record, Schemas.Sett
   { capped: { max: 1, size: 100000 }, versionKey: false }
 );
 
-export const SettingsModel = (mongoose.models[ModelNames.SESSION] ??
-  mongoose.model(ModelNames.SESSION, SettingsSchema)) as Schemas.Settings.Model;
+export const SettingsModel = (mongoose.models[ModelNames.SETTINGS] ??
+  mongoose.model(ModelNames.SETTINGS, SettingsSchema)) as Schemas.Settings.Model;

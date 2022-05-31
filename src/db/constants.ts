@@ -20,5 +20,7 @@ export enum ModelNames {
 
   SESSION = "Session",
 
+  SETTINGS = "Settings",
+
   ATTENDANCE = "Attendance",
 }
