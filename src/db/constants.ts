@@ -26,4 +26,5 @@ export enum ModelNames {
 
   CALENDAR = "Calendar",
   E_CALENDAR = "event",
+  T_CALENDAR = "timetable",
 }

@@ -372,6 +372,35 @@ declare global {
       type EventModel = Mongoose.Model<EventSchema>;
 
       type EventRecord = ModelRecord<EventSchema>;
+
+      type TimetablePeriod = {
+        end: Date;
+        start: Date;
+      } & (
+        | {
+            _type: "subject";
+            subject: ObjectId;
+            teacher: ObjectId;
+          }
+        | {
+            _type: "idle";
+            title: string;
+            description?: string;
+          }
+      );
+
+      type TimetableSchema = {
+        // Weekly timetable entry
+        class: ObjectId;
+        days: Array<{
+          date: Date;
+          periods: TimetablePeriod[];
+        }>;
+      };
+
+      type TimetableModel = Mongoose.Model<TimetableSchema>;
+
+      type TimetableRecord = ModelRecord<TimetableSchema>;
     }
   }
 }
