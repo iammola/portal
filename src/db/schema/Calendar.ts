@@ -87,37 +87,43 @@ const TimetableDaySchema = new mongoose.Schema<Schemas.Calendar.TimetableSchema[
   { _id: false }
 );
 
-export const EventSchema = new mongoose.Schema<Schemas.Calendar.EventSchema>({
-  title: {
-    type: String,
-    required: [true, "Event title required"],
-  },
-  start: {
-    type: Date,
-    required: [true, "Event start date required"],
-  },
-  ends: {
-    type: Date,
-    required: [true, "Event end date required"],
-    validate: {
-      message: "End date must be after start date",
-      validator: function (this: Schemas.Calendar.EventSchema, end?: Date) {
-        return end === undefined ? true : new Date(end).getTime() > new Date(this.start).getTime();
+export const EventSchema = new mongoose.Schema<Schemas.Calendar.EventSchema>(
+  {
+    title: {
+      type: String,
+      required: [true, "Event title required"],
+    },
+    start: {
+      type: Date,
+      required: [true, "Event start date required"],
+    },
+    ends: {
+      type: Date,
+      required: [true, "Event end date required"],
+      validate: {
+        message: "End date must be after start date",
+        validator: function (this: Schemas.Calendar.EventSchema, end?: Date) {
+          return end === undefined ? true : new Date(end).getTime() > new Date(this.start).getTime();
+        },
       },
     },
+    invitees: {
+      type: EventInviteesSchema,
+      default: undefined,
+    },
   },
-  invitees: {
-    type: EventInviteesSchema,
-    default: undefined,
-  },
-});
+  { versionKey: false }
+);
 
-export const TimetableSchema = new mongoose.Schema<Schemas.Calendar.TimetableSchema>({
-  class: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: [true, "Timetable Class is required"],
+export const TimetableSchema = new mongoose.Schema<Schemas.Calendar.TimetableSchema>(
+  {
+    class: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, "Timetable Class is required"],
+    },
+    days: {
+      type: [TimetableDaySchema],
+    },
   },
-  days: {
-    type: [TimetableDaySchema],
-  },
-});
+  { versionKey: false }
+);
