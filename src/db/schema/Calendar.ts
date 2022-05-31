@@ -4,10 +4,6 @@ import { ModelNames } from "db/constants";
 
 const EventInviteesSchema = new mongoose.Schema<Schemas.Calendar.EventSchema["invitees"]>(
   {
-    classes: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: ModelNames.CLASS,
-    },
     parents: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "", // TODO: Parent Model

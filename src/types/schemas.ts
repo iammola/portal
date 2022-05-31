@@ -365,7 +365,6 @@ declare global {
         ends: Date;
         invitees: {
           staff: ObjectId[];
-          classes: ObjectId[];
           parents: ObjectId[];
           students: ObjectId[];
         };
