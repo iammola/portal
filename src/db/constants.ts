@@ -7,11 +7,11 @@ export enum ModelNames {
 
   PARENT = "Parent",
 
-  RESULT = "RESULT",
+  RESULT = "Result",
 
   STUDENT = "Student",
 
-  STAFF = "staff",
+  STAFF = "Staff",
   T_STAFF = "teacher",
 
   SUBJECT = "Subject",
