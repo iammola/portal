@@ -334,5 +334,15 @@ declare global {
 
       type Model = Mongoose.Model<Schema>;
     }
+
+    namespace Settings {
+      type Schema = {
+        locked: boolean;
+      };
+
+      type Record = ModelRecord<Schema>;
+
+      type Model = Mongoose.Model<Schema>;
+    }
   }
 }

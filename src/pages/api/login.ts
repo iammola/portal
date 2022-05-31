@@ -8,7 +8,7 @@ import { connect } from "db";
 import { comparePassword } from "db/utils";
 import { JWT_ALG, JWT_COOKIE_KEY } from "utils";
 import { NotFoundError, routeWrapper } from "api";
-import { ParentModel, StaffModel, StudentModel } from "db/models";
+import { ParentModel, SettingsModel, StaffModel, StudentModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -32,9 +32,11 @@ async function getUser(level: string, username: string): Promise<User | null | u
 }
 
 const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
-  if (typeof req.body !== "string" || !req.body) throw new Error("Invalid Request Body");
+  // A specific type of privilege will be able to bypass this
+  const settings = await SettingsModel.findOne({}, "locked");
+  if (settings?.locked !== false) throw new Error("Could not complete request");
 
-  const { level, password, remember, username } = JSON.parse(req.body) as API.Auth.POST.Body;
+  const { level, password, remember, username } = req.body as API.Auth.POST.Body;
   if (!username) throw new Error("Username required");
 
   const user = await getUser(level, username);

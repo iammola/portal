@@ -12,6 +12,8 @@ export { SessionModel } from "./Session";
 
 export { StudentModel } from "./Student";
 
+export { SettingsModel } from "./Settings";
+
 export { AttendanceModel } from "./Attendance";
 
 export { StaffModel, TeacherStaffModel } from "./Staff";
