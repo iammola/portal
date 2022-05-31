@@ -348,5 +348,30 @@ declare global {
 
       type Model = Mongoose.Model<Schema>;
     }
+
+    namespace Calendar {
+      // The timetable can be changed a week,
+      // A period lasts 45 minutes on a Monday-Thursday, and 35 mins on Friday.
+
+      type Schema<T> = DocumentId & {
+        __type: T;
+      };
+
+      type EventSchema = {
+        title: string;
+        start: Date;
+        ends: Date;
+        invitees: {
+          staff: ObjectId[];
+          classes: ObjectId[];
+          parents: ObjectId[];
+          students: ObjectId[];
+        };
+      };
+
+      type EventModel = Mongoose.Model<EventSchema>;
+
+      type EventRecord = ModelRecord<EventSchema>;
+    }
   }
 }
