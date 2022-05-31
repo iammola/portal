@@ -195,8 +195,13 @@ declare global {
       type Type = "parent" | "teacher" | "student";
 
       type Name = {
+        title?: string;
         other?: string;
-      } & Record<"initials" | "title" | "full" | "first" | "last", string>;
+        initials: string;
+        last: string;
+        full: string;
+        first: string;
+      };
 
       type Password = {
         hash: string;

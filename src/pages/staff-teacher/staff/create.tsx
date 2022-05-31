@@ -47,7 +47,6 @@ const CreateTeacher: NextPage = () => {
     last: "",
     first: "",
     initials: "",
-    title: teacherTitles[0],
   });
   const [contact, setContact] = useState<Schemas.Staff.Base["contact"]>({ email: { primary: "" } });
 
@@ -74,7 +73,7 @@ const CreateTeacher: NextPage = () => {
         setPassword("");
         setDob(undefined);
         setGender(teacherGenders[0]);
-        setName({ full: "", last: "", first: "", initials: "", title: teacherTitles[0] });
+        setName({ full: "", last: "", first: "", initials: "" });
         setContact({ email: { primary: "" }, phone: { primary: "" }, address: { primary: "" } });
       } else throw result.error;
     } catch (error) {
@@ -105,7 +104,6 @@ const CreateTeacher: NextPage = () => {
             <div className="w-full min-w-0 space-y-7">
               <div className="grid gap-6 sm:grid-cols-[minmax(max-content,200px)_minmax(0,1fr)]">
                 <Select
-                  required
                   label="Title"
                   value={name.title}
                   onValueChange={(title) => setName((name) => ({ ...name, title }))}

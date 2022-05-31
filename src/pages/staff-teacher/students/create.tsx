@@ -46,7 +46,6 @@ const CreateStudent: NextPage = () => {
     last: "",
     first: "",
     initials: "",
-    title: studentTitles[0],
   });
   const [contact, setContact] = useState<Schemas.Student.Schema["contact"]>({ email: { primary: "" } });
   const [guardians, setGuardians] = useState<Array<Record<"guardian" | "relation", string>>>([]);
@@ -112,7 +111,7 @@ const CreateStudent: NextPage = () => {
         setGuardians([]);
         setDob(undefined);
         setGender(studentGenders[0]);
-        setName({ full: "", last: "", first: "", initials: "", title: studentTitles[0] });
+        setName({ full: "", last: "", first: "", initials: "" });
         setContact({ email: { primary: "" }, phone: { primary: "" }, address: { primary: "" } });
       } else throw result.error;
     } catch (error) {
@@ -143,7 +142,6 @@ const CreateStudent: NextPage = () => {
             <div className="w-full min-w-0 space-y-7">
               <div className="grid gap-6 sm:grid-cols-[minmax(max-content,200px)_minmax(0,1fr)]">
                 <Select
-                  required
                   label="Title"
                   value={name.title}
                   onValueChange={(title) => setName((name) => ({ ...name, title }))}

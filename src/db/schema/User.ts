@@ -89,7 +89,7 @@ export const createUserSchema = <D extends Schemas.User.Base, M extends mongoose
 const UserName = new mongoose.Schema<Schemas.User.Name>(
   {
     other: userSubName(),
-    title: userSubName("Title required"),
+    title: userSubName(),
     last: userSubName("Last name required"),
     full: userSubName("Full name required"),
     first: userSubName("First name required"),
