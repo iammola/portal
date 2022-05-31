@@ -192,5 +192,25 @@ declare global {
         };
       }
     }
+
+    namespace Event {
+      namespace POST {
+        export type Data = CreateData;
+
+        type Invitee = "all" | string[];
+        export type Body = Omit<Schemas.Calendar.EventSchema, "invitees"> & {
+          invitees: {
+            parents?: Invitee;
+          } & (
+            | { classes: Invitee; students: undefined; staff: undefined }
+            | {
+                classes?: undefined;
+                students: Invitee;
+                staff: Invitee | { teachers: Invitee /* Other Staff Types */ };
+              }
+          );
+        };
+      }
+    }
   }
 }
