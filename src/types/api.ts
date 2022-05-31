@@ -198,7 +198,7 @@ declare global {
         export type Data = CreateData;
 
         type Invitee = "all" | string[];
-        export type Body = Omit<Schemas.Calendar.EventSchema, "invitees"> & {
+        export type Body = Omit<Schemas.Calendar.EventSchema, "invitees" | "__type"> & {
           invitees: {
             parents?: Invitee;
           } & (
