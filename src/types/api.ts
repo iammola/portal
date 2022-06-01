@@ -78,12 +78,10 @@ declare global {
           type Body = GroupBody | BaseBody;
 
           type BaseBody = {
-            class: string;
             teachers: string[];
           } & Pick<Schemas.Subject.BaseSchema, "name" | "__type" | "mandatory">;
 
           type GroupBody = {
-            class: string;
             divisions: Array<{ teachers: string[]; name: Schemas.Subject.DivisionSchema["name"] }>;
           } & Pick<Schemas.Subject.GroupSchema, "name" | "__type" | "mandatory">;
         }

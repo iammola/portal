@@ -60,13 +60,12 @@ const CreateSubject: NextPage = () => {
       toastID = toasts.add({ kind: "loading", description: "Processing request..." });
 
       const result = await fetchAPIEndpoint<API.Class.POST.Subjects.Data, API.Class.POST.Subjects.Body>(
-        "/api/subjects",
+        `/api/classes/${selectedClass}/subjects`,
         {
           method: "POST",
           body: {
             name,
             __type,
-            class: selectedClass,
             mandatory: mandatory ? true : undefined,
             teachers: __type === "base" ? teachers.split(" ") : [],
             divisions:
