@@ -7,8 +7,8 @@ import Head from "next/head";
 
 import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
+import { JWT_COOKIE_TOKEN, REDIRECT_QUERY } from "utils";
 import { Checkbox, Input, Password, Select } from "components/Form";
-import { JWT_COOKIE_TOKEN, REDIRECT_QUERY, USER_ID_COOKIE, USER_LEVEL_COOKIE } from "utils";
 
 const Login: NextPage = () => {
   const toasts = useToast();
@@ -39,17 +39,14 @@ const Login: NextPage = () => {
 
       toasts.remove(toastID);
       if (result.success) {
-        const { _id, expires, level, token } = result.data;
-        const options = {
+        const { expires, token } = result.data;
+
+        setCookies(JWT_COOKIE_TOKEN, token, {
           path: "/",
           secure: true,
           sameSite: true,
           expires: expires ? new Date(expires) : undefined,
-        };
-
-        setCookies(USER_ID_COOKIE, _id, options);
-        setCookies(USER_LEVEL_COOKIE, level, options);
-        setCookies(JWT_COOKIE_TOKEN, token, options);
+        });
 
         toastID = toasts.add({ kind: "success", description: "Success!!" });
 

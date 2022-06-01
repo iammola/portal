@@ -6,9 +6,9 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { comparePassword } from "db/utils";
-import { JWT_ALG, JWT_COOKIE_KEY } from "utils";
 import { NotFoundError, routeWrapper } from "api";
 import { ParentModel, SettingsModel, StaffModel, StudentModel } from "db/models";
+import { JWT_ALG, JWT_COOKIE_KEY, USER_ID_COOKIE, USER_LEVEL_COOKIE } from "utils";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -55,14 +55,17 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
     .sign(privateKey);
 
   const expires = remember ? new Date(Date.now() + 7 * 24 * 60 * 60) : undefined;
-  const options = { req, res, expires, secure: true, httpOnly: true, sameSite: true };
+  const options = { req, res, expires, secure: true, sameSite: true };
 
-  setCookies(JWT_COOKIE_KEY, await exportSPKI(publicKey), options);
+  setCookies(JWT_COOKIE_KEY, await exportSPKI(publicKey), { ...options, httpOnly: true });
+  /* Client Cookies */
+  setCookies(USER_ID_COOKIE, user._id, options);
+  setCookies(USER_LEVEL_COOKIE, level !== "staff" ? level : `${level}-${user.__type ?? ""}`, options);
 
   return [
     {
       message: ReasonPhrases.OK,
-      data: { token, expires, _id: user._id, level: level !== "staff" ? level : `${level}-${user.__type ?? ""}` },
+      data: { token, expires },
     },
     StatusCodes.OK,
   ];
