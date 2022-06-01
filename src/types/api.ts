@@ -71,6 +71,20 @@ declare global {
         type Data = CreateData<Pick<Schemas.Class.Record, "createdAt">>;
 
         type Body = Pick<Schemas.Class.Record, "name"> & Record<"teachers", string[]>;
+
+        namespace Subjects {
+          type Data = CreateData;
+
+          type Body = GroupBody | BaseBody;
+
+          type BaseBody = {
+            teachers: string[];
+          } & Pick<Schemas.Subject.BaseSchema, "name" | "__type" | "mandatory">;
+
+          type GroupBody = {
+            divisions: Array<{ teachers: string[]; name: Schemas.Subject.DivisionSchema["name"] }>;
+          } & Pick<Schemas.Subject.GroupSchema, "name" | "__type" | "mandatory">;
+        }
       }
 
       namespace PUT {
@@ -118,21 +132,15 @@ declare global {
         type SubjectKeys<T extends BaseBody | GroupBody> = Utils.OneKey<Omit<T, K>> & Pick<T, K>;
       }
 
-      namespace POST {
-        type Data = CreateData;
-
-        type Body = GroupBody | BaseBody;
-      }
-
       type BaseBody = {
         class: string;
         teachers: string[];
-      } & Omit<Schemas.Subject.BaseSchema, "_id" | "class" | "order" | "teachers">;
+      } & Pick<Schemas.Subject.BaseSchema, "name" | "__type" | "mandatory">;
 
       type GroupBody = {
         class: string;
         divisions: Array<{ teachers: string[]; name: Schemas.Subject.DivisionSchema["name"] }>;
-      } & Omit<Schemas.Subject.GroupSchema, "_id" | "class" | "divisions" | "order">;
+      } & Pick<Schemas.Subject.GroupSchema, "name" | "__type" | "mandatory">;
     }
 
     namespace Session {

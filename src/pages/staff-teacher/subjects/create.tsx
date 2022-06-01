@@ -59,17 +59,20 @@ const CreateSubject: NextPage = () => {
       setIsLoading(true);
       toastID = toasts.add({ kind: "loading", description: "Processing request..." });
 
-      const result = await fetchAPIEndpoint<API.Subject.POST.Data, API.Subject.POST.Body>("/api/subjects", {
-        method: "POST",
-        body: {
-          name,
-          __type,
-          class: selectedClass,
-          mandatory: mandatory ? true : undefined,
-          teachers: __type === "base" ? teachers.split(" ") : [],
-          divisions: __type === "group" ? divisions.map((div) => ({ ...div, teachers: div.teachers.split(" ") })) : [],
-        },
-      });
+      const result = await fetchAPIEndpoint<API.Class.POST.Subjects.Data, API.Class.POST.Subjects.Body>(
+        `/api/classes/${selectedClass}/subjects`,
+        {
+          method: "POST",
+          body: {
+            name,
+            __type,
+            mandatory: mandatory ? true : undefined,
+            teachers: __type === "base" ? teachers.split(" ") : [],
+            divisions:
+              __type === "group" ? divisions.map((div) => ({ ...div, teachers: div.teachers.split(" ") })) : [],
+          },
+        }
+      );
 
       setIsLoading(false);
       toasts.remove(toastID);
