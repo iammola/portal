@@ -1,5 +1,6 @@
 import { randomBytes } from "crypto";
 
+import { add } from "date-fns";
 import { setCookies } from "cookies-next";
 import { generateKeyPair, SignJWT, exportSPKI } from "jose";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
@@ -54,7 +55,7 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
     .setProtectedHeader({ typ: "JWT", alg: JWT_ALG })
     .sign(privateKey);
 
-  const expires = remember ? new Date(Date.now() + 7 * 24 * 60 * 60) : undefined;
+  const expires = remember ? add(new Date(), { days: 7 }) : undefined;
   const options = { req, res, expires, secure: true, sameSite: true };
 
   setCookies(JWT_COOKIE_KEY, await exportSPKI(publicKey), { ...options, httpOnly: true });
