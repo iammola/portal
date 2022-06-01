@@ -14,8 +14,6 @@ import { JWT_ALG, JWT_COOKIE_KEY, USER_ID_COOKIE, USER_LEVEL_COOKIE } from "util
 import type { NextApiRequest, NextApiResponse } from "next";
 
 async function getUser(level: string, username: string): Promise<User | null | undefined> {
-  await connect();
-
   if (level === "student")
     return await StudentModel.findByUsername(username, "password")
       .populate<Schemas.User.Virtuals>("password")
@@ -33,6 +31,8 @@ async function getUser(level: string, username: string): Promise<User | null | u
 }
 
 const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
+  await connect();
+
   // A specific type of privilege will be able to bypass this
   const settings = await SettingsModel.findOne({}, "locked");
   if (settings?.locked !== false) throw new Error("Could not complete request");
