@@ -6,14 +6,14 @@ import { BaseSubjectModel, ClassModel, GroupSubjectModel, TeacherStaffModel } fr
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const handler: API.Handler<API.Subject.POST.Data> = async (req) => {
+const handler: API.Handler<API.Class.POST.Subjects.Data> = async (req) => {
   await connect();
-  if (req.method === "POST") return POST(req.body as API.Subject.POST.Body);
+  if (req.method === "POST") return POST(req.body as API.Class.POST.Subjects.Body);
 
   return null;
 };
 
-async function POST(body: API.Subject.POST.Body): API.HandlerResponse<API.Subject.POST.Data> {
+async function POST(body: API.Class.POST.Subjects.Body): API.HandlerResponse<API.Class.POST.Subjects.Data> {
   if (body.__type === "group" && body.divisions.length < 2) throw new Error("At least 2 divisions are required");
 
   const teachers = body.__type === "base" ? body.teachers : body.divisions.map((div) => div.teachers).flat();
