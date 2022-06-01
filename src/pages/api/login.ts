@@ -34,7 +34,7 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
   await connect();
 
   // A specific type of privilege will be able to bypass this
-  const settings = await SettingsModel.findOne({}, "locked");
+  const settings = await SettingsModel.findOne({}, "locked").lean();
   if (settings?.locked !== false) throw new Error("Could not complete request");
 
   const { level, password, remember, username } = req.body as API.Auth.POST.Body;
