@@ -1,5 +1,5 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
-import { differenceInCalendarWeeks, isAfter, isSameDay } from "date-fns";
+import { differenceInCalendarWeeks, differenceInMinutes, isAfter, isSameDay } from "date-fns";
 
 import { connect } from "db";
 import { routeWrapper } from "api";
@@ -16,6 +16,8 @@ const handler: API.Handler<API.Timetable.POST.Data> = async (req) => {
 };
 
 async function POST(body: API.Timetable.POST.Body): API.HandlerResponse<API.Timetable.POST.Data> {
+  if (!body.week) throw new Error("Week is required");
+
   const [term, ...checks] = await Promise.all([
     TermModel.findById(body.term, "start end").lean(),
     ClassModel.exists({ _id: body.class }),
@@ -39,6 +41,9 @@ async function POST(body: API.Timetable.POST.Body): API.HandlerResponse<API.Time
     (acc, b) => {
       const subjects: Schemas.ObjectId[] = [];
       const teachers: Schemas.ObjectId[] = [];
+
+      if (b.periods.length < 1)
+        throw new Error(`At least one period for day (${format(new Date(b.date), "dd/MM/yyyy")}) must be specified`);
 
       b.periods.forEach((period) => {
         if (period._type === "idle") return;
@@ -70,6 +75,16 @@ async function POST(body: API.Timetable.POST.Body): API.HandlerResponse<API.Time
       if (!isSameDay(date, new Date(period.end))) throw new Error("Period end day must match specified date");
       if (!isSameDay(date, new Date(period.start))) throw new Error("Period start day must match specified date");
       if (isAfter(new Date(period.end), new Date(period.start))) throw new Error("Period cannot start after end");
+
+      const minTimeInterval = 45; // TODO: Set in settings
+      const timeBetween = differenceInMinutes(new Date(period.start), new Date(period.end));
+
+      if (timeBetween < minTimeInterval)
+        throw new Error(
+          `Time between Period start and end must be at least ${minTimeInterval} minutes not ${timeBetween}`
+        );
+      if (timeBetween % minTimeInterval !== 0)
+        throw new Error(`Time between Period start and end must be divisible by ${minTimeInterval}`);
 
       if (period._type === "subject") {
         const subject = subjects.find((_) => _._id.equals(period.subject));
