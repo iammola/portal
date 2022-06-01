@@ -6,4 +6,4 @@ const config = {
   experimental: { newNextLinkBehavior: true },
 };
 
-module.export = config;
+module.exports = config;
