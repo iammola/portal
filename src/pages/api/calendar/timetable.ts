@@ -1,5 +1,5 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
-import { differenceInCalendarWeeks, differenceInMinutes, isAfter, isSameDay } from "date-fns";
+import { differenceInCalendarWeeks, differenceInMinutes, format, isAfter, isSameDay } from "date-fns";
 
 import { connect } from "db";
 import { routeWrapper } from "api";
@@ -71,7 +71,7 @@ async function POST(body: API.Timetable.POST.Body): API.HandlerResponse<API.Time
     if (date > termEnd.getTime()) throw new Error("Cannot add timetable after term end");
     if (date < termStart.getTime()) throw new Error("Cannot add timetable before term begins");
 
-    day.periods.forEach((period) => {
+    day.periods.forEach((period, periodIdx) => {
       if (!isSameDay(date, new Date(period.end))) throw new Error("Period end day must match specified date");
       if (!isSameDay(date, new Date(period.start))) throw new Error("Period start day must match specified date");
       if (isAfter(new Date(period.end), new Date(period.start))) throw new Error("Period cannot start after end");
@@ -90,8 +90,14 @@ async function POST(body: API.Timetable.POST.Body): API.HandlerResponse<API.Time
         const subject = subjects.find((_) => _._id.equals(period.subject));
         const teacher = teachers.find((_) => _._id.equals(period.teacher));
 
-        if (subject == undefined) throw new Error("Subject does not exist");
-        if (teacher == undefined) throw new Error("Teacher does not exist");
+        if (subject == undefined)
+          throw new Error(
+            `Subject does not exist in period ${periodIdx} on day ${format(new Date(day.date), "dd/MM/yyyy")}`
+          );
+        if (teacher == undefined)
+          throw new Error(
+            `Teacher does not exist in period ${periodIdx} on day ${format(new Date(day.date), "dd/MM/yyyy")}`
+          );
       } else if (!period.title) throw new Error("Period Title is required");
     });
 
