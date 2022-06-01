@@ -73,5 +73,4 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
 
 type User = { _id: Schemas.ObjectId; __type?: string } & Pick<Schemas.User.Virtuals, "password">;
 
-export default async (req: NextApiRequest, res: NextApiResponse) =>
-  routeWrapper<API.Auth.POST.Data>(req, res, handler, ["POST"]);
+export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["POST"]);
