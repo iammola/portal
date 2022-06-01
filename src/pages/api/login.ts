@@ -1,20 +1,19 @@
 import { randomBytes } from "crypto";
 
+import { add } from "date-fns";
 import { setCookies } from "cookies-next";
 import { generateKeyPair, SignJWT, exportSPKI } from "jose";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { comparePassword } from "db/utils";
-import { JWT_ALG, JWT_COOKIE_KEY } from "utils";
 import { NotFoundError, routeWrapper } from "api";
 import { ParentModel, SettingsModel, StaffModel, StudentModel } from "db/models";
+import { JWT_ALG, JWT_COOKIE_KEY, USER_ID_COOKIE, USER_LEVEL_COOKIE } from "utils";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
 async function getUser(level: string, username: string): Promise<User | null | undefined> {
-  await connect();
-
   if (level === "student")
     return await StudentModel.findByUsername(username, "password")
       .populate<Schemas.User.Virtuals>("password")
@@ -32,8 +31,10 @@ async function getUser(level: string, username: string): Promise<User | null | u
 }
 
 const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
+  await connect();
+
   // A specific type of privilege will be able to bypass this
-  const settings = await SettingsModel.findOne({}, "locked");
+  const settings = await SettingsModel.findOne({}, "locked").lean();
   if (settings?.locked !== false) throw new Error("Could not complete request");
 
   const { level, password, remember, username } = req.body as API.Auth.POST.Body;
@@ -54,15 +55,18 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
     .setProtectedHeader({ typ: "JWT", alg: JWT_ALG })
     .sign(privateKey);
 
-  const expires = remember ? new Date(Date.now() + 7 * 24 * 60 * 60) : undefined;
-  const options = { req, res, expires, secure: true, httpOnly: true, sameSite: true };
+  const expires = remember ? add(new Date(), { days: 7 }) : undefined;
+  const options = { req, res, expires, secure: true, sameSite: true };
 
-  setCookies(JWT_COOKIE_KEY, await exportSPKI(publicKey), options);
+  setCookies(JWT_COOKIE_KEY, await exportSPKI(publicKey), { ...options, httpOnly: true });
+  /* Client Cookies */
+  setCookies(USER_ID_COOKIE, user._id, options);
+  setCookies(USER_LEVEL_COOKIE, level !== "staff" ? level : `${level}-${user.__type ?? ""}`, options);
 
   return [
     {
       message: ReasonPhrases.OK,
-      data: { token, expires, _id: user._id, level: level !== "staff" ? level : `${level}-${user.__type ?? ""}` },
+      data: { token, expires },
     },
     StatusCodes.OK,
   ];
@@ -70,5 +74,4 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
 
 type User = { _id: Schemas.ObjectId; __type?: string } & Pick<Schemas.User.Virtuals, "password">;
 
-export default async (req: NextApiRequest, res: NextApiResponse) =>
-  routeWrapper<API.Auth.POST.Data>(req, res, handler, ["POST"]);
+export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["POST"]);

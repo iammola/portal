@@ -8,7 +8,7 @@ const SettingsSchema = new mongoose.Schema<Schemas.Settings.Record, Schemas.Sett
       type: Boolean,
     },
   },
-  { capped: { max: 1, size: 100000 }, versionKey: false }
+  { capped: { max: 1, size: 1024 }, versionKey: false }
 );
 
 export const SettingsModel = (mongoose.models[ModelNames.SETTINGS] ??
