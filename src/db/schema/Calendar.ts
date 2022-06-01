@@ -121,6 +121,10 @@ export const TimetableSchema = new mongoose.Schema<Schemas.Calendar.TimetableSch
       type: mongoose.Schema.Types.ObjectId,
       required: [true, "Timetable Class is required"],
     },
+    week: {
+      type: Number,
+      required: [true, "Timetable Week is required"],
+    },
     days: {
       type: [TimetableDaySchema],
     },
