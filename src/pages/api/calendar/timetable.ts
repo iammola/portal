@@ -1,5 +1,5 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
-import { differenceInCalendarWeeks, differenceInMinutes, format, isAfter, isSameDay } from "date-fns";
+import { compareAsc, differenceInCalendarWeeks, differenceInMinutes, format, isAfter, isSameDay } from "date-fns";
 
 import { connect } from "db";
 import { routeWrapper } from "api";
@@ -35,8 +35,6 @@ async function POST(body: API.Timetable.POST.Body): API.HandlerResponse<API.Time
   if (body.week > differenceInCalendarWeeks(termEnd, termStart))
     throw new Error("Specified term does not have that many weeks");
 
-  const days: Schemas.Calendar.TimetableSchema["days"] = [];
-
   const itemIds = body.days.reduce<Record<"subjects" | "teachers", Schemas.ObjectId[]>>(
     (acc, b) => {
       const subjects: Schemas.ObjectId[] = [];
@@ -64,12 +62,13 @@ async function POST(body: API.Timetable.POST.Body): API.HandlerResponse<API.Time
     TeacherStaffModel.find({ _id: { $in: [...new Set(itemIds.teachers)] } }, "_id").lean(),
   ]);
 
-  body.days.forEach((day) => {
-    if (days.find((_) => isSameDay(new Date(_.date), new Date(day.date)))) throw new Error("Duplicate days provided");
+  body.days.forEach((day, _, days) => {
     const date = new Date(day.date).getTime();
+    const formatted = format(date, "dd/MM/yyyy");
 
     if (date > termEnd.getTime()) throw new Error("Cannot add timetable after term end");
     if (date < termStart.getTime()) throw new Error("Cannot add timetable before term begins");
+    if (days.find((_) => isSameDay(new Date(_.date), date))) throw new Error(`Duplicate day ${formatted} provided`);
 
     day.periods.forEach((period, periodIdx) => {
       if (!isSameDay(date, new Date(period.end))) throw new Error("Period end day must match specified date");
@@ -90,24 +89,18 @@ async function POST(body: API.Timetable.POST.Body): API.HandlerResponse<API.Time
         const subject = subjects.find((_) => _._id.equals(period.subject));
         const teacher = teachers.find((_) => _._id.equals(period.teacher));
 
-        if (subject == undefined)
-          throw new Error(
-            `Subject does not exist in period ${periodIdx} on day ${format(new Date(day.date), "dd/MM/yyyy")}`
-          );
-        if (teacher == undefined)
-          throw new Error(
-            `Teacher does not exist in period ${periodIdx} on day ${format(new Date(day.date), "dd/MM/yyyy")}`
-          );
+        if (subject == undefined) throw new Error(`Subject does not exist in period ${periodIdx} on day ${formatted}`);
+        if (teacher == undefined) throw new Error(`Teacher does not exist in period ${periodIdx} on day ${formatted}`);
       } else if (!period.title) throw new Error("Period Title is required");
     });
 
-    days.push(day);
+    day.periods = day.periods.sort((periodA, periodB) => compareAsc(new Date(periodA.start), new Date(periodB.start)));
   });
 
   const { _id } = await TimetableCalendarModel.create({
-    days,
     week: body.week,
     class: body.class,
+    days: body.days.sort((dayA, day2) => compareAsc(new Date(dayA.date), new Date(day2.date))),
   });
 
   return [{ data: { _id }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
