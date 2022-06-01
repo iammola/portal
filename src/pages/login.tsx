@@ -17,7 +17,7 @@ const Login: NextPage = () => {
   const [levels] = useState(() => [
     { value: "student", emoji: "👨‍🎓", text: "Student" },
     { value: "parent", emoji: "👨‍👩‍👦", text: "Parent" },
-    { value: "staff", emoji: "👨‍🏫", xt: "Staff" },
+    { value: "staff", emoji: "👨‍🏫", text: "Staff" },
   ]);
 
   const [username, setUsername] = useState("");
