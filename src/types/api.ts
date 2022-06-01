@@ -195,10 +195,10 @@ declare global {
 
     namespace Event {
       namespace POST {
-        export type Data = CreateData;
+        type Data = CreateData;
 
         type Invitee = "all" | string[];
-        export type Body = Omit<Schemas.Calendar.EventSchema, "invitees" | "__type"> & {
+        type Body = Omit<Schemas.Calendar.EventSchema, "invitees" | "__type"> & {
           invitees?:
             | Invitee
             | Partial<{
@@ -207,6 +207,16 @@ declare global {
                 students: Invitee;
                 staff: Invitee | Partial<{ teachers: Invitee /* Other Staff Types */ }>;
               }>;
+        };
+      }
+    }
+
+    namespace Timetable {
+      namespace POST {
+        type Data = CreateData;
+
+        type Body = Omit<Schemas.Calendar.TimetableSchema, "_id" | "__type"> & {
+          term: Schemas.ObjectId;
         };
       }
     }
