@@ -58,14 +58,6 @@ declare global {
       }
     }
 
-    namespace Attendance {
-      namespace POST {
-        type Body = Schemas.Attendance.Date;
-
-        type Data = CreateData & UpdateData;
-      }
-    }
-
     namespace Class {
       namespace POST {
         type Data = CreateData<Pick<Schemas.Class.Record, "createdAt">>;
@@ -87,14 +79,6 @@ declare global {
         }
       }
 
-      namespace PUT {
-        namespace Teachers {
-          type Data = UpdateData;
-
-          type Body = Record<"teachers", string[]>;
-        }
-      }
-
       namespace GET {
         type ClassDataNoTeacher = Omit<Schemas.Class.Record<true>, "teachers">;
 
@@ -112,35 +96,6 @@ declare global {
 
         type Teachers = Record<"teachers", Schemas.Staff.TeacherSchema[]>;
       }
-
-      namespace DELETE {
-        type Teachers = DeleteData & Record<"message", string>;
-      }
-    }
-
-    namespace Subject {
-      namespace DELETE {
-        type Data = DeleteData;
-      }
-
-      namespace PUT {
-        type Data = UpdateData;
-
-        type Body = SubjectKeys<BaseBody | GroupBody>;
-
-        type K = "__type";
-        type SubjectKeys<T extends BaseBody | GroupBody> = Utils.OneKey<Omit<T, K>> & Pick<T, K>;
-      }
-
-      type BaseBody = {
-        class: string;
-        teachers: string[];
-      } & Pick<Schemas.Subject.BaseSchema, "name" | "__type" | "mandatory">;
-
-      type GroupBody = {
-        class: string;
-        divisions: Array<{ teachers: string[]; name: Schemas.Subject.DivisionSchema["name"] }>;
-      } & Pick<Schemas.Subject.GroupSchema, "name" | "__type" | "mandatory">;
     }
 
     namespace Session {
@@ -182,16 +137,6 @@ declare global {
           current: boolean;
           session: Pick<Schemas.Session.Record, "name">;
         } & Omit<Schemas.Term.Record, "session">;
-      }
-    }
-
-    namespace Parent {
-      namespace POST {
-        type Data = CreateData<Pick<Schemas.Parent.Schema, "schoolMail">>;
-
-        type Body = {
-          password: string;
-        } & Omit<Schemas.Parent.Schema, "_id" | "schoolMail" | "password">;
       }
     }
 
