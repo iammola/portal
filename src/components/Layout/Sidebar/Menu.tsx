@@ -9,9 +9,9 @@ import { cx, USER_LEVEL_COOKIE } from "utils";
 import navigation from "./navigation.json";
 
 export const Menu: React.FC = () => {
-  const list = useMemo<MenuLink[]>(() => {
+  const list = useMemo<MenuLink[] | undefined>(() => {
     const level = getCookie(USER_LEVEL_COOKIE);
-    if (!level) return [];
+    if (!level) return;
 
     return navigation[level as keyof typeof navigation];
   }, []);
@@ -19,7 +19,7 @@ export const Menu: React.FC = () => {
   return (
     <NavigationMenuPrimitive.Root orientation="vertical">
       <NavigationMenuPrimitive.List className="w-full space-y-2 py-4 px-3">
-        {list.map((item, idx) => (
+        {list?.map((item, idx) => (
           <NavigationLink {...item} key={`${idx} - ${item.title}`} />
         ))}
       </NavigationMenuPrimitive.List>
