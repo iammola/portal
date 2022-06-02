@@ -153,13 +153,13 @@ declare global {
     namespace Teacher {
       namespace GET {
         type Students = Array<
-          Pick<Schemas.Student.Record, "_id" | "gender" | "username" | "schoolMail"> & {
+          {
             age?: string;
             name: string;
             class?: string;
             avatar?: string;
             initials: string;
-          }
+          } & Pick<Schemas.Student.Record, "_id" | "gender" | "username" | "schoolMail">
         >;
       }
     }
@@ -198,7 +198,7 @@ declare global {
         type Data = CreateData;
 
         type Invitee = "all" | string[];
-        type Body = Omit<Schemas.Calendar.EventSchema, "invitees" | "__type"> & {
+        type Body = {
           invitees?:
             | Invitee
             | Partial<{
@@ -207,7 +207,7 @@ declare global {
                 students: Invitee;
                 staff: Invitee | Partial<{ teachers: Invitee /* Other Staff Types */ }>;
               }>;
-        };
+        } & Omit<Schemas.Calendar.EventSchema, "invitees" | "__type">;
       }
     }
 
@@ -215,9 +215,7 @@ declare global {
       namespace POST {
         type Data = CreateData;
 
-        type Body = Omit<Schemas.Calendar.TimetableSchema, "_id" | "__type"> & {
-          term: Schemas.ObjectId;
-        };
+        type Body = Omit<Schemas.Calendar.TimetableSchema, "_id" | "__type">;
       }
     }
   }

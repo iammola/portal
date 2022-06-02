@@ -355,9 +355,11 @@ declare global {
 
       type Schema<T> = DocumentId & {
         __type: T;
+        term: ObjectId;
       };
 
       type Model = Mongoose.Model<EventSchema | TimetableSchema>;
+      type Record = ModelRecord<EventSchema | TimetableSchema>;
 
       type EventSchema = Schema<ModelNames.E_CALENDAR> & {
         title: string;
