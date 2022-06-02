@@ -35,7 +35,7 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
 
   // A specific type of privilege will be able to bypass this
   const settings = await SettingsModel.findOne({}, "locked").lean();
-  if (settings?.locked !== false) throw new Error("Could not complete request");
+  if (settings?.locked !== false) throw new Error("The system is locked... Contact an Administrator");
 
   const { level, password, remember, username } = req.body as API.Auth.POST.Body;
   if (!username) throw new Error("Username required");
