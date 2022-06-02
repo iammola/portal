@@ -22,7 +22,12 @@ const handler: API.Handler<API.Event.POST.Data> = async (req) => {
 };
 
 async function POST({ invitees, ...body }: API.Event.POST.Body): API.HandlerResponse<API.Event.POST.Data> {
-  if (new Date(body.start) > new Date(body.ends)) throw new Error("Start date cannot be after specified end");
+  const term = await TermModel.findById(body.term, "start end").lean();
+  if (term == null) throw new Error("Term not found");
+
+  if (new Date(body.start) < new Date(term.start)) throw new Error("Cannot add event before term starts");
+  if (new Date(body.ends) > new Date(term.end)) throw new Error("Cannot add event after term ends");
+  if (new Date(body.start) >= new Date(body.ends)) throw new Error("Event cannot start after end");
 
   const inviteIDs: Partial<Record<"staff" | "parents" | "students", Schemas.ObjectId[]>> = {};
 
@@ -56,7 +61,7 @@ async function POST({ invitees, ...body }: API.Event.POST.Body): API.HandlerResp
       });
 
       inviteIDs.students = students.map((_) => _._id);
-      inviteIDs.staff = classes.map((_) => _.teachers as Schemas.ObjectId[]).flat();
+      inviteIDs.staff = classes.map((_) => _.teachers).flat();
     } else {
       if (invitees.students) {
         const students =
