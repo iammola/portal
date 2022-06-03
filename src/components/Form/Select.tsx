@@ -55,6 +55,8 @@ Select.Item = function Item({ children, ...props }) {
   );
 };
 
+export default Select;
+
 type SelectProps = {
   id?: string;
   label: string;

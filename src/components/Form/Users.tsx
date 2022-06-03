@@ -86,6 +86,8 @@ export const Users: React.FC<UsersProps> = ({ children, id, onValueChange, ...pr
   );
 };
 
+export default Users;
+
 const User: React.FC<{ username: string }> = ({ username }) => {
   const { data, error } = useSWR<API.Result<API.User.GET.Data>, unknown>(`/api/${username}`);
   const [user, setUser] = useState<Record<"name" | "image" | "initials" | "level", string> | null | false>();

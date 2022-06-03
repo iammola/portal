@@ -32,6 +32,8 @@ RadioGroup.Item = function Item({ children, id, ...props }) {
   );
 };
 
+export default RadioGroup;
+
 type RadioGroup = {
   Item: React.FC<CP<Parameters<typeof RadioGroupPrimitive.Item>[0]>>;
 } & React.FC<CP<Parameters<typeof RadioGroupPrimitive.Root>[0]>>;

@@ -52,6 +52,8 @@ export const Input: React.FC<InputProps> = ({ children, id, onValueChange, valid
   );
 };
 
+export default Input;
+
 type InputProps = {
   value?: string;
   children: string;

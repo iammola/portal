@@ -81,6 +81,8 @@ export const Password: React.FC<PasswordProps> = ({ children, id, onValueChange,
   );
 };
 
+export default Password;
+
 type PasswordProps = {
   value?: string;
   children: string;

@@ -108,6 +108,8 @@ export const Phone: React.FC<PhoneProps> = ({ children, id, onValueChange, ...pr
   );
 };
 
+export default Phone;
+
 type PhoneProps = {
   value?: string;
   children: string;

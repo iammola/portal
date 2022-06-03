@@ -27,6 +27,9 @@ export const Checkbox: React.FC<CheckboxProps> = ({ children, id, ...props }) =>
     </div>
   );
 };
+
+export default Checkbox;
+
 type CheckboxProps = Parameters<typeof CheckboxPrimitive.Root>[0] & {
   children: string;
 };

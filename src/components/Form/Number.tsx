@@ -1,7 +1,7 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { useId, useState } from "react";
 
-export const Number: React.FC<NumberProps> = ({ children, id, onValueChange, ...props }) => {
+const Component: React.FC<NumberProps> = ({ children, id, onValueChange, ...props }) => {
   const customId = useId();
   const [value, setValue] = useState(props.value ?? "");
 
@@ -50,6 +50,9 @@ export const Number: React.FC<NumberProps> = ({ children, id, onValueChange, ...
     </div>
   );
 };
+
+export { Component as Number };
+export default Component;
 
 type NumberProps = {
   value?: number;
