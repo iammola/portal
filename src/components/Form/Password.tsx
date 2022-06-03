@@ -1,22 +1,35 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { useId, useState, useMemo } from "react";
+import { useEffect, useId, useState, useMemo } from "react";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 
 import { checkPasswordStrength, cx } from "utils";
 
+import type { ZxcvbnResult } from "@zxcvbn-ts/core";
+
 export const Password: React.FC<PasswordProps> = ({ children, id, onValueChange, ...props }) => {
   const customId = useId();
   const [isVisible, setIsVisible] = useState(false);
-  const [check] = useState(checkPasswordStrength);
+  const [check, setCheck] = useState<(password: string) => ZxcvbnResult>();
 
   const strength = useMemo(() => {
+    if (!check) return { score: -1, title: "No" };
+
     const value = props.value as string;
     const { score = -1 } = value ? check(value) : {};
     const title = ["Bad", "Poor", "Weak", "Good", "Strong"][score] ?? "No";
 
     return { score, title };
   }, [check, props.value]);
+
+  useEffect(() => {
+    const init = async () => {
+      const checker = await checkPasswordStrength();
+      setCheck(checker);
+    };
+
+    void init();
+  }, []);
 
   return (
     <PopoverPrimitive.Root>

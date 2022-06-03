@@ -1,7 +1,3 @@
-import zxcvbnEnPackage from "@zxcvbn-ts/language-en";
-import { zxcvbn, zxcvbnOptions } from "@zxcvbn-ts/core";
-import zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
-
 export const NETWORK_STATE = {
   online: { emoji: "😄", description: "Found the internet!" },
   offline: { emoji: "🤔", description: "Hmm... no internet?" },
@@ -57,21 +53,4 @@ export function cx(
   return [...new Set(classes.flat())].join(" ").replace(/\s{2,}/g, " ");
 }
 
-/**
- * It sets the options for the zxcvbn library, and then returns a function that calls zxcvbn to check the strength of the password
- * @returns A function that takes a password and returns a zxcvbn object.
- */
-export function checkPasswordStrength() {
-  const options = {
-    translations: zxcvbnEnPackage.translations,
-    graphs: zxcvbnCommonPackage.adjacencyGraphs,
-    dictionary: {
-      ...zxcvbnCommonPackage.dictionary,
-      ...zxcvbnEnPackage.dictionary,
-    },
-  };
-
-  zxcvbnOptions.setOptions(options);
-
-  return (password: string) => zxcvbn(password);
-}
+export { checkPasswordStrength } from "./password";
