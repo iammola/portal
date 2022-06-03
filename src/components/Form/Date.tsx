@@ -168,6 +168,7 @@ const Component: React.FC<DateProps> = ({ children, id, onValueChange, ...props 
 };
 
 export { Component as Date };
+export default Component;
 
 const Calendar: React.FC<CalendarProps> = ({ date, month, year, onValueChange }) => {
   const [activeMonth, setActiveMonth] = useState(String(month === "" ? new Date().getMonth() + 1 : +month));

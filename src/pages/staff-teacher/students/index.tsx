@@ -3,13 +3,17 @@ import { Fragment, useState } from "react";
 import { TrashIcon } from "@radix-ui/react-icons";
 import useSWR from "swr";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
-import { fetchAPIEndpoint } from "api";
+import { cx } from "utils";
+import { fetchAPI } from "api/client";
 import { Select } from "components/Form";
-import { cx, USER_ID_COOKIE } from "utils";
-import { Avatar, useToast } from "components";
+import { useToast } from "components/Toast";
+import { USER_ID_COOKIE } from "utils/constants";
 
 import type { NextPage } from "next";
+
+const Avatar = dynamic(() => import("components/Avatar"));
 
 const Students: NextPage = () => {
   const toasts = useToast();
@@ -45,7 +49,7 @@ const Students: NextPage = () => {
     const toastID = toasts.add({ kind: "loading", description: "Deleting student..." });
 
     try {
-      const result = await fetchAPIEndpoint<API.Student.DELETE.Data>(`/api/students/${id}`, { method: "DELETE" });
+      const result = await fetchAPI<API.Student.DELETE.Data>(`/api/students/${id}`, { method: "DELETE" });
 
       toasts.remove(toastID);
 

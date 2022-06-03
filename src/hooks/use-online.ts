@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 
-import { useToast } from "components";
-import { NETWORK_STATE } from "utils";
+import { useToast } from "components/Toast";
+import { NETWORK_STATE } from "utils/constants";
 import { useIsomorphicLayoutEffect } from "hooks";
 
 /**

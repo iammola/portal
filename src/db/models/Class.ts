@@ -1,9 +1,11 @@
-import * as mongoose from "mongoose";
+import { model, models, Schema } from "mongoose";
 
 import { ModelNames } from "db";
 import { ClassName } from "db/schema/Class";
 
-const ClassSchema = new mongoose.Schema<Schemas.Class.Record, Schemas.Class.Model>(
+import type { ProjectionType, QueryOptions } from "mongoose";
+
+const ClassSchema = new Schema<Schemas.Class.Record, Schemas.Class.Model>(
   {
     name: {
       type: ClassName,
@@ -16,7 +18,7 @@ const ClassSchema = new mongoose.Schema<Schemas.Class.Record, Schemas.Class.Mode
     teachers: {
       default: undefined,
       ref: ModelNames.STAFF,
-      type: [mongoose.Schema.Types.ObjectId],
+      type: [Schema.Types.ObjectId],
     },
     order: {
       type: Number,
@@ -40,14 +42,14 @@ ClassSchema.static(
   function (
     name: string,
     type: keyof Schemas.ThingName,
-    ...args: [mongoose.ProjectionType<Schemas.Class.Record>?, mongoose.QueryOptions?]
+    ...args: [ProjectionType<Schemas.Class.Record>?, QueryOptions?]
   ) {
     const regex = new RegExp(name.replaceAll(/[-_]/g, " "), "i");
     return this.findOne({ [`name.${type}`]: regex }, ...args);
   }
 );
 
-ClassSchema.static("getTeachers", function (classId: string, proj?: unknown, options?: mongoose.QueryOptions) {
+ClassSchema.static("getTeachers", function (classId: string, proj?: unknown, options?: QueryOptions) {
   return this.findById(classId, "teachers", options).populate("teachers", proj);
 });
 
@@ -55,5 +57,4 @@ ClassSchema.pre("validate", async function () {
   if (this.isNew) this.order = 1 + (await this.collection.countDocuments({}));
 });
 
-export const ClassModel = (mongoose.models[ModelNames.CLASS] ??
-  mongoose.model(ModelNames.CLASS, ClassSchema)) as Schemas.Class.Model;
+export const ClassModel = (models[ModelNames.CLASS] ?? model(ModelNames.CLASS, ClassSchema)) as Schemas.Class.Model;

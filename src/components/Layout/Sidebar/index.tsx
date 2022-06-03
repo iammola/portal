@@ -2,12 +2,13 @@ import { Fragment, useState } from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { Cross2Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
+import dynamic from "next/dynamic";
 
 import { cx } from "utils";
 import { useOnline } from "hooks";
-import { Avatar } from "components";
+import { Avatar } from "components/Avatar";
 
-import { Menu } from "./Menu";
+const Menu = dynamic(() => import("./Menu"));
 
 export const Sidebar: React.FC = () => {
   const { online } = useOnline();
@@ -70,7 +71,7 @@ const Footer: React.FC<{ online: boolean }> = ({ online }) => {
   return (
     <div className="flex w-full items-center gap-4 p-4">
       <div className="relative rounded-full ring-1 ring-gray-6 dark:ring-gray-dark-6">
-        <Avatar initials="RP" src="/Users/005.jpg" name="Rebecca Pearson" />
+        <Avatar initials="RP" src="" name="Rebecca Pearson" />
         <div
           className={cx("absolute bottom-0.5 right-0.5 h-2 w-2 rounded-full", [
             online,

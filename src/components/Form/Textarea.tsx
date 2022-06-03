@@ -48,6 +48,8 @@ export const Textarea: React.FC<TextareaProps> = ({ children, id, onValueChange,
   );
 };
 
+export default Textarea;
+
 type TextareaProps = {
   value?: string;
   children: string;

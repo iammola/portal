@@ -1,7 +1,8 @@
+import { Error } from "mongoose";
+import { importSPKI, jwtVerify } from "jose";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { verifyAuth } from "./auth";
-import { formatError, NotFoundError, UnauthorizedError } from "./error";
+import { JWT_ALG, JWT_COOKIE_KEY } from "utils/constants";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -64,5 +65,54 @@ export async function routeWrapper<T extends object>(
     );
 }
 
-export { NotFoundError, UnauthorizedError };
-export { fetchAPIEndpoint } from "./endpoint";
+/**
+ * It verifies that the JWT in the Authorization header matches the JWT in the cookie
+ * @param {NextApiRequest} request - NextApiRequest - This is the request object that Next.js provides to the API route.
+ */
+export async function verifyAuth(request: NextApiRequest) {
+  const key = request.cookies[JWT_COOKIE_KEY];
+  const auth = request.headers.authorization?.split(" ");
+
+  if (!key || !auth) throw new UnauthorizedError("Missing Authentication Token");
+
+  if (auth[0] !== "Bearer") throw new UnauthorizedError("Invalid Authentication Type");
+
+  try {
+    await jwtVerify(auth[1], await importSPKI(key, JWT_ALG));
+  } catch (error: unknown) {
+    throw new UnauthorizedError("Invalid Authorization Token");
+  }
+}
+
+/**
+ * It takes an error object and returns a string
+ * @param {unknown} error - unknown - The error object that we want to format.
+ * @returns An object with the key being the path and the value being the error message.
+ */
+export function formatError(error: unknown) {
+  if (error instanceof Error.ValidationError)
+    return Object.fromEntries(
+      Object.entries(error.errors).map(([path, error]) => [
+        path,
+        error instanceof Error.ValidatorError ? error.properties.type : `Invalid ${error.path} type`,
+      ])
+    );
+
+  if (error instanceof Error.MongooseServerSelectionError) return "Could not connect to server";
+
+  return (error as globalThis.Error).message;
+}
+
+export class NotFoundError extends globalThis.Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "NotFoundError";
+  }
+}
+
+export class UnauthorizedError extends globalThis.Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "UnauthorizedError";
+  }
+}

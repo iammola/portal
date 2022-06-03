@@ -1,7 +1,7 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { routeWrapper } from "api";
+import { routeWrapper } from "api/server";
 import { createUser } from "db/utils";
 import { ClassModel, ParentModel, StudentModel, SubjectModel, StaffModel, TermModel } from "db/models";
 

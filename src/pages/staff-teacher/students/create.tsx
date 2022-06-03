@@ -3,8 +3,8 @@ import { Cross2Icon, PlusIcon, ReloadIcon } from "@radix-ui/react-icons";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
-import { useToast } from "components";
-import { fetchAPIEndpoint } from "api";
+import { useToast } from "components/Toast";
+import { fetchAPI } from "api/client";
 import { LoadingIcon } from "components/Icons";
 import { Date, Input, Password, Phone, Select, Textarea, Users } from "components/Form";
 
@@ -94,7 +94,7 @@ const CreateStudent: NextPage = () => {
       toastID = toasts.add({ kind: "loading", description: "Processing request..." });
 
       const body = { name, contact, dob, username, password, academic, guardians, images: {} };
-      const result = await fetchAPIEndpoint<API.Student.POST.Data, API.Student.POST.Body>("/api/students", {
+      const result = await fetchAPI<API.Student.POST.Data, API.Student.POST.Body>("/api/students", {
         method: "POST",
         body: { ...body, gender: gender[0] },
       });

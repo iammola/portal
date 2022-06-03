@@ -1,7 +1,7 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { routeWrapper, NotFoundError } from "api";
+import { NotFoundError, routeWrapper } from "api/server";
 import { ParentModel, StudentModel, StaffModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";

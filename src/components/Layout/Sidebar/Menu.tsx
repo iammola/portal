@@ -4,11 +4,12 @@ import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 
-import { cx, USER_LEVEL_COOKIE } from "utils";
+import { cx } from "utils";
+import { USER_LEVEL_COOKIE } from "utils/constants";
 
 import navigation from "./navigation.json";
 
-export const Menu: React.FC = () => {
+const Menu: React.FC = () => {
   const list = useMemo<MenuLink[] | undefined>(() => {
     const level = getCookie(USER_LEVEL_COOKIE);
     if (!level) return;
@@ -26,6 +27,8 @@ export const Menu: React.FC = () => {
     </NavigationMenuPrimitive.Root>
   );
 };
+
+export default Menu;
 
 const NavigationLink: React.FC<MenuLink> = ({ title, href }) => {
   const { asPath } = useRouter();

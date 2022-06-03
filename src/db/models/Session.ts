@@ -1,10 +1,12 @@
-import * as mongoose from "mongoose";
+import { model, models, Schema } from "mongoose";
 
 import { ModelNames } from "db";
 import { TermModel } from "db/models/Term";
 import { SessionName } from "db/schema/Session";
 
-const SessionSchema = new mongoose.Schema<Schemas.Session.Record, Schemas.Session.Model>(
+import type { ProjectionType, QueryOptions } from "mongoose";
+
+const SessionSchema = new Schema<Schemas.Session.Record, Schemas.Session.Model>(
   {
     name: {
       type: SessionName,
@@ -27,15 +29,12 @@ SessionSchema.virtual("termsCount", {
   foreignField: "session",
 });
 
-SessionSchema.static(
-  "findCurrent",
-  async function (...args: [mongoose.ProjectionType<Schemas.Session.Record>?, mongoose.QueryOptions?]) {
-    const term = await TermModel.findCurrent("session", args[1]).lean();
-    if (term == null) return null;
+SessionSchema.static("findCurrent", async function (...args: [ProjectionType<Schemas.Session.Record>?, QueryOptions?]) {
+  const term = await TermModel.findCurrent("session", args[1]).lean();
+  if (term == null) return null;
 
-    return await this.findById(term.session, ...args).lean();
-  }
-);
+  return await this.findById(term.session, ...args).lean();
+});
 
-export const SessionModel = (mongoose.models[ModelNames.SESSION] ??
-  mongoose.model(ModelNames.SESSION, SessionSchema)) as Schemas.Session.Model;
+export const SessionModel = (models[ModelNames.SESSION] ??
+  model(ModelNames.SESSION, SessionSchema)) as Schemas.Session.Model;

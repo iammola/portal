@@ -1,16 +1,18 @@
-import * as mongoose from "mongoose";
+import { model, models, Schema } from "mongoose";
 
 import { ModelNames } from "db";
 import { hashPassword } from "db/utils";
 
-const AuthSchema = new mongoose.Schema<AuthSchema>(
+import type { Model, VirtualTypeOptions } from "mongoose";
+
+const AuthSchema = new Schema<AuthSchema>(
   {
     password: {
       type: String,
       default: undefined,
     },
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       unique: true,
       immutable: true,
@@ -59,10 +61,10 @@ AuthSchema.pre("save", function (next) {
   next();
 });
 
-export const AuthModel = (mongoose.models[ModelNames.AUTH] ??
-  mongoose.model<AuthSchema>(ModelNames.AUTH, AuthSchema)) as mongoose.Model<AuthSchema>;
+export const AuthModel = (models[ModelNames.AUTH] ??
+  model<AuthSchema>(ModelNames.AUTH, AuthSchema)) as Model<AuthSchema>;
 
-export const UserAuthVirtual: [string, mongoose.VirtualTypeOptions] = [
+export const UserAuthVirtual: [string, VirtualTypeOptions] = [
   "password",
   {
     justOne: true,

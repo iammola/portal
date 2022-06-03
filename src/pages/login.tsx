@@ -1,14 +1,15 @@
-import { NextPage } from "next";
 import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { setCookies } from "cookies-next";
 import { Fragment, useState } from "react";
 import Head from "next/head";
 
-import { useToast } from "components";
-import { fetchAPIEndpoint } from "api";
-import { JWT_COOKIE_TOKEN, REDIRECT_QUERY } from "utils";
+import { useToast } from "components/Toast";
+import { fetchAPI } from "api/client";
+import { JWT_COOKIE_TOKEN, REDIRECT_QUERY } from "utils/constants";
 import { Checkbox, Input, Password, Select } from "components/Form";
+
+import type { NextPage } from "next";
 
 const Login: NextPage = () => {
   const toasts = useToast();
@@ -32,7 +33,7 @@ const Login: NextPage = () => {
     try {
       toastID = toasts.add({ kind: "loading", description: "Authenticating request..." });
 
-      const result = await fetchAPIEndpoint<API.Auth.POST.Data, API.Auth.POST.Body>("/api/login", {
+      const result = await fetchAPI<API.Auth.POST.Data, API.Auth.POST.Body>("/api/login", {
         method: "POST",
         body: { level, remember, password, username },
       });

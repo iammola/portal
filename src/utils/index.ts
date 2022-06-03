@@ -1,24 +1,3 @@
-import zxcvbnEnPackage from "@zxcvbn-ts/language-en";
-import { zxcvbn, zxcvbnOptions } from "@zxcvbn-ts/core";
-import zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
-
-export const NETWORK_STATE = {
-  online: { emoji: "😄", description: "Found the internet!" },
-  offline: { emoji: "🤔", description: "Hmm... no internet?" },
-};
-
-export const JWT_ALG = "PS256";
-
-export const JWT_COOKIE_KEY = "jwt-k";
-
-export const JWT_COOKIE_TOKEN = "jwt-t";
-
-export const USER_ID_COOKIE = "user-id";
-
-export const USER_LEVEL_COOKIE = "user-level";
-
-export const REDIRECT_QUERY = "to";
-
 /**
  * It takes a country code, converts it to uppercase, splits it into an array of characters, maps each
  * character to its corresponding code point, and then returns a string of the code points
@@ -55,23 +34,4 @@ export function cx(
   }, []);
 
   return [...new Set(classes.flat())].join(" ").replace(/\s{2,}/g, " ");
-}
-
-/**
- * It sets the options for the zxcvbn library, and then returns a function that calls zxcvbn to check the strength of the password
- * @returns A function that takes a password and returns a zxcvbn object.
- */
-export function checkPasswordStrength() {
-  const options = {
-    translations: zxcvbnEnPackage.translations,
-    graphs: zxcvbnCommonPackage.adjacencyGraphs,
-    dictionary: {
-      ...zxcvbnCommonPackage.dictionary,
-      ...zxcvbnEnPackage.dictionary,
-    },
-  };
-
-  zxcvbnOptions.setOptions(options);
-
-  return (password: string) => zxcvbn(password);
 }

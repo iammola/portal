@@ -3,8 +3,8 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
-import { useToast } from "components";
-import { fetchAPIEndpoint } from "api";
+import { useToast } from "components/Toast";
+import { fetchAPI } from "api/client";
 import { LoadingIcon } from "components/Icons";
 import { Date, Input, Password, Phone, RadioGroup, Select, Textarea } from "components/Form";
 
@@ -58,7 +58,7 @@ const CreateTeacher: NextPage = () => {
       setIsLoading(true);
       toastID = toasts.add({ kind: "loading", description: "Processing request..." });
       const body = { __type, name, contact, dob, username, password, classes, images: {}, privileges: [] };
-      const result = await fetchAPIEndpoint<API.Staff.POST.Data, API.Staff.POST.Body>("/api/staff", {
+      const result = await fetchAPI<API.Staff.POST.Data, API.Staff.POST.Body>("/api/staff", {
         method: "POST",
         body: { ...body, gender: gender[0] },
       });

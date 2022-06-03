@@ -2,7 +2,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { SessionModel } from "db/models";
-import { NotFoundError, routeWrapper } from "api";
+import { NotFoundError, routeWrapper } from "api/server";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
