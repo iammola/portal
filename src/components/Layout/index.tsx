@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
+import { ToastProvider } from "components/Toast";
+
 import { Body } from "./Body";
 import { Loading } from "./Loading";
 import { Sidebar } from "./Sidebar";
 import { ThemePicker } from "./Theme";
-import { ToastProvider } from "./Toast";
 
 export const Layout: React.FC<CP<LayoutProps>> = ({ children, hideSidebar }) => {
   const router = useRouter();

@@ -3,7 +3,7 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
-import { useToast } from "components";
+import { useToast } from "components/Toast";
 import { fetchAPIEndpoint } from "api/client";
 import { LoadingIcon } from "components/Icons";
 import { Date, Input, Password, Phone, RadioGroup, Select, Textarea } from "components/Form";

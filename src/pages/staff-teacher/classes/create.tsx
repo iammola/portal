@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Fragment, useState } from "react";
 
-import { useToast } from "components";
+import { useToast } from "components/Toast";
 import { fetchAPIEndpoint } from "api/client";
 import { LoadingIcon } from "components/Icons";
 import { Input, Users } from "components/Form";

@@ -3,13 +3,17 @@ import { Fragment, useState } from "react";
 import { TrashIcon } from "@radix-ui/react-icons";
 import useSWR from "swr";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
+import { cx } from "utils";
 import { fetchAPIEndpoint } from "api/client";
 import { Select } from "components/Form";
-import { cx, USER_ID_COOKIE } from "utils";
-import { Avatar, useToast } from "components";
+import { useToast } from "components/Toast";
+import { USER_ID_COOKIE } from "utils/constants";
 
 import type { NextPage } from "next";
+
+const Avatar = dynamic(() => import("components/Avatar"));
 
 const Students: NextPage = () => {
   const toasts = useToast();

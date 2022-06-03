@@ -4,7 +4,7 @@ import { setCookies } from "cookies-next";
 import { Fragment, useState } from "react";
 import Head from "next/head";
 
-import { useToast } from "components";
+import { useToast } from "components/Toast";
 import { fetchAPIEndpoint } from "api/client";
 import { JWT_COOKIE_TOKEN, REDIRECT_QUERY } from "utils/constants";
 import { Checkbox, Input, Password, Select } from "components/Form";
