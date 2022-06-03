@@ -1,11 +1,11 @@
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import Head from "next/head";
 import { Fragment, useState } from "react";
-import { addMonths, format, isToday, isWeekend, subMonths } from "date-fns";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
+import { addMonths, format, getWeek, isToday, isWeekend, subMonths } from "date-fns";
 
 import { cx } from "utils";
-import { useMonthDates } from "hooks";
+import { useMonthDates, useMonthWeeks } from "hooks";
 
 import type { NextPage } from "next";
 
@@ -14,6 +14,7 @@ const Events: NextPage = () => {
   const [days] = useState(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]);
 
   const dates = useMonthDates(activeDate);
+  const weeks = useMonthWeeks(activeDate);
 
   return (
     <Fragment>
@@ -54,6 +55,18 @@ const Events: NextPage = () => {
           <div className="col-start-1 col-end-2 row-start-2 flex w-[67.5px] min-w-0 flex-col gap-2.5 rounded-lg bg-gray-3 px-2.5 dark:bg-gray-dark-3">
             <div className="h-9 w-full" />
             <SeparatorPrimitive.Root className="h-px w-full bg-gray-11 dark:bg-gray-dark-11" />
+            <div className="flex w-full grow flex-col items-start justify-start gap-5">
+              {weeks.map(({ date }) => (
+                <div key={format(date, "dd-MM-yy")} className="flex w-full grow items-center justify-center p-0.5">
+                  <abbr
+                    title={`Week ${getWeek(date)} - ${date.getFullYear()}`}
+                    className="text-sm font-medium text-gray-11 underline-offset-1 dark:text-gray-dark-11"
+                  >
+                    {getWeek(date)}
+                  </abbr>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="col-start-2 row-start-2 flex h-full w-full min-w-0 flex-col gap-2.5 rounded-lg bg-gray-3 py-2.5 pr-10 pl-10 dark:bg-gray-dark-3">
             <div className="flex w-full items-center gap-5 py-1">
