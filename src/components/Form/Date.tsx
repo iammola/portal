@@ -1,7 +1,6 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { eachDayOfInterval, endOfMonth, subDays } from "date-fns";
 import { Fragment, useEffect, useId, useRef, useState } from "react";
 import {
   CalendarIcon,
@@ -13,7 +12,7 @@ import {
 } from "@radix-ui/react-icons";
 
 import { cx } from "utils";
-import { useIsomorphicLayoutEffect } from "hooks";
+import { useIsomorphicLayoutEffect, useMonthDates } from "hooks";
 
 const Component: React.FC<DateProps> = ({ children, id, onValueChange, ...props }) => {
   const customId = useId();
@@ -178,7 +177,7 @@ const Calendar: React.FC<CalendarProps> = ({ date, month, year, onValueChange })
     months: "January February March April May June July August September October November December".split(" "),
   }));
 
-  const dates = useMonthDates(activeMonth, year || textYear);
+  const dates = useMonthDates(+activeMonth, +(year || textYear));
 
   function setYear(val: string) {
     if (isNaN(+val)) return;
@@ -303,30 +302,6 @@ const CalendarDate: React.FC<CalendarDateProps> = ({ children, isSelected, ...pr
   );
 };
 
-function useMonthDates(month: string, year: string) {
-  const [dates, setDates] = useState<MonthDate[]>([]);
-
-  useIsomorphicLayoutEffect(() => {
-    const start = new Date(+year, +month - 1);
-    const end = endOfMonth(start);
-
-    const dates = eachDayOfInterval({
-      start: start.getDay() > 0 ? subDays(start, start.getDay()) : start,
-      end: end.getDay() < 6 ? subDays(end, end.getDay() - 6) : end,
-    }).map((date) => {
-      const monthEnd = endOfMonth(date);
-
-      return {
-        date,
-        type: monthEnd.getTime() > end.getTime() ? "next" : monthEnd.getTime() < end.getTime() ? "previous" : "current",
-      } as const;
-    });
-    setDates(dates);
-  }, [month, year]);
-
-  return dates;
-}
-
 type DateProps = {
   value?: Date;
   children: string;
@@ -336,11 +311,6 @@ type DateProps = {
 type CalendarProps = {
   onValueChange(val: string, key: "date" | "month" | "year"): void;
 } & Record<"date" | "month" | "year", string>;
-
-type MonthDate = {
-  date: Date;
-  type: "previous" | "current" | "next";
-};
 
 type CalendarDateProps = {
   className: string;
