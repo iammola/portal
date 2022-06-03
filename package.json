@@ -33,6 +33,7 @@
     "@zxcvbn-ts/language-common": "^2.0.1",
     "@zxcvbn-ts/language-en": "^2.0.1",
     "awesome-phonenumber": "^3.0.2",
+    "check-password-strength": "^2.0.5",
     "cookies-next": "^2.0.4",
     "date-fns": "^2.28.0",
     "http-status-codes": "^2.2.0",
