@@ -4,7 +4,8 @@ import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 
-import { cx, USER_LEVEL_COOKIE } from "utils";
+import { cx } from "utils";
+import { USER_LEVEL_COOKIE } from "utils/constants";
 
 import navigation from "./navigation.json";
 

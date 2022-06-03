@@ -6,7 +6,7 @@ import Head from "next/head";
 
 import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
-import { JWT_COOKIE_TOKEN, REDIRECT_QUERY } from "utils";
+import { JWT_COOKIE_TOKEN, REDIRECT_QUERY } from "utils/constants";
 import { Checkbox, Input, Password, Select } from "components/Form";
 
 import type { NextPage } from "next";

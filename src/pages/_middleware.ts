@@ -1,6 +1,6 @@
 import { NextMiddleware, NextResponse } from "next/server";
 
-import { JWT_COOKIE_TOKEN, REDIRECT_QUERY, USER_LEVEL_COOKIE } from "utils";
+import { JWT_COOKIE_TOKEN, REDIRECT_QUERY, USER_LEVEL_COOKIE } from "utils/constants";
 
 export const middleware: NextMiddleware = (req) => {
   const url = req.nextUrl.clone();
