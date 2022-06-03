@@ -1,14 +1,19 @@
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import Head from "next/head";
 import { Fragment, useState } from "react";
-import { addMonths, format, subMonths } from "date-fns";
+import { addMonths, format, isToday, isWeekend, subMonths } from "date-fns";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
+
+import { cx } from "utils";
+import { useMonthDates } from "hooks";
 
 import type { NextPage } from "next";
 
 const Events: NextPage = () => {
   const [activeDate, setActiveDate] = useState(new Date());
   const [days] = useState(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]);
+
+  const dates = useMonthDates(activeDate);
 
   return (
     <Fragment>
@@ -50,8 +55,8 @@ const Events: NextPage = () => {
             <div className="h-9 w-full" />
             <SeparatorPrimitive.Root className="h-px w-full bg-gray-11 dark:bg-gray-dark-11" />
           </div>
-          <div className="col-start-2 row-start-2 flex h-full w-full min-w-0 flex-col gap-2.5 rounded-lg bg-gray-3 pr-10 pl-10 dark:bg-gray-dark-3">
-            <div className="flex w-full items-center gap-5 pt-3 pb-1">
+          <div className="col-start-2 row-start-2 flex h-full w-full min-w-0 flex-col gap-2.5 rounded-lg bg-gray-3 py-2.5 pr-10 pl-10 dark:bg-gray-dark-3">
+            <div className="flex w-full items-center gap-5 py-1">
               {days.map((day) => (
                 <div
                   key={day}
@@ -62,6 +67,27 @@ const Events: NextPage = () => {
               ))}
             </div>
             <SeparatorPrimitive.Root className="h-px w-full bg-gray-11 pl-10 dark:bg-gray-dark-11" />
+            <div className="grid w-full grow grid-cols-7 gap-5">
+              {dates.map(({ date, type }) => (
+                <div
+                  key={format(date, "dd-MM-yy")}
+                  className={cx("flex flex-col items-end justify-start gap-2.5 rounded-lg p-2.5", {
+                    "bg-gray-5 dark:bg-gray-dark-5": isToday(date) && type === "current",
+                    "bg-gray-4 dark:bg-gray-dark-4": isToday(date) && type !== "current",
+                  })}
+                >
+                  <span
+                    className={cx("text-sm font-medium", [
+                      type === "current" && !isWeekend(date),
+                      "text-gray-12 dark:text-gray-dark-12",
+                      "text-gray-11 dark:text-gray-dark-11",
+                    ])}
+                  >
+                    {format(date, date.getDate() === 1 ? "d MMM" : "d")}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
