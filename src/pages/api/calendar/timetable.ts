@@ -2,7 +2,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { compareAsc, differenceInCalendarWeeks, differenceInMinutes, format, isAfter, isSameDay } from "date-fns";
 
 import { connect } from "db";
-import { routeWrapper } from "api";
+import { routeWrapper } from "api/server";
 import { ClassModel, SubjectModel, TeacherStaffModel, TermModel, TimetableCalendarModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
