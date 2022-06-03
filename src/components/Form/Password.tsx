@@ -1,35 +1,27 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { useEffect, useId, useState, useMemo } from "react";
+import { useId, useState, useMemo } from "react";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
+import { passwordStrength, Options } from "check-password-strength";
 
-import { checkPasswordStrength, cx } from "utils";
+import { cx } from "utils";
 
-import type { ZxcvbnResult } from "@zxcvbn-ts/core";
+const passwordOptions: Options<string> = [
+  { id: 0, value: "Bad", minDiversity: 0, minLength: 0 },
+  { id: 1, value: "Poor", minDiversity: 1, minLength: 3 },
+  { id: 2, value: "Weak", minDiversity: 2, minLength: 6 },
+  { id: 3, value: "Good", minDiversity: 3, minLength: 8 },
+  { id: 4, value: "Strong", minDiversity: 3, minLength: 10 },
+];
 
 export const Password: React.FC<PasswordProps> = ({ children, id, onValueChange, ...props }) => {
   const customId = useId();
   const [isVisible, setIsVisible] = useState(false);
-  const [check, setCheck] = useState<(password: string) => ZxcvbnResult>();
 
   const strength = useMemo(() => {
-    if (!check) return { score: -1, title: "No" };
-
-    const value = props.value as string;
-    const { score = -1 } = value ? check(value) : {};
-    const title = ["Bad", "Poor", "Weak", "Good", "Strong"][score] ?? "No";
-
-    return { score, title };
-  }, [check, props.value]);
-
-  useEffect(() => {
-    const init = async () => {
-      const checker = await checkPasswordStrength();
-      setCheck(checker);
-    };
-
-    void init();
-  }, []);
+    const strength = props.value ? passwordStrength(props.value, passwordOptions) : { id: -1, value: "No" };
+    return { score: strength.id, title: strength.value };
+  }, [props.value]);
 
   return (
     <PopoverPrimitive.Root>

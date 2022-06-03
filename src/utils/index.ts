@@ -52,5 +52,3 @@ export function cx(
 
   return [...new Set(classes.flat())].join(" ").replace(/\s{2,}/g, " ");
 }
-
-export { checkPasswordStrength } from "./password";
