@@ -1,4 +1,3 @@
-import { NextPage } from "next";
 import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { setCookies } from "cookies-next";
@@ -9,6 +8,8 @@ import { useToast } from "components";
 import { fetchAPIEndpoint } from "api";
 import { JWT_COOKIE_TOKEN, REDIRECT_QUERY } from "utils";
 import { Checkbox, Input, Password, Select } from "components/Form";
+
+import type { NextPage } from "next";
 
 const Login: NextPage = () => {
   const toasts = useToast();

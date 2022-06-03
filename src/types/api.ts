@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { StatusCodes, ReasonPhrases } from "http-status-codes";
+import type { NextApiRequest, NextApiResponse } from "next";
+import type { StatusCodes, ReasonPhrases } from "http-status-codes";
 
 declare global {
   namespace API {

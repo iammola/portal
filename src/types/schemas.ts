@@ -1,7 +1,6 @@
-import * as bson from "bson";
-import * as Mongoose from "mongoose";
-
-import { ModelNames } from "db";
+import type * as bson from "bson";
+import type * as Mongoose from "mongoose";
+import type { ModelNames } from "db/constants";
 
 declare global {
   namespace Schemas {
