@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 
 import { ToastProvider } from "components/Toast";
 
-import { Body } from "./Body";
 import { Loading } from "./Loading";
 import { Sidebar } from "./Sidebar";
 import { ThemePicker } from "./Theme";
@@ -35,7 +34,9 @@ export const Layout: React.FC<CP<LayoutProps>> = ({ children, hideSidebar }) => 
     <main className="relative flex h-screen w-screen items-stretch overflow-hidden font-sans">
       <ToastProvider>
         {!hideSidebar && <Sidebar />}
-        <Body>{children}</Body>
+        <section className="flex h-full grow flex-col justify-start overflow-y-auto bg-white dark:bg-slate-dark-1">
+          {children}
+        </section>
       </ToastProvider>
       <Loading key={key} isAnimating={routeChanging} />
       <ThemePicker />

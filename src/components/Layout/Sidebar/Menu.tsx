@@ -9,7 +9,7 @@ import { USER_LEVEL_COOKIE } from "utils/constants";
 
 import navigation from "./navigation.json";
 
-export const Menu: React.FC = () => {
+const Menu: React.FC = () => {
   const list = useMemo<MenuLink[] | undefined>(() => {
     const level = getCookie(USER_LEVEL_COOKIE);
     if (!level) return;
@@ -27,6 +27,8 @@ export const Menu: React.FC = () => {
     </NavigationMenuPrimitive.Root>
   );
 };
+
+export default Menu;
 
 const NavigationLink: React.FC<MenuLink> = ({ title, href }) => {
   const { asPath } = useRouter();

@@ -2,12 +2,13 @@ import { Fragment, useState } from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { Cross2Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
+import dynamic from "next/dynamic";
 
 import { cx } from "utils";
 import { useOnline } from "hooks";
-import { Avatar } from "components";
+import { Avatar } from "components/Avatar";
 
-import { Menu } from "./Menu";
+const Menu = dynamic(() => import("./Menu"));
 
 export const Sidebar: React.FC = () => {
   const { online } = useOnline();
