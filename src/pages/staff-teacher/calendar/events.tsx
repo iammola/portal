@@ -1,10 +1,13 @@
+import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import Head from "next/head";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 
 import type { NextPage } from "next";
 
 const Events: NextPage = () => {
+  const [days] = useState(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]);
+
   return (
     <Fragment>
       <Head>
@@ -35,6 +38,23 @@ const Events: NextPage = () => {
                 <CaretRightIcon />
               </button>
             </div>
+          </div>
+          <div className="col-start-1 col-end-2 row-start-2 flex w-[67.5px] min-w-0 flex-col gap-2.5 rounded-lg bg-gray-3 px-2.5 dark:bg-gray-dark-3">
+            <div className="h-9 w-full" />
+            <SeparatorPrimitive.Root className="h-px w-full bg-gray-11 dark:bg-gray-dark-11" />
+          </div>
+          <div className="col-start-2 row-start-2 flex h-full w-full min-w-0 flex-col gap-2.5 rounded-lg bg-gray-3 pr-10 pl-10 dark:bg-gray-dark-3">
+            <div className="flex w-full items-center gap-5 pt-3 pb-1">
+              {days.map((day) => (
+                <div
+                  key={day}
+                  className="flex grow items-center justify-end text-sm font-medium tracking-wide text-gray-11 dark:text-gray-dark-11"
+                >
+                  {day}
+                </div>
+              ))}
+            </div>
+            <SeparatorPrimitive.Root className="h-px w-full bg-gray-11 pl-10 dark:bg-gray-dark-11" />
           </div>
         </div>
       </div>
