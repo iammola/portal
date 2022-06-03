@@ -5,7 +5,7 @@ import { Fragment, useState } from "react";
 import Head from "next/head";
 
 import { useToast } from "components/Toast";
-import { fetchAPIEndpoint } from "api/client";
+import { fetchAPI } from "api/client";
 import { JWT_COOKIE_TOKEN, REDIRECT_QUERY } from "utils/constants";
 import { Checkbox, Input, Password, Select } from "components/Form";
 
@@ -33,7 +33,7 @@ const Login: NextPage = () => {
     try {
       toastID = toasts.add({ kind: "loading", description: "Authenticating request..." });
 
-      const result = await fetchAPIEndpoint<API.Auth.POST.Data, API.Auth.POST.Body>("/api/login", {
+      const result = await fetchAPI<API.Auth.POST.Data, API.Auth.POST.Body>("/api/login", {
         method: "POST",
         body: { level, remember, password, username },
       });

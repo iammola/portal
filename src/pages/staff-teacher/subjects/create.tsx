@@ -6,7 +6,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import { useToast } from "components/Toast";
-import { fetchAPIEndpoint } from "api/client";
+import { fetchAPI } from "api/client";
 import { LoadingIcon } from "components/Icons";
 import { useIsomorphicLayoutEffect } from "hooks";
 import { Checkbox, Input, RadioGroup, Select, Users } from "components/Form";
@@ -59,7 +59,7 @@ const CreateSubject: NextPage = () => {
       setIsLoading(true);
       toastID = toasts.add({ kind: "loading", description: "Processing request..." });
 
-      const result = await fetchAPIEndpoint<API.Class.POST.Subjects.Data, API.Class.POST.Subjects.Body>(
+      const result = await fetchAPI<API.Class.POST.Subjects.Data, API.Class.POST.Subjects.Body>(
         `/api/classes/${selectedClass}/subjects`,
         {
           method: "POST",

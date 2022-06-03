@@ -8,16 +8,16 @@ import { JWT_COOKIE_TOKEN } from "utils/constants";
  * @param init - An object to initialize the fetch request
  * @returns the API response data
  */
-export async function fetchAPIEndpoint<ResponseData>(
+export async function fetchAPI<ResponseData>(
   endpoint: RequestInfo,
   init?: Omit<RequestInit, "body"> & { body?: never; method: "GET" | "DELETE" }
 ): Promise<API.Result<ResponseData>>;
-export async function fetchAPIEndpoint<ResponseData, Body>(
+export async function fetchAPI<ResponseData, Body>(
   endpoint: RequestInfo,
   init: Omit<RequestInit, "body"> & { body: Body; method: "POST" | "PUT" | "SEARCH" }
 ): Promise<API.Result<ResponseData>>;
 
-export async function fetchAPIEndpoint<ResponseData>(endpoint: RequestInfo, { body, ...init }: RequestInit = {}) {
+export async function fetchAPI<ResponseData>(endpoint: RequestInfo, { body, ...init }: RequestInit = {}) {
   const JWT = getCookie(JWT_COOKIE_TOKEN);
 
   const response = await fetch(endpoint, {

@@ -3,14 +3,14 @@ import { SWRConfig } from "swr";
 import { ThemeProvider } from "next-themes";
 
 import "style.css";
-import { fetchAPIEndpoint } from "api/client";
+import { fetchAPI } from "api/client";
 import { Layout } from "components/Layout";
 
 import type { AppProps } from "next/app";
 
 const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
   return (
-    <SWRConfig value={{ fetcher: fetchAPIEndpoint }}>
+    <SWRConfig value={{ fetcher: fetchAPI }}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="#1c1d1e" />

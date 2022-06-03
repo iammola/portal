@@ -4,7 +4,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import { useToast } from "components/Toast";
-import { fetchAPIEndpoint } from "api/client";
+import { fetchAPI } from "api/client";
 import { LoadingIcon } from "components/Icons";
 import { Date, Input, Password, Phone, Select, Textarea, Users } from "components/Form";
 
@@ -94,7 +94,7 @@ const CreateStudent: NextPage = () => {
       toastID = toasts.add({ kind: "loading", description: "Processing request..." });
 
       const body = { name, contact, dob, username, password, academic, guardians, images: {} };
-      const result = await fetchAPIEndpoint<API.Student.POST.Data, API.Student.POST.Body>("/api/students", {
+      const result = await fetchAPI<API.Student.POST.Data, API.Student.POST.Body>("/api/students", {
         method: "POST",
         body: { ...body, gender: gender[0] },
       });

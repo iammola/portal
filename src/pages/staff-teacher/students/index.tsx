@@ -6,7 +6,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import { cx } from "utils";
-import { fetchAPIEndpoint } from "api/client";
+import { fetchAPI } from "api/client";
 import { Select } from "components/Form";
 import { useToast } from "components/Toast";
 import { USER_ID_COOKIE } from "utils/constants";
@@ -49,7 +49,7 @@ const Students: NextPage = () => {
     const toastID = toasts.add({ kind: "loading", description: "Deleting student..." });
 
     try {
-      const result = await fetchAPIEndpoint<API.Student.DELETE.Data>(`/api/students/${id}`, { method: "DELETE" });
+      const result = await fetchAPI<API.Student.DELETE.Data>(`/api/students/${id}`, { method: "DELETE" });
 
       toasts.remove(toastID);
 

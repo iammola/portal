@@ -6,7 +6,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import { useToast } from "components/Toast";
-import { fetchAPIEndpoint } from "api/client";
+import { fetchAPI } from "api/client";
 import { LoadingIcon } from "components/Icons";
 import { Date as FormDate, Input, Select } from "components/Form";
 
@@ -51,7 +51,7 @@ const CreateTerm: NextPage = () => {
     const toastID = toasts.add({ kind: "loading", description: "Processing Request..." });
 
     try {
-      const result = await fetchAPIEndpoint<API.Session.POST.Terms.Data, API.Session.POST.Terms.Body>(
+      const result = await fetchAPI<API.Session.POST.Terms.Data, API.Session.POST.Terms.Body>(
         `/api/sessions/${newSession ? "new" : session}/terms`,
         {
           method: "POST",
