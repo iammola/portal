@@ -3,10 +3,13 @@ import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 import { Fragment, useId, useState } from "react";
 import { EyeOpenIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import useSWR from "swr";
+import dynamic from "next/dynamic";
 
 import { cx } from "utils";
-import { Avatar, Icons } from "components";
+import { LoadingIcon } from "components/Icons";
 import { useIsomorphicLayoutEffect } from "hooks";
+
+const Avatar = dynamic(() => import("components/Avatar"));
 
 export const Users: React.FC<UsersProps> = ({ children, id, onValueChange, ...props }) => {
   const customId = useId();
@@ -143,9 +146,7 @@ const User: React.FC<{ username: string }> = ({ username }) => {
             </div>
           </Fragment>
         )}
-        {user === undefined && (
-          <Icons.LoadingIcon className="h-6 w-6 animate-spin stroke-gray-9 dark:stroke-gray-dark-9" />
-        )}
+        {user === undefined && <LoadingIcon className="h-6 w-6 animate-spin stroke-gray-9 dark:stroke-gray-dark-9" />}
         {user === null && <span className="text-sm text-gray-11 dark:text-gray-dark-11">User does not exist</span>}
         <HoverCardPrimitive.Arrow className="fill-white dark:fill-gray-dark-2" />
       </HoverCardPrimitive.Content>

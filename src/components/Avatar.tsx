@@ -17,6 +17,7 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
     </AvatarPrimitive.Root>
   );
 };
+export default Avatar;
 
 type AvatarProps = {
   src: string;
