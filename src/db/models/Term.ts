@@ -1,9 +1,11 @@
-import * as mongoose from "mongoose";
+import { model, models, Schema } from "mongoose";
 
 import { ModelNames } from "db";
 import { TermName } from "db/schema/Term";
 
-const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>(
+import type { ProjectionType, QueryOptions } from "mongoose";
+
+const TermSchema = new Schema<Schemas.Term.Record, Schemas.Term.Model>(
   {
     name: {
       type: TermName,
@@ -11,7 +13,7 @@ const TermSchema = new mongoose.Schema<Schemas.Term.Record, Schemas.Term.Model>(
     },
     session: {
       ref: ModelNames.SESSION,
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: [true, "Term session required"],
     },
     start: {
@@ -39,12 +41,8 @@ TermSchema.virtual("current").get(function () {
   return Date.now() >= start && Date.now() <= end;
 });
 
-TermSchema.static(
-  "findCurrent",
-  function (...args: [mongoose.ProjectionType<Schemas.Term.Record>?, mongoose.QueryOptions?]) {
-    return TermModel.findOne({ start: { $lte: new Date() }, end: { $gte: new Date() } }, ...args);
-  }
-);
+TermSchema.static("findCurrent", function (...args: [ProjectionType<Schemas.Term.Record>?, QueryOptions?]) {
+  return TermModel.findOne({ start: { $lte: new Date() }, end: { $gte: new Date() } }, ...args);
+});
 
-export const TermModel = (mongoose.models[ModelNames.TERM] ??
-  mongoose.model(ModelNames.TERM, TermSchema)) as Schemas.Term.Model;
+export const TermModel = (models[ModelNames.TERM] ?? model(ModelNames.TERM, TermSchema)) as Schemas.Term.Model;

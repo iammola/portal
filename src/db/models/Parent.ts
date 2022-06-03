@@ -1,4 +1,4 @@
-import * as mongoose from "mongoose";
+import { model, models } from "mongoose";
 
 import { ModelNames } from "db";
 import { createUserSchema } from "db/schema/User";
@@ -10,5 +10,5 @@ const ParentSchema = createUserSchema<Schemas.Parent.Record, Schemas.Parent.Mode
   },
 });
 
-export const ParentModel = (mongoose.models[ModelNames.PARENT] ??
-  mongoose.model(ModelNames.PARENT, ParentSchema)) as Schemas.Parent.Model;
+export const ParentModel = (models[ModelNames.PARENT] ??
+  model(ModelNames.PARENT, ParentSchema)) as Schemas.Parent.Model;

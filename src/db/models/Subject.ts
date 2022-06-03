@@ -1,13 +1,13 @@
-import * as mongoose from "mongoose";
+import { model, models, Schema } from "mongoose";
 
 import { ModelNames } from "db";
 import { BaseSubjectSchema, GroupSubjectSchema } from "db/schema/Subject";
 
-const SubjectSchema = new mongoose.Schema<Schemas.Subject.Record>(
+const SubjectSchema = new Schema<Schemas.Subject.Record>(
   {
     class: {
       ref: ModelNames.CLASS,
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: [true, "Subject class required"],
     },
     mandatory: {
@@ -22,8 +22,8 @@ const SubjectSchema = new mongoose.Schema<Schemas.Subject.Record>(
   { discriminatorKey: "__type", versionKey: false }
 );
 
-export const SubjectModel = (mongoose.models[ModelNames.SUBJECT] ??
-  mongoose.model(ModelNames.SUBJECT, SubjectSchema)) as Schemas.Subject.Model;
+export const SubjectModel = (models[ModelNames.SUBJECT] ??
+  model(ModelNames.SUBJECT, SubjectSchema)) as Schemas.Subject.Model;
 
 export const BaseSubjectModel = (SubjectModel.discriminators?.[ModelNames.B_SUBJECT] ??
   SubjectModel.discriminator(ModelNames.B_SUBJECT, BaseSubjectSchema)) as Schemas.Subject.BaseModel;

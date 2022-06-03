@@ -1,4 +1,4 @@
-import * as mongoose from "mongoose";
+import { model, models } from "mongoose";
 
 import { ModelNames } from "db";
 import { createUserSchema } from "db/schema/User";
@@ -15,5 +15,5 @@ const StudentSchema = createUserSchema<Schemas.Student.Record, Schemas.Student.M
   },
 });
 
-export const StudentModel = (mongoose.models[ModelNames.STUDENT] ??
-  mongoose.model(ModelNames.STUDENT, StudentSchema)) as Schemas.Student.Model;
+export const StudentModel = (models[ModelNames.STUDENT] ??
+  model(ModelNames.STUDENT, StudentSchema)) as Schemas.Student.Model;

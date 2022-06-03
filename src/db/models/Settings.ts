@@ -1,8 +1,8 @@
-import * as mongoose from "mongoose";
+import { model, models, Schema } from "mongoose";
 
 import { ModelNames } from "db";
 
-const SettingsSchema = new mongoose.Schema<Schemas.Settings.Record, Schemas.Settings.Model>(
+const SettingsSchema = new Schema<Schemas.Settings.Record, Schemas.Settings.Model>(
   {
     locked: {
       type: Boolean,
@@ -11,5 +11,5 @@ const SettingsSchema = new mongoose.Schema<Schemas.Settings.Record, Schemas.Sett
   { capped: { max: 1, size: 1024 }, versionKey: false }
 );
 
-export const SettingsModel = (mongoose.models[ModelNames.SETTINGS] ??
-  mongoose.model(ModelNames.SETTINGS, SettingsSchema)) as Schemas.Settings.Model;
+export const SettingsModel = (models[ModelNames.SETTINGS] ??
+  model(ModelNames.SETTINGS, SettingsSchema)) as Schemas.Settings.Model;
