@@ -3,7 +3,6 @@ import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 import { Fragment, useId, useState } from "react";
 import { EyeOpenIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import useSWR from "swr";
-import Link from "next/link";
 
 import { cx } from "utils";
 import { Avatar, Icons } from "components";
@@ -108,7 +107,7 @@ const User: React.FC<{ username: string }> = ({ username }) => {
   return (
     <HoverCardPrimitive.Root>
       <HoverCardPrimitive.Trigger asChild>
-        <Link
+        <a
           target="_blank"
           rel="noopener noreferrer"
           href={`/link/to/${username}`}
@@ -123,7 +122,7 @@ const User: React.FC<{ username: string }> = ({ username }) => {
           }
         >
           {username}
-        </Link>
+        </a>
       </HoverCardPrimitive.Trigger>
       <HoverCardPrimitive.Content
         sideOffset={3}
