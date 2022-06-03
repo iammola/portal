@@ -2,15 +2,13 @@ import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { useCallback, useId, useMemo, useState } from "react";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
-import {
-  parsePhoneNumber,
-  getAsYouType,
-  getSupportedRegionCodes,
-  getCountryCodeForRegionCode,
-} from "awesome-phonenumber";
 
 import { getFlagEmoji } from "utils";
 import { useIsomorphicLayoutEffect } from "hooks";
+
+const { parsePhoneNumber, getAsYouType, getSupportedRegionCodes, getCountryCodeForRegionCode } = await import(
+  "awesome-phonenumber"
+);
 
 export const Phone: React.FC<PhoneProps> = ({ children, id, onValueChange, ...props }) => {
   const customId = useId();
