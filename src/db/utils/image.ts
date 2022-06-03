@@ -1,8 +1,5 @@
 import { randomBytes } from "crypto";
 
-import sharp from "sharp";
-import { drive, auth } from "@googleapis/drive";
-
 const CRED = process.env.DRIVE_API_CRED;
 const FOLDER = process.env.DRIVE_IMAGES_FOLDER;
 
@@ -17,9 +14,11 @@ const keys = JSON.parse(CRED) as GoogleAPICred;
  * @returns The ID of the uploaded file
  */
 export async function uploadImage(dataURL?: string) {
+  if (!FOLDER) throw new Error("Please define the DRIVE_IMAGES_FOLDER env variable");
   if (!dataURL) return;
 
-  if (!FOLDER) throw new Error("Please define the DRIVE_IMAGES_FOLDER env variable");
+  const { default: sharp } = await import("sharp");
+  const { drive, auth } = await import("@googleapis/drive");
 
   const [, base64] = dataURL.split(dataURLRegex);
   const client = drive({
