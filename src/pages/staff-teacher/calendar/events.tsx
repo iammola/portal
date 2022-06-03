@@ -25,9 +25,12 @@ const Events: NextPage = () => {
         <h3 className="text-4xl font-bold text-gray-12 dark:text-gray-dark-12">School Events</h3>
         <div className="grid w-full grow grid-cols-[max-content_minmax(0,1fr)] grid-rows-[max-content_minmax(0,1fr)] gap-2.5">
           <div className="col-span-full flex w-full min-w-0 items-center justify-between gap-2.5 rounded-lg bg-gray-3 px-5 py-2 dark:bg-gray-dark-3">
-            <h6 className="text-lg font-semibold tracking-wide text-gray-12 dark:text-gray-dark-12">
+            <time
+              dateTime={format(activeDate, "yyyy-MM")}
+              className="text-lg font-semibold tracking-wide text-gray-12 dark:text-gray-dark-12"
+            >
               {format(activeDate, "MMMM yyyy")}
-            </h6>
+            </time>
             <div className="flex items-center justify-center gap-0.5 p-1.5">
               <button
                 type="button"
@@ -57,14 +60,18 @@ const Events: NextPage = () => {
             <SeparatorPrimitive.Root className="h-px w-full bg-gray-11 dark:bg-gray-dark-11" />
             <div className="flex w-full grow flex-col items-start justify-start gap-5">
               {weeks.map(({ date }) => (
-                <div key={format(date, "dd-MM-yy")} className="flex w-full grow items-center justify-center p-0.5">
+                <time
+                  key={format(date, "dd-MM-yy")}
+                  dateTime={format(date, "yyyy'-W'ww")}
+                  className="flex w-full grow items-center justify-center p-0.5"
+                >
                   <abbr
                     title={`Week ${getWeek(date)} - ${date.getFullYear()}`}
                     className="text-sm font-medium text-gray-11 underline-offset-1 dark:text-gray-dark-11"
                   >
                     {getWeek(date)}
                   </abbr>
-                </div>
+                </time>
               ))}
             </div>
           </div>
@@ -89,7 +96,8 @@ const Events: NextPage = () => {
                     "bg-gray-4 dark:bg-gray-dark-4": isToday(date) && type !== "current",
                   })}
                 >
-                  <span
+                  <time
+                    dateTime={format(date, "yyyy-MM-dd")}
                     className={cx("text-sm font-medium", [
                       type === "current" && !isWeekend(date),
                       "text-gray-12 dark:text-gray-dark-12",
@@ -97,7 +105,7 @@ const Events: NextPage = () => {
                     ])}
                   >
                     {format(date, date.getDate() === 1 ? "d MMM" : "d")}
-                  </span>
+                  </time>
                 </div>
               ))}
             </div>
