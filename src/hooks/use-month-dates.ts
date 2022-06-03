@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { endOfMonth, eachDayOfInterval, subDays } from "date-fns";
+import { endOfMonth, eachDayOfInterval, subDays, startOfMonth } from "date-fns";
 
 import { useIsomorphicLayoutEffect } from "hooks";
 
-export function useMonthDates(month: number, year: number) {
+export function useMonthDates(date: Date) {
   const [dates, setDates] = useState<MonthDate[]>([]);
 
   useIsomorphicLayoutEffect(() => {
-    const start = new Date(year, month - 1);
+    const start = startOfMonth(date);
     const end = endOfMonth(start);
 
     const interval = eachDayOfInterval({
@@ -26,7 +26,7 @@ export function useMonthDates(month: number, year: number) {
         } as const;
       })
     );
-  }, [month, year]);
+  }, [date]);
 
   return dates;
 }
