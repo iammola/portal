@@ -1,11 +1,13 @@
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import Head from "next/head";
 import { Fragment, useState } from "react";
+import { addMonths, format, subMonths } from "date-fns";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 
 import type { NextPage } from "next";
 
 const Events: NextPage = () => {
+  const [activeDate, setActiveDate] = useState(new Date());
   const [days] = useState(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]);
 
   return (
@@ -17,22 +19,27 @@ const Events: NextPage = () => {
         <h3 className="text-4xl font-bold text-gray-12 dark:text-gray-dark-12">School Events</h3>
         <div className="grid w-full grow grid-cols-[max-content_minmax(0,1fr)] grid-rows-[max-content_minmax(0,1fr)] gap-2.5">
           <div className="col-span-full flex w-full min-w-0 items-center justify-between gap-2.5 rounded-lg bg-gray-3 px-5 py-2 dark:bg-gray-dark-3">
-            <h6 className="text-lg font-semibold tracking-wide text-gray-12 dark:text-gray-dark-12">June 2022</h6>
+            <h6 className="text-lg font-semibold tracking-wide text-gray-12 dark:text-gray-dark-12">
+              {format(activeDate, "MMMM yyyy")}
+            </h6>
             <div className="flex items-center justify-center gap-0.5 p-1.5">
               <button
                 type="button"
+                onClick={() => setActiveDate(subMonths(activeDate, 1))}
                 className="rounded-full p-2 text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-6 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-6 dark:active:bg-gray-dark-6"
               >
                 <CaretLeftIcon />
               </button>
               <button
                 type="button"
+                onClick={() => setActiveDate(new Date())}
                 className="rounded-lg px-4 py-1 text-sm text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-6 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-6 dark:active:bg-gray-dark-6"
               >
                 Today
               </button>
               <button
                 type="button"
+                onClick={() => setActiveDate(addMonths(activeDate, 1))}
                 className="rounded-full p-2 text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-6 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-6 dark:active:bg-gray-dark-6"
               >
                 <CaretRightIcon />
