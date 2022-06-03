@@ -3,7 +3,7 @@ import { add, format, isAfter } from "date-fns";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { NotFoundError, routeWrapper } from "api";
+import { NotFoundError, routeWrapper } from "api/server";
 import { SessionModel, TermModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";

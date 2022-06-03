@@ -3,7 +3,7 @@ import { SWRConfig } from "swr";
 import { ThemeProvider } from "next-themes";
 
 import "style.css";
-import { fetchAPIEndpoint } from "api";
+import { fetchAPIEndpoint } from "api/client";
 import { Layout } from "components/Layout";
 
 import type { AppProps } from "next/app";

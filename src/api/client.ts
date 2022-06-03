@@ -1,6 +1,6 @@
 import { getCookie } from "cookies-next";
 
-import { JWT_COOKIE_TOKEN } from "utils";
+import { JWT_COOKIE_TOKEN } from "utils/constants";
 
 /**
  * It takes an endpoint, and an optional body, and returns the response data from the API

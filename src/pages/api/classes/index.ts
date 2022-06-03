@@ -1,7 +1,7 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { routeWrapper } from "api";
+import { routeWrapper } from "api/server";
 import { ClassModel, TeacherStaffModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";

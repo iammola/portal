@@ -4,7 +4,7 @@ import { TrashIcon } from "@radix-ui/react-icons";
 import useSWR from "swr";
 import Head from "next/head";
 
-import { fetchAPIEndpoint } from "api";
+import { fetchAPIEndpoint } from "api/client";
 import { Select } from "components/Form";
 import { cx, USER_ID_COOKIE } from "utils";
 import { Avatar, useToast } from "components";

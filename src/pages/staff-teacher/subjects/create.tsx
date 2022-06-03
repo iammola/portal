@@ -6,7 +6,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import { useToast } from "components";
-import { fetchAPIEndpoint } from "api";
+import { fetchAPIEndpoint } from "api/client";
 import { LoadingIcon } from "components/Icons";
 import { useIsomorphicLayoutEffect } from "hooks";
 import { Checkbox, Input, RadioGroup, Select, Users } from "components/Form";

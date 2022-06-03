@@ -4,7 +4,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import { useToast } from "components";
-import { fetchAPIEndpoint } from "api";
+import { fetchAPIEndpoint } from "api/client";
 import { LoadingIcon } from "components/Icons";
 import { Date, Input, Password, Phone, Select, Textarea, Users } from "components/Form";
 

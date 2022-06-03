@@ -6,8 +6,8 @@ import { generateKeyPair, SignJWT, exportSPKI } from "jose";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
+import { NotFoundError, routeWrapper } from "api/server";
 import { comparePassword } from "db/utils";
-import { NotFoundError, routeWrapper } from "api";
 import { ParentModel, SettingsModel, StaffModel, StudentModel } from "db/models";
 import { JWT_ALG, JWT_COOKIE_KEY, USER_ID_COOKIE, USER_LEVEL_COOKIE } from "utils/constants";
 
