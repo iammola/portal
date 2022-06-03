@@ -1,6 +1,6 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { useId, useState, useMemo, useCallback } from "react";
+import { useCallback, useId, useMemo, useState } from "react";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import {
   parsePhoneNumber,
@@ -15,16 +15,18 @@ import { useIsomorphicLayoutEffect } from "hooks";
 export const Phone: React.FC<PhoneProps> = ({ children, id, onValueChange, ...props }) => {
   const customId = useId();
   const [formatted, setFormatted] = useState("");
-  const [regions] = useState(getSupportedRegionCodes());
+
+  const [regions] = useState(getSupportedRegionCodes);
   const [regionNames] = useState(() => new Intl.DisplayNames([], { type: "region" }));
-  const [regionCode, setRegionCode] = useState(() => parsePhoneNumber(props.value ?? "").getRegionCode() ?? "NG");
-  const formatter = useMemo(() => getAsYouType(regionCode), [regionCode]);
+  const [region, setRegion] = useState(() => parsePhoneNumber(props.value ?? "").getRegionCode() ?? "NG");
+
+  const formatter = useMemo(() => getAsYouType(region), [region]);
 
   const updateRegion = useCallback(
-    (regionCode: string) => {
+    (region: string) => {
       onValueChange("");
       setFormatted("");
-      setRegionCode(regionCode);
+      setRegion(region);
     },
     [onValueChange]
   );
@@ -36,7 +38,7 @@ export const Phone: React.FC<PhoneProps> = ({ children, id, onValueChange, ...pr
 
       const formatted = formatter.getPhoneNumber();
       onValueChange(formatted.getNumber("e164") ?? "");
-      setRegionCode((region) => formatted.getRegionCode() ?? region);
+      setRegion((region) => formatted.getRegionCode() ?? region);
     },
     [formatter, onValueChange]
   );
@@ -54,10 +56,10 @@ export const Phone: React.FC<PhoneProps> = ({ children, id, onValueChange, ...pr
         <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{children}</span>
         {!props.required && <span className="text-xs text-gray-11 dark:text-gray-dark-11">Optional</span>}
       </LabelPrimitive.Root>
-      <SelectPrimitive.Root value={regionCode} onValueChange={updateRegion}>
+      <SelectPrimitive.Root value={region} onValueChange={updateRegion}>
         <div className="relative flex w-full">
           <SelectPrimitive.Trigger className="inline-flex shrink-0 items-center justify-center gap-2 rounded-l bg-gray-3 px-4 text-sm text-gray-11 hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-5 dark:bg-gray-dark-3 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-5">
-            <SelectPrimitive.Value>{getFlagEmoji(regionCode)}</SelectPrimitive.Value>
+            <SelectPrimitive.Value>{getFlagEmoji(region)}</SelectPrimitive.Value>
             <SelectPrimitive.Icon asChild>
               <ChevronDownIcon />
             </SelectPrimitive.Icon>
