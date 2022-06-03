@@ -16,7 +16,7 @@ export function formatError(error: unknown) {
 
   if (error instanceof Error.MongooseServerSelectionError) return "Could not connect to server";
 
-  return (error as Error).message;
+  return (error as globalThis.Error).message;
 }
 
 export class NotFoundError extends globalThis.Error {
