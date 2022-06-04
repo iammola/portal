@@ -395,9 +395,9 @@ declare global {
       type TimetableSchema = Schema<ModelNames.T_CALENDAR> & {
         // Weekly timetable entry
         class: ObjectId;
-        week: number;
+        weeks: [number, ...number[]];
         days: Array<{
-          date: Date;
+          day: number;
           periods: TimetablePeriod[];
         }>;
       };

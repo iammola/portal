@@ -76,8 +76,12 @@ const TimetablePeriodSchema = new mongoose.Schema<Schemas.Calendar.TimetablePeri
 
 const TimetableDaySchema = new mongoose.Schema<Schemas.Calendar.TimetableSchema["days"][number]>(
   {
-    date: {
-      type: Date,
+    day: {
+      type: Number,
+      enum: {
+        values: [0, 1, 2, 3, 4, 5, 6],
+        message: "A day cannot be less than 0 or more than 6",
+      },
       required: [true, "Timetable date required"],
     },
     periods: {
@@ -121,8 +125,22 @@ export const TimetableSchema = new mongoose.Schema<Schemas.Calendar.TimetableSch
       type: mongoose.Schema.Types.ObjectId,
       required: [true, "Timetable Class is required"],
     },
-    week: {
-      type: Number,
+    weeks: {
+      type: [Number],
+      validate: [
+        {
+          message: "At least One Week is required",
+          validator: (weeks: number[]) => weeks.length > 0,
+        },
+        {
+          message: "Week numbers are meant to be unique",
+          validator: (weeks: number[]) => new Set(weeks).size === weeks.length,
+        },
+        {
+          message: "Week number cannot be less than 1",
+          validator: (weeks: number[]) => weeks.every((week) => week > 0),
+        },
+      ],
       required: [true, "Timetable Week is required"],
     },
     days: {
