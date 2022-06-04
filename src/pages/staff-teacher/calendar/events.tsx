@@ -21,9 +21,9 @@ const Events: NextPage = () => {
       <Head>
         <title>Events &middot; Portal</title>
       </Head>
-      <div className="flex h-full flex-col items-start justify-center gap-5 p-10 pt-[60px]">
+      <div className="flex h-full flex-col items-start justify-center gap-5 p-8">
         <h3 className="text-4xl font-bold text-gray-12 dark:text-gray-dark-12">School Events</h3>
-        <div className="grid w-full grow grid-cols-[max-content_minmax(0,1fr)] grid-rows-[max-content_minmax(0,1fr)] gap-2.5">
+        <div className="grid min-h-0 w-full grow grid-cols-[max-content_minmax(0,1fr)] grid-rows-[max-content_minmax(0,1fr)] gap-2.5">
           <div className="col-span-full flex w-full min-w-0 items-center justify-between gap-2.5 rounded-lg bg-gray-3 px-5 py-2 dark:bg-gray-dark-3">
             <time
               dateTime={format(activeDate, "yyyy-MM")}
@@ -55,7 +55,7 @@ const Events: NextPage = () => {
               </button>
             </div>
           </div>
-          <div className="col-start-1 col-end-2 row-start-2 flex w-[67.5px] min-w-0 flex-col gap-2.5 rounded-lg bg-gray-3 px-2.5 dark:bg-gray-dark-3">
+          <div className="col-start-1 col-end-2 row-start-2 flex min-w-0 flex-col gap-2.5 rounded-lg bg-gray-3 px-3.5 dark:bg-gray-dark-3">
             <div className="h-9 w-full" />
             <SeparatorPrimitive.Root className="h-px w-full bg-gray-11 dark:bg-gray-dark-11" />
             <div className="flex w-full grow flex-col items-start justify-start gap-5">
@@ -87,11 +87,14 @@ const Events: NextPage = () => {
               ))}
             </div>
             <SeparatorPrimitive.Root className="h-px w-full bg-gray-11 pl-10 dark:bg-gray-dark-11" />
-            <div className="grid w-full grow grid-cols-7 gap-5">
+            <div
+              className="grid min-h-0 w-full grow grid-cols-7 gap-5"
+              style={{ gridTemplateRows: `repeat(${dates.length / 7}, minmax(0, 1fr))` }}
+            >
               {dates.map(({ date, type }) => (
                 <div
                   key={format(date, "dd-MM-yy")}
-                  className={cx("flex flex-col items-end justify-start gap-2.5 rounded-lg p-2.5", {
+                  className={cx("flex flex-col items-end justify-start gap-0.5 overflow-hidden rounded-lg p-2.5", {
                     "bg-gray-5 dark:bg-gray-dark-5": isToday(date) && type === "current",
                     "bg-gray-4 dark:bg-gray-dark-4": isToday(date) && type !== "current",
                   })}
