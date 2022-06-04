@@ -392,14 +392,16 @@ declare global {
           }
       );
 
+      type TimetableDay = {
+        day: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+        periods: TimetablePeriod[];
+      };
+
       type TimetableSchema = Schema<ModelNames.T_CALENDAR> & {
         // Weekly timetable entry
         class: ObjectId;
         weeks: [number, ...number[]];
-        days: Array<{
-          day: number;
-          periods: TimetablePeriod[];
-        }>;
+        days: TimetableDay[];
       };
 
       type TimetableModel = Mongoose.Model<TimetableSchema>;

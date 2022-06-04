@@ -74,7 +74,7 @@ const TimetablePeriodSchema = new mongoose.Schema<Schemas.Calendar.TimetablePeri
   { _id: false }
 );
 
-const TimetableDaySchema = new mongoose.Schema<Schemas.Calendar.TimetableSchema["days"][number]>(
+const TimetableDaySchema = new mongoose.Schema<Schemas.Calendar.TimetableDay>(
   {
     day: {
       type: Number,
