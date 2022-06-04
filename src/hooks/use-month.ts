@@ -37,9 +37,9 @@ export function useMonthDates(date: Date) {
   useIsomorphicLayoutEffect(() => {
     if (!interval) return;
 
-    const { end } = interval;
+    const end = endOfMonth(date);
     setDates(eachDayOfInterval(interval).map((date) => getDate(date, end)));
-  }, [interval]);
+  }, [date, interval]);
 
   return dates;
 }
@@ -51,9 +51,9 @@ export function useMonthWeeks(date: Date) {
   useIsomorphicLayoutEffect(() => {
     if (!interval) return;
 
-    const { end } = interval;
+    const end = endOfMonth(date);
     setWeeks(eachWeekOfInterval(interval).map((week) => getDate(week, end)));
-  }, [interval]);
+  }, [date, interval]);
 
   return weeks;
 }
