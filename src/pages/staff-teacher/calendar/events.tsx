@@ -2,7 +2,7 @@ import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import Head from "next/head";
 import { Fragment, useState } from "react";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
-import { addMonths, format, getWeek, isToday, isWeekend, subMonths } from "date-fns";
+import { add, format, getWeek, isToday, isWeekend } from "date-fns";
 
 import { cx } from "utils";
 import { useMonthDates, useMonthWeeks } from "hooks";
@@ -34,7 +34,7 @@ const Events: NextPage = () => {
             <div className="flex items-center justify-center gap-0.5 p-1.5">
               <button
                 type="button"
-                onClick={() => setActiveDate(subMonths(activeDate, 1))}
+                onClick={() => setActiveDate(add(activeDate, { months: -1 }))}
                 className="rounded-full p-2 text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-6 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-6 dark:active:bg-gray-dark-6"
               >
                 <CaretLeftIcon />
@@ -48,7 +48,7 @@ const Events: NextPage = () => {
               </button>
               <button
                 type="button"
-                onClick={() => setActiveDate(addMonths(activeDate, 1))}
+                onClick={() => setActiveDate(add(activeDate, { months: 1 }))}
                 className="rounded-full p-2 text-gray-12 hover:bg-gray-5 focus:outline-none focus:ring-2 focus:ring-gray-6 active:bg-gray-6 dark:text-gray-dark-12 dark:hover:bg-gray-dark-5 dark:focus:ring-gray-dark-6 dark:active:bg-gray-dark-6"
               >
                 <CaretRightIcon />
