@@ -215,7 +215,9 @@ declare global {
       namespace POST {
         type Data = CreateData;
 
-        type Body = Omit<Schemas.Calendar.TimetableSchema, "_id" | "__type">;
+        type Body = {
+          week: number;
+        } & Omit<Schemas.Calendar.TimetableSchema, "_id" | "__type" | "weeks">;
       }
     }
   }

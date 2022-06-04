@@ -1,5 +1,5 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
-import { compareAsc, differenceInCalendarWeeks, differenceInMinutes, format, isAfter, isSameDay } from "date-fns";
+import { compareAsc, differenceInCalendarWeeks, differenceInMinutes, set } from "date-fns";
 
 import { connect } from "db";
 import { routeWrapper } from "api/server";
@@ -15,13 +15,14 @@ const handler: API.Handler<API.Timetable.POST.Data> = async (req) => {
   return null;
 };
 
-async function POST(body: API.Timetable.POST.Body): API.HandlerResponse<API.Timetable.POST.Data> {
-  if (!body.week) throw new Error("Week is required");
+async function POST({ week, ...body }: API.Timetable.POST.Body): API.HandlerResponse<API.Timetable.POST.Data> {
+  if (week < 1) throw new Error("Week cannot be less than 1");
 
+  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const [term, ...checks] = await Promise.all([
     TermModel.findById(body.term, "start end").lean(),
     ClassModel.exists({ _id: body.class }),
-    TimetableCalendarModel.exists({ class: body.class, week: body.week }),
+    TimetableCalendarModel.exists({ class: body.class, weeks: week }),
   ]);
 
   if (term == null) throw new Error("Term not found");
@@ -29,21 +30,19 @@ async function POST(body: API.Timetable.POST.Body): API.HandlerResponse<API.Time
   if (checks[1] != null) throw new Error("Timetable already specified for specified Class and Week");
   if (body.days.length < 1) throw new Error("At least one day must be specified");
 
-  const termEnd = new Date(term.end);
-  const termStart = new Date(term.start);
+  const [termEnd, termStart] = [term.end, term.start].map((d) => new Date(d));
 
-  if (body.week > differenceInCalendarWeeks(termEnd, termStart))
+  if (week > differenceInCalendarWeeks(termEnd, termStart))
     throw new Error("Specified term does not have that many weeks");
 
   const itemIds = body.days.reduce<Record<"subjects" | "teachers", Schemas.ObjectId[]>>(
-    (acc, b) => {
+    (acc, { day, periods }) => {
       const subjects: Schemas.ObjectId[] = [];
       const teachers: Schemas.ObjectId[] = [];
 
-      if (b.periods.length < 1)
-        throw new Error(`At least one period for day (${format(new Date(b.date), "dd/MM/yyyy")}) must be specified`);
+      if (periods.length < 1) throw new Error(`At least one period for day (${daysOfWeek[day]}) is required`);
 
-      b.periods.forEach((period) => {
+      periods.forEach((period) => {
         if (period._type === "idle") return;
         subjects.push(period.subject);
         teachers.push(period.teacher);
@@ -62,45 +61,44 @@ async function POST(body: API.Timetable.POST.Body): API.HandlerResponse<API.Time
     TeacherStaffModel.find({ _id: { $in: [...new Set(itemIds.teachers)] } }, "_id").lean(),
   ]);
 
-  body.days.forEach((day, _, days) => {
-    const date = new Date(day.date).getTime();
-    const formatted = format(date, "dd/MM/yyyy");
+  const days = body.days.map(({ day, ...item }) => {
+    if (body.days.find((otherDay) => otherDay.day === day)) throw new Error(`Duplicate ${daysOfWeek[day]} provided`);
 
-    if (date > termEnd.getTime()) throw new Error("Cannot add timetable after term end");
-    if (date < termStart.getTime()) throw new Error("Cannot add timetable before term begins");
-    if (days.find((_) => isSameDay(new Date(_.date), date))) throw new Error(`Duplicate day ${formatted} provided`);
+    const periods = item.periods.map((period, idx) => {
+      const minTime = 45; // TODO: Set in settings
+      const [end, start] = [period.end, period.start].map((time) => new Date(time));
 
-    day.periods.forEach((period, periodIdx) => {
-      if (!isSameDay(date, new Date(period.end))) throw new Error("Period end day must match specified date");
-      if (!isSameDay(date, new Date(period.start))) throw new Error("Period start day must match specified date");
-      if (isAfter(new Date(period.end), new Date(period.start))) throw new Error("Period cannot start after end");
-
-      const minTimeInterval = 45; // TODO: Set in settings
-      const timeBetween = differenceInMinutes(new Date(period.start), new Date(period.end));
-
-      if (timeBetween < minTimeInterval)
-        throw new Error(
-          `Time between Period start and end must be at least ${minTimeInterval} minutes not ${timeBetween}`
-        );
-      if (timeBetween % minTimeInterval !== 0)
-        throw new Error(`Time between Period start and end must be divisible by ${minTimeInterval}`);
+      const timeDiff = differenceInMinutes(start, end);
+      if (timeDiff < 0) throw new Error("A period start cannot be after end");
+      if (timeDiff < minTime) throw new Error(`A period is required to have a minimum of ${minTime} minutes`);
+      if (timeDiff % minTime) throw new Error(`The duration of a period must be in multiples of ${minTime}`);
 
       if (period._type === "subject") {
         const subject = subjects.find((_) => _._id.equals(period.subject));
         const teacher = teachers.find((_) => _._id.equals(period.teacher));
 
-        if (subject == undefined) throw new Error(`Subject does not exist in period ${periodIdx} on day ${formatted}`);
-        if (teacher == undefined) throw new Error(`Teacher does not exist in period ${periodIdx} on day ${formatted}`);
+        if (subject == undefined) throw new Error(`The subject on ${daysOfWeek[day]} period ${idx} was not found`);
+        if (teacher == undefined) throw new Error(`The teacher on ${daysOfWeek[day]} period ${idx} was not found`);
       } else if (!period.title) throw new Error("Period Title is required");
+
+      return {
+        ...period,
+        end: set(new Date(0), { hours: end.getHours(), minutes: end.getMinutes() }),
+        start: set(new Date(0), { hours: start.getHours(), minutes: start.getMinutes() }),
+      };
     });
 
-    day.periods = day.periods.sort((periodA, periodB) => compareAsc(new Date(periodA.start), new Date(periodB.start)));
+    return {
+      day,
+      periods: periods.sort((a, b) => compareAsc(new Date(a.start), new Date(b.start))),
+    };
   });
 
   const { _id } = await TimetableCalendarModel.create({
-    week: body.week,
+    weeks: [week],
+    term: body.term,
     class: body.class,
-    days: body.days.sort((dayA, day2) => compareAsc(new Date(dayA.date), new Date(day2.date))),
+    days: days.sort((a, b) => a.day - b.day),
   });
 
   return [{ data: { _id }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
