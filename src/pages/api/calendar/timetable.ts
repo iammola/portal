@@ -19,6 +19,14 @@ async function POST({ week, ...body }: API.Timetable.POST.Body): API.HandlerResp
   if (week < 1) throw new Error("Week cannot be less than 1");
 
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  // TODO: Add to settings
+  /* Setting the limits for the time of the periods. 0 is Unlimited */
+  const limits = {
+    idle: { min: 0, max: 30 },
+    subject: { min: 45, max: 135 },
+  };
+
   const [term, ...checks] = await Promise.all([
     TermModel.findById(body.term, "start end").lean(),
     ClassModel.exists({ _id: body.class }),
@@ -65,13 +73,16 @@ async function POST({ week, ...body }: API.Timetable.POST.Body): API.HandlerResp
     if (body.days.find((otherDay) => otherDay.day === day)) throw new Error(`Duplicate ${daysOfWeek[day]} provided`);
 
     const periods = item.periods.map((period, idx) => {
-      const minTime = 45; // TODO: Set in settings
+      const { max, min } = limits[period._type];
       const [end, start] = [period.end, period.start].map((time) => new Date(time));
 
       const timeDiff = differenceInMinutes(start, end);
-      if (timeDiff < 0) throw new Error("A period start cannot be after end");
-      if (timeDiff < minTime) throw new Error(`A period is required to have a minimum of ${minTime} minutes`);
-      if (timeDiff % minTime) throw new Error(`The duration of a period must be in multiples of ${minTime}`);
+      const key = period._type === "idle" ? "An idle" : "A subject";
+
+      if (timeDiff <= 0) throw new Error(`${key} period cannot be less than 1 minute`);
+      if (max > 0 && timeDiff > max) throw new Error(`${key} period is required to have a max of ${max} minutes`);
+      if (min > 0 && timeDiff < min) throw new Error(`${key} period is required to have a min of ${min} minutes`);
+      if (min > 0 && timeDiff % min) throw new Error(`${key} period's duration must be in multiples of ${min} minutes`);
 
       if (period._type === "subject") {
         const subject = subjects.find((_) => _._id.equals(period.subject));
