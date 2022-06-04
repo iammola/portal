@@ -88,16 +88,21 @@ const Events: NextPage = () => {
             </div>
             <SeparatorPrimitive.Root className="h-px w-full bg-gray-11 pl-10 dark:bg-gray-dark-11" />
             <div
-              className="grid min-h-0 w-full grow grid-cols-7 gap-5"
+              className="grid min-h-0 w-full grow grid-cols-7 gap-2.5"
               style={{ gridTemplateRows: `repeat(${dates.length / 7}, minmax(0, 1fr))` }}
             >
               {dates.map(({ date, type }) => (
                 <div
                   key={format(date, "dd-MM-yy")}
-                  className={cx("flex flex-col items-end justify-start gap-0.5 overflow-hidden rounded-lg p-2.5", {
-                    "bg-gray-5 dark:bg-gray-dark-5": isToday(date) && type === "current",
-                    "bg-gray-4 dark:bg-gray-dark-4": isToday(date) && type !== "current",
-                  })}
+                  className={cx(
+                    "flex flex-col items-end justify-start gap-0.5 overflow-hidden rounded-lg p-2.5",
+                    !isToday(date)
+                      ? "hover:bg-gray-6 dark:hover:bg-gray-dark-6"
+                      : {
+                          "bg-gray-5 hover:bg-gray-6 dark:bg-gray-dark-5 dark:hover:bg-gray-dark-6": type === "current",
+                          "bg-gray-4 hover:bg-gray-5 dark:bg-gray-dark-4 dark:hover:bg-gray-dark-5": type !== "current",
+                        }
+                  )}
                 >
                   <time
                     dateTime={format(date, "yyyy-MM-dd")}
