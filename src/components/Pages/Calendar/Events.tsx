@@ -2,15 +2,27 @@ import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { useState } from "react";
 import { format, add, getWeek, isToday, isWeekend } from "date-fns";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
+import useSWR from "swr";
 
 import { cx } from "utils";
 import { useMonthDates, useMonthWeeks, MonthDate } from "hooks";
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const Calendar: React.FC = () => {
-  const [activeDate, setActiveDate] = useState(new Date());
+  const [, setEvents] = useState<API.Event.GET.AllData>([]);
 
-  const { dates } = useMonthDates(activeDate);
+  const [activeDate, setActiveDate] = useState(new Date());
+  const { dates, interval } = useMonthDates(activeDate);
+
+  useSWR<API.Result<API.Event.GET.AllData>>(
+    `/api/calendar/events?start=${+(interval?.start ?? "")}&ends=${+(interval?.end ?? "")}`,
+    {
+      onSuccess(result) {
+        if (!result.success) return;
+        setEvents(result.data);
+      },
+    }
+  );
 
   return (
     <div className="grid min-h-0 w-full grow grid-cols-[max-content_minmax(0,1fr)] grid-rows-[max-content_minmax(0,1fr)] gap-2.5">
