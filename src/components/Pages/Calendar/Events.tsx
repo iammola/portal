@@ -1,6 +1,6 @@
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { useState } from "react";
-import { format, add, getWeek, isToday, isWeekend } from "date-fns";
+import { format, add, getWeek, isToday, isWeekend, isSameDay } from "date-fns";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import useSWR from "swr";
 
@@ -9,7 +9,7 @@ import { useMonthDates, useMonthWeeks, MonthDate } from "hooks";
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const Calendar: React.FC = () => {
-  const [, setEvents] = useState<API.Event.GET.AllData>([]);
+  const [events, setEvents] = useState<API.Event.GET.AllData>([]);
 
   const [activeDate, setActiveDate] = useState(new Date());
   const { dates, interval } = useMonthDates(activeDate);
@@ -45,7 +45,11 @@ const Calendar: React.FC = () => {
           style={{ gridTemplateRows: `repeat(${dates.length / 7}, minmax(0, 1fr))` }}
         >
           {dates.map((props) => (
-            <CalendarDate key={format(props.date, "dd-MM-yy")} {...props} />
+            <CalendarDate
+              {...props}
+              key={format(props.date, "dd-MM-yy")}
+              events={events.filter(({ start }) => isSameDay(new Date(start), props.date))}
+            />
           ))}
         </div>
       </div>
@@ -53,7 +57,7 @@ const Calendar: React.FC = () => {
   );
 };
 
-const CalendarDate: React.FC<MonthDate> = ({ date, type }) => {
+const CalendarDate: React.FC<MonthDate & { events: API.Event.GET.AllData }> = ({ date, type }) => {
   return (
     <div
       className={cx(
