@@ -209,6 +209,10 @@ declare global {
               }>;
         } & Omit<Schemas.Calendar.EventSchema, "invitees" | "__type">;
       }
+
+      namespace GET {
+        type AllData = Array<Pick<Schemas.Calendar.EventSchema, "_id" | "title" | "ends" | "start">>;
+      }
     }
 
     namespace Timetable {

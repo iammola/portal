@@ -14,12 +14,20 @@ import {
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const handler: API.Handler<API.Event.POST.Data> = async (req) => {
+const handler: API.Handler<API.Event.POST.Data | API.Event.GET.AllData> = async (req) => {
   await connect();
   if (req.method === "POST") return POST(req.body as API.Event.POST.Body);
+  if (req.method === "GET") return GET(req.query);
 
   return null;
 };
+
+async function GET({ start, ends, term }: Record<string, unknown>): API.HandlerResponse<API.Event.GET.AllData> {
+  const filter = start || ends ? { start, ends } : term ? { term } : {};
+  const events = await EventCalendarModel.find(filter, "title start ends").lean();
+
+  return [{ data: events, message: ReasonPhrases.OK }, StatusCodes.OK];
+}
 
 async function POST({ invitees, ...body }: API.Event.POST.Body): API.HandlerResponse<API.Event.POST.Data> {
   const term = await TermModel.findById(body.term, "start end").lean();
@@ -102,4 +110,4 @@ async function POST({ invitees, ...body }: API.Event.POST.Body): API.HandlerResp
   return [{ data: { _id }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
-export default (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["POST"]);
+export default (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["GET", "POST"]);
