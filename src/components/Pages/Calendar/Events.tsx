@@ -10,7 +10,7 @@ const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
 const Calendar: React.FC = () => {
   const [activeDate, setActiveDate] = useState(new Date());
 
-  const dates = useMonthDates(activeDate);
+  const { dates } = useMonthDates(activeDate);
 
   return (
     <div className="grid min-h-0 w-full grow grid-cols-[max-content_minmax(0,1fr)] grid-rows-[max-content_minmax(0,1fr)] gap-2.5">
@@ -69,7 +69,7 @@ const CalendarDate: React.FC<MonthDate> = ({ date, type }) => {
 };
 
 const WeekPanel: React.FC<{ date: Date }> = ({ date }) => {
-  const weeks = useMonthWeeks(date);
+  const { weeks } = useMonthWeeks(date);
 
   return (
     <div className="col-start-1 col-end-2 row-start-2 flex min-w-0 flex-col gap-2.5 rounded-lg bg-gray-3 px-3.5 dark:bg-gray-dark-3">

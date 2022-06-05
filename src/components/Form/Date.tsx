@@ -177,7 +177,7 @@ const Calendar: React.FC<CalendarProps> = ({ date, month, year, onValueChange })
     months: "January February March April May June July August September October November December".split(" "),
   }));
 
-  const dates = useMonthDates(new Date(+(year || textYear), +activeMonth - 1));
+  const { dates } = useMonthDates(new Date(+(year || textYear), +activeMonth - 1));
 
   function setYear(val: string) {
     if (isNaN(+val)) return;

@@ -30,7 +30,7 @@ function useInterval(date: Date) {
   return interval;
 }
 
-export function useMonthDates(date: Date) {
+export function useMonthDates(date: Date): MonthRange<"dates"> {
   const interval = useInterval(date);
   const [dates, setDates] = useState<MonthDate[]>([]);
 
@@ -41,10 +41,10 @@ export function useMonthDates(date: Date) {
     setDates(eachDayOfInterval(interval).map((date) => getDate(date, end)));
   }, [date, interval]);
 
-  return dates;
+  return { dates, interval };
 }
 
-export function useMonthWeeks(date: Date) {
+export function useMonthWeeks(date: Date): MonthRange<"weeks"> {
   const interval = useInterval(date);
   const [weeks, setWeeks] = useState<MonthDate[]>([]);
 
@@ -55,10 +55,16 @@ export function useMonthWeeks(date: Date) {
     setWeeks(eachWeekOfInterval(interval).map((week) => getDate(week, end)));
   }, [date, interval]);
 
-  return weeks;
+  return { weeks, interval };
 }
 
 export type MonthDate = {
   date: Date;
   type: "previous" | "current" | "next";
+};
+
+type MonthRange<K extends string> = {
+  interval?: Record<"start" | "end", Date>;
+} & {
+  [T in K]: MonthDate[];
 };
