@@ -58,7 +58,7 @@ export function useMonthWeeks(date: Date) {
   return weeks;
 }
 
-type MonthDate = {
+export type MonthDate = {
   date: Date;
   type: "previous" | "current" | "next";
 };
