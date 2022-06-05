@@ -57,11 +57,11 @@ const Calendar: React.FC = () => {
   );
 };
 
-const CalendarDate: React.FC<MonthDate & { events: API.Event.GET.AllData }> = ({ date, type }) => {
+const CalendarDate: React.FC<MonthDate & { events: API.Event.GET.AllData }> = ({ date, events, type }) => {
   return (
     <div
       className={cx(
-        "flex flex-col items-end justify-start gap-0.5 overflow-hidden rounded-lg p-2.5",
+        "flex flex-col items-end justify-start gap-0.5 overflow-hidden rounded-lg p-2.5 pb-1",
         !isToday(date)
           ? "hover:bg-gray-6 dark:hover:bg-gray-dark-6"
           : {
@@ -72,7 +72,7 @@ const CalendarDate: React.FC<MonthDate & { events: API.Event.GET.AllData }> = ({
     >
       <time
         dateTime={format(date, "yyyy-MM-dd")}
-        className={cx("text-sm font-medium", [
+        className={cx("text-sm font-medium leading-none", [
           type === "current" && !isWeekend(date),
           "text-gray-12 dark:text-gray-dark-12",
           "text-gray-11 dark:text-gray-dark-11",
@@ -80,6 +80,16 @@ const CalendarDate: React.FC<MonthDate & { events: API.Event.GET.AllData }> = ({
       >
         {format(date, date.getDate() === 1 ? "d MMM" : "d")}
       </time>
+      {events.length > 0 && (
+        <div className="flex w-full shrink grow flex-col items-start gap-px overflow-hidden">
+          <div className="flex w-full flex-row items-center gap-1.5">
+            <span aria-hidden className="h-1 w-1 shrink-0 rounded-full bg-gray-9 dark:bg-gray-dark-9" />
+            <span className="grow truncate text-xs font-medium text-gray-12 dark:text-gray-dark-12">
+              {events.length} event{events.length > 1 && "s"}
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
