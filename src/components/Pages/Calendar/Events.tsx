@@ -1,14 +1,16 @@
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { useState } from "react";
-import { format, add, getWeek, isToday, isWeekend, isSameDay } from "date-fns";
-import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
+import { CaretLeftIcon, CaretRightIcon, PlusIcon } from "@radix-ui/react-icons";
+import { format, add, getWeek, isToday, isWeekend, isSameDay, set } from "date-fns";
 import useSWR from "swr";
 
+import * as Dialog from "components/Dialog";
 import { cx } from "utils";
+import { Input, Date as FormDate } from "components/Form";
 import { useMonthDates, useMonthWeeks, MonthDate } from "hooks";
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const Calendar: React.FC = () => {
+export const Calendar: React.FC = () => {
   const [events, setEvents] = useState<API.Event.GET.AllData>([]);
 
   const [activeDate, setActiveDate] = useState(new Date());
@@ -54,6 +56,62 @@ const Calendar: React.FC = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+export const CreateDialog: React.FC = () => {
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState<Date>();
+
+  const [end, setEnd] = useState<Date>();
+  const [start, setStart] = useState<Date>();
+
+  function setTime(position: "start" | "end", value: string) {
+    const setter = position === "start" ? setStart : setEnd;
+    if (value === "") return setter(undefined);
+
+    const [, hours = 0, minutes = 0] = value.match(/(\d+):(\d+)/) ?? [];
+    setter(set(new Date(), { hours: +hours, minutes: +minutes }));
+  }
+
+  return (
+    <Dialog.Root>
+      <Dialog.Trigger className="flex items-center justify-center gap-1.5 rounded-md bg-gray-3 px-4 py-2 text-sm font-medium text-gray-12 shadow hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-8 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-8">
+        <PlusIcon />
+        Add new Event
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Title className="text-2xl font-semibold tracking-wide">Create a new Event</Dialog.Title>
+        <SeparatorPrimitive.Root className="my-2 h-px w-full bg-gray-11 px-10 dark:bg-gray-dark-11" />
+        <div className="mt-5 w-full space-y-4">
+          <Input required value={title} onValueChange={setTitle}>
+            Title
+          </Input>
+          <FormDate required value={date} onValueChange={setDate}>
+            Date
+          </FormDate>
+          <div className="flex items-center justify-start gap-2.5">
+            <Input
+              required
+              type="time"
+              value={start ? format(start, "HH:mm") : ""}
+              onValueChange={(val) => setTime("start", val)}
+            >
+              Start Time
+            </Input>
+            <Input
+              required
+              type="time"
+              value={end ? format(end, "HH:mm") : ""}
+              onValueChange={(val) => setTime("end", val)}
+              min={start ? format(add(start, { minutes: 1 }), "HH:mm") : undefined}
+            >
+              End Time
+            </Input>
+          </div>
+        </div>
+      </Dialog.Content>
+    </Dialog.Root>
   );
 };
 
@@ -156,5 +214,3 @@ const MonthPanel: React.FC<{ date: Date; onDateChange(date: Date): void }> = ({ 
     </div>
   );
 };
-
-export default Calendar;
