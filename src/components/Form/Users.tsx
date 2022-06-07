@@ -143,7 +143,7 @@ const User: React.FC<{ username: string }> = ({ username }) => {
             <div className="flex flex-col items-start justify-center gap-1">
               <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{user.name}</span>
               <span className="text-xs text-gray-11 dark:text-gray-dark-11">
-                {username} - {user.level}
+                <span>{username}</span> - <span className="capitalize">{user.level}</span>
               </span>
             </div>
           </Fragment>
