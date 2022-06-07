@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { endOfMonth, eachDayOfInterval, subDays, startOfMonth, eachWeekOfInterval } from "date-fns";
+import { endOfMonth, eachDayOfInterval, subDays, eachWeekOfInterval } from "date-fns";
 
 import { useIsomorphicLayoutEffect } from "hooks";
 
@@ -12,12 +12,12 @@ function getDate(date: Date, end: Date): MonthDate {
   };
 }
 
-function useInterval(date: Date) {
+function useInterval(year: number, month: number) {
   const [interval, setInterval] = useState<Record<"start" | "end", Date>>();
 
   useIsomorphicLayoutEffect(() => {
-    const start = startOfMonth(date);
-    const end = endOfMonth(start);
+    const start = new Date(year, month);
+    const end = endOfMonth(new Date(year, month));
 
     const interval = {
       start: start.getDay() > 0 ? subDays(start, start.getDay()) : start,
@@ -25,35 +25,35 @@ function useInterval(date: Date) {
     };
 
     setInterval(interval);
-  }, [date]);
+  }, [month, year]);
 
   return interval;
 }
 
-export function useMonthDates(date: Date): MonthRange<"dates"> {
-  const interval = useInterval(date);
+export function useMonthDates(year: number, month: number): MonthRange<"dates"> {
+  const interval = useInterval(year, month);
   const [dates, setDates] = useState<MonthDate[]>([]);
 
   useIsomorphicLayoutEffect(() => {
     if (!interval) return;
+    const end = endOfMonth(new Date(year, month));
 
-    const end = endOfMonth(date);
     setDates(eachDayOfInterval(interval).map((date) => getDate(date, end)));
-  }, [date, interval]);
+  }, [interval, month, year]);
 
   return { dates, interval };
 }
 
-export function useMonthWeeks(date: Date): MonthRange<"weeks"> {
-  const interval = useInterval(date);
+export function useMonthWeeks(year: number, month: number): MonthRange<"weeks"> {
+  const interval = useInterval(year, month);
   const [weeks, setWeeks] = useState<MonthDate[]>([]);
 
   useIsomorphicLayoutEffect(() => {
     if (!interval) return;
+    const end = endOfMonth(new Date(year, month));
 
-    const end = endOfMonth(date);
     setWeeks(eachWeekOfInterval(interval).map((week) => getDate(week, end)));
-  }, [date, interval]);
+  }, [interval, month, year]);
 
   return { weeks, interval };
 }

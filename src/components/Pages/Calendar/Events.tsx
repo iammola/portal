@@ -14,7 +14,7 @@ export const Calendar: React.FC = () => {
   const [events, setEvents] = useState<API.Event.GET.AllData>([]);
 
   const [activeDate, setActiveDate] = useState(new Date());
-  const { dates, interval } = useMonthDates(activeDate);
+  const { dates, interval } = useMonthDates(activeDate.getFullYear(), activeDate.getMonth());
 
   useSWR<API.Result<API.Event.GET.AllData>>(
     `/api/calendar/events?start=${+(interval?.start ?? "")}&ends=${+(interval?.end ?? "")}`,
@@ -153,7 +153,7 @@ const CalendarDate: React.FC<MonthDate & { events: API.Event.GET.AllData }> = ({
 };
 
 const WeekPanel: React.FC<{ date: Date }> = ({ date }) => {
-  const { weeks } = useMonthWeeks(date);
+  const { weeks } = useMonthWeeks(date.getFullYear(), date.getMonth());
 
   return (
     <div className="col-start-1 col-end-2 row-start-2 flex min-w-0 flex-col gap-2.5 rounded-lg bg-gray-3 px-3.5 dark:bg-gray-dark-3">
