@@ -207,7 +207,7 @@ declare global {
                 students: Invitee;
                 staff: Invitee | Partial<{ teachers: Invitee /* Other Staff Types */ }>;
               }>;
-        } & Omit<Schemas.Calendar.EventSchema, "invitees" | "__type">;
+        } & Omit<Schemas.Calendar.EventSchema, "invitees" | "__type" | "_id">;
       }
 
       namespace GET {

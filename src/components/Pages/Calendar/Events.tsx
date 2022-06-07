@@ -6,6 +6,7 @@ import useSWR from "swr";
 
 import * as Dialog from "components/Dialog";
 import { cx } from "utils";
+import { fetchAPI } from "api/client";
 import { useMonthDates, useMonthWeeks, MonthDate } from "hooks";
 import { Checkbox, Date as FormDate, Input, Users } from "components/Form";
 
@@ -89,6 +90,42 @@ export const CreateDialog: React.FC = () => {
     setUsers({ ...update, all, specific: all ? "" : update.specific });
   }
 
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (!start || !end || !date) return;
+
+    try {
+      const result = await fetchAPI<API.Event.POST.Data, API.Event.POST.Body>("/api/calendar/events", {
+        method: "POST",
+        body: {
+          title,
+          start: set(date, { hours: start.getHours(), minutes: start.getMinutes() }),
+          ends: set(date, { hours: end.getHours(), minutes: end.getMinutes() }),
+          invitees: users.all
+            ? "all"
+            : users.parents || users.students || users.staff
+            ? {
+                parents: users.parents ? "all" : undefined,
+                students: users.students ? "all" : undefined,
+                staff: users.staff ? "all" : undefined,
+              }
+            : users.specific.split(" "),
+        },
+      });
+
+      if (result.success) {
+        setTitle("");
+        setEnd(undefined);
+        setStart(undefined);
+        setDate(undefined);
+        setUsers({ all: false, students: false, staff: false, parents: false, specific: "" });
+      } else throw result.error;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <Dialog.Root>
       <Dialog.Trigger className="flex items-center justify-center gap-1.5 rounded-md bg-gray-3 px-4 py-2 text-sm font-medium text-gray-12 shadow hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-8 dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-8">
@@ -98,7 +135,7 @@ export const CreateDialog: React.FC = () => {
       <Dialog.Content>
         <Dialog.Title className="text-2xl font-semibold tracking-wide">Create a new Event</Dialog.Title>
         <SeparatorPrimitive.Root className="my-2 h-px w-full bg-gray-11 px-10 dark:bg-gray-dark-11" />
-        <div className="mt-5 w-full space-y-7">
+        <form onSubmit={(e) => void handleSubmit(e)} className="mt-5 w-full space-y-7">
           <div className="space-y-4">
             <Input required value={title} onValueChange={setTitle}>
               Title
@@ -167,7 +204,7 @@ export const CreateDialog: React.FC = () => {
           >
             Create Event
           </button>
-        </div>
+        </form>
       </Dialog.Content>
     </Dialog.Root>
   );
