@@ -212,38 +212,55 @@ export const CreateDialog: React.FC = () => {
 
 const CalendarDate: React.FC<MonthDate & { events: API.Event.GET.AllData }> = ({ date, events, type }) => {
   return (
-    <div
-      className={cx(
-        "flex flex-col items-end justify-start gap-0.5 overflow-hidden rounded-lg p-2.5 pb-1",
-        !isToday(date)
-          ? "hover:bg-gray-6 dark:hover:bg-gray-dark-6"
-          : {
-              "bg-gray-5 hover:bg-gray-6 dark:bg-gray-dark-5 dark:hover:bg-gray-dark-6": type === "current",
-              "bg-gray-4 hover:bg-gray-5 dark:bg-gray-dark-4 dark:hover:bg-gray-dark-5": type !== "current",
-            }
-      )}
-    >
-      <time
-        dateTime={format(date, "yyyy-MM-dd")}
-        className={cx("text-sm font-medium leading-none", [
-          type === "current" && !isWeekend(date),
-          "text-gray-12 dark:text-gray-dark-12",
-          "text-gray-11 dark:text-gray-dark-11",
-        ])}
+    <Dialog.Root>
+      <Dialog.Trigger
+        className={cx(
+          "flex flex-col items-end justify-start gap-0.5 overflow-hidden rounded-lg p-2.5 pb-1",
+          !isToday(date)
+            ? "hover:bg-gray-6 dark:hover:bg-gray-dark-6"
+            : {
+                "bg-gray-5 hover:bg-gray-6 dark:bg-gray-dark-5 dark:hover:bg-gray-dark-6": type === "current",
+                "bg-gray-4 hover:bg-gray-5 dark:bg-gray-dark-4 dark:hover:bg-gray-dark-5": type !== "current",
+              }
+        )}
       >
-        {format(date, date.getDate() === 1 ? "d MMM" : "d")}
-      </time>
-      {events.length > 0 && (
-        <div className="flex w-full shrink grow flex-col items-start gap-px overflow-hidden">
-          <div className="flex w-full flex-row items-center gap-1.5">
-            <span aria-hidden className="h-1 w-1 shrink-0 rounded-full bg-gray-9 dark:bg-gray-dark-9" />
-            <span className="grow truncate text-xs font-medium text-gray-12 dark:text-gray-dark-12">
-              {events.length} event{events.length > 1 && "s"}
-            </span>
+        <time
+          dateTime={format(date, "yyyy-MM-dd")}
+          className={cx("text-sm font-medium leading-none", [
+            type === "current" && !isWeekend(date),
+            "text-gray-12 dark:text-gray-dark-12",
+            "text-gray-11 dark:text-gray-dark-11",
+          ])}
+        >
+          {format(date, date.getDate() === 1 ? "d MMM" : "d")}
+        </time>
+        {events.length > 0 && (
+          <div className="flex w-full shrink grow flex-col items-start gap-px overflow-hidden">
+            <div className="flex w-full flex-row items-center gap-1.5">
+              <span aria-hidden className="h-1 w-1 shrink-0 rounded-full bg-gray-9 dark:bg-gray-dark-9" />
+              <span className="grow truncate text-left text-xs font-medium text-gray-12 dark:text-gray-dark-12">
+                {events.length} {events.length > 1 ? "events" : "event"}
+              </span>
+            </div>
           </div>
+        )}
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Title className="text-2xl font-semibold tracking-wide">{format(date, "PP")}</Dialog.Title>
+        <SeparatorPrimitive.Root className="my-2 h-px w-full bg-gray-11 px-10 dark:bg-gray-dark-11" />
+        <div className="mt-5 w-full space-y-1">
+          {events.map((e) => (
+            <div
+              key={String(e._id)}
+              className="flex w-full items-center justify-between gap-3 rounded-md p-3 hover:bg-gray-4 dark:hover:bg-gray-dark-4"
+            >
+              <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{e.title}</span>
+              <span className="text-xs text-gray-11 dark:text-gray-dark-11">{format(new Date(e.start), "p")}</span>
+            </div>
+          ))}
         </div>
-      )}
-    </div>
+      </Dialog.Content>
+    </Dialog.Root>
   );
 };
 
