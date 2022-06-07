@@ -18,7 +18,7 @@ export const Calendar: React.FC = () => {
   const { dates, interval } = useMonthDates(activeDate.getFullYear(), activeDate.getMonth());
 
   useSWR<API.Result<API.Event.GET.AllData>>(
-    `/api/calendar/events?start=${+(interval?.start ?? "")}&ends=${+(interval?.end ?? "")}`,
+    interval && `/api/calendar/events?start=${+interval.start}&ends=${+interval.end}`,
     {
       onSuccess(result) {
         if (!result.success) return;
