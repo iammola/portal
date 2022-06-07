@@ -23,7 +23,7 @@ const handler: API.Handler<API.Event.POST.Data | API.Event.GET.AllData> = async 
 };
 
 async function GET({ start, ends, term }: Record<string, unknown>): API.HandlerResponse<API.Event.GET.AllData> {
-  const filter = start || ends ? { start, ends } : term ? { term } : {};
+  const filter = start || ends ? { start: { $gte: start }, ends: { $lte: ends } } : term ? { term } : {};
   const events = await EventCalendarModel.find(filter, "title start ends").lean();
 
   return [{ data: events, message: ReasonPhrases.OK }, StatusCodes.OK];
