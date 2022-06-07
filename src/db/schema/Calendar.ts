@@ -146,6 +146,10 @@ export const TimetableSchema = new mongoose.Schema<Schemas.Calendar.TimetableSch
     days: {
       type: [TimetableDaySchema],
     },
+    term: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, "Timetable Term is required"],
+    },
   },
   { versionKey: false }
 );

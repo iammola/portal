@@ -355,7 +355,6 @@ declare global {
 
       type Schema<T> = DocumentId & {
         __type: T;
-        term: ObjectId;
       };
 
       type Model = Mongoose.Model<EventSchema | TimetableSchema>;
@@ -399,6 +398,7 @@ declare global {
 
       type TimetableSchema = Schema<ModelNames.T_CALENDAR> & {
         // Weekly timetable entry
+        term: ObjectId;
         class: ObjectId;
         weeks: [number, ...number[]];
         days: TimetableDay[];

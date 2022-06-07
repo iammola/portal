@@ -4,12 +4,7 @@ import { ModelNames } from "db/constants";
 import { EventSchema, TimetableSchema } from "db/schema/Calendar";
 
 const CalendarSchema = new mongoose.Schema<Schemas.Calendar.Record>(
-  {
-    term: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: [true, "Calendar Term is required"],
-    },
-  },
+  {},
   { versionKey: false, discriminatorKey: "__type" }
 );
 
