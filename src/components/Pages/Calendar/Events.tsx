@@ -6,8 +6,8 @@ import useSWR from "swr";
 
 import * as Dialog from "components/Dialog";
 import { cx } from "utils";
-import { Input, Date as FormDate } from "components/Form";
 import { useMonthDates, useMonthWeeks, MonthDate } from "hooks";
+import { Checkbox, Date as FormDate, Input, Users } from "components/Form";
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 export const Calendar: React.FC = () => {
@@ -66,12 +66,27 @@ export const CreateDialog: React.FC = () => {
   const [end, setEnd] = useState<Date>();
   const [start, setStart] = useState<Date>();
 
+  const [users, setUsers] = useState({
+    all: false,
+    students: false,
+    staff: false,
+    parents: false,
+    specific: "",
+  });
+
   function setTime(position: "start" | "end", value: string) {
     const setter = position === "start" ? setStart : setEnd;
     if (value === "") return setter(undefined);
 
     const [, hours = 0, minutes = 0] = value.match(/(\d+):(\d+)/) ?? [];
     setter(set(new Date(), { hours: +hours, minutes: +minutes }));
+  }
+
+  function updateUsers(key: keyof Omit<typeof users, "all" | "specific">, value: boolean) {
+    const update = { ...users, [key]: value };
+    const all = update.students && update.staff && update.parents;
+
+    setUsers({ ...update, all, specific: all ? "" : update.specific });
   }
 
   return (
@@ -108,6 +123,36 @@ export const CreateDialog: React.FC = () => {
             >
               End Time
             </Input>
+          </div>
+          <div className="space-y-1">
+            <span className="text-sm font-medium text-gray-12 dark:text-gray-dark-12">Invitees</span>
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <Checkbox
+                  onCheckedChange={(c) => {
+                    const all = !!c;
+                    setUsers((users) => ({ ...users, all, students: all, parents: all, staff: all }));
+                  }}
+                  checked={users.all ? true : users.students || users.staff || users.parents ? "indeterminate" : false}
+                >
+                  All Users
+                </Checkbox>
+                <div className="flex flex-col flex-wrap items-start justify-start gap-2 xs:flex-row xs:gap-4">
+                  <Checkbox checked={users.students} onCheckedChange={(c) => updateUsers("students", !!c)}>
+                    All Students
+                  </Checkbox>
+                  <Checkbox checked={users.staff} onCheckedChange={(c) => updateUsers("staff", !!c)}>
+                    All Staff
+                  </Checkbox>
+                  <Checkbox checked={users.parents} onCheckedChange={(c) => updateUsers("parents", !!c)}>
+                    All Parents
+                  </Checkbox>
+                </div>
+              </div>
+              <Users value={users.specific} onValueChange={(specific) => setUsers((users) => ({ ...users, specific }))}>
+                Specific Users
+              </Users>
+            </div>
           </div>
         </div>
       </Dialog.Content>
