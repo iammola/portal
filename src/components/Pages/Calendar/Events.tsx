@@ -98,62 +98,75 @@ export const CreateDialog: React.FC = () => {
       <Dialog.Content>
         <Dialog.Title className="text-2xl font-semibold tracking-wide">Create a new Event</Dialog.Title>
         <SeparatorPrimitive.Root className="my-2 h-px w-full bg-gray-11 px-10 dark:bg-gray-dark-11" />
-        <div className="mt-5 w-full space-y-4">
-          <Input required value={title} onValueChange={setTitle}>
-            Title
-          </Input>
-          <FormDate required value={date} onValueChange={setDate}>
-            Date
-          </FormDate>
-          <div className="flex items-center justify-start gap-2.5">
-            <Input
-              required
-              type="time"
-              value={start ? format(start, "HH:mm") : ""}
-              onValueChange={(val) => setTime("start", val)}
-            >
-              Start Time
+        <div className="mt-5 w-full space-y-7">
+          <div className="space-y-4">
+            <Input required value={title} onValueChange={setTitle}>
+              Title
             </Input>
-            <Input
-              required
-              type="time"
-              value={end ? format(end, "HH:mm") : ""}
-              onValueChange={(val) => setTime("end", val)}
-              min={start ? format(add(start, { minutes: 1 }), "HH:mm") : undefined}
-            >
-              End Time
-            </Input>
-          </div>
-          <div className="space-y-1">
-            <span className="text-sm font-medium text-gray-12 dark:text-gray-dark-12">Invitees</span>
-            <div className="space-y-3">
-              <div className="space-y-2">
-                <Checkbox
-                  onCheckedChange={(c) => {
-                    const all = !!c;
-                    setUsers((users) => ({ ...users, all, students: all, parents: all, staff: all }));
-                  }}
-                  checked={users.all ? true : users.students || users.staff || users.parents ? "indeterminate" : false}
-                >
-                  All Users
-                </Checkbox>
-                <div className="flex flex-col flex-wrap items-start justify-start gap-2 xs:flex-row xs:gap-4">
-                  <Checkbox checked={users.students} onCheckedChange={(c) => updateUsers("students", !!c)}>
-                    All Students
+            <FormDate required value={date} onValueChange={setDate}>
+              Date
+            </FormDate>
+            <div className="flex items-center justify-start gap-2.5">
+              <Input
+                required
+                type="time"
+                value={start ? format(start, "HH:mm") : ""}
+                onValueChange={(val) => setTime("start", val)}
+              >
+                Start Time
+              </Input>
+              <Input
+                required
+                type="time"
+                value={end ? format(end, "HH:mm") : ""}
+                onValueChange={(val) => setTime("end", val)}
+                min={start ? format(add(start, { minutes: 1 }), "HH:mm") : undefined}
+              >
+                End Time
+              </Input>
+            </div>
+            <div className="space-y-1">
+              <span className="text-sm font-medium text-gray-12 dark:text-gray-dark-12">Invitees</span>
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <Checkbox
+                    onCheckedChange={(c) => {
+                      const all = !!c;
+                      setUsers((users) => ({ ...users, all, students: all, parents: all, staff: all }));
+                    }}
+                    checked={
+                      users.all ? true : users.students || users.staff || users.parents ? "indeterminate" : false
+                    }
+                  >
+                    All Users
                   </Checkbox>
-                  <Checkbox checked={users.staff} onCheckedChange={(c) => updateUsers("staff", !!c)}>
-                    All Staff
-                  </Checkbox>
-                  <Checkbox checked={users.parents} onCheckedChange={(c) => updateUsers("parents", !!c)}>
-                    All Parents
-                  </Checkbox>
+                  <div className="flex flex-col flex-wrap items-start justify-start gap-2 xs:flex-row xs:gap-4">
+                    <Checkbox checked={users.students} onCheckedChange={(c) => updateUsers("students", !!c)}>
+                      All Students
+                    </Checkbox>
+                    <Checkbox checked={users.staff} onCheckedChange={(c) => updateUsers("staff", !!c)}>
+                      All Staff
+                    </Checkbox>
+                    <Checkbox checked={users.parents} onCheckedChange={(c) => updateUsers("parents", !!c)}>
+                      All Parents
+                    </Checkbox>
+                  </div>
                 </div>
+                <Users
+                  value={users.specific}
+                  onValueChange={(specific) => setUsers((users) => ({ ...users, specific }))}
+                >
+                  Specific Users
+                </Users>
               </div>
-              <Users value={users.specific} onValueChange={(specific) => setUsers((users) => ({ ...users, specific }))}>
-                Specific Users
-              </Users>
             </div>
           </div>
+          <button
+            type="submit"
+            className="w-full rounded-lg bg-gray-3 p-3 text-white hover:bg-gray-4 focus:outline-none dark:bg-gray-dark-3 dark:text-gray-dark-12 dark:hover:bg-gray-dark-4"
+          >
+            Create Event
+          </button>
         </div>
       </Dialog.Content>
     </Dialog.Root>
