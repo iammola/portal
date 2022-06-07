@@ -4,6 +4,7 @@
 
 /** @type {import('next').NextConfig} */
 const config = {
+  swcMinify: true,
   reactStrictMode: true,
   images: {
     domains: ["drive.google.com"],
