@@ -30,12 +30,8 @@ async function GET({ start, ends, term }: Record<string, unknown>): API.HandlerR
 }
 
 async function POST({ invitees, ...body }: API.Event.POST.Body): API.HandlerResponse<API.Event.POST.Data> {
-  const term = await TermModel.findById(body.term, "start end").lean();
-  if (term == null) throw new Error("Term not found");
-
-  if (new Date(body.start) < new Date(term.start)) throw new Error("Cannot add event before term starts");
-  if (new Date(body.ends) > new Date(term.end)) throw new Error("Cannot add event after term ends");
-  if (new Date(body.start) >= new Date(body.ends)) throw new Error("Event cannot start after end");
+  const term = await TermModel.exists({ start: { $gte: body.start }, end: { $lte: body.ends } });
+  if (term == null) throw new Error("A term has not been created in the time frame");
 
   const inviteIDs: Partial<Record<"staff" | "parents" | "students", Schemas.ObjectId[]>> = {};
 
