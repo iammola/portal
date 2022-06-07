@@ -32,7 +32,7 @@ async function GETUser(username: string): API.HandlerResponse<API.User.GET.Data>
     const { __type, ...cur } = user as unknown as API.User.GET.Data & { __type?: string };
     return {
       ...cur,
-      level: __type ? `Staff (${__type})` : levels[idx],
+      level: __type ? `${levels[idx]} (${__type})` : levels[idx],
     };
   }, null);
 
