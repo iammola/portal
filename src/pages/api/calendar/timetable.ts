@@ -109,8 +109,9 @@ async function POST({ week, ...body }: API.Timetable.POST.Body): API.HandlerResp
     TeacherStaffModel.find({ _id: { $in: [...new Set(itemIds.teachers)] } }, "_id").lean(),
   ]);
 
-  const days = body.days.map(({ day, ...item }) => {
-    if (body.days.find((otherDay) => otherDay.day === day)) throw new Error(`Duplicate ${daysOfWeek[day]} provided`);
+  const days = body.days.map(({ day, ...item }, idx) => {
+    if (body.days.find((otherDay, otherIdx) => otherDay.day === day && otherIdx !== idx))
+      throw new Error(`Duplicate ${daysOfWeek[day]} periods provided`);
 
     const periods = item.periods.map((period, idx) => {
       const { max, min } = limits[period._type];
