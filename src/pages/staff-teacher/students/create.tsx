@@ -10,24 +10,30 @@ import { Date, Input, Password, Phone, Select, Textarea, Users } from "component
 
 import type { NextPage } from "next";
 
-const AcademicRecord = dynamic(() => import("components/Pages/Student").then((_) => _.AcademicRecord), {
-  loading: ({ error, retry }) =>
-    error == null ? (
-      <div className="flex flex-col items-center justify-center gap-2 text-gray-11 dark:text-gray-dark-11">
-        <LoadingIcon className="h-[15px] w-[15px] animate-spin" />
-        Loading...
-      </div>
-    ) : (
-      <button
-        type="button"
-        onClick={retry}
-        className="flex items-center justify-center gap-2 text-gray-11 focus:outline-none dark:text-gray-dark-11"
-      >
-        Try again
-        <ReloadIcon />
-      </button>
-    ),
-});
+const AcademicRecord = dynamic(
+  async () => {
+    const { AcademicRecord } = await import("components/Pages/Student");
+    return AcademicRecord;
+  },
+  {
+    loading: ({ error, retry }) =>
+      error == null ? (
+        <div className="flex flex-col items-center justify-center gap-2 text-gray-11 dark:text-gray-dark-11">
+          <LoadingIcon className="h-[15px] w-[15px] animate-spin" />
+          Loading...
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={retry}
+          className="flex items-center justify-center gap-2 text-gray-11 focus:outline-none dark:text-gray-dark-11"
+        >
+          Try again
+          <ReloadIcon />
+        </button>
+      ),
+  }
+);
 
 const CreateStudent: NextPage = () => {
   const toasts = useToast();
