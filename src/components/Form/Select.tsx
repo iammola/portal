@@ -18,7 +18,7 @@ export const Select: Select = ({ children, id, label, ...props }) => {
       <SelectPrimitive.Root {...props}>
         <SelectPrimitive.Trigger
           id={id || customId}
-          className="inline-flex h-[45px] w-full select-none items-center justify-between gap-8 rounded bg-gray-3 px-4 text-sm text-gray-11 hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-5 dark:bg-gray-dark-3 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-5"
+          className="inline-flex h-[45px] w-full min-w-max select-none items-center justify-between gap-8 rounded bg-gray-3 px-4 text-sm text-gray-11 hover:bg-gray-4 focus:outline-none focus:ring-2 focus:ring-gray-7 active:bg-gray-5 dark:bg-gray-dark-3 dark:text-gray-dark-11 dark:hover:bg-gray-dark-4 dark:focus:ring-gray-dark-7 dark:active:bg-gray-dark-5"
         >
           <SelectPrimitive.Value />
           <SelectPrimitive.Icon asChild>
