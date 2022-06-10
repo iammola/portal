@@ -98,7 +98,9 @@ const Timetable: NextPage = () => {
               )}
               {terms?.map(({ session, terms }) => (
                 <Fragment key={session}>
-                  <span className="text-xs font-medium text-gray-11 dark:text-gray-dark-11">{session}</span>
+                  <span className="py-1 pl-2 text-xs font-medium tracking-wide text-gray-11 dark:text-gray-dark-11">
+                    {session}
+                  </span>
                   {terms.map((term) => (
                     <Select.Item key={term._id} value={term._id}>
                       {term.name}
