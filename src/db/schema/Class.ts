@@ -1,6 +1,6 @@
-import * as mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-export const ClassName = new mongoose.Schema<Schemas.ThingName>(
+export const ClassName = new Schema<Schemas.ThingName>(
   {
     long: {
       trim: true,
