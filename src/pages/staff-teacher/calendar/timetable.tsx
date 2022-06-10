@@ -1,11 +1,74 @@
 import useSWR from "swr";
 import Head from "next/head";
 import { Fragment, useState } from "react";
-import { differenceInCalendarWeeks } from "date-fns";
+import { add, differenceInCalendarWeeks, eachHourOfInterval, set } from "date-fns";
 
 import { Select } from "components/Form/Select";
 
 import type { NextPage } from "next";
+
+const activeDays = [1, 2, 3, 4, 5];
+// TODO: Active School Days Period Lengths (From Settings)
+const periodLengths = {
+  45: [1, 2, 3, 4],
+  30: [5],
+};
+// TODO: Time School Starts and End (From Settings)
+const time = {
+  start: [
+    {
+      days: [1, 2, 3, 4, 5],
+      value: new Date(1970, 0, 1, 8),
+    },
+  ],
+  end: [
+    {
+      days: [1, 2, 3, 4, 5],
+      value: new Date(1970, 0, 1, 14),
+    },
+    {
+      days: [5],
+      value: new Date(1970, 0, 1, 11, 30),
+    },
+  ],
+};
+// NOTE: Active School Days
+
+function getTimeBounds() {
+  /**
+   * It takes a date, and returns a new date with the same hours and minutes as the original date, but
+   * with the year, month, day, seconds, and milliseconds set to 0
+   * @param {Date} date - Date - The date to set the time on
+   */
+  const setter = (date: Date) => set(new Date(0), { hours: date.getHours(), minutes: date.getMinutes() });
+
+  /**
+   * It takes an array of objects, each of which has a value property that is a Date, and returns the
+   * Date that is the earliest or latest in the array, depending on the value of the isAfter parameter
+   * @param items - Array<{ value: Date }>
+   * @param isAfter - a function that takes two dates and returns true if the first date is after the
+   * second date
+   * @param {number} offset - number - the number of hours to add to the date
+   * @returns A date object
+   */
+  function getLimit(items: Array<{ value: Date }>, isAfter: (left: Date, right: Date) => boolean, offset: number) {
+    const date = items.reduce((acc, cur) => {
+      if (acc.getTime() === 0) return cur.value;
+
+      return isAfter(setter(acc), setter(new Date(cur.value))) ? cur.value : acc;
+    }, new Date(0));
+
+    return add(date, { hours: offset });
+  }
+
+  const offset = 1;
+  const start = getLimit(time.start, (left, right) => left > right, -offset);
+  const end = getLimit(time.end, (left, right) => left < right, offset);
+
+  return { start, end };
+}
+
+const { DaysPanel, HoursPanel, TimetableWeekPanel } = await import("components/Pages/Calendar/Timetable");
 
 const Timetable: NextPage = () => {
   const [weeksInTerms, setWeeksInTerms] = useState<Record<string, number>>({});
@@ -13,6 +76,8 @@ const Timetable: NextPage = () => {
 
   const [classes, setClasses] = useState<Array<Record<"_id" | "name", string>>>();
   const [terms, setTerms] = useState<Array<{ session: string; terms: Array<Record<"_id" | "name", string>> }>>();
+
+  const [timetable, setTimetable] = useState<API.Timetable.GET.Data>();
 
   useSWR<API.Result<API.Class.GET.AllData>>("/api/classes", {
     onSuccess(result) {
@@ -31,8 +96,8 @@ const Timetable: NextPage = () => {
       if (!result.success) return;
       const { current, data } = result.data;
 
-      let week = "1";
       const weeks: Record<string, number> = {};
+      let week = timetable?.term.toString() === active.term ? active.week : "1";
 
       setTerms(
         data.map(({ session, terms }) => ({
@@ -58,6 +123,18 @@ const Timetable: NextPage = () => {
       setActive((active) => ({ ...active, week, term: current && !active.term ? String(current._id) : active.term }));
     },
   });
+
+  useSWR<API.Result<API.Timetable.GET.Data>>(
+    Object.values(active).every(Boolean) && `/api/calendar/timetable?${new URLSearchParams(active).toString()}`,
+    {
+      onSuccess(result) {
+        if (!result.success) return;
+        setTimetable(result.data);
+      },
+    }
+  );
+
+  const hours = eachHourOfInterval(getTimeBounds());
 
   return (
     <Fragment>
@@ -121,6 +198,22 @@ const Timetable: NextPage = () => {
                 </Select.Item>
               ))}
             </Select>
+          </div>
+        </div>
+        <div className="grid min-h-0 w-full grow grid-cols-[max-content_minmax(0,1fr)] grid-rows-[max-content_minmax(0,1fr)] rounded-lg">
+          <DaysPanel activeDays={activeDays} />
+          <HoursPanel hours={hours} />
+          <div
+            className="col-start-2 col-end-3 row-start-2 row-end-3 grid"
+            style={{ gridTemplateRows: `repeat(${activeDays.length}, minmax(0, 1fr))` }}
+          >
+            {activeDays.map((day) => (
+              <TimetableWeekPanel
+                key={day}
+                hours={hours}
+                periods={timetable?.days.find((e) => e.day === day)?.periods}
+              />
+            ))}
           </div>
         </div>
       </div>
