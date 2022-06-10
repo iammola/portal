@@ -116,7 +116,7 @@ async function POST({ week, ...body }: API.Timetable.POST.Body): API.HandlerResp
       const { max, min } = limits[period._type];
       const [end, start] = [period.end, period.start].map((time) => new Date(time));
 
-      const timeDiff = differenceInMinutes(start, end);
+      const timeDiff = differenceInMinutes(end, start);
       const key = period._type === "idle" ? "An idle" : "A subject";
 
       if (timeDiff <= 0) throw new Error(`${key} period cannot be less than 1 minute`);
