@@ -8,11 +8,6 @@ import { Select } from "components/Form/Select";
 import type { NextPage } from "next";
 
 const activeDays = [1, 2, 3, 4, 5];
-// TODO: Active School Days Period Lengths (From Settings)
-const periodLengths = {
-  45: [1, 2, 3, 4],
-  30: [5],
-};
 // TODO: Time School Starts and End (From Settings)
 const time = {
   start: [
@@ -32,8 +27,8 @@ const time = {
     },
   ],
 };
-// NOTE: Active School Days
 
+// NOTE: Active School Days
 function getTimeBounds() {
   /**
    * It takes a date, and returns a new date with the same hours and minutes as the original date, but
