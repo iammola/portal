@@ -186,9 +186,11 @@ declare global {
     namespace User {
       namespace GET {
         type Data = {
+          _id: Schemas.ObjectId;
           level: string;
-          images?: Pick<NonNullable<Schemas.User.Base["images"]>, "avatar">;
-          name: Pick<Schemas.User.Base["name"], "full" | "initials">;
+          name: string;
+          avatar?: string;
+          initials: string;
         };
       }
     }
