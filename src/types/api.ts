@@ -223,6 +223,40 @@ declare global {
           week: number;
         } & Omit<Schemas.Calendar.TimetableSchema, "_id" | "__type" | "weeks">;
       }
+
+      namespace GET {
+        type Data = Pick<Schemas.Calendar.TimetableSchema, "term" | "class"> & {
+          week: number;
+          days: Array<
+            Omit<Schemas.Calendar.TimetableDay, "periods"> & {
+              periods: Array<
+                Pick<Schemas.Calendar.TimetablePeriod, "end" | "start"> &
+                  (
+                    | {
+                        _type: "subject";
+                        subject: {
+                          _id: Schemas.ObjectId;
+                          name: string;
+                        };
+                        teacher: {
+                          _id: Schemas.ObjectId;
+                          avatar: string;
+                          name: string;
+                          initials: string;
+                          username: string;
+                        };
+                      }
+                    | {
+                        _type: "idle";
+                        title: string;
+                        description?: string;
+                      }
+                  )
+              >;
+            }
+          >;
+        };
+      }
     }
   }
 }

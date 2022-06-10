@@ -2,18 +2,58 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { compareAsc, differenceInCalendarWeeks, differenceInMinutes, set } from "date-fns";
 
 import { connect } from "db";
-import { routeWrapper } from "api/server";
+import { NotFoundError, routeWrapper } from "api/server";
 import { ClassModel, SubjectModel, TeacherStaffModel, TermModel, TimetableCalendarModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const handler: API.Handler<API.Timetable.POST.Data> = async (req) => {
+const handler: API.Handler<API.Timetable.POST.Data | API.Timetable.GET.Data> = async (req) => {
   await connect();
 
+  if (req.method === "GET") return GET(req.query as GETQuery);
   if (req.method === "POST") return POST(req.body as API.Timetable.POST.Body);
 
   return null;
 };
+
+type GETQuery = Record<"week" | "class" | "term", string>;
+async function GET({ week, term, ...query }: GETQuery): API.HandlerResponse<API.Timetable.GET.Data> {
+  const timetable = await TimetableCalendarModel.findOne({ term, weeks: +week, class: query.class })
+    .select("-weeks")
+    .populate("days.periods.subject", "name.long")
+    .populate("days.periods.teacher", "images.avatar name.full name.initials")
+    .lean();
+
+  if (timetable == null) throw new NotFoundError("Timetable entry not found");
+
+  const data = {
+    week: +week,
+    term: timetable.term,
+    class: timetable.class,
+    days: timetable.days.map(({ day, periods }) => ({
+      day,
+      periods: periods.map((period) =>
+        Object.assign(
+          period,
+          period._type == "subject" && {
+            subject: {
+              _id: (period.subject as unknown as Schemas.Subject.Record)._id,
+              name: (period.subject as unknown as Schemas.Subject.Record).name.long,
+            },
+            teacher: {
+              _id: (period.teacher as unknown as Schemas.Staff.Record)._id,
+              name: (period.teacher as unknown as Schemas.Staff.Record).name.full,
+              initials: (period.teacher as unknown as Schemas.Staff.Record).name.initials,
+              avatar: (period.teacher as unknown as Schemas.Staff.Record).images?.avatar,
+            },
+          }
+        )
+      ),
+    })),
+  } as API.Timetable.GET.Data;
+
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
+}
 
 async function POST({ week, ...body }: API.Timetable.POST.Body): API.HandlerResponse<API.Timetable.POST.Data> {
   if (week < 1) throw new Error("Week cannot be less than 1");
@@ -115,4 +155,4 @@ async function POST({ week, ...body }: API.Timetable.POST.Body): API.HandlerResp
   return [{ data: { _id }, message: ReasonPhrases.CREATED }, StatusCodes.CREATED];
 }
 
-export default (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["POST"]);
+export default (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["POST", "GET"]);
