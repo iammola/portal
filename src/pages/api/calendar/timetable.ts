@@ -128,8 +128,8 @@ async function POST({ week, ...body }: API.Timetable.POST.Body): API.HandlerResp
         const subject = subjects.find((_) => _._id.equals(period.subject));
         const teacher = teachers.find((_) => _._id.equals(period.teacher));
 
-        if (subject == undefined) throw new Error(`The subject on ${daysOfWeek[day]} period ${idx} was not found`);
-        if (teacher == undefined) throw new Error(`The teacher on ${daysOfWeek[day]} period ${idx} was not found`);
+        if (subject == undefined) throw new Error(`The subject on ${daysOfWeek[day]} period #${idx + 1} was not found`);
+        if (teacher == undefined) throw new Error(`The teacher on ${daysOfWeek[day]} period #${idx + 1} was not found`);
       } else if (!period.title) throw new Error("Period Title is required");
 
       return {
