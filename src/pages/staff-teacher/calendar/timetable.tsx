@@ -200,11 +200,12 @@ const Timetable: NextPage = () => {
             </Select>
           </div>
         </div>
-        <div className="grid min-h-0 w-full grow grid-cols-[max-content_minmax(0,1fr)] grid-rows-[max-content_minmax(0,1fr)] rounded-lg">
+        <div className="grid min-h-0 w-full grow select-none grid-cols-[max-content_minmax(0,1fr)] grid-rows-[max-content_minmax(0,1fr)] divide-x divide-y divide-gray-7 rounded-lg border border-gray-7 dark:divide-gray-dark-7 dark:border-gray-dark-7">
+          <div className="col-start-1 col-end-2 row-start-1 row-end-1" />
           <DaysPanel activeDays={activeDays} />
           <HoursPanel hours={hours} />
           <div
-            className="col-start-2 col-end-3 row-start-2 row-end-3 grid"
+            className="col-start-2 col-end-3 row-start-2 row-end-3 grid divide-y divide-gray-7 dark:divide-gray-dark-7"
             style={{ gridTemplateRows: `repeat(${activeDays.length}, minmax(0, 1fr))` }}
           >
             {activeDays.map((day) => (

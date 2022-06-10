@@ -4,11 +4,14 @@ const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
 
 export const DaysPanel: React.FC<{ activeDays: number[] }> = ({ activeDays }) => {
   return (
-    <div className="col-start-1 col-end-2 row-start-2 row-end-3 flex flex-col items-start justify-start">
+    <div
+      style={{ gridTemplateRows: `repeat(${activeDays.length}, minmax(0, 1fr))` }}
+      className="col-start-1 col-end-2 row-start-2 row-end-3 grid divide-y divide-gray-7 !border-l-0 dark:divide-gray-dark-7"
+    >
       {activeDays.map((day) => (
         <div
           key={day}
-          className="flex h-full w-full grow items-center justify-center text-gray-11 dark:text-gray-dark-11"
+          className="flex h-full min-h-0 w-full items-center justify-center px-2 text-gray-11 dark:text-gray-dark-11"
         >
           {days[day]}
         </div>
@@ -19,7 +22,10 @@ export const DaysPanel: React.FC<{ activeDays: number[] }> = ({ activeDays }) =>
 
 export const HoursPanel: React.FC<{ hours: Date[] }> = ({ hours }) => {
   return (
-    <div className="col-start-2 col-end-3 row-start-1 row-end-2 flex items-start justify-start">
+    <div
+      style={{ gridTemplateColumns: `repeat(${hours.length}, minmax(0, 1fr))` }}
+      className="col-start-2 col-end-3 row-start-1 row-end-2 grid divide-x divide-gray-7 !border-t-0 dark:divide-gray-dark-7"
+    >
       {hours.map((hour) => {
         const time = format(hour, "p");
 
@@ -27,7 +33,7 @@ export const HoursPanel: React.FC<{ hours: Date[] }> = ({ hours }) => {
           <time
             key={time}
             dateTime={time}
-            className="h-full min-w-[5px] grow p-2 text-center text-sm text-gray-11 dark:text-gray-dark-11"
+            className="h-full min-w-0 p-2 text-center text-sm text-gray-11 dark:text-gray-dark-11"
           >
             {time}
           </time>
@@ -43,7 +49,7 @@ export const TimetableWeekPanel: React.FC<{
 }> = ({ hours, periods }) => {
   return (
     <div
-      className="grid h-full w-full min-w-0"
+      className="grid h-full w-full min-w-0 divide-x divide-gray-7 dark:divide-gray-dark-7"
       style={{ gridTemplateColumns: `repeat(${hours.length}, minmax(0, 1fr))` }}
     >
       {hours.map((hour) => (
