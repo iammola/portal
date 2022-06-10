@@ -1,21 +1,21 @@
-import * as mongoose from "mongoose";
+import { Schema } from "mongoose";
 
 import { ModelNames } from "db/constants";
 
-const EventInviteesSchema = new mongoose.Schema<Schemas.Calendar.EventSchema["invitees"]>(
+const EventInviteesSchema = new Schema<Schemas.Calendar.EventSchema["invitees"]>(
   {
     parents: {
-      type: [mongoose.Schema.Types.ObjectId],
+      type: [Schema.Types.ObjectId],
       ref: "", // TODO: Parent Model
       default: undefined,
     },
     staff: {
-      type: [mongoose.Schema.Types.ObjectId],
+      type: [Schema.Types.ObjectId],
       ref: ModelNames.STAFF,
       default: undefined,
     },
     students: {
-      type: [mongoose.Schema.Types.ObjectId],
+      type: [Schema.Types.ObjectId],
       ref: ModelNames.STUDENT,
       default: undefined,
     },
@@ -23,7 +23,7 @@ const EventInviteesSchema = new mongoose.Schema<Schemas.Calendar.EventSchema["in
   { _id: false }
 );
 
-const TimetablePeriodSchema = new mongoose.Schema<Schemas.Calendar.TimetablePeriod>(
+const TimetablePeriodSchema = new Schema<Schemas.Calendar.TimetablePeriod>(
   {
     _type: {
       type: String,
@@ -40,7 +40,7 @@ const TimetablePeriodSchema = new mongoose.Schema<Schemas.Calendar.TimetablePeri
       required: [true, "Period Start Date required"],
     },
     teacher: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: ModelNames.STAFF,
       required: [
         function (this: Schemas.Calendar.TimetablePeriod) {
@@ -50,7 +50,7 @@ const TimetablePeriodSchema = new mongoose.Schema<Schemas.Calendar.TimetablePeri
       ],
     },
     subject: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: ModelNames.SUBJECT,
       required: [
         function (this: Schemas.Calendar.TimetablePeriod) {
@@ -76,7 +76,7 @@ const TimetablePeriodSchema = new mongoose.Schema<Schemas.Calendar.TimetablePeri
   { _id: false }
 );
 
-const TimetableDaySchema = new mongoose.Schema<Schemas.Calendar.TimetableDay>(
+const TimetableDaySchema = new Schema<Schemas.Calendar.TimetableDay>(
   {
     day: {
       type: Number,
@@ -93,7 +93,7 @@ const TimetableDaySchema = new mongoose.Schema<Schemas.Calendar.TimetableDay>(
   { _id: false }
 );
 
-export const EventSchema = new mongoose.Schema<Schemas.Calendar.EventSchema>(
+export const EventSchema = new Schema<Schemas.Calendar.EventSchema>(
   {
     title: {
       type: String,
@@ -121,10 +121,10 @@ export const EventSchema = new mongoose.Schema<Schemas.Calendar.EventSchema>(
   { versionKey: false }
 );
 
-export const TimetableSchema = new mongoose.Schema<Schemas.Calendar.TimetableSchema>(
+export const TimetableSchema = new Schema<Schemas.Calendar.TimetableSchema>(
   {
     class: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: [true, "Timetable Class is required"],
     },
     weeks: {
@@ -149,7 +149,7 @@ export const TimetableSchema = new mongoose.Schema<Schemas.Calendar.TimetableSch
       type: [TimetableDaySchema],
     },
     term: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: [true, "Timetable Term is required"],
     },
   },
