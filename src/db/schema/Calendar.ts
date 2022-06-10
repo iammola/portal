@@ -41,6 +41,7 @@ const TimetablePeriodSchema = new mongoose.Schema<Schemas.Calendar.TimetablePeri
     },
     teacher: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: ModelNames.STAFF,
       required: [
         function (this: Schemas.Calendar.TimetablePeriod) {
           return this._type === "subject";
@@ -50,6 +51,7 @@ const TimetablePeriodSchema = new mongoose.Schema<Schemas.Calendar.TimetablePeri
     },
     subject: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: ModelNames.SUBJECT,
       required: [
         function (this: Schemas.Calendar.TimetablePeriod) {
           return this._type === "subject";
