@@ -1,5 +1,6 @@
 import type * as bson from "bson";
 import type * as Mongoose from "mongoose";
+import type { Day } from "date-fns";
 import type { ModelNames } from "db/constants";
 
 declare global {
@@ -340,8 +341,26 @@ declare global {
     }
 
     namespace Settings {
+      type SchoolTime = {
+        days: Day[];
+        value: Date;
+      };
+
+      type PeriodDurations = {
+        min: number;
+        max: number;
+      };
+
       type Schema = {
         locked: boolean;
+        activeSchoolDays: Day[];
+        activeSchoolTime: {
+          start: SchoolTime[];
+          end: SchoolTime[];
+        };
+        periodDurations: {
+          [K in Schemas.Calendar.TimetablePeriod["_type"]]: PeriodDurations;
+        };
       };
 
       type Record = ModelRecord<Schema>;
@@ -392,7 +411,7 @@ declare global {
       );
 
       type TimetableDay = {
-        day: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+        day: Day;
         periods: TimetablePeriod[];
       };
 
