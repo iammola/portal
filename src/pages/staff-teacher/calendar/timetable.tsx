@@ -1,13 +1,15 @@
 import useSWR from "swr";
 import Head from "next/head";
 import { Fragment, useState } from "react";
+import { differenceInCalendarWeeks } from "date-fns";
 
 import { Select } from "components/Form/Select";
 
 import type { NextPage } from "next";
 
 const Timetable: NextPage = () => {
-  const [active, setActive] = useState<Record<"class" | "term", string>>({ class: "", term: "" });
+  const [weeksInTerms, setWeeksInTerms] = useState<Record<string, number>>({});
+  const [active, setActive] = useState<Record<"class" | "term" | "week", string>>({ class: "", term: "", week: "1" });
 
   const [classes, setClasses] = useState<Array<Record<"_id" | "name", string>>>();
   const [terms, setTerms] = useState<Array<{ session: string; terms: Array<Record<"_id" | "name", string>> }>>();
@@ -29,21 +31,31 @@ const Timetable: NextPage = () => {
       if (!result.success) return;
       const { current, data } = result.data;
 
+      let week = "1";
+      const weeks: Record<string, number> = {};
+
       setTerms(
         data.map(({ session, terms }) => ({
           session: session.name.long,
-          terms: terms.map((term) => ({
-            _id: String(term._id),
-            name: term.name.long,
-          })),
+          terms: terms.map((term) => {
+            const termWeeks = differenceInCalendarWeeks(new Date(term.end), new Date(term.start));
+            weeks[String(term._id)] = termWeeks;
+
+            if (term._id == current?._id) {
+              const currentWeek = differenceInCalendarWeeks(new Date(), new Date(term.start));
+              week = String(currentWeek < 1 ? 1 : currentWeek > termWeeks ? termWeeks : currentWeek);
+            }
+
+            return {
+              _id: String(term._id),
+              name: term.name.long,
+            };
+          }),
         }))
       );
 
-      if (current && !active.term)
-        setActive({
-          ...active,
-          term: String(current._id),
-        });
+      setWeeksInTerms(weeks);
+      setActive((active) => ({ ...active, week, term: current && !active.term ? String(current._id) : active.term }));
     },
   });
 
@@ -93,6 +105,18 @@ const Timetable: NextPage = () => {
                     </Select.Item>
                   ))}
                 </Fragment>
+              ))}
+            </Select>
+            <Select
+              required
+              label="Week"
+              value={String(active.week)}
+              onValueChange={(week) => setActive((active) => ({ ...active, week }))}
+            >
+              {Array.from({ length: weeksInTerms[active.term] ?? 1 }).map((_, idx) => (
+                <Select.Item key={idx} value={String(idx + 1)}>
+                  Week {idx + 1}
+                </Select.Item>
               ))}
             </Select>
           </div>
