@@ -56,23 +56,33 @@ export const TimetableWeekPanel: React.FC<{
         const hour = new Date(date);
 
         return (
-          <div className="relative h-full w-full min-w-0" key={format(hour, "p")}>
+          <div
+            key={format(hour, "p")}
+            className="grid h-full w-full min-w-0 grid-cols-[100%] items-center justify-start p-2"
+          >
             {periods
               ?.filter((period) => new Date(period.start).getHours() === hour.getHours())
               .map((period, idx) => {
-                const minutesOffset = differenceInMinutes(new Date(period.start), hour);
-                const periodDuration = differenceInMinutes(new Date(period.end), new Date(period.start));
+                const [start, end] = [period.start, period.end].map((time) => new Date(time));
+                const minutesOffset = differenceInMinutes(start, hour);
+                const periodDuration = differenceInMinutes(end, start);
 
                 return (
                   <div
                     key={idx}
-                    className="min-w-max"
+                    className="relative z-[1] min-w-max rounded-lg bg-gray-3 p-2 py-1.5 text-gray-12 dark:bg-gray-dark-3 dark:text-gray-dark-12"
                     style={{
                       width: `${(periodDuration / 60) * 1e2}%`,
                       marginLeft: `${(minutesOffset / 60) * 1e2}%`,
                     }}
                   >
-                    {period._type === "subject" && period.subject.name} {periodDuration} mins
+                    <div className="text-sm tracking-wide text-gray-12 dark:text-gray-dark-12">
+                      {period._type === "subject" ? period.subject.name : period.title}
+                    </div>
+                    <div className="text-xs font-medium tracking-wide text-gray-11 dark:text-gray-dark-11">
+                      {format(start, "p")} - {format(end, "p")}
+                      {period._type === "subject" && <> &middot; {period.teacher.name}</>}
+                    </div>
                   </div>
                 );
               })}
