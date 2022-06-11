@@ -18,3 +18,11 @@ SettingsSchema.pre("save", async function () {
 
 export const SettingsModel = (models[ModelNames.SETTINGS] ??
   model(ModelNames.SETTINGS, SettingsSchema)) as Schemas.Settings.Model;
+
+const SETTINGS_DEFAULT = new SettingsModel({
+  locked: false,
+});
+
+SETTINGS_DEFAULT.save({ validateBeforeSave: true }, function (err) {
+  if (!err) console.warn("Default Settings Saved to DB");
+});
