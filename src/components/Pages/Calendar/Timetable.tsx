@@ -46,7 +46,7 @@ export const HoursPanel: React.FC<{ hours: Date[] }> = ({ hours }) => {
 export const TimetableWeekPanel: React.FC<{
   hours: Date[];
   periods?: API.Timetable.GET.Data["days"][number]["periods"];
-}> = ({ hours, periods }) => {
+}> = ({ hours, periods = [] }) => {
   return (
     <div
       className="grid h-full w-full min-w-0 divide-x divide-gray-7 dark:divide-gray-dark-7"
@@ -54,38 +54,37 @@ export const TimetableWeekPanel: React.FC<{
     >
       {hours.map((date) => {
         const hour = new Date(date);
+        const periodsInHour = periods.filter((period) => new Date(period.start).getHours() === hour.getHours());
 
         return (
           <div
             key={format(hour, "p")}
             className="grid h-full w-full min-w-0 grid-cols-[100%] items-center justify-start p-2"
           >
-            {periods
-              ?.filter((period) => new Date(period.start).getHours() === hour.getHours())
-              .map((period, idx) => {
-                const [start, end] = [period.start, period.end].map((time) => new Date(time));
-                const minutesOffset = differenceInMinutes(start, hour);
-                const periodDuration = differenceInMinutes(end, start);
+            {periodsInHour.map((period, idx) => {
+              const [start, end] = [period.start, period.end].map((time) => new Date(time));
+              const offset = differenceInMinutes(start, hour);
+              const duration = differenceInMinutes(end, start);
 
-                return (
-                  <div
-                    key={idx}
-                    className="relative z-[1] min-w-max rounded-lg bg-gray-3 p-2 py-1.5 text-gray-12 dark:bg-gray-dark-3 dark:text-gray-dark-12"
-                    style={{
-                      width: `${(periodDuration / 60) * 1e2}%`,
-                      marginLeft: `${(minutesOffset / 60) * 1e2}%`,
-                    }}
-                  >
-                    <div className="text-sm tracking-wide text-gray-12 dark:text-gray-dark-12">
-                      {period._type === "subject" ? period.subject.name : period.title}
-                    </div>
-                    <div className="text-xs font-medium tracking-wide text-gray-11 dark:text-gray-dark-11">
-                      {format(start, "p")} - {format(end, "p")}
-                      {period._type === "subject" && <> &middot; {period.teacher.name}</>}
-                    </div>
+              return (
+                <div
+                  key={idx}
+                  className="relative z-[1] min-w-max rounded-lg bg-gray-3 p-2 py-1.5 text-gray-12 dark:bg-gray-dark-3 dark:text-gray-dark-12"
+                  style={{
+                    width: `${(duration / 60) * 1e2}%`,
+                    marginLeft: `${(offset / 60) * 1e2}%`,
+                  }}
+                >
+                  <div className="text-sm tracking-wide text-gray-12 dark:text-gray-dark-12">
+                    {period._type === "subject" ? period.subject.name : period.title}
                   </div>
-                );
-              })}
+                  <div className="text-xs font-medium tracking-wide text-gray-11 dark:text-gray-dark-11">
+                    {format(start, "p")} - {format(end, "p")}
+                    {period._type === "subject" && <> &middot; {period.teacher.name}</>}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         );
       })}
