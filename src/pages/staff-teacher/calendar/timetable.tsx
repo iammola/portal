@@ -3,69 +3,15 @@ import Head from "next/head";
 import { Fragment, useState } from "react";
 import { add, differenceInCalendarWeeks, eachHourOfInterval, set } from "date-fns";
 
+import { connect } from "db";
+import { SettingsModel } from "db/models";
 import { Select } from "components/Form/Select";
 
-import type { NextPage } from "next";
-
-const activeDays = [1, 2, 3, 4, 5];
-// TODO: Time School Starts and End (From Settings)
-const time = {
-  start: [
-    {
-      days: [1, 2, 3, 4, 5],
-      value: new Date(1970, 0, 1, 8),
-    },
-  ],
-  end: [
-    {
-      days: [1, 2, 3, 4, 5],
-      value: new Date(1970, 0, 1, 14),
-    },
-    {
-      days: [5],
-      value: new Date(1970, 0, 1, 11, 30),
-    },
-  ],
-};
-
-// NOTE: Active School Days
-function getTimeBounds() {
-  /**
-   * It takes a date, and returns a new date with the same hours and minutes as the original date, but
-   * with the year, month, day, seconds, and milliseconds set to 0
-   * @param {Date} date - Date - The date to set the time on
-   */
-  const setter = (date: Date) => set(new Date(0), { hours: date.getHours(), minutes: date.getMinutes() });
-
-  /**
-   * It takes an array of objects, each of which has a value property that is a Date, and returns the
-   * Date that is the earliest or latest in the array, depending on the value of the isAfter parameter
-   * @param items - Array<{ value: Date }>
-   * @param isAfter - a function that takes two dates and returns true if the first date is after the
-   * second date
-   * @param {number} offset - number - the number of hours to add to the date
-   * @returns A date object
-   */
-  function getLimit(items: Array<{ value: Date }>, isAfter: (left: Date, right: Date) => boolean, offset: number) {
-    const date = items.reduce((acc, cur) => {
-      if (acc.getTime() === 0) return cur.value;
-
-      return isAfter(setter(acc), setter(new Date(cur.value))) ? cur.value : acc;
-    }, new Date(0));
-
-    return add(date, { hours: offset });
-  }
-
-  const offset = 1;
-  const start = getLimit(time.start, (left, right) => left > right, -offset);
-  const end = getLimit(time.end, (left, right) => left < right, offset);
-
-  return { start, end };
-}
+import type { GetServerSideProps, NextPage } from "next";
 
 const { DaysPanel, HoursPanel, TimetableWeekPanel } = await import("components/Pages/Calendar/Timetable");
 
-const Timetable: NextPage = () => {
+const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
   const [weeksInTerms, setWeeksInTerms] = useState<Record<string, number>>({});
   const [active, setActive] = useState<Record<"class" | "term" | "week", string>>({ class: "", term: "", week: "1" });
 
@@ -128,8 +74,6 @@ const Timetable: NextPage = () => {
       },
     }
   );
-
-  const hours = eachHourOfInterval(getTimeBounds());
 
   return (
     <Fragment>
@@ -215,6 +159,41 @@ const Timetable: NextPage = () => {
       </div>
     </Fragment>
   );
+};
+
+export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
+  await connect();
+  const settings = await SettingsModel.findOne({}, "activeSchoolDays activeSchoolTime").lean();
+
+  function getLimit(items: Array<{ value: Date }>, isAfter: (left: Date, right: Date) => boolean, offset: number) {
+    const setter = (date: Date) => set(new Date(0), { hours: date.getHours(), minutes: date.getMinutes() });
+
+    const date = items.reduce((acc, cur) => {
+      if (acc.getTime() === 0) return cur.value;
+
+      return isAfter(setter(acc), setter(new Date(cur.value))) ? cur.value : acc;
+    }, new Date(0));
+
+    return add(date, { hours: offset });
+  }
+
+  const offset = 1;
+  const { activeSchoolDays = [], activeSchoolTime = { start: [], end: [] } } = settings ?? {};
+
+  const props = JSON.stringify({
+    activeDays: activeSchoolDays,
+    hours: eachHourOfInterval({
+      start: getLimit(activeSchoolTime.start, (left, right) => left > right, -offset),
+      end: getLimit(activeSchoolTime.end, (left, right) => left < right, offset),
+    }),
+  });
+
+  return { props: JSON.parse(props) as PageProps };
+};
+
+type PageProps = {
+  hours: Date[];
+  activeDays: Schemas.Settings.Schema["activeSchoolDays"];
 };
 
 export default Timetable;

@@ -3,7 +3,14 @@ import { compareAsc, differenceInCalendarWeeks, differenceInMinutes, set } from 
 
 import { connect } from "db";
 import { NotFoundError, routeWrapper } from "api/server";
-import { ClassModel, SubjectModel, TeacherStaffModel, TermModel, TimetableCalendarModel } from "db/models";
+import {
+  ClassModel,
+  SettingsModel,
+  SubjectModel,
+  TeacherStaffModel,
+  TermModel,
+  TimetableCalendarModel,
+} from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -60,20 +67,15 @@ async function POST({ week, ...body }: API.Timetable.POST.Body): API.HandlerResp
 
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-  // TODO: Add to settings
-  /* Setting the limits for the time of the periods. 0 is Unlimited */
-  const limits = {
-    idle: { min: 0, max: 30 },
-    subject: { min: 45, max: 135 },
-  };
-
-  const [term, ...checks] = await Promise.all([
+  const [term, settings, ...checks] = await Promise.all([
     TermModel.findById(body.term, "start end").lean(),
+    SettingsModel.findOne({}, "periodDurations").lean(),
     ClassModel.exists({ _id: body.class }),
     TimetableCalendarModel.exists({ class: body.class, weeks: week }),
   ]);
 
   if (term == null) throw new Error("Term not found");
+  if (settings == null) throw new Error("Period settings not defined");
   if (checks[0] == null) throw new Error("Class not found");
   if (checks[1] != null) throw new Error("Timetable already specified for specified Class and Week");
   if (body.days.length < 1) throw new Error("At least one day must be specified");
@@ -114,7 +116,7 @@ async function POST({ week, ...body }: API.Timetable.POST.Body): API.HandlerResp
       throw new Error(`Duplicate ${daysOfWeek[day]} periods provided`);
 
     const periods = item.periods.map((period, idx) => {
-      const { max, min } = limits[period._type];
+      const { max, min } = settings.periodDurations[period._type];
       const [end, start] = [period.end, period.start].map((time) => new Date(time));
 
       const timeDiff = differenceInMinutes(end, start);

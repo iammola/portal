@@ -361,7 +361,7 @@ declare global {
         periodDurations: {
           [K in Schemas.Calendar.TimetablePeriod["_type"]]: PeriodDurations;
         };
-      };
+      } & DocumentId;
 
       type Record = ModelRecord<Schema>;
 
