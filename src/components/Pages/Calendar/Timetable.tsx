@@ -69,16 +69,16 @@ export const TimetableWeekPanel: React.FC<{
               return (
                 <div
                   key={idx}
-                  className="relative z-[1] min-w-max rounded-lg bg-gray-3 p-2 py-1.5 text-gray-12 dark:bg-gray-dark-3 dark:text-gray-dark-12"
+                  className="relative z-[1] rounded-lg bg-gray-3 p-2 py-1.5 text-gray-12 dark:bg-gray-dark-3 dark:text-gray-dark-12"
                   style={{
                     width: `${(duration / 60) * 1e2}%`,
                     marginLeft: `${(offset / 60) * 1e2}%`,
                   }}
                 >
-                  <div className="text-sm tracking-wide text-gray-12 dark:text-gray-dark-12">
+                  <div className="truncate text-sm tracking-wide text-gray-12 dark:text-gray-dark-12">
                     {period._type === "subject" ? period.subject.name : period.title}
                   </div>
-                  <div className="text-xs font-medium tracking-wide text-gray-11 dark:text-gray-dark-11">
+                  <div className="truncate text-xs font-medium tracking-wide text-gray-11 dark:text-gray-dark-11">
                     {format(start, "p")} - {format(end, "p")}
                     {period._type === "subject" && <> &middot; {period.teacher.name}</>}
                   </div>
