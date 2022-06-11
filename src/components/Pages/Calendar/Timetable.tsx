@@ -57,10 +57,7 @@ export const TimetableWeekPanel: React.FC<{
         const periodsInHour = periods.filter((period) => new Date(period.start).getHours() === hour.getHours());
 
         return (
-          <div
-            key={format(hour, "p")}
-            className="grid h-full w-full min-w-0 grid-cols-[100%] items-center justify-start p-2"
-          >
+          <div key={format(hour, "p")} className="relative flex h-full w-full min-w-0">
             {periodsInHour.map((period, idx) => {
               const [start, end] = [period.start, period.end].map((time) => new Date(time));
               const offset = differenceInMinutes(start, hour);
@@ -69,10 +66,12 @@ export const TimetableWeekPanel: React.FC<{
               return (
                 <div
                   key={idx}
-                  className="relative z-[1] rounded-lg bg-gray-3 p-2 py-1.5 text-gray-12 dark:bg-gray-dark-3 dark:text-gray-dark-12"
+                  className="absolute z-[1] rounded-lg bg-gray-3 p-2 py-1.5 text-gray-12 dark:bg-gray-dark-3 dark:text-gray-dark-12"
                   style={{
                     width: `${(duration / 60) * 1e2}%`,
                     marginLeft: `${(offset / 60) * 1e2}%`,
+                    maxHeight: `${100 / periodsInHour.length}%`,
+                    marginTop: `${idx * (100 / periodsInHour.length)}%`,
                   }}
                 >
                   <div className="truncate text-sm tracking-wide text-gray-12 dark:text-gray-dark-12">
