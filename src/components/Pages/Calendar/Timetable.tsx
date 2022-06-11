@@ -11,7 +11,7 @@ export const DaysPanel: React.FC<{ activeDays: number[] }> = ({ activeDays }) =>
       {activeDays.map((day) => (
         <div
           key={day}
-          className="flex h-full min-h-0 w-full items-center justify-center px-2 text-gray-11 dark:text-gray-dark-11"
+          className="flex h-full min-h-0 w-full items-center justify-center p-2 text-gray-11 dark:text-gray-dark-11"
         >
           {days[day]}
         </div>
