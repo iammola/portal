@@ -144,8 +144,8 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
           <DaysPanel activeDays={activeDays} />
           <HoursPanel hours={hours} />
           <div
-            className="col-start-2 col-end-3 row-start-2 row-end-3 grid divide-y divide-gray-7 dark:divide-gray-dark-7"
-            style={{ gridTemplateRows: `repeat(${activeDays.length}, minmax(0, 1fr))` }}
+            className="col-start-2 col-end-3 row-start-2 row-end-3 grid divide-x divide-gray-7 dark:divide-gray-dark-7"
+            style={{ gridTemplateColumns: `repeat(${activeDays.length}, minmax(0, 1fr))` }}
           >
             {activeDays.map((day) => (
               <TimetableWeekPanel

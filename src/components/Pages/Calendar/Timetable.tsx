@@ -5,8 +5,8 @@ const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
 export const DaysPanel: React.FC<{ activeDays: number[] }> = ({ activeDays }) => {
   return (
     <div
-      style={{ gridTemplateRows: `repeat(${activeDays.length}, minmax(0, 1fr))` }}
-      className="col-start-1 col-end-2 row-start-2 row-end-3 grid divide-y divide-gray-7 !border-l-0 dark:divide-gray-dark-7"
+      style={{ gridTemplateColumns: `repeat(${activeDays.length}, minmax(0, 1fr))` }}
+      className="col-start-2 col-end-3 row-start-1 row-end-2 grid divide-x divide-gray-7 !border-t-0 dark:divide-gray-dark-7"
     >
       {activeDays.map((day) => (
         <div
@@ -23,8 +23,8 @@ export const DaysPanel: React.FC<{ activeDays: number[] }> = ({ activeDays }) =>
 export const HoursPanel: React.FC<{ hours: Date[] }> = ({ hours }) => {
   return (
     <div
-      style={{ gridTemplateColumns: `repeat(${hours.length}, minmax(0, 1fr))` }}
-      className="col-start-2 col-end-3 row-start-1 row-end-2 grid divide-x divide-gray-7 !border-t-0 dark:divide-gray-dark-7"
+      style={{ gridTemplateRows: `repeat(${hours.length}, minmax(0, 1fr))` }}
+      className="col-start-1 col-end-2 row-start-2 row-end-3 grid divide-y divide-gray-7 !border-l-0 dark:divide-gray-dark-7"
     >
       {hours.map((hour) => {
         const time = format(new Date(hour), "p");
@@ -33,7 +33,7 @@ export const HoursPanel: React.FC<{ hours: Date[] }> = ({ hours }) => {
           <time
             key={time}
             dateTime={time}
-            className="h-full min-w-0 p-2 text-center text-sm text-gray-11 dark:text-gray-dark-11"
+            className="flex h-full min-w-0 items-center justify-center p-2 text-sm text-gray-11 dark:text-gray-dark-11"
           >
             {time}
           </time>
@@ -49,15 +49,15 @@ export const TimetableWeekPanel: React.FC<{
 }> = ({ hours, periods = [] }) => {
   return (
     <div
-      className="grid h-full w-full min-w-0 divide-x divide-gray-7 dark:divide-gray-dark-7"
-      style={{ gridTemplateColumns: `repeat(${hours.length}, minmax(0, 1fr))` }}
+      className="grid h-full min-h-0 w-full divide-y divide-gray-7 dark:divide-gray-dark-7"
+      style={{ gridTemplateRows: `repeat(${hours.length}, minmax(0, 1fr))` }}
     >
       {hours.map((date) => {
         const hour = new Date(date);
         const periodsInHour = periods.filter((period) => new Date(period.start).getHours() === hour.getHours());
 
         return (
-          <div key={format(hour, "p")} className="relative flex h-full w-full min-w-0">
+          <div key={format(hour, "p")} className="relative grid h-full w-full grid-flow-col items-start gap-0.5">
             {periodsInHour.map((period, idx) => {
               const [start, end] = [period.start, period.end].map((time) => new Date(time));
               const offset = differenceInMinutes(start, hour);
@@ -66,12 +66,12 @@ export const TimetableWeekPanel: React.FC<{
               return (
                 <div
                   key={idx}
-                  className="absolute z-[1] rounded-lg bg-gray-3 p-2 py-1.5 text-gray-12 dark:bg-gray-dark-3 dark:text-gray-dark-12"
+                  className="absolute z-[1] w-full min-w-0 rounded-lg bg-gray-3 px-2 py-1.5 text-gray-12 dark:bg-gray-dark-3 dark:text-gray-dark-12"
                   style={{
-                    width: `${(duration / 60) * 1e2}%`,
-                    marginLeft: `${(offset / 60) * 1e2}%`,
-                    maxHeight: `${100 / periodsInHour.length}%`,
-                    marginTop: `${idx * (100 / periodsInHour.length)}%`,
+                    top: `${(offset / 60) * 1e2}%`,
+                    height: `${(duration / 60) * 1e2}%`,
+                    width: `${100 / periodsInHour.length}%`,
+                    left: `${(100 / periodsInHour.length) * idx}%`,
                   }}
                 >
                   <div className="truncate text-sm tracking-wide text-gray-12 dark:text-gray-dark-12">
