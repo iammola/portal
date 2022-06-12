@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import Head from "next/head";
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { add, differenceInCalendarWeeks, eachHourOfInterval, set } from "date-fns";
 
 import { connect } from "db";
@@ -19,6 +19,9 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
   const [terms, setTerms] = useState<Array<{ session: string; terms: Array<Record<"_id" | "name", string>> }>>();
 
   const [timetable, setTimetable] = useState<API.Timetable.GET.Data>();
+
+  const ref = useRef<HTMLDivElement>(null);
+  const [hovered, setHovered] = useState<{ time: string; top: number }>();
 
   useSWR<API.Result<API.Class.GET.AllData>>("/api/classes", {
     onSuccess(result) {
@@ -74,6 +77,19 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
       },
     }
   );
+
+  function handleMouseOver(e: React.MouseEvent<HTMLDivElement>) {
+    if (!ref.current) return;
+
+    const { height, top: refTop } = ref.current.getBoundingClientRect();
+
+    let top = e.clientY - refTop;
+
+    if (top < 0) top = 0;
+    if (top > height) top = height;
+
+    setHovered({ time: "", top });
+  }
 
   return (
     <Fragment>
@@ -144,7 +160,10 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
           <DaysPanel activeDays={activeDays} />
           <HoursPanel hours={hours} />
           <div
-            className="col-start-2 col-end-3 row-start-2 row-end-3 grid divide-x divide-gray-7 dark:divide-gray-dark-7"
+            ref={ref}
+            onMouseOver={handleMouseOver}
+            onMouseLeave={() => setHovered(undefined)}
+            className="relative z-0 col-start-2 col-end-3 row-start-2 row-end-3 grid divide-x divide-gray-7 dark:divide-gray-dark-7"
             style={{ gridTemplateColumns: `repeat(${activeDays.length}, minmax(0, 1fr))` }}
           >
             {activeDays.map((day) => (
@@ -154,6 +173,15 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
                 periods={timetable?.days.find((e) => e.day === day)?.periods}
               />
             ))}
+            {hovered && (
+              <div
+                style={{ top: hovered.top }}
+                className="absolute inset-x-0 z-10 flex w-full -translate-y-1/2 items-center justify-start !border-0"
+              >
+                <div className="h-0.5 grow bg-red-5 dark:bg-red-dark-5" />
+                <div className="rounded p-3">{hovered.time}</div>
+              </div>
+            )}
           </div>
         </div>
       </div>
