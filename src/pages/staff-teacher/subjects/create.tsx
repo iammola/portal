@@ -13,7 +13,10 @@ import { Checkbox, Input, RadioGroup, Select, Users } from "components/Form";
 
 import type { NextPage } from "next";
 
-const DivisionSubject = dynamic(() => import("components/Pages/Subject").then((_) => _.DivisionSubjectFields));
+const DivisionSubject = dynamic(async () => {
+  const { DivisionSubjectFields } = await import("components/Pages/Subject");
+  return DivisionSubjectFields;
+});
 
 type Division = { teachers: string; name: Schemas.Subject.DivisionSchema["name"] };
 const CreateSubject: NextPage = () => {

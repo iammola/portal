@@ -12,7 +12,10 @@ import { Date as FormDate, Input, Select } from "components/Form";
 
 import type { NextPage } from "next";
 
-const CreateSession = dynamic(() => import("components/Pages/Term").then((_) => _.CreateSession));
+const CreateSession = dynamic(async () => {
+  const { CreateSession } = await import("components/Pages/Term");
+  return CreateSession;
+});
 
 const CreateTerm: NextPage = () => {
   const [newSession, setNewSession] = useState<Record<"long" | "short", string>>();

@@ -16,9 +16,9 @@ const Login: NextPage = () => {
   const router = useRouter();
 
   const [levels] = useState(() => [
-    { value: "student", emoji: "👨‍🎓", text: "Student" },
-    { value: "parent", emoji: "👨‍👩‍👦", text: "Parent" },
-    { value: "staff", emoji: "👨‍🏫", text: "Staff" },
+    { value: "student", emoji: "👨‍🎓" },
+    { value: "parent", emoji: "👨‍👩‍👦" },
+    { value: "staff", emoji: "👨‍🏫" },
   ]);
 
   const [username, setUsername] = useState("");
@@ -98,11 +98,11 @@ const Login: NextPage = () => {
               Password
             </Password>
             <Select required label="Access Level" value={level} onValueChange={setLevel}>
-              {levels.map(({ emoji, value, text }) => (
+              {levels.map(({ emoji, value }) => (
                 <Select.Item key={value} value={value}>
-                  <div className="flex items-center justify-start gap-3">
+                  <div className="flex items-center justify-start gap-3 capitalize">
                     <span>{emoji}</span>
-                    <span>{text}</span>
+                    <span>{value}</span>
                   </div>
                 </Select.Item>
               ))}

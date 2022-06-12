@@ -1,6 +1,6 @@
-import * as mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-export const TeacherStaffSchema = new mongoose.Schema(
+export const TeacherStaffSchema = new Schema(
   {
     privileges: {
       type: [String],

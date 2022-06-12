@@ -1,9 +1,9 @@
-import * as mongoose from "mongoose";
+import { Schema } from "mongoose";
 
 import { ModelNames } from "db";
 
 const SubjectName = () =>
-  new mongoose.Schema<Schemas.ThingName>(
+  new Schema<Schemas.ThingName>(
     {
       long: {
         trim: true,
@@ -19,7 +19,7 @@ const SubjectName = () =>
     { _id: false }
   );
 
-export const BaseSubjectSchema = new mongoose.Schema<Schemas.Subject.BaseRecord>(
+export const BaseSubjectSchema = new Schema<Schemas.Subject.BaseRecord>(
   {
     name: {
       type: SubjectName(),
@@ -28,7 +28,7 @@ export const BaseSubjectSchema = new mongoose.Schema<Schemas.Subject.BaseRecord>
     teachers: {
       default: undefined,
       ref: ModelNames.STAFF,
-      type: [mongoose.Schema.Types.ObjectId],
+      type: [Schema.Types.ObjectId],
     },
   },
   { versionKey: false }
@@ -38,7 +38,7 @@ BaseSubjectSchema.virtual("teachersCount").get(function (this: Schemas.Subject.B
   return this.teachers.length;
 });
 
-export const GroupSubjectSchema = new mongoose.Schema<Schemas.Subject.GroupRecord>(
+export const GroupSubjectSchema = new Schema<Schemas.Subject.GroupRecord>(
   {
     name: {
       type: SubjectName(),

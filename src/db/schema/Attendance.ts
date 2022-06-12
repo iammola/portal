@@ -1,6 +1,6 @@
-import * as mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-export const DateSchema = new mongoose.Schema<Schemas.Attendance.Date>({
+export const DateSchema = new Schema<Schemas.Attendance.Date>({
   in: {
     type: Date,
     immutable: true,

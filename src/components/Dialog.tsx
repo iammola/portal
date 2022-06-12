@@ -31,7 +31,7 @@ export const Content: React.FC<CP<DialogPrimitive.DialogContentProps>> = ({ chil
       <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black-a-10" />
       <DialogPrimitive.Content
         {...contentProps}
-        className="fixed left-1/2 top-1/2 z-50 max-h-[85vh] w-[90vw] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-6 dark:bg-gray-dark-2 sm:max-w-lg"
+        className="fixed left-1/2 top-1/2 z-50 max-h-[85vh] w-[90vw] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-md bg-white p-6 dark:bg-gray-dark-2 sm:max-w-lg"
       >
         {children}
         <DialogPrimitive.Close

@@ -26,19 +26,20 @@ async function GETUser(username: string): API.HandlerResponse<API.User.GET.Data>
   ]);
 
   const levels = ["student", "staff", "parent"];
-  const user = result.reduce<(API.User.GET.Data & { __type?: string }) | null>((acc, user, idx) => {
-    if (user == null) return acc;
+  const idx = result.findIndex((user) => user !== null);
 
-    const { __type, ...cur } = user as unknown as API.User.GET.Data & { __type?: string };
-    return {
-      ...cur,
-      level: __type ? `Staff (${__type})` : levels[idx],
-    };
-  }, null);
-
+  const user = result[idx];
   if (user == null) throw new NotFoundError("A user with the specified username does not exist");
 
-  return [{ data: user, message: ReasonPhrases.OK }, StatusCodes.OK];
+  const data = {
+    _id: user._id,
+    name: user.name.full,
+    avatar: user.images?.avatar,
+    initials: user.name.initials,
+    level: "__type" in user ? `${levels[idx]} (${user.__type})` : levels[idx],
+  };
+
+  return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["GET"]);

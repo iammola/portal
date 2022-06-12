@@ -90,20 +90,15 @@ export default Users;
 
 const User: React.FC<{ username: string }> = ({ username }) => {
   const { data, error } = useSWR<API.Result<API.User.GET.Data>, unknown>(`/api/${username}`);
-  const [user, setUser] = useState<Record<"name" | "image" | "initials" | "level", string> | null | false>();
+  const [user, setUser] = useState<Record<"name" | "avatar" | "initials" | "level", string> | null | false>();
 
   useIsomorphicLayoutEffect(() => {
     if (error) return setUser(false);
     if (!data) return setUser(undefined);
 
     if (data.success) {
-      const { name, images, level } = data.data;
-      return setUser({
-        level,
-        name: name.full,
-        initials: name.initials,
-        image: images?.avatar ?? "",
-      });
+      const { avatar = "", initials, name, level } = data.data;
+      return setUser({ level, name, initials, avatar });
     }
 
     if (data.message === "Not Found") return setUser(null);
@@ -139,11 +134,11 @@ const User: React.FC<{ username: string }> = ({ username }) => {
       >
         {user && (
           <Fragment>
-            <Avatar {...user} src={user.image} />
+            <Avatar {...user} src={user.avatar} />
             <div className="flex flex-col items-start justify-center gap-1">
               <span className="text-sm font-medium tracking-wide text-gray-12 dark:text-gray-dark-12">{user.name}</span>
               <span className="text-xs text-gray-11 dark:text-gray-dark-11">
-                {username} - ${user.level}
+                <span>{username}</span> - <span className="capitalize">{user.level}</span>
               </span>
             </div>
           </Fragment>
