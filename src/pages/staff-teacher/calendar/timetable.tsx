@@ -110,11 +110,19 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
     }
 
     if (top < height && top > 0) {
-      const target = e.target as HTMLElement;
-      const { height, top: targetTop } = target.getBoundingClientRect();
-      const hourIdx = [...(target.parentElement?.children ?? [])].indexOf(target);
+      let target = e.target as HTMLElement;
+      const day = [...([...ref.current.children].find((el) => el.contains(target))?.children ?? [])];
 
-      if (hourIdx < 0) return;
+      while (day.indexOf(target) < 0) {
+        const parent = target.parentElement;
+        if (parent == null) break;
+
+        target = parent;
+      }
+
+      const hourIdx = day.indexOf(target);
+      const { height, top: targetTop } = target.getBoundingClientRect();
+
       const offset = (e.clientY - targetTop) / height;
 
       time = add(new Date(hours[hourIdx]), {
