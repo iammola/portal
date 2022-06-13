@@ -41,33 +41,33 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
       if (!result.success) return;
       const { current, data } = result.data;
 
-      const weeks: Record<string, number> = {};
       let week = active.week;
+      const weeks: Record<string, number> = {};
 
-      setTerms(
-        data.map(({ session, terms }) => ({
-          session: session.name.long,
-          terms: terms.map((term) => {
-            const termWeeks = differenceInCalendarWeeks(new Date(term.end), new Date(term.start));
-            weeks[String(term._id)] = termWeeks;
+      const terms = data.map(({ session, terms }) => ({
+        session: session.name.long,
+        terms: terms.map((term) => {
+          const termWeeks = differenceInCalendarWeeks(new Date(term.end), new Date(term.start));
+          weeks[String(term._id)] = termWeeks;
 
-            if (String(term._id) === active.term && +week > termWeeks) week = String(termWeeks);
+          if (String(term._id) === active.term && +week > termWeeks) week = String(termWeeks);
 
-            if (term._id == current?._id) {
-              const currentWeek = differenceInCalendarWeeks(new Date(), new Date(term.start));
-              week = String(currentWeek < 1 ? 1 : currentWeek > termWeeks ? termWeeks : currentWeek);
-            }
+          if (term._id == current?._id) {
+            const currentWeek = differenceInCalendarWeeks(new Date(), new Date(term.start));
+            week = String(currentWeek < 1 ? 1 : currentWeek > termWeeks ? termWeeks : currentWeek);
+          }
 
-            return {
-              _id: String(term._id),
-              name: term.name.long,
-            };
-          }),
-        }))
-      );
+          return {
+            _id: String(term._id),
+            name: term.name.long,
+          };
+        }),
+      }));
 
+      setTerms(terms);
       setWeeksInTerms(weeks);
-      setActive((active) => ({ ...active, week, term: current && !active.term ? String(current._id) : active.term }));
+      if ((current && !active.term) || week !== active.week)
+        setActive((active) => ({ ...active, week, term: current ? String(current._id) : active.term }));
     },
   });
 
