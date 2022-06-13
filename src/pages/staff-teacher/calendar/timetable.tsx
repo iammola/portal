@@ -1,8 +1,9 @@
 import useSWR from "swr";
 import Head from "next/head";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { add, differenceInCalendarWeeks, differenceInMinutes, eachHourOfInterval, lightFormat, set } from "date-fns";
 
+import { cx } from "utils";
 import { connect } from "db";
 import { SettingsModel } from "db/models";
 import { Select } from "components/Form/Select";
@@ -18,7 +19,7 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
   const [classes, setClasses] = useState<Array<Record<"_id" | "name", string>>>();
   const [terms, setTerms] = useState<Array<{ session: string; terms: Array<Record<"_id" | "name", string>> }>>();
 
-  const [timetable, setTimetable] = useState<API.Timetable.GET.Data>();
+  const [timetable, setTimetable] = useState<TimetableData>({ state: 2, data: [] });
 
   const ref = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState<{ time: string; top: number }>();
@@ -72,11 +73,19 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
     Object.values(active).every(Boolean) && `/api/calendar/timetable?${new URLSearchParams(active).toString()}`,
     {
       onSuccess(result) {
-        if (!result.success) return;
-        setTimetable(result.data);
+        let [state, data] = [1, []] as [typeof timetable.state, typeof timetable.data];
+
+        if (!result.success) state = result.message === "Not Found" ? -2 : -1;
+        else [state, data] = [0, result.data.days];
+
+        setTimetable({ state, data });
       },
     }
   );
+
+  useEffect(() => {
+    if (+active.week && active.term && active.class) setTimetable({ state: 1, data: [] });
+  }, [active]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!ref.current?.contains(e.target as Node)) return;
@@ -176,36 +185,58 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
             </Select>
           </div>
         </div>
-        <div className="grid min-h-0 w-full grow select-none grid-cols-[max-content_minmax(0,1fr)] grid-rows-[max-content_minmax(0,1fr)] divide-x divide-y divide-gray-7 rounded-lg border border-gray-7 dark:divide-gray-dark-7 dark:border-gray-dark-7">
-          <div className="col-start-1 col-end-2 row-start-1 row-end-1" />
-          <DaysPanel activeDays={activeDays} />
-          <HoursPanel hours={hours.slice(0, -1)} lastHour={hours.at(-1)} />
-          <div
-            ref={ref}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={() => setHovered(undefined)}
-            className="relative z-0 col-start-2 col-end-3 row-start-2 row-end-3 grid divide-x divide-gray-7 dark:divide-gray-dark-7"
-            style={{ gridTemplateColumns: `repeat(${activeDays.length}, minmax(0, 1fr))` }}
-          >
-            {activeDays.map((day) => (
-              <TimetableWeekPanel
-                key={day}
-                hours={hours.slice(0, -1)}
-                periods={timetable?.days.find((e) => e.day === day)?.periods}
-              />
-            ))}
-            {hovered && (
+        <div
+          className={cx(
+            "grid min-h-0 w-full grow select-none grid-cols-[max-content_minmax(0,1fr)] grid-rows-[max-content_minmax(0,1fr)] rounded-lg",
+            {
+              "divide-x divide-y divide-gray-7 border border-gray-7 dark:divide-gray-dark-7 dark:border-gray-dark-7":
+                timetable.state === 0,
+            }
+          )}
+        >
+          {timetable.state === -1 && <div className="col-span-full row-span-full">Error loading timetable data</div>}
+          {timetable.state === -2 && (
+            <div className="col-span-full row-span-full">
+              A timetable entry for the selected class, term and week has not been created
+            </div>
+          )}
+          {timetable.state === 0 && (
+            <Fragment>
+              <div className="col-start-1 col-end-2 row-start-1 row-end-1" />
+              <DaysPanel activeDays={activeDays} />
+              <HoursPanel hours={hours.slice(0, -1)} lastHour={hours.at(-1)} />
               <div
-                style={{ top: hovered.top }}
-                className="pointer-events-none absolute inset-x-0 z-10 flex w-full -translate-y-1/2 items-center justify-start gap-1.5 !border-0 pr-1.5"
+                ref={ref}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={() => setHovered(undefined)}
+                className="relative z-0 col-start-2 col-end-3 row-start-2 row-end-3 grid divide-x divide-gray-7 dark:divide-gray-dark-7"
+                style={{ gridTemplateColumns: `repeat(${activeDays.length}, minmax(0, 1fr))` }}
               >
-                <div className="h-px grow bg-gray-8 dark:bg-gray-dark-8" />
-                <div className="p-1 text-xs font-medium tracking-wide text-gray-11 dark:text-gray-dark-11">
-                  {hovered.time}
-                </div>
+                {activeDays.map((day) => (
+                  <TimetableWeekPanel
+                    key={day}
+                    hours={hours.slice(0, -1)}
+                    periods={timetable.data.find((e) => e.day === day)?.periods}
+                  />
+                ))}
+                {hovered && (
+                  <div
+                    style={{ top: hovered.top }}
+                    className="pointer-events-none absolute inset-x-0 z-10 flex w-full -translate-y-1/2 items-center justify-start gap-1.5 !border-0 pr-1.5"
+                  >
+                    <div className="h-px grow bg-gray-8 dark:bg-gray-dark-8" />
+                    <div className="p-1 text-xs font-medium tracking-wide text-gray-11 dark:text-gray-dark-11">
+                      {hovered.time}
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </Fragment>
+          )}
+          {timetable.state === 1 && <div className="col-span-full row-span-full">Loading data</div>}
+          {timetable.state === 2 && (
+            <div className="col-span-full row-span-full">Choose a Class and Term from the fields above</div>
+          )}
         </div>
       </div>
     </Fragment>
@@ -245,6 +276,21 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
 type PageProps = {
   hours: Date[];
   activeDays: Schemas.Settings.Schema["activeSchoolDays"];
+};
+
+type TimetableData = {
+  /**
+   * The `state` property is used to indicate the state of the data.
+   *
+   * - `-2`: The data does not exist.
+   * - `-1`: The data failed to fetch.
+   * - `0`: The data is ready to be used.
+   * - `1`: The data is being updated
+   * - `2`: The data has not been fetched.
+   */
+  state: -2 | -1 | 0 | 1 | 2;
+  /** The timetable data. */
+  data: API.Timetable.GET.Data["days"];
 };
 
 export default Timetable;
