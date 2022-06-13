@@ -14,7 +14,7 @@ const { DaysPanel, HoursPanel, TimetableWeekPanel } = await import("components/P
 
 const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
   const [weeksInTerms, setWeeksInTerms] = useState<Record<string, number>>({});
-  const [active, setActive] = useState<Record<"class" | "term" | "week", string>>({ class: "", term: "", week: "1" });
+  const [active, setActive] = useState<Record<"class" | "term" | "week", string>>({ class: "", term: "", week: "" });
 
   const [classes, setClasses] = useState<Array<Record<"_id" | "name", string>>>();
   const [terms, setTerms] = useState<Array<{ session: string; terms: Array<Record<"_id" | "name", string>> }>>();
@@ -181,7 +181,12 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
               value={String(active.week)}
               onValueChange={(week) => setActive((active) => ({ ...active, week }))}
             >
-              {Array.from({ length: weeksInTerms[active.term] ?? 1 }).map((_, idx) => (
+              {!active.week && (
+                <Select.Item disabled value="">
+                  Select a Week
+                </Select.Item>
+              )}
+              {Array.from({ length: weeksInTerms[active.term] ?? 0 }).map((_, idx) => (
                 <Select.Item key={idx} value={String(idx + 1)}>
                   Week {idx + 1}
                 </Select.Item>
@@ -239,7 +244,7 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
           )}
           {timetable.state === 1 && <div className="col-span-full row-span-full">Loading data</div>}
           {timetable.state === 2 && (
-            <div className="col-span-full row-span-full">Choose a Class and Term from the fields above</div>
+            <div className="col-span-full row-span-full">Choose a Class, Term and Week from the fields above</div>
           )}
         </div>
       </div>
