@@ -75,6 +75,8 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
     Object.values(active).every(Boolean) && `/api/calendar/timetable?${new URLSearchParams(active).toString()}`,
     {
       onSuccess(result) {
+        if (!result.success && timetable.data.length > 0) return;
+
         let [state, data] = [1, []] as [typeof timetable.state, typeof timetable.data];
 
         if (!result.success) state = result.message === "Not Found" ? -2 : -1;
