@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import { Fragment, useRef, useState } from "react";
-import { add, differenceInCalendarWeeks, eachHourOfInterval, set } from "date-fns";
+import { add, differenceInCalendarWeeks, differenceInMinutes, eachHourOfInterval, format, set } from "date-fns";
 
 import { connect } from "db";
 import { SettingsModel } from "db/models";
@@ -78,17 +78,38 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
     }
   );
 
-  function handleMouseOver(e: React.MouseEvent<HTMLDivElement>) {
-    if (!ref.current) return;
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (!ref.current?.contains(e.target as Node)) return;
 
     const { height, top: refTop } = ref.current.getBoundingClientRect();
 
+    let time: Date | undefined;
     let top = e.clientY - refTop;
 
-    if (top < 0) top = 0;
-    if (top > height) top = height;
+    if (top < 0) {
+      top = 0;
+      time = hours.at(0);
+    }
 
-    setHovered({ time: "", top });
+    if (top > height) {
+      top = height;
+      time = hours.at(-1);
+    }
+
+    if (top < height && top > 0) {
+      const target = e.target as HTMLElement;
+      const { height, top: targetTop } = target.getBoundingClientRect();
+      const hourIdx = [...(target.parentElement?.children ?? [])].indexOf(target);
+
+      if (hourIdx < 0) return;
+      const offset = (e.clientY - targetTop) / height;
+
+      time = add(new Date(hours[hourIdx]), {
+        minutes: offset * differenceInMinutes(new Date(hours[hourIdx + 1]), new Date(hours[hourIdx])),
+      });
+    }
+
+    setHovered({ time: time ? format(new Date(time), "p") : "", top });
   }
 
   return (
@@ -161,7 +182,7 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
           <HoursPanel hours={hours.slice(0, -1)} lastHour={hours.at(-1)} />
           <div
             ref={ref}
-            onMouseOver={handleMouseOver}
+            onMouseMove={handleMouseMove}
             onMouseLeave={() => setHovered(undefined)}
             className="relative z-0 col-start-2 col-end-3 row-start-2 row-end-3 grid divide-x divide-gray-7 dark:divide-gray-dark-7"
             style={{ gridTemplateColumns: `repeat(${activeDays.length}, minmax(0, 1fr))` }}
@@ -176,7 +197,7 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
             {hovered && (
               <div
                 style={{ top: hovered.top }}
-                className="absolute inset-x-0 z-10 flex w-full -translate-y-1/2 items-center justify-start !border-0"
+                className="pointer-events-none absolute inset-x-0 z-10 flex w-full -translate-y-1/2 items-center justify-start !border-0"
               >
                 <div className="h-0.5 grow bg-red-5 dark:bg-red-dark-5" />
                 <div className="rounded p-3">{hovered.time}</div>
