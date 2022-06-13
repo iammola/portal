@@ -20,22 +20,26 @@ export const DaysPanel: React.FC<{ activeDays: number[] }> = ({ activeDays }) =>
   );
 };
 
-export const HoursPanel: React.FC<{ hours: Date[] }> = ({ hours }) => {
+export const HoursPanel: React.FC<{ hours: Date[]; lastHour?: Date }> = ({ hours, lastHour }) => {
   return (
     <div
       style={{ gridTemplateRows: `repeat(${hours.length}, minmax(0, 1fr))` }}
       className="col-start-1 col-end-2 row-start-2 row-end-3 grid divide-y divide-gray-7 !border-l-0 dark:divide-gray-dark-7"
     >
-      {hours.map((hour) => {
-        const time = format(new Date(hour), "p");
+      {hours.map((hour, idx) => {
+        hour = new Date(hour);
+
+        const time = format(hour, "p");
+        const end = hours.at(idx + 1) ?? lastHour;
 
         return (
           <time
             key={time}
             dateTime={time}
-            className="flex h-full min-w-0 items-center justify-center p-2 text-sm text-gray-11 dark:text-gray-dark-11"
+            className="flex h-full min-w-0 items-center justify-center p-2 text-xs text-gray-11 dark:text-gray-dark-11"
           >
             {time}
+            {end && <> - {format(new Date(end), "p")}</>}
           </time>
         );
       })}
