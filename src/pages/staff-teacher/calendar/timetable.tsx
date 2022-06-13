@@ -197,10 +197,12 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
             {hovered && (
               <div
                 style={{ top: hovered.top }}
-                className="pointer-events-none absolute inset-x-0 z-10 flex w-full -translate-y-1/2 items-center justify-start !border-0"
+                className="pointer-events-none absolute inset-x-0 z-10 flex w-full -translate-y-1/2 items-center justify-start gap-1.5 !border-0 pr-1.5"
               >
-                <div className="h-0.5 grow bg-red-5 dark:bg-red-dark-5" />
-                <div className="rounded p-3">{hovered.time}</div>
+                <div className="h-px grow bg-gray-8 dark:bg-gray-dark-8" />
+                <div className="p-1 text-xs font-medium tracking-wide text-gray-11 dark:text-gray-dark-11">
+                  {hovered.time}
+                </div>
               </div>
             )}
           </div>
