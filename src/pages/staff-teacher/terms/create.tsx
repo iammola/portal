@@ -1,6 +1,6 @@
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { Fragment, useState } from "react";
-import { add, differenceInCalendarWeeks, format } from "date-fns";
+import { add, differenceInCalendarWeeks, lightFormat } from "date-fns";
 import useSWR from "swr";
 import Head from "next/head";
 import dynamic from "next/dynamic";
@@ -139,7 +139,7 @@ const CreateTerm: NextPage = () => {
                     required
                     value={end}
                     onValueChange={setEnd}
-                    min={start ? format(add(start, { weeks: 1 }), "yyyy-MM-dd") : undefined}
+                    min={start ? lightFormat(add(start, { weeks: 1 }), "yyyy-MM-dd") : undefined}
                   >
                     End Date
                   </FormDate>

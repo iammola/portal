@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import { Fragment, useRef, useState } from "react";
-import { add, differenceInCalendarWeeks, differenceInMinutes, eachHourOfInterval, format, set } from "date-fns";
+import { add, differenceInCalendarWeeks, differenceInMinutes, eachHourOfInterval, lightFormat, set } from "date-fns";
 
 import { connect } from "db";
 import { SettingsModel } from "db/models";
@@ -109,7 +109,7 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
       });
     }
 
-    setHovered({ time: time ? format(new Date(time), "p") : "", top });
+    setHovered({ time: time ? lightFormat(new Date(time), "hh:mm a") : "", top });
   }
 
   return (

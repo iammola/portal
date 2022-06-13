@@ -1,4 +1,4 @@
-import { differenceInMinutes, format } from "date-fns";
+import { differenceInMinutes, lightFormat } from "date-fns";
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -29,7 +29,7 @@ export const HoursPanel: React.FC<{ hours: Date[]; lastHour?: Date }> = ({ hours
       {hours.map((hour, idx) => {
         hour = new Date(hour);
 
-        const time = format(hour, "p");
+        const time = lightFormat(hour, "hh:mm a");
         const end = hours.at(idx + 1) ?? lastHour;
 
         return (
@@ -39,7 +39,7 @@ export const HoursPanel: React.FC<{ hours: Date[]; lastHour?: Date }> = ({ hours
             className="flex h-full min-w-0 items-center justify-center p-2 text-xs text-gray-11 dark:text-gray-dark-11"
           >
             {time}
-            {end && <> - {format(new Date(end), "p")}</>}
+            {end && <> - {lightFormat(new Date(end), "hh:mm a")}</>}
           </time>
         );
       })}
@@ -61,7 +61,10 @@ export const TimetableWeekPanel: React.FC<{
         const periodsInHour = periods.filter((period) => new Date(period.start).getHours() === hour.getHours());
 
         return (
-          <div key={format(hour, "p")} className="relative grid h-full w-full grid-flow-col items-start gap-0.5">
+          <div
+            key={lightFormat(hour, "hh:mm a")}
+            className="relative grid h-full w-full grid-flow-col items-start gap-0.5"
+          >
             {periodsInHour.map((period, idx) => {
               const [start, end] = [period.start, period.end].map((time) => new Date(time));
               const offset = differenceInMinutes(start, hour);
@@ -82,7 +85,7 @@ export const TimetableWeekPanel: React.FC<{
                     {period._type === "subject" ? period.subject.name : period.title}
                   </div>
                   <div className="truncate text-xs font-medium tracking-wide text-gray-11 dark:text-gray-dark-11">
-                    {format(start, "p")} - {format(end, "p")}
+                    {lightFormat(start, "hh:mm a")} - {lightFormat(end, "hh:mm a")}
                     {period._type === "subject" && <> &middot; {period.teacher.name}</>}
                   </div>
                 </div>
