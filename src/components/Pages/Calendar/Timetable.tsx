@@ -53,7 +53,7 @@ export const TimetableWeekPanel: React.FC<{
 }> = ({ hours, periods = [] }) => {
   return (
     <div
-      className="grid h-full min-h-0 w-full divide-y divide-gray-7 dark:divide-gray-dark-7"
+      className="pointer-events-auto grid h-full min-h-0 w-full divide-y divide-gray-7 dark:divide-gray-dark-7"
       style={{ gridTemplateRows: `repeat(${hours.length}, minmax(0, 1fr))` }}
     >
       {hours.map((date) => {
