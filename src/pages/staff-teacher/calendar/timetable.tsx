@@ -42,7 +42,7 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
       const { current, data } = result.data;
 
       const weeks: Record<string, number> = {};
-      let week = timetable?.term.toString() === active.term ? active.week : "1";
+      let week = active.week;
 
       setTerms(
         data.map(({ session, terms }) => ({
@@ -50,6 +50,8 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
           terms: terms.map((term) => {
             const termWeeks = differenceInCalendarWeeks(new Date(term.end), new Date(term.start));
             weeks[String(term._id)] = termWeeks;
+
+            if (String(term._id) === active.term && +week > termWeeks) week = String(termWeeks);
 
             if (term._id == current?._id) {
               const currentWeek = differenceInCalendarWeeks(new Date(), new Date(term.start));
