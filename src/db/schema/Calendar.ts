@@ -124,6 +124,7 @@ export const EventSchema = new Schema<Schemas.Calendar.EventSchema>(
 export const TimetableSchema = new Schema<Schemas.Calendar.TimetableSchema>(
   {
     class: {
+      ref: ModelNames.CLASS,
       type: Schema.Types.ObjectId,
       required: [true, "Timetable Class is required"],
     },
