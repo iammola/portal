@@ -226,6 +226,7 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
                 ref={ref}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={() => setHovered(undefined)}
+                onMouseOver={(e) => !hovered && handleMouseMove(e)}
                 className="pointer-events-none relative z-0 col-start-2 col-end-3 row-start-2 row-end-3 grid divide-x divide-gray-7 dark:divide-gray-dark-7"
                 style={{ gridTemplateColumns: `repeat(${activeDays.length}, minmax(0, 1fr))` }}
               >
