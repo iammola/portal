@@ -5,6 +5,7 @@ import { add, differenceInCalendarWeeks, differenceInMinutes, eachHourOfInterval
 
 import { cx } from "utils";
 import { connect } from "db";
+import { Avatar } from "components";
 import { SettingsModel } from "db/models";
 import { Select } from "components/Form/Select";
 
@@ -14,9 +15,15 @@ const { DaysPanel, HoursPanel, TimetableWeekPanel } = await import("components/P
 
 const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
   const [weeksInTerms, setWeeksInTerms] = useState<Record<string, number>>({});
-  const [active, setActive] = useState<Record<"class" | "term" | "week", string>>({ class: "", term: "", week: "" });
+  const [active, setActive] = useState<Record<"class" | "term" | "week" | "teacher", string>>({
+    week: "",
+    term: "",
+    class: "",
+    teacher: "",
+  });
 
   const [classes, setClasses] = useState<Array<Record<"_id" | "name", string>>>();
+  const [teachers, setTeachers] = useState<Array<Record<"_id" | "name" | "avatar" | "initials", string>>>();
   const [terms, setTerms] = useState<Array<{ session: string; terms: Array<Record<"_id" | "name", string>> }>>();
 
   const [timetable, setTimetable] = useState<TimetableData>({ state: 2, data: [] });
@@ -33,6 +40,21 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
           name: item.name.long,
         }))
       );
+    },
+  });
+
+  useSWR<API.Result<API.Teacher.GET.AllData>>("/api/teachers", {
+    onSuccess(result) {
+      if (!result.success) return;
+
+      const teachers = result.data.map((teacher) => ({
+        _id: String(teacher._id),
+        name: teacher.name.full,
+        initials: teacher.name.initials,
+        avatar: teacher.images?.avatar ?? "",
+      }));
+
+      setTeachers(teachers);
     },
   });
 
@@ -71,24 +93,21 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
     },
   });
 
-  useSWR<API.Result<API.Timetable.GET.Data>>(
-    Object.values(active).every(Boolean) && `/api/calendar/timetable?${new URLSearchParams(active).toString()}`,
-    {
-      onSuccess(result) {
-        if (!result.success && timetable.data.length > 0) return;
+  useSWR<API.Result<API.Timetable.GET.Data>>(getTermRoute(), {
+    onSuccess(result) {
+      if (!result.success && timetable.data.length > 0) return;
 
-        let [state, data] = [1, []] as [typeof timetable.state, typeof timetable.data];
+      let [state, data] = [1, []] as [typeof timetable.state, typeof timetable.data];
 
-        if (!result.success) state = result.message === "Not Found" ? -2 : -1;
-        else [state, data] = [0, result.data.days];
+      if (!result.success) state = result.message === "Not Found" ? -2 : -1;
+      else [state, data] = [0, result.data.days];
 
-        setTimetable({ state, data });
-      },
-    }
-  );
+      setTimetable({ state, data });
+    },
+  });
 
   useEffect(() => {
-    if (+active.week && active.term && active.class) setTimetable({ state: 1, data: [] });
+    if (+active.week && active.term && (active.class || active.teacher)) setTimetable({ state: 1, data: [] });
   }, [active]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
@@ -133,6 +152,16 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
     setHovered({ time: time ? lightFormat(new Date(time), "hh:mm a") : "", top });
   }
 
+  function getTermRoute() {
+    const { week, term, teacher } = active;
+    if (+week < 1 || !term) return;
+
+    const params = new URLSearchParams({ week, term });
+    params.set(teacher ? "teacher" : "class", teacher || active.class);
+
+    return `/api/calendar/timetable?${params.toString()}`;
+  }
+
   return (
     <Fragment>
       <Head>
@@ -144,9 +173,34 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
           <div className="flex items-center justify-center gap-4">
             <Select
               required
+              label="Teacher"
+              value={active.teacher}
+              onValueChange={(teacher) => setActive((active) => ({ ...active, teacher, class: "" }))}
+            >
+              {!active.teacher && teachers && teachers.length === 0 ? (
+                <Select.Item disabled value="">
+                  No Teachers
+                </Select.Item>
+              ) : (
+                <Select.Item disabled value="">
+                  Select a Teacher
+                </Select.Item>
+              )}
+              {teachers?.map((teacher) => (
+                <Select.Item key={teacher._id} value={teacher._id}>
+                  <div className="justify-content flex items-center gap-2.5">
+                    <Avatar {...teacher} src={teacher.avatar} sizeClassName="h-8 w-8" textClassName="text-xs" />
+                    <span>{teacher.name}</span>
+                  </div>
+                </Select.Item>
+              ))}
+            </Select>
+            <span className="text-xs font-light text-gray-11 dark:text-gray-dark-11">or</span>
+            <Select
+              required
               label="Class"
               value={active.class}
-              onValueChange={(val) => setActive((active) => ({ ...active, class: val }))}
+              onValueChange={(val) => setActive((active) => ({ ...active, class: val, teacher: "" }))}
             >
               {!active.class && (
                 <Select.Item disabled value="">
