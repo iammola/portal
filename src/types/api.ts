@@ -231,36 +231,27 @@ declare global {
       }
 
       namespace GET {
-        type Data = Pick<Schemas.Calendar.TimetableSchema, "term" | "class"> & {
+        type PopulatedPeriod = {
+          class?: Pick<Schemas.Class.Schema, "_id" | "name">;
+        } & Pick<Schemas.Calendar.TimetablePeriod, "end" | "start"> &
+          (
+            | {
+                _type: "subject";
+                subject: { _id: Schemas.ObjectId; name: string };
+                teacher: { _id: Schemas.ObjectId; avatar?: string } & Record<"username" | "initials" | "name", string>;
+              }
+            | {
+                _type: "idle";
+                title: string;
+                description?: string;
+              }
+          );
+
+        type Data = {
           week: number;
-          days: Array<
-            Omit<Schemas.Calendar.TimetableDay, "periods"> & {
-              periods: Array<
-                Pick<Schemas.Calendar.TimetablePeriod, "end" | "start"> &
-                  (
-                    | {
-                        _type: "subject";
-                        subject: {
-                          _id: Schemas.ObjectId;
-                          name: string;
-                        };
-                        teacher: {
-                          _id: Schemas.ObjectId;
-                          avatar: string;
-                          name: string;
-                          initials: string;
-                          username: string;
-                        };
-                      }
-                    | {
-                        _type: "idle";
-                        title: string;
-                        description?: string;
-                      }
-                  )
-              >;
-            }
-          >;
+          term: Schemas.ObjectId;
+          class?: Schemas.ObjectId;
+          days: Array<Pick<Schemas.Calendar.TimetableDay, "day"> & Record<"periods", PopulatedPeriod[]>>;
         };
       }
     }

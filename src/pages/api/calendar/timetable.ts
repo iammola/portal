@@ -12,6 +12,7 @@ import {
   TimetableCalendarModel,
 } from "db/models";
 
+import type { Day } from "date-fns";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Timetable.POST.Data | API.Timetable.GET.Data> = async (req) => {
@@ -24,14 +25,74 @@ const handler: API.Handler<API.Timetable.POST.Data | API.Timetable.GET.Data> = a
 };
 
 type GETQuery = Record<"week" | "term", string> & { [K in "class" | "teacher"]?: string };
-async function GET({ week, teacher, term, ...query }: GETQuery): API.HandlerResponse<API.Timetable.GET.Data> {
-  const timetable = await TimetableCalendarModel.findOne(
-    Object.assign({ term, weeks: +week }, teacher ? { "days.periods.teacher": teacher } : { class: query.class })
-  )
-    .select("-weeks")
-    .populate("days.periods.subject", "name.long")
-    .populate("days.periods.teacher", "username images.avatar name.full name.initials")
-    .lean();
+async function GET({ week, teacher, term, ...other }: GETQuery): API.HandlerResponse<API.Timetable.GET.Data> {
+  const [query, select, populate] = [
+    { term, weeks: +week },
+    { weeks: 0 },
+    [
+      { path: "days.periods.subject", select: "name.long" },
+      { path: "days.periods.teacher", select: "username images.avatar name.full name.initials" },
+    ],
+  ];
+
+  function formatPeriods(
+    periods: Schemas.Calendar.TimetablePeriod[],
+    withClass?: Pick<Schemas.Class.Schema, "_id" | "name">
+  ): API.Timetable.GET.PopulatedPeriod[] {
+    return periods.map((period) => {
+      if (period._type === "subject") {
+        const { subject, teacher } = period as unknown as {
+          subject: Schemas.Subject.Record;
+          teacher: Schemas.Staff.Record;
+        };
+
+        return {
+          ...period,
+          class: withClass,
+          subject: {
+            _id: subject._id,
+            name: subject.name.long,
+          },
+          teacher: {
+            _id: teacher._id,
+            name: teacher.name.full,
+            username: teacher.username,
+            initials: teacher.name.initials,
+            avatar: teacher.images?.avatar,
+          },
+        };
+      }
+
+      return { ...period, class: withClass };
+    });
+  }
+
+  if (teacher) {
+    const timetable = await TimetableCalendarModel.find({ ...query, "days.periods.teacher": teacher }, select, {
+      populate: [...populate, { path: "class", select: "name" }],
+    }).lean();
+
+    const days = Object.entries(
+      timetable.reduce<Record<number, API.Timetable.GET.PopulatedPeriod[]>>(
+        (acc, cur) =>
+          cur.days.reduce(
+            (days, { day, periods }) => ({
+              ...days,
+              [day]: [
+                ...(days[day] ?? []),
+                ...formatPeriods(periods, cur.class as unknown as Pick<Schemas.Class.Schema, "_id" | "name">),
+              ],
+            }),
+            acc
+          ),
+        {}
+      )
+    ).map(([day, periods]) => ({ day: +day as Day, periods }));
+
+    return [{ data: { days, week: +week, term: timetable[0].term }, message: ReasonPhrases.OK }, StatusCodes.OK];
+  }
+
+  const timetable = await TimetableCalendarModel.findOne({ ...query, class: other.class }, select, { populate }).lean();
 
   if (timetable == null) throw new NotFoundError("Timetable entry not found");
 
@@ -41,26 +102,9 @@ async function GET({ week, teacher, term, ...query }: GETQuery): API.HandlerResp
     class: timetable.class,
     days: timetable.days.map(({ day, periods }) => ({
       day,
-      periods: periods.map((period) =>
-        Object.assign(
-          period,
-          period._type == "subject" && {
-            subject: {
-              _id: (period.subject as unknown as Schemas.Subject.Record)._id,
-              name: (period.subject as unknown as Schemas.Subject.Record).name.long,
-            },
-            teacher: {
-              _id: (period.teacher as unknown as Schemas.Staff.Record)._id,
-              name: (period.teacher as unknown as Schemas.Staff.Record).name.full,
-              initials: (period.teacher as unknown as Schemas.Staff.Record).name.initials,
-              avatar: (period.teacher as unknown as Schemas.Staff.Record).images?.avatar,
-              username: (period.teacher as unknown as Schemas.Staff.Record).username,
-            },
-          }
-        )
-      ),
+      periods: formatPeriods(periods),
     })),
-  } as API.Timetable.GET.Data;
+  };
 
   return [{ data, message: ReasonPhrases.OK }, StatusCodes.OK];
 }
