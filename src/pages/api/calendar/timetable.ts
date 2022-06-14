@@ -28,7 +28,7 @@ async function GET({ week, term, ...query }: GETQuery): API.HandlerResponse<API.
   const timetable = await TimetableCalendarModel.findOne({ term, weeks: +week, class: query.class })
     .select("-weeks")
     .populate("days.periods.subject", "name.long")
-    .populate("days.periods.teacher", "images.avatar name.full name.initials")
+    .populate("days.periods.teacher", "username images.avatar name.full name.initials")
     .lean();
 
   if (timetable == null) throw new NotFoundError("Timetable entry not found");
@@ -52,6 +52,7 @@ async function GET({ week, term, ...query }: GETQuery): API.HandlerResponse<API.
               name: (period.teacher as unknown as Schemas.Staff.Record).name.full,
               initials: (period.teacher as unknown as Schemas.Staff.Record).name.initials,
               avatar: (period.teacher as unknown as Schemas.Staff.Record).images?.avatar,
+              username: (period.teacher as unknown as Schemas.Staff.Record).username,
             },
           }
         )
