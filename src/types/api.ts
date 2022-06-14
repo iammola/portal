@@ -161,6 +161,10 @@ declare global {
             initials: string;
           } & Pick<Schemas.Student.Record, "_id" | "gender" | "username" | "schoolMail">
         >;
+
+        type Data = Schemas.Staff.TeacherSchema;
+
+        type AllData = Data[];
       }
     }
 
