@@ -23,9 +23,11 @@ const handler: API.Handler<API.Timetable.POST.Data | API.Timetable.GET.Data> = a
   return null;
 };
 
-type GETQuery = Record<"week" | "class" | "term", string>;
-async function GET({ week, term, ...query }: GETQuery): API.HandlerResponse<API.Timetable.GET.Data> {
-  const timetable = await TimetableCalendarModel.findOne({ term, weeks: +week, class: query.class })
+type GETQuery = Record<"week" | "term", string> & { [K in "class" | "teacher"]?: string };
+async function GET({ week, teacher, term, ...query }: GETQuery): API.HandlerResponse<API.Timetable.GET.Data> {
+  const timetable = await TimetableCalendarModel.findOne(
+    Object.assign({ term, weeks: +week }, teacher ? { "days.periods.teacher": teacher } : { class: query.class })
+  )
     .select("-weeks")
     .populate("days.periods.subject", "name.long")
     .populate("days.periods.teacher", "username images.avatar name.full name.initials")
