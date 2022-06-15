@@ -86,6 +86,7 @@ export const TimetableWeekPanel: React.FC<{
                   >
                     <div className="h-full text-left">
                       <div className="truncate text-sm tracking-wide text-gray-12 dark:text-gray-dark-12">
+                        {period.class && <>{period.class.name.short} &middot; </>}
                         {period._type === "subject" ? period.subject.name : period.title}
                       </div>
                       <div className="truncate text-xs font-medium tracking-wide text-gray-11 dark:text-gray-dark-11">
@@ -98,6 +99,9 @@ export const TimetableWeekPanel: React.FC<{
                     sideOffset={3}
                     className="flex w-[270px] flex-col items-start justify-start gap-0.5 rounded-md bg-white p-4 shadow-md dark:bg-gray-dark-2 xs:w-[300px]"
                   >
+                    {period.class && (
+                      <div className="text-sm text-gray-11 dark:text-gray-dark-11">{period.class.name.long}</div>
+                    )}
                     <div className="font-semibold tracking-wide text-gray-12 dark:text-gray-dark-12">
                       {period._type === "subject" ? period.subject.name : period.title}
                     </div>
