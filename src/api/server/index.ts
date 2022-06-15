@@ -25,7 +25,12 @@ export async function routeWrapper<T extends object>(
   let data: API.RouteResponse<T> | null = null;
 
   try {
-    if (req.url !== "/api/login") await verifyAuth(req);
+    if (req.url !== "/api/login") {
+      const [type, token] = req.headers.authorization?.split(" ") ?? [];
+      if (type !== "Bearer") throw new UnauthorizedError("Invalid Authentication Type");
+
+      await verifyAuth(req, token);
+    }
 
     if (methods.includes(req.method as API.METHOD)) {
       try {
