@@ -3,13 +3,18 @@ import { useRouter } from "next/router";
 import { setCookies } from "cookies-next";
 import { Fragment, useState } from "react";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
-import { useToast } from "components/Toast";
 import { fetchAPI } from "api/client";
+import { useToast } from "components/Toast";
 import { JWT_COOKIE_TOKEN, REDIRECT_QUERY } from "utils/constants";
-import { Checkbox, Input, Password, Select } from "components/Form";
 
 import type { NextPage } from "next";
+
+const { Select } = await import("components/Form/Select");
+const Input = dynamic(() => import("components/Form/Input"));
+const Checkbox = dynamic(() => import("components/Form/Checkbox"));
+const Password = dynamic(() => import("components/Form/Password"));
 
 const Login: NextPage = () => {
   const toasts = useToast();
