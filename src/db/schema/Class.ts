@@ -17,7 +17,10 @@ export const ClassName = new Schema<Schemas.ThingName>(
     special: {
       trim: true,
       type: String,
-      unique: true,
+      index: {
+        unique: true,
+        partialFilterExpression: { special: { $type: "string" } },
+      },
     },
   },
   { _id: false }
