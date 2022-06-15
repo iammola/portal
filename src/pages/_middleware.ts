@@ -15,7 +15,4 @@ export const middleware: NextMiddleware = (req) => {
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
-
-  url.pathname = `/${level}${url.pathname}`;
-  return NextResponse.rewrite(url);
 };
