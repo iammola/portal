@@ -207,6 +207,7 @@ const CreateStudent: NextPage = () => {
               <div className="grid gap-6 sm:grid-cols-2">
                 <Input
                   required
+                  type="email"
                   value={contact.email.primary}
                   onValueChange={(primary) =>
                     setContact((contact) => ({ ...contact, email: { ...contact.email, primary } }))
@@ -215,6 +216,7 @@ const CreateStudent: NextPage = () => {
                   Email Address
                 </Input>
                 <Input
+                  type="email"
                   value={contact.email.other}
                   onValueChange={(other) =>
                     setContact((contact) => ({ ...contact, email: { ...contact.email, other } }))

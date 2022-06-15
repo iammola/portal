@@ -1,5 +1,5 @@
 import { startSession } from "mongoose";
-import { add, format, isAfter } from "date-fns";
+import { add, isAfter, lightFormat } from "date-fns";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
@@ -68,8 +68,8 @@ async function POST(
     }),
   ]);
 
-  const formatEnd = format(new Date(end), "dd/MM/yyyy");
-  const formatStart = format(new Date(start), "dd/MM/yyyy");
+  const formatEnd = lightFormat(new Date(end), "dd/MM/yyyy");
+  const formatStart = lightFormat(new Date(start), "dd/MM/yyyy");
 
   if (checks[0]) throw new Error(`A term that starts on ${formatStart} already exists`);
   if (checks[1]) throw new Error(`A term that ends on ${formatEnd} already exists`);

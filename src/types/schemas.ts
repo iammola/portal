@@ -1,5 +1,6 @@
 import type * as bson from "bson";
 import type * as Mongoose from "mongoose";
+import type { Day } from "date-fns";
 import type { ModelNames } from "db/constants";
 
 declare global {
@@ -340,13 +341,91 @@ declare global {
     }
 
     namespace Settings {
+      type SchoolTime = {
+        days: Day[];
+        value: Date;
+      };
+
+      type PeriodDurations = {
+        min: number;
+        max: number;
+      };
+
       type Schema = {
         locked: boolean;
-      };
+        activeSchoolDays: Day[];
+        activeSchoolTime: {
+          start: SchoolTime[];
+          end: SchoolTime[];
+        };
+        periodDurations: {
+          [K in Schemas.Calendar.TimetablePeriod["_type"]]: PeriodDurations;
+        };
+      } & DocumentId;
 
       type Record = ModelRecord<Schema>;
 
       type Model = Mongoose.Model<Schema>;
+    }
+
+    namespace Calendar {
+      // The timetable can be changed a week,
+      // A period lasts 45 minutes on a Monday-Thursday, and 35 mins on Friday.
+
+      type Schema<T> = DocumentId & {
+        __type: T;
+      };
+
+      type Model = Mongoose.Model<EventSchema | TimetableSchema>;
+      type Record = ModelRecord<EventSchema | TimetableSchema>;
+
+      type EventSchema = Schema<ModelNames.E_CALENDAR> & {
+        title: string;
+        start: Date;
+        ends: Date;
+        invitees?: {
+          staff?: ObjectId[];
+          parents?: ObjectId[];
+          students?: ObjectId[];
+        };
+      };
+
+      type EventModel = Mongoose.Model<EventSchema>;
+
+      type EventRecord = ModelRecord<EventSchema>;
+
+      type TimetablePeriod = {
+        end: Date;
+        start: Date;
+      } & (
+        | {
+            _type: "subject";
+            subject: ObjectId;
+            teacher: ObjectId;
+          }
+        | {
+            _type: "idle";
+            title: string;
+            description?: string;
+          }
+      );
+
+      type TimetableDay = {
+        day: Day;
+        periods: TimetablePeriod[];
+      };
+
+      type TimetableSchema = Schema<ModelNames.T_CALENDAR> & {
+        // Weekly timetable entry
+        term: ObjectId;
+        class: ObjectId;
+        weeks: [number, ...number[]];
+        days: TimetableDay[];
+      };
+
+      type TimetableModel = Mongoose.Model<TimetableSchema>;
+
+      type TimetableRecord = ModelRecord<TimetableSchema>;
     }
   }
 }

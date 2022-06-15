@@ -153,14 +153,18 @@ declare global {
     namespace Teacher {
       namespace GET {
         type Students = Array<
-          Pick<Schemas.Student.Record, "_id" | "gender" | "username" | "schoolMail"> & {
+          {
             age?: string;
             name: string;
             class?: string;
             avatar?: string;
             initials: string;
-          }
+          } & Pick<Schemas.Student.Record, "_id" | "gender" | "username" | "schoolMail">
         >;
+
+        type Data = Schemas.Staff.TeacherSchema;
+
+        type AllData = Data[];
       }
     }
 
@@ -191,6 +195,63 @@ declare global {
           name: string;
           avatar?: string;
           initials: string;
+        };
+      }
+    }
+
+    namespace Event {
+      namespace POST {
+        type Data = CreateData;
+
+        type Invitee = "all" | string[];
+        type Body = {
+          invitees?:
+            | Invitee
+            | Partial<{
+                parents: Invitee;
+                classes: Invitee;
+                students: Invitee;
+                staff: Invitee | Partial<{ teachers: Invitee /* Other Staff Types */ }>;
+              }>;
+        } & Omit<Schemas.Calendar.EventSchema, "invitees" | "__type" | "_id">;
+      }
+
+      namespace GET {
+        type AllData = Array<Pick<Schemas.Calendar.EventSchema, "_id" | "title" | "ends" | "start">>;
+      }
+    }
+
+    namespace Timetable {
+      namespace POST {
+        type Data = CreateData;
+
+        type Body = {
+          week: number;
+        } & Omit<Schemas.Calendar.TimetableSchema, "_id" | "__type" | "weeks">;
+      }
+
+      namespace GET {
+        type PopulatedPeriod = {
+          class?: Pick<Schemas.Class.Schema, "_id" | "name">;
+        } & Pick<Schemas.Calendar.TimetablePeriod, "end" | "start"> &
+          (
+            | {
+                _type: "subject";
+                subject: { _id: Schemas.ObjectId; name: string };
+                teacher: { _id: Schemas.ObjectId; avatar?: string } & Record<"username" | "initials" | "name", string>;
+              }
+            | {
+                _type: "idle";
+                title: string;
+                description?: string;
+              }
+          );
+
+        type Data = {
+          week: number;
+          term: Schemas.ObjectId;
+          class?: Schemas.ObjectId;
+          days: Array<Pick<Schemas.Calendar.TimetableDay, "day"> & Record<"periods", PopulatedPeriod[]>>;
         };
       }
     }

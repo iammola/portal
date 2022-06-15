@@ -23,4 +23,8 @@ export enum ModelNames {
   SETTINGS = "Settings",
 
   ATTENDANCE = "Attendance",
+
+  CALENDAR = "Calendar",
+  E_CALENDAR = "event",
+  T_CALENDAR = "timetable",
 }

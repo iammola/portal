@@ -1,25 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 const colors = require("@radix-ui/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
-
-/** @type {import("tailwindcss/tailwind-config").TailwindConfig } */
-module.exports = {
-  darkMode: "class",
-  content: ["src/**/*.{ts,tsx}"],
-  theme: {
-    colors: radixToTailwindConfig(),
-    screens: { xs: "475px", ...defaultTheme.screens },
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    extend: { fontFamily: { sans: ["Inter", ...defaultTheme.fontFamily.sans] } },
-  },
-};
-
-/**
- * @param {string} step
- * @param {string} color
- */
-function getStep(step, color) {
-  return step.replace(new RegExp(`${color}a?`, "i"), "");
-}
 
 function radixToTailwindConfig() {
   const initial = {
@@ -28,6 +9,8 @@ function radixToTailwindConfig() {
     current: "currentColor",
     transparent: "transparent",
   };
+
+  const getStep = (step, color) => String(step).replace(new RegExp(`${String(color)}a?`, "i"), "");
 
   return Object.entries(colors).reduce((acc, [color, colorSteps]) => {
     const arr = color.split(/(?=[A-Z])/);
@@ -45,3 +28,20 @@ function radixToTailwindConfig() {
     };
   }, initial);
 }
+
+/** @type {import("tailwindcss").Config } */
+const config = {
+  darkMode: "class",
+  content: ["src/**/*.{ts,tsx}"],
+  theme: {
+    colors: radixToTailwindConfig(),
+    screens: { xs: "475px", ...defaultTheme.screens },
+    extend: {
+      fontFamily: {
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+      },
+    },
+  },
+};
+
+module.exports = config;
