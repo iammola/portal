@@ -80,7 +80,14 @@ async function GET({ week, teacher, term, ...other }: GETQuery): API.HandlerResp
               ...days,
               [day]: [
                 ...(days[day] ?? []),
-                ...formatPeriods(periods, cur.class as unknown as Pick<Schemas.Class.Schema, "_id" | "name">),
+                ...formatPeriods(
+                  periods.filter(
+                    (period) =>
+                      period._type === "subject" &&
+                      (period.teacher as unknown as Schemas.Staff.Record)._id.equals(teacher)
+                  ),
+                  cur.class as unknown as Pick<Schemas.Class.Schema, "_id" | "name">
+                ),
               ],
             }),
             acc
