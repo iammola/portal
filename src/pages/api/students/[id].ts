@@ -1,23 +1,23 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { routeWrapper } from "api/server";
 import { USER_ID_COOKIE } from "utils/constants";
-import { StudentModel, TeacherStaffModel } from "db/models";
+import { StaffModel, StudentModel } from "db/models";
+import { routeWrapper, UnauthorizedError } from "api/server";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Student.DELETE.Data> = async (req) => {
-  if (req.method === "DELETE") return DELETE(req.query.id, req.cookies[USER_ID_COOKIE]);
+  if (req.method === "DELETE") {
+    const privileged = await StaffModel.hasPrivileges(req.cookies[USER_ID_COOKIE], ["u.stu"]);
+    if (!privileged) throw new UnauthorizedError("You are not privileged to delete a student");
+
+    return DELETE(req.query.id);
+  }
 
   return null;
 };
 
-async function DELETE(id: unknown, userId: string): API.HandlerResponse<API.Student.DELETE.Data> {
-  const teacher = await TeacherStaffModel.findById(userId, "privileges").lean(); // TODO: Check the teacher privileges
-
-  // TODO: Check Privileges
-  if (teacher == null) throw new Error("Unauthorized to complete this request");
-
+async function DELETE(id: unknown): API.HandlerResponse<API.Student.DELETE.Data> {
   const { deletedCount: count, acknowledged: success } = await StudentModel.deleteOne({ _id: id });
 
   return [{ data: { count, success }, message: ReasonPhrases.OK }, StatusCodes.OK];

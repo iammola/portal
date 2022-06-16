@@ -1,6 +1,7 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { routeWrapper } from "api/server";
+import { USER_ID_COOKIE } from "utils/constants";
+import { routeWrapper, UnauthorizedError } from "api/server";
 import {
   EventCalendarModel,
   ClassModel,
@@ -14,7 +15,12 @@ import {
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Event.POST.Data | API.Event.GET.AllData> = async (req) => {
-  if (req.method === "POST") return POST(req.body as API.Event.POST.Body);
+  if (req.method === "POST") {
+    const privileged = await StaffModel.hasPrivileges(req.cookies[USER_ID_COOKIE], ["s.cet"]);
+    if (!privileged) throw new UnauthorizedError("You are not privileged to create an event");
+
+    return POST(req.body as API.Event.POST.Body);
+  }
   if (req.method === "GET") return GET(req.query);
 
   return null;

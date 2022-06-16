@@ -1,13 +1,19 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { routeWrapper } from "api/server";
 import { createUser } from "db/utils";
+import { USER_ID_COOKIE } from "utils/constants";
+import { routeWrapper, UnauthorizedError } from "api/server";
 import { ClassModel, StudentModel, StaffModel, ParentModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Staff.POST.Data> = async (req) => {
-  if (req.method === "POST") return POST(req.body as API.Staff.POST.Body);
+  if (req.method === "POST") {
+    const privileged = await StaffModel.hasPrivileges(req.cookies[USER_ID_COOKIE], ["u.sta"]);
+    if (!privileged) throw new UnauthorizedError("You are not privileged to create a staff");
+
+    return POST(req.body as API.Staff.POST.Body);
+  }
 
   return null;
 };

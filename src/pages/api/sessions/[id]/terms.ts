@@ -2,14 +2,20 @@ import { startSession } from "mongoose";
 import { add, isAfter, lightFormat } from "date-fns";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { NotFoundError, routeWrapper } from "api/server";
-import { SessionModel, TermModel } from "db/models";
+import { USER_ID_COOKIE } from "utils/constants";
+import { SessionModel, StaffModel, TermModel } from "db/models";
+import { NotFoundError, routeWrapper, UnauthorizedError } from "api/server";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Session.POST.Terms.Data | API.Session.GET.Terms> = async (req) => {
   if (req.method === "GET") return GET(req.query.id);
-  if (req.method === "POST") return POST(req.query.id, req.body as API.Session.POST.Terms.Body);
+  if (req.method === "POST") {
+    const privileged = await StaffModel.hasPrivileges(req.cookies[USER_ID_COOKIE], ["s.sts"]);
+    if (!privileged) throw new UnauthorizedError("You are not privileged to create a session or term");
+
+    return POST(req.query.id, req.body as API.Session.POST.Terms.Body);
+  }
 
   return null;
 };
