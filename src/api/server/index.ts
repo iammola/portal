@@ -33,12 +33,6 @@ export async function routeWrapper<T extends object>(
     }
 
     if (methods.includes(req.method as API.METHOD)) {
-      try {
-        if (req.body && typeof req.body === "string") req.body = JSON.parse(req.body) as Record<string, unknown>;
-      } catch (error) {
-        console.error(error);
-      }
-
       data = (await routeHandler(req as never, res)) as API.RouteResponse<T>;
       if (data) data[0] = { ...data[0], success: true } as API.RouteResponse<T>[0];
     }

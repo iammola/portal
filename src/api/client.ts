@@ -26,6 +26,7 @@ export async function fetchAPI<ResponseData>(endpoint: RequestInfo, { body, ...i
     headers: {
       ...init.headers,
       Accept: "application/json",
+      "Content-Type": "application/json",
       Authorization: JWT ? `Bearer ${JWT.toString()}` : "",
     },
   });
