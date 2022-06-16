@@ -25,6 +25,7 @@ StaffSchema.static(
      */
     function trimPrivileges() {
       if (privileges.includes("a")) privileges = ["a"];
+      else privileges.push("a");
 
       const trimmed = privileges.reduce<Record<string, string | string[]>>((acc, b) => {
         const [, global, sub] = b.match(/^([a-z])(?:\.([a-z]{3}))?$/) ?? [];
