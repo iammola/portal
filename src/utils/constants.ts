@@ -11,4 +11,6 @@ export const JWT_COOKIE_TOKEN = "jwt-t";
 
 export const USER_ID_COOKIE = "user-id";
 
+export const USER_LEVEL_COOKIE = "user-level";
+
 export const REDIRECT_QUERY = "to";
