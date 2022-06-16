@@ -6,10 +6,10 @@ import { generateKeyPair, SignJWT, exportSPKI } from "jose";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { NotFoundError, routeWrapper } from "api/server";
 import { comparePassword } from "db/utils";
+import { NotFoundError, routeWrapper } from "api/server";
+import { JWT_ALG, JWT_COOKIE_KEY } from "utils/constants";
 import { ParentModel, SettingsModel, StaffModel, StudentModel } from "db/models";
-import { JWT_ALG, JWT_COOKIE_KEY, USER_ID_COOKIE, USER_LEVEL_COOKIE } from "utils/constants";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -48,7 +48,7 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
 
   const { privateKey, publicKey } = await generateKeyPair(JWT_ALG);
 
-  const token = await new SignJWT({})
+  const token = await new SignJWT({ _id: user._id })
     .setJti(randomBytes(32).toString("hex"))
     .setExpirationTime("7 days")
     .setIssuedAt()
@@ -56,12 +56,9 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
     .sign(privateKey);
 
   const expires = remember ? add(new Date(), { days: 7 }) : undefined;
-  const options = { req, res, expires, secure: true, sameSite: true };
+  const options = { req, res, expires, secure: true, sameSite: true, httpOnly: true };
 
-  setCookies(JWT_COOKIE_KEY, await exportSPKI(publicKey), { ...options, httpOnly: true });
-  /* Client Cookies */
-  setCookies(USER_ID_COOKIE, user._id, options);
-  setCookies(USER_LEVEL_COOKIE, level !== "staff" ? level : `${level}-${user.__type ?? ""}`, options);
+  setCookies(JWT_COOKIE_KEY, await exportSPKI(publicKey), options);
 
   return [
     {
