@@ -1,4 +1,3 @@
-import { getCookies } from "cookies-next";
 import { Fragment, useState } from "react";
 import { TrashIcon } from "@radix-ui/react-icons";
 import useSWR from "swr";
@@ -9,7 +8,6 @@ import { cx } from "utils";
 import { fetchAPI } from "api/client";
 import { Select } from "components/Form";
 import { useToast } from "components/Toast";
-import { USER_ID_COOKIE } from "utils/constants";
 
 import type { NextPage } from "next";
 
@@ -18,12 +16,11 @@ const Avatar = dynamic(() => import("components/Avatar"));
 const Students: NextPage = () => {
   const toasts = useToast();
 
-  const cookies = getCookies();
   const [filter, setFilter] = useState<"" | "all">("");
   const [group, setGroup] = useState<"none" | "class">("none");
 
   const { data: students, mutate } = useSWR<API.Result<API.Teacher.GET.Students>>(
-    `/api/teachers/${cookies[USER_ID_COOKIE]}/students?filter=${filter}`
+    `/api/teachers/me/students?filter=${filter}`
   );
 
   function groupData() {
