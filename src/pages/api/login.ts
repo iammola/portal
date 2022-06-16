@@ -19,7 +19,7 @@ async function getUser(level: string, username: string): Promise<User | null | u
       .lean({ virtuals: ["password"] });
 
   if (level === "staff")
-    return await StaffModel.findByUsername(username, "password __type")
+    return await StaffModel.findByUsername(username, "password __type privileges")
       .populate<Schemas.User.Virtuals>("password")
       .lean({ virtuals: ["password"] });
 
@@ -30,16 +30,17 @@ async function getUser(level: string, username: string): Promise<User | null | u
 }
 
 const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
-  // A specific type of privilege will be able to bypass this
-  const settings = await SettingsModel.findOne({}, "locked").lean();
-  if (settings?.locked !== false) throw new Error("The system is locked... Contact an Administrator");
-
   const { level, password, remember, username } = req.body as API.Auth.POST.Body;
   if (!username) throw new Error("Username required");
 
   const user = await getUser(level, username);
   if (user === null) throw new NotFoundError("User not found");
   if (user === undefined) throw new Error("Invalid user level");
+
+  if (!user.privileges?.includes("a")) {
+    const settings = await SettingsModel.findOne({}, "locked").lean();
+    if (settings?.locked !== false) throw new Error("The system is locked... Contact an Administrator");
+  }
 
   if (!comparePassword(password, user.password)) throw new Error("Invalid password");
 
@@ -69,6 +70,9 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
   ];
 };
 
-type User = { _id: Schemas.ObjectId; __type?: string } & Pick<Schemas.User.Virtuals, "password">;
+type User = {
+  _id: Schemas.ObjectId;
+  password: Schemas.User.Virtuals["password"];
+} & Partial<Pick<Schemas.Staff.Record, "__type" | "privileges">>;
 
 export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["POST"]);
