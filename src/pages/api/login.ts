@@ -48,7 +48,10 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
 
   const { privateKey, publicKey } = await generateKeyPair(JWT_ALG);
 
-  const token = await new SignJWT({ _id: user._id })
+  const token = await new SignJWT({
+    _id: user._id,
+    level: level !== "staff" ? level : `${level}-${user.__type ?? ""}`,
+  })
     .setJti(randomBytes(32).toString("hex"))
     .setExpirationTime("7 days")
     .setIssuedAt()
