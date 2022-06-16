@@ -37,6 +37,7 @@ export async function routeWrapper<T extends object>(
   try {
     if (req.url !== "/api/login") {
       const [type, token] = req.headers.authorization?.split(" ") ?? [];
+      if (type === undefined) throw new UnauthorizedError(ReasonPhrases.UNAUTHORIZED);
       if (type !== "Bearer") throw new UnauthorizedError("Invalid Authentication Type");
 
       const { _id, level } = await verifyAuth(req, token);
