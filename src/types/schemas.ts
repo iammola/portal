@@ -319,11 +319,16 @@ declare global {
 
       type TeacherSchema = Schema<ModelNames.T_STAFF>;
 
-      type Model = Mongoose.Model<TeacherSchema> & User.StaticMethods<TeacherSchema>;
+      type Model = Mongoose.Model<TeacherSchema> & StaticMethods & User.StaticMethods<TeacherSchema>;
       type Record<V extends boolean | keyof User.Virtuals = false> = ModelRecord<TeacherRecord, User.Virtuals, V>;
 
-      type TeacherModel = Mongoose.Model<TeacherSchema> & User.StaticMethods<TeacherSchema>;
+      type TeacherModel = Mongoose.Model<TeacherSchema> & StaticMethods & User.StaticMethods<TeacherSchema>;
       type TeacherRecord = ModelRecord<TeacherSchema>;
+
+      type StaticMethods = {
+        /** Check if a Staff has all the privileges specified */
+        hasPrivileges(staffId: string | ObjectId, privileges: Record["privileges"]): Promise<boolean>;
+      };
     }
 
     namespace Parent {
