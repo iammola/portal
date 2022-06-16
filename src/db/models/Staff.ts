@@ -4,7 +4,15 @@ import { ModelNames } from "db";
 import { createUserSchema } from "db/schema/User";
 import { TeacherStaffSchema } from "db/schema/Staff";
 
-const StaffSchema = createUserSchema<Schemas.Staff.Base>({}, { discriminatorKey: "__type" });
+const StaffSchema = createUserSchema<Omit<Schemas.Staff.Record, "__type">>(
+  {
+    privileges: {
+      type: [String],
+      enum: ["a", "u", "u.sta", "u.stu", "s", "s.cls", "s.sts", "s.cet"],
+    },
+  },
+  { discriminatorKey: "__type" }
+);
 
 export const StaffModel = (models[ModelNames.STAFF] ?? model(ModelNames.STAFF, StaffSchema)) as Schemas.Staff.Model;
 

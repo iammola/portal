@@ -293,9 +293,28 @@ declare global {
     namespace Staff {
       type Base = User.Base;
 
-      type Schema<T, P = never> = {
+      type Schema<T> = {
         __type: T;
-        privileges: P[];
+        /**
+         * This is an array of privileges that the user has.
+         *
+         * ### All Privileges
+         * - `a` - Access to all settings and other privileges
+         *
+         * ### User Privileges
+         * - `u` - Create, Modify and Delete all types of users
+         * - `u.sta` - Create, Modify and Delete all Staff
+         * - `u.stu` - Create, Modify and Delete all Students
+         *
+         * ### Structure Privileges
+         * This applies to classes, subjects, sessions, terms, calendar events and timetables
+         *
+         * - `s` - Create, Modify and Delete all types of structures
+         * - `s.cls` - Create, Modify and Delete classes and subjects
+         * - `s.sts` - Create, Modify and Delete sessions and terms
+         * - `s.cet` - Create, Modify and Delete calendar events and timetables (Class Teacher can still add timetables for their class)
+         */
+        privileges: Array<"a" | "u" | "u.sta" | "u.stu" | "s" | "s.cls" | "s.sts" | "s.cet">;
       } & Base;
 
       type TeacherSchema = Schema<ModelNames.T_STAFF>;
