@@ -5,7 +5,6 @@ import { setCookies } from "cookies-next";
 import { generateKeyPair, SignJWT, exportSPKI } from "jose";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { connect } from "db";
 import { comparePassword } from "db/utils";
 import { NotFoundError, routeWrapper } from "api/server";
 import { JWT_ALG, JWT_COOKIE_KEY } from "utils/constants";
@@ -31,8 +30,6 @@ async function getUser(level: string, username: string): Promise<User | null | u
 }
 
 const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
-  await connect();
-
   // A specific type of privilege will be able to bypass this
   const settings = await SettingsModel.findOne({}, "locked").lean();
   if (settings?.locked !== false) throw new Error("The system is locked... Contact an Administrator");

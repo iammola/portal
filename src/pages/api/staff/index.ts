@@ -1,6 +1,5 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { connect } from "db";
 import { routeWrapper } from "api/server";
 import { createUser } from "db/utils";
 import { ClassModel, StudentModel, StaffModel, ParentModel } from "db/models";
@@ -8,7 +7,6 @@ import { ClassModel, StudentModel, StaffModel, ParentModel } from "db/models";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Staff.POST.Data> = async (req) => {
-  await connect();
   if (req.method === "POST") return POST(req.body as API.Staff.POST.Body);
 
   return null;

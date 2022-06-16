@@ -1,6 +1,5 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { connect } from "db";
 import { routeWrapper } from "api/server";
 import { USER_ID_COOKIE } from "utils/constants";
 import { StudentModel, TeacherStaffModel } from "db/models";
@@ -8,8 +7,6 @@ import { StudentModel, TeacherStaffModel } from "db/models";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Student.DELETE.Data> = async (req) => {
-  await connect();
-
   if (req.method === "DELETE") return DELETE(req.query.id, req.cookies[USER_ID_COOKIE]);
 
   return null;

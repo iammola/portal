@@ -1,6 +1,5 @@
 import { ClientSession, startSession } from "mongoose";
 
-import { connect } from "db";
 import { AuthModel, ParentModel, StudentModel, TeacherStaffModel } from "db/models";
 
 /**
@@ -15,7 +14,6 @@ export async function createUser<T extends User, B extends { password: string }>
   body: B,
   sessionCallback?: (session: ClientSession, _id?: Schemas.ObjectId) => Promise<void>
 ) {
-  await connect();
   const session = await startSession();
   let res: Partial<API.CreateData<Record<"schoolMail", string>>> = {};
 

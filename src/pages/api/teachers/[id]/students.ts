@@ -1,14 +1,12 @@
 import { formatDistanceToNowStrict } from "date-fns";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { connect } from "db";
 import { routeWrapper } from "api/server";
 import { ClassModel, SubjectModel, StudentModel, TermModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Teacher.GET.Students> = async (req) => {
-  await connect();
   if (req.method === "GET") return GET(req.query.id, req.query.filter);
 
   return null;

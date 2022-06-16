@@ -1,14 +1,11 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { connect } from "db";
 import { routeWrapper } from "api/server";
 import { ClassModel, TeacherStaffModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Class.POST.Data | API.Class.GET.AllData> = async (req) => {
-  await connect();
-
   if (req.method === "POST") return POST(req.body as API.Class.POST.Body);
   if (req.method === "GET") return GET();
 

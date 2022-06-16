@@ -1,6 +1,5 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { connect } from "db";
 import { routeWrapper } from "api/server";
 import {
   EventCalendarModel,
@@ -15,7 +14,6 @@ import {
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Event.POST.Data | API.Event.GET.AllData> = async (req) => {
-  await connect();
   if (req.method === "POST") return POST(req.body as API.Event.POST.Body);
   if (req.method === "GET") return GET(req.query);
 

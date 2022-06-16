@@ -1,6 +1,5 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { connect } from "db";
 import { TeacherStaffModel } from "db/models";
 import { USER_ID_COOKIE } from "utils/constants";
 import { NotFoundError, routeWrapper } from "api/server";
@@ -8,8 +7,6 @@ import { NotFoundError, routeWrapper } from "api/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Teacher.GET.Data> = async (req) => {
-  await connect();
-
   if (req.method === "GET") return GET(req.query.id as string, req.cookies[USER_ID_COOKIE]);
 
   return null;

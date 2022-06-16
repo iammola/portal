@@ -2,6 +2,7 @@ import { Error } from "mongoose";
 import { setCookies } from "cookies-next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
+import { connect } from "db";
 import { USER_ID_COOKIE } from "utils/constants";
 
 import { verifyAuth } from "./auth";
@@ -39,8 +40,9 @@ export async function routeWrapper<T extends object>(
     }
 
     if (methods.includes(req.method as API.METHOD)) {
-      data = (await routeHandler(req as never, res)) as API.RouteResponse<T>;
-      if (data) data[0] = { ...data[0], success: true } as API.RouteResponse<T>[0];
+      await connect();
+      data = (await routeHandler(req as never, res)) as API.RouteResponse<T> | null;
+      if (data !== null) data[0].success = true;
     }
   } catch (error: unknown) {
     let [message, code] = [ReasonPhrases.BAD_REQUEST, StatusCodes.BAD_REQUEST];

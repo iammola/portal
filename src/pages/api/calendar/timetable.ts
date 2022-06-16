@@ -1,7 +1,6 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { compareAsc, differenceInCalendarWeeks, differenceInMinutes, set } from "date-fns";
 
-import { connect } from "db";
 import { NotFoundError, routeWrapper } from "api/server";
 import {
   ClassModel,
@@ -16,8 +15,6 @@ import type { Day } from "date-fns";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Timetable.POST.Data | API.Timetable.GET.Data> = async (req) => {
-  await connect();
-
   if (req.method === "GET") return GET(req.query as GETQuery);
   if (req.method === "POST") return POST(req.body as API.Timetable.POST.Body);
 
