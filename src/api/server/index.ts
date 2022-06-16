@@ -1,5 +1,8 @@
 import { Error } from "mongoose";
+import { setCookies } from "cookies-next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
+
+import { USER_ID_COOKIE } from "utils/constants";
 
 import { verifyAuth } from "./auth";
 import { NotFoundError, UnauthorizedError } from "./error";
@@ -29,7 +32,10 @@ export async function routeWrapper<T extends object>(
       const [type, token] = req.headers.authorization?.split(" ") ?? [];
       if (type !== "Bearer") throw new UnauthorizedError("Invalid Authentication Type");
 
-      await verifyAuth(req, token);
+      const { _id } = await verifyAuth(req, token);
+      const options = { req, res, secure: true, sameSite: true };
+
+      setCookies(USER_ID_COOKIE, _id, options);
     }
 
     if (methods.includes(req.method as API.METHOD)) {

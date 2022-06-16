@@ -10,8 +10,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 const handler: API.Handler<API.Student.DELETE.Data> = async (req) => {
   await connect();
 
-  const userId = req.cookies[USER_ID_COOKIE];
-  if (req.method === "DELETE") return DELETE(req.query.id, userId);
+  if (req.method === "DELETE") return DELETE(req.query.id, req.cookies[USER_ID_COOKIE]);
 
   return null;
 };
