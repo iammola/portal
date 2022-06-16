@@ -291,6 +291,7 @@ declare global {
     }
 
     namespace Staff {
+      type Privilege = "a" | "u" | "u.sta" | "u.stu" | "s" | "s.cls" | "s.sts" | "s.cet";
       type Base = User.Base;
 
       type Schema<T> = {
@@ -314,7 +315,7 @@ declare global {
          * - `s.sts` - Create, Modify and Delete sessions and terms
          * - `s.cet` - Create, Modify and Delete calendar events and timetables (Class Teacher can still add timetables for their class)
          */
-        privileges: Array<"a" | "u" | "u.sta" | "u.stu" | "s" | "s.cls" | "s.sts" | "s.cet">;
+        privileges: Privilege[];
       } & Base;
 
       type TeacherSchema = Schema<ModelNames.T_STAFF>;
@@ -347,7 +348,7 @@ declare global {
          * - `s.sts` - Create, Modify and Delete sessions and terms
          * - `s.cet` - Create, Modify and Delete calendar events and timetables (Class Teacher can still add timetables for their class)
          */
-        hasPrivileges(staffId: string | ObjectId, privileges: Record["privileges"]): Promise<boolean>;
+        hasPrivileges(staffId: string | ObjectId, privileges: [Privilege, ...Privilege[]]): Promise<boolean>;
       };
     }
 
