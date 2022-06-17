@@ -23,7 +23,7 @@ export { NotFoundError, UnauthorizedError };
  * @param {NextApiResponse} res - NextApiResponse - The response object from Next.js
  * @param routeHandler - The function that will be called when the route is hit.
  * @param {API.METHOD[]} methods - An array of HTTP methods that the route supports.
- * @param {AllowedPrivileges} privileges - An object of user and staff privileges that are allowed to access the route.
+ * @param {AllowedPrivileges} privileges - An object of user levels and staff privileges that are allowed to access the route.
  */
 export async function routeWrapper<T extends object>(
   req: NextApiRequest,
@@ -45,7 +45,8 @@ export async function routeWrapper<T extends object>(
       if (privileges) {
         const { user, staff } = privileges;
 
-        if (!user.includes(level as Privilege)) throw new UnauthorizedError("Unable to access this resource");
+        if (!user.find((t) => (level as Schemas.User.Level).startsWith(t)))
+          throw new UnauthorizedError("Unable to access this resource");
 
         if (staff) {
           const user = await StaffModel.findById(_id, "privileges").lean();
@@ -93,10 +94,8 @@ export async function routeWrapper<T extends object>(
     );
 }
 
-type Privilege = "student" | "parent" | "staff" | `staff-${Schemas.Staff.Record["__type"]}`;
-
 type AllowedPrivileges = {
-  user: Privilege[];
+  user: Schemas.User.TopLevel[];
   staff?: Schemas.Staff.Record["privileges"];
 };
 

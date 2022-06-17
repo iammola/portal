@@ -192,7 +192,10 @@ declare global {
     }
 
     namespace User {
-      type Type = "parent" | "teacher" | "student";
+      type Level = TopLevel | SubLevel;
+
+      type TopLevel = "student" | "parent" | "staff";
+      type SubLevel = `staff-${Schemas.Staff.Record["__type"]}`;
 
       type Name = {
         title?: string;

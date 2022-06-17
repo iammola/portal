@@ -9,7 +9,7 @@ import { AuthModel, ParentModel, StudentModel, TeacherStaffModel } from "db/mode
  * @param [sessionCallback] - This is a function that will be called after the user is created. It will be passed the session and the user's _id and is useful if you want to do something else in the same transaction.
  * @returns a Promise that resolves to an object with the keys _id and schoolMail.
  */
-export async function createUser<T extends User, B extends { password: string }>(
+export async function createUser<T extends Exclude<Schemas.User.Level, "staff">, B extends { password: string }>(
   type: T,
   body: B,
   sessionCallback?: (session: ClientSession, _id?: Schemas.ObjectId) => Promise<void>
@@ -45,5 +45,3 @@ export function generateSchoolMail(username: string) {
   const DOMAIN = "fake.io";
   return `${username}@${DOMAIN}`;
 }
-
-type User = "parent" | "student" | "staff-teacher";

@@ -43,10 +43,10 @@ declare global {
     namespace Auth {
       namespace POST {
         type Body = {
-          level: string;
           password: string;
           username: string;
           remember: boolean;
+          level: Schemas.User.TopLevel;
         };
 
         type Data = {

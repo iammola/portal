@@ -15,7 +15,7 @@ const Login: NextPage = () => {
   const toasts = useToast();
   const router = useRouter();
 
-  const [levels] = useState(() => [
+  const [levels] = useState<Array<{ value: Schemas.User.TopLevel; emoji: string }>>(() => [
     { value: "student", emoji: "👨‍🎓" },
     { value: "parent", emoji: "👨‍👩‍👦" },
     { value: "staff", emoji: "👨‍🏫" },
@@ -97,7 +97,7 @@ const Login: NextPage = () => {
             <Password required value={password} onValueChange={setPassword} autoComplete="current-password">
               Password
             </Password>
-            <Select required label="Access Level" value={level} onValueChange={setLevel}>
+            <Select required label="Access Level" value={level} onValueChange={(l) => setLevel(l as typeof level)}>
               {levels.map(({ emoji, value }) => (
                 <Select.Item key={value} value={value}>
                   <div className="flex items-center justify-start gap-3 capitalize">

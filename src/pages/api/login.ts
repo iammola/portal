@@ -12,7 +12,7 @@ import { ParentModel, SettingsModel, StaffModel, StudentModel } from "db/models"
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function getUser(level: string, username: string): Promise<User | null | undefined> {
+async function getUser(level: Schemas.User.TopLevel, username: string): Promise<User | null | undefined> {
   if (level === "student")
     return await StudentModel.findByUsername(username, "password")
       .populate<Schemas.User.Virtuals>("password")
