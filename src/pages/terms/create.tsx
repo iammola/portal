@@ -5,12 +5,13 @@ import useSWR from "swr";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
-import { useToast } from "components/Toast";
 import { fetchAPI } from "api/client";
+import { verifyLevel } from "utils/pages";
+import { useToast } from "components/Toast";
 import { LoadingIcon } from "components/Icons";
 import { Date as FormDate, Input, Select } from "components/Form";
 
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 
 const CreateSession = dynamic(async () => {
   const { CreateSession } = await import("components/Pages/Term");
@@ -174,6 +175,11 @@ const CreateTerm: NextPage = () => {
       </div>
     </Fragment>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const allowed = await verifyLevel(req, "staff");
+  return allowed ? { props: {} } : { notFound: true };
 };
 
 export default CreateTerm;

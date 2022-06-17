@@ -6,6 +6,7 @@ import { add, differenceInCalendarWeeks, differenceInMinutes, eachHourOfInterval
 import { cx } from "utils";
 import { connect } from "db";
 import { Avatar } from "components";
+import { verifyLevel } from "utils/pages";
 import { SettingsModel } from "db/models";
 import { Select } from "components/Form/Select";
 
@@ -315,7 +316,10 @@ const Timetable: NextPage<PageProps> = ({ activeDays, hours }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
+export const getServerSideProps: GetServerSideProps<PageProps> = async ({ req }) => {
+  const allowed = await verifyLevel(req, ["staff", "student"]);
+  if (!allowed) return { notFound: true };
+
   await connect();
   const settings = await SettingsModel.findOne({}, "activeSchoolDays activeSchoolTime").lean();
 
