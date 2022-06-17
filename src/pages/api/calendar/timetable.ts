@@ -1,12 +1,13 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { compareAsc, differenceInCalendarWeeks, differenceInMinutes, set } from "date-fns";
 
-import { connect } from "db";
-import { NotFoundError, routeWrapper } from "api/server";
+import { USER_ID_COOKIE } from "utils/constants";
+import { NotFoundError, routeWrapper, UnauthorizedError } from "api/server";
 import {
   ClassModel,
   SettingsModel,
   SubjectModel,
+  StaffModel,
   TeacherStaffModel,
   TermModel,
   TimetableCalendarModel,
@@ -16,10 +17,13 @@ import type { Day } from "date-fns";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Timetable.POST.Data | API.Timetable.GET.Data> = async (req) => {
-  await connect();
-
   if (req.method === "GET") return GET(req.query as GETQuery);
-  if (req.method === "POST") return POST(req.body as API.Timetable.POST.Body);
+  if (req.method === "POST") {
+    const privileged = await StaffModel.hasPrivileges(req.cookies[USER_ID_COOKIE], ["s.cet"]);
+    if (!privileged) throw new UnauthorizedError("You are not privileged to create a timetable");
+
+    return POST(req.body as API.Timetable.POST.Body);
+  }
 
   return null;
 };

@@ -1,15 +1,5 @@
 {
   "parent": [],
-  "student": [
-    {
-      "href": "/",
-      "title": "My Results"
-    }
-  ],
-  "teacher": [
-    {
-      "href": "/students",
-      "title": "Students"
-    }
-  ]
+  "student": [],
+  "staff-teacher": []
 }

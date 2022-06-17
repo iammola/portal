@@ -1,19 +1,20 @@
 import { Fragment, useState } from "react";
-import { ReloadIcon } from "@radix-ui/react-icons";
+import { Cross2Icon, PlusIcon, ReloadIcon } from "@radix-ui/react-icons";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
-import { useToast } from "components/Toast";
 import { fetchAPI } from "api/client";
+import { verifyLevel } from "utils/pages";
+import { useToast } from "components/Toast";
 import { LoadingIcon } from "components/Icons";
-import { Date, Input, Password, Phone, RadioGroup, Select, Textarea } from "components/Form";
+import { Date, Input, Password, Phone, Select, Textarea, Users } from "components/Form";
 
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 
-const ClassTeacher = dynamic(
+const AcademicRecord = dynamic(
   async () => {
-    const { ClassTeacher } = await import("components/Pages/Teacher");
-    return ClassTeacher;
+    const { AcademicRecord } = await import("components/Pages/Student");
+    return AcademicRecord;
   },
   {
     loading: ({ error, retry }) =>
@@ -28,43 +29,79 @@ const ClassTeacher = dynamic(
           onClick={retry}
           className="flex items-center justify-center gap-2 text-gray-11 focus:outline-none dark:text-gray-dark-11"
         >
-          <ReloadIcon />
           Try again
+          <ReloadIcon />
         </button>
       ),
   }
 );
 
-const CreateTeacher: NextPage = () => {
+const CreateStudent: NextPage = () => {
   const toasts = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
-  const [teacherGenders] = useState(() => ["Male", "Female"]);
-  const [teacherTitles] = useState(() => ["Mr.", "Ms.", "Mrs.", "Dr."]);
+  const [studentTitles] = useState(() => ["Master", "Miss"]);
+  const [studentGenders] = useState(() => ["Male", "Female"]);
+  const [studentGuardians] = useState(() => ["father", "mother", "other"]);
 
   const [dob, setDob] = useState<Date>();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [classes, setClasses] = useState<string[]>();
-  const [gender, setGender] = useState(teacherGenders[0]);
-  const [__type, setType] = useState("teacher" as Schemas.Staff.Record["__type"]);
-  const [name, setName] = useState<Schemas.Staff.Base["name"]>({
+  const [gender, setGender] = useState(studentGenders[0]);
+  const [name, setName] = useState<Schemas.Student.Schema["name"]>({
     full: "",
     last: "",
     first: "",
     initials: "",
   });
-  const [contact, setContact] = useState<Schemas.Staff.Base["contact"]>({ email: { primary: "" } });
+  const [contact, setContact] = useState<Schemas.Student.Schema["contact"]>({ email: { primary: "" } });
+  const [guardians, setGuardians] = useState<Array<Record<"guardian" | "relation", string>>>([]);
+  const [academic, setAcademic] = useState<Array<Record<"term" | "class", string> & { subjects: string[] }>>([]);
+
+  function updateGuardians(action: "add"): void;
+  function updateGuardians(action: "remove", idx: number): void;
+  function updateGuardians(action: "update", idx: number, update: Utils.OneKey<typeof guardians[0]>): void;
+  function updateGuardians(
+    action: "add" | "update" | "remove",
+    idx?: number,
+    update?: Utils.OneKey<typeof guardians[0]>
+  ) {
+    if (action === "add") setGuardians((guardians) => [...guardians, { guardian: "", relation: studentGuardians[0] }]);
+    if (action === "remove") setGuardians((guardians) => guardians.filter((_, guardianIdx) => guardianIdx !== idx));
+    if (action === "update")
+      setGuardians((guardians) =>
+        guardians.map((guardian, guardianIdx) => Object.assign(guardian, guardianIdx === idx && update))
+      );
+  }
+
+  function updateAcademic(action: "add"): void;
+  function updateAcademic(action: "remove", idx: number): void;
+  function updateAcademic(action: "update", idx: number, update: Utils.OneKey<typeof academic[0]>): void;
+  function updateAcademic(
+    action: "add" | "remove" | "update",
+    idx?: number,
+    update?: Utils.OneKey<typeof academic[0]>
+  ) {
+    if (action === "add") setAcademic((academic) => [...academic, { term: "", class: "", subjects: [] }]);
+    if (action === "remove") setAcademic((academic) => academic.filter((_, academicIdx) => academicIdx !== idx));
+    if (action === "update")
+      setAcademic((academic) =>
+        academic.map((academic, academicIdx) => Object.assign(academic, academicIdx === idx && update))
+      );
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     let toastID: number;
 
+    if (dob == undefined) return (e.target as HTMLFormElement).reportValidity();
+
     try {
       setIsLoading(true);
       toastID = toasts.add({ kind: "loading", description: "Processing request..." });
-      const body = { __type, name, contact, dob, username, password, classes, images: {}, privileges: [] };
-      const result = await fetchAPI<API.Staff.POST.Data, API.Staff.POST.Body>("/api/staff", {
+
+      const body = { name, contact, dob, username, password, academic, guardians, images: {} };
+      const result = await fetchAPI<API.Student.POST.Data, API.Student.POST.Body>("/api/students", {
         method: "POST",
         body: { ...body, gender: gender[0] },
       });
@@ -77,8 +114,10 @@ const CreateTeacher: NextPage = () => {
 
         setUsername("");
         setPassword("");
+        setAcademic([]);
+        setGuardians([]);
         setDob(undefined);
-        setGender(teacherGenders[0]);
+        setGender(studentGenders[0]);
         setName({ full: "", last: "", first: "", initials: "" });
         setContact({ email: { primary: "" }, phone: { primary: "" }, address: { primary: "" } });
       } else throw result.error;
@@ -92,10 +131,10 @@ const CreateTeacher: NextPage = () => {
   return (
     <Fragment>
       <Head>
-        <title>Create a Teacher Account &middot; Portal</title>
+        <title>Create a Student Account &middot; Portal</title>
       </Head>
       <div className="mx-auto flex w-full grow flex-col items-center justify-center gap-8 py-10 px-8 xl:max-w-[75rem]">
-        <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Staff Account</h3>
+        <h3 className="text-2xl font-bold text-gray-12 dark:text-gray-dark-12">Create a Student Account</h3>
         <form
           onSubmit={(e) => void handleSubmit(e)}
           className="flex w-full grow flex-col items-center justify-start gap-7"
@@ -114,7 +153,7 @@ const CreateTeacher: NextPage = () => {
                   value={name.title}
                   onValueChange={(title) => setName((name) => ({ ...name, title }))}
                 >
-                  {teacherTitles.map((title) => (
+                  {studentTitles.map((title) => (
                     <Select.Item key={title} value={title}>
                       {title}
                     </Select.Item>
@@ -145,11 +184,11 @@ const CreateTeacher: NextPage = () => {
                 </Input>
               </div>
               <div className="grid gap-6 xs:grid-cols-[max-content_minmax(max-content,200px)]">
-                <Date value={dob} onValueChange={setDob}>
+                <Date required value={dob} onValueChange={setDob}>
                   Date of Birth
                 </Date>
                 <Select required label="Gender" value={gender} onValueChange={setGender}>
-                  {teacherGenders.map((gender) => (
+                  {studentGenders.map((gender) => (
                     <Select.Item key={gender} value={gender}>
                       {gender}
                     </Select.Item>
@@ -227,37 +266,78 @@ const CreateTeacher: NextPage = () => {
           </section>
           <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
             <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
-              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Staff Type</h3>
+              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Guardians</h3>
               <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
             </div>
             <div className="w-full min-w-0 space-y-7">
-              <RadioGroup value={__type} onValueChange={(v) => setType(v as typeof __type)}>
-                <RadioGroup.Item value="teacher">Teacher</RadioGroup.Item>
-              </RadioGroup>
-            </div>
-          </section>
-
-          {__type === "teacher" && (
-            <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
-              <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
-                <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Classes</h3>
-                <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
-              </div>
-              <div className="w-full min-w-0 space-y-7">
-                {classes === undefined ? (
+              {guardians.map((item, idx) => (
+                <div key={idx} className="grid grid-cols-[minmax(0,1fr),max-content] gap-3 md:gap-6">
+                  <div className="grid min-w-0 grid-cols-none grid-rows-2 gap-3 md:grid-cols-2 md:grid-rows-none md:gap-6">
+                    <Select
+                      required
+                      label="Guardian"
+                      value={item.relation}
+                      onValueChange={(relation) => updateGuardians("update", idx, { relation })}
+                    >
+                      {studentGuardians.map((relation) => (
+                        <Select.Item key={relation} value={relation}>
+                          {relation}
+                        </Select.Item>
+                      ))}
+                    </Select>
+                    <Users
+                      required
+                      value={item.guardian}
+                      onValueChange={(guardian) => updateGuardians("update", idx, { guardian })}
+                    >
+                      Guardian
+                    </Users>
+                  </div>
                   <button
                     type="button"
-                    onClick={() => setClasses([])}
-                    className="inline-flex w-full min-w-max max-w-[250px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
+                    onClick={() => updateGuardians("remove", idx)}
+                    className="shrink-0 self-center rounded-full p-1 hover:bg-gray-4 focus:outline-none dark:hover:bg-gray-dark-4 md:p-2 "
                   >
-                    Load Classes
+                    <Cross2Icon className="text-gray-12 dark:text-gray-dark-12" />
                   </button>
-                ) : (
-                  <ClassTeacher selected={classes} updateSelected={setClasses} />
-                )}
-              </div>
-            </section>
-          )}
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => updateGuardians("add")}
+                className="inline-flex w-full max-w-[175px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
+              >
+                <PlusIcon />
+                Add Guardian
+              </button>
+            </div>
+          </section>
+          <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
+            <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
+              <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Academic History</h3>
+              <p className="text-sm tracking-wide text-gray-11 dark:text-gray-dark-11">Description</p>
+            </div>
+            <div className="w-full min-w-0 space-y-7">
+              {academic.map((item, idx) => (
+                <div key={idx} className="grid grid-rows-[minmax(0,1fr),max-content] gap-6 md:gap-3">
+                  <AcademicRecord
+                    {...item}
+                    updateTerm={(term) => updateAcademic("update", idx, { term })}
+                    updateClass={(value) => updateAcademic("update", idx, { class: value })}
+                    updateSubjects={(subjects) => updateAcademic("update", idx, { subjects })}
+                  />
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => updateAcademic("add")}
+                className="inline-flex w-full min-w-max max-w-[250px] items-center justify-center gap-3 rounded-lg bg-black-a-9 p-3 text-white shadow-lg hover:bg-black-a-10 focus:outline-none disabled:text-white-a-12 dark:text-gray-dark-12 dark:disabled:text-gray-dark-11"
+              >
+                <PlusIcon className="shrink-0" />
+                Add Academic History
+              </button>
+            </div>
+          </section>
           <section className="grid w-full grid-cols-none grid-rows-[max-content_minmax(0,1fr)] gap-6 rounded-lg bg-white p-6 shadow dark:bg-gray-dark-2 md:grid-cols-[max-content_minmax(0,1fr)] md:grid-rows-none">
             <div className="flex w-[12.5rem] min-w-0 flex-col items-start justify-start gap-2">
               <h3 className="text-lg font-medium leading-none text-gray-12 dark:text-gray-dark-12">Profile</h3>
@@ -287,7 +367,7 @@ const CreateTeacher: NextPage = () => {
                 Processing...
               </Fragment>
             ) : (
-              "Create Staff"
+              "Create Student"
             )}
           </button>
         </form>
@@ -296,4 +376,9 @@ const CreateTeacher: NextPage = () => {
   );
 };
 
-export default CreateTeacher;
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const allowed = await verifyLevel(req, "staff");
+  return allowed ? { props: {} } : { notFound: true };
+};
+
+export default CreateStudent;

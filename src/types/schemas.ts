@@ -192,7 +192,10 @@ declare global {
     }
 
     namespace User {
-      type Type = "parent" | "teacher" | "student";
+      type Level = TopLevel | SubLevel;
+
+      type TopLevel = "student" | "parent" | "staff";
+      type SubLevel = `staff-${Schemas.Staff.Record["__type"]}`;
 
       type Name = {
         title?: string;
@@ -291,20 +294,65 @@ declare global {
     }
 
     namespace Staff {
+      type Privilege = "a" | "u" | "u.sta" | "u.stu" | "s" | "s.cls" | "s.sts" | "s.cet";
       type Base = User.Base;
 
-      type Schema<T, P = never> = {
+      type Schema<T> = {
         __type: T;
-        privileges: P[];
+        /**
+         * This is an array of privileges that the user has.
+         *
+         * ### All Privileges
+         * - `a` - Access to all settings and other privileges
+         *
+         * ### User Privileges
+         * - `u` - Create, Modify and Delete all types of users
+         * - `u.sta` - Create, Modify and Delete all Staff
+         * - `u.stu` - Create, Modify and Delete all Students
+         *
+         * ### Structure Privileges
+         * This applies to classes, subjects, sessions, terms, calendar events and timetables
+         *
+         * - `s` - Create, Modify and Delete all types of structures
+         * - `s.cls` - Create, Modify and Delete classes and subjects
+         * - `s.sts` - Create, Modify and Delete sessions and terms
+         * - `s.cet` - Create, Modify and Delete calendar events and timetables (Class Teacher can still add timetables for their class)
+         */
+        privileges: Privilege[];
       } & Base;
 
       type TeacherSchema = Schema<ModelNames.T_STAFF>;
 
-      type Model = Mongoose.Model<TeacherSchema> & User.StaticMethods<TeacherSchema>;
+      type Model = Mongoose.Model<TeacherSchema> & StaticMethods & User.StaticMethods<TeacherSchema>;
       type Record<V extends boolean | keyof User.Virtuals = false> = ModelRecord<TeacherRecord, User.Virtuals, V>;
 
-      type TeacherModel = Mongoose.Model<TeacherSchema> & User.StaticMethods<TeacherSchema>;
+      type TeacherModel = Mongoose.Model<TeacherSchema> & StaticMethods & User.StaticMethods<TeacherSchema>;
       type TeacherRecord = ModelRecord<TeacherSchema>;
+
+      type StaticMethods = {
+        /**
+         * Check if a Staff has all the privileges specified
+         * @param staffId Staff ID
+         * @param privileges This is an array of privileges that the user has.
+         *
+         * ### All Privileges
+         * - `a` - Access to all settings and other privileges
+         *
+         * ### User Privileges
+         * - `u` - Create, Modify and Delete all types of users
+         * - `u.sta` - Create, Modify and Delete all Staff
+         * - `u.stu` - Create, Modify and Delete all Students
+         *
+         * ### Structure Privileges
+         * This applies to classes, subjects, sessions, terms, calendar events and timetables
+         *
+         * - `s` - Create, Modify and Delete all types of structures
+         * - `s.cls` - Create, Modify and Delete classes and subjects
+         * - `s.sts` - Create, Modify and Delete sessions and terms
+         * - `s.cet` - Create, Modify and Delete calendar events and timetables (Class Teacher can still add timetables for their class)
+         */
+        hasPrivileges(staffId: string | ObjectId, privileges: [Privilege, ...Privilege[]]): Promise<boolean>;
+      };
     }
 
     namespace Parent {

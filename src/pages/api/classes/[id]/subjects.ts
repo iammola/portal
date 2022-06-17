@@ -1,15 +1,26 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { connect } from "db";
-import { routeWrapper } from "api/server";
-import { BaseSubjectModel, ClassModel, GroupSubjectModel, SubjectModel, TeacherStaffModel } from "db/models";
+import { USER_ID_COOKIE } from "utils/constants";
+import { routeWrapper, UnauthorizedError } from "api/server";
+import {
+  BaseSubjectModel,
+  ClassModel,
+  GroupSubjectModel,
+  SubjectModel,
+  StaffModel,
+  TeacherStaffModel,
+} from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Class.GET.Subjects | API.Class.POST.Subjects.Data> = async (req) => {
-  await connect();
   if (req.method === "GET") return GET(req.query.id);
-  if (req.method === "POST") return POST(req.query.id, req.body as API.Class.POST.Subjects.Body);
+  if (req.method === "POST") {
+    const privileged = await StaffModel.hasPrivileges(req.cookies[USER_ID_COOKIE], ["s.cls"]);
+    if (!privileged) throw new UnauthorizedError("You are not privileged to create a subject");
+
+    return POST(req.query.id, req.body as API.Class.POST.Subjects.Body);
+  }
 
   return null;
 };

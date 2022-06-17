@@ -7,13 +7,13 @@ import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cx } from "utils";
 import { USER_LEVEL_COOKIE } from "utils/constants";
 
-import navigation from "./navigation.json";
+const { default: navigation } = await import("./navigation.json");
 
 const Menu: React.FC = () => {
   const list = useMemo<MenuLink[] | undefined>(() => {
     const level = getCookie(USER_LEVEL_COOKIE);
-    if (!level) return;
 
+    if (!level) return;
     return navigation[level as keyof typeof navigation];
   }, []);
 

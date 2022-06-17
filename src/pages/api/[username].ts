@@ -1,14 +1,11 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { connect } from "db";
 import { NotFoundError, routeWrapper } from "api/server";
 import { ParentModel, StudentModel, StaffModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.User.GET.Data> = async (req) => {
-  await connect();
-
   const { username } = req.query;
 
   if (req.method === "GET" && typeof username === "string" && /^@/.test(username)) return GETUser(username);

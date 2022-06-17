@@ -5,22 +5,21 @@ import { setCookies } from "cookies-next";
 import { generateKeyPair, SignJWT, exportSPKI } from "jose";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { connect } from "db";
-import { NotFoundError, routeWrapper } from "api/server";
 import { comparePassword } from "db/utils";
+import { NotFoundError, routeWrapper } from "api/server";
+import { JWT_ALG, JWT_COOKIE_KEY } from "utils/constants";
 import { ParentModel, SettingsModel, StaffModel, StudentModel } from "db/models";
-import { JWT_ALG, JWT_COOKIE_KEY, USER_ID_COOKIE, USER_LEVEL_COOKIE } from "utils/constants";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
-async function getUser(level: string, username: string): Promise<User | null | undefined> {
+async function getUser(level: Schemas.User.TopLevel, username: string): Promise<User | null | undefined> {
   if (level === "student")
     return await StudentModel.findByUsername(username, "password")
       .populate<Schemas.User.Virtuals>("password")
       .lean({ virtuals: ["password"] });
 
   if (level === "staff")
-    return await StaffModel.findByUsername(username, "password __type")
+    return await StaffModel.findByUsername(username, "password __type privileges")
       .populate<Schemas.User.Virtuals>("password")
       .lean({ virtuals: ["password"] });
 
@@ -31,12 +30,6 @@ async function getUser(level: string, username: string): Promise<User | null | u
 }
 
 const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
-  await connect();
-
-  // A specific type of privilege will be able to bypass this
-  const settings = await SettingsModel.findOne({}, "locked").lean();
-  if (settings?.locked !== false) throw new Error("The system is locked... Contact an Administrator");
-
   const { level, password, remember, username } = req.body as API.Auth.POST.Body;
   if (!username) throw new Error("Username required");
 
@@ -44,11 +37,19 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
   if (user === null) throw new NotFoundError("User not found");
   if (user === undefined) throw new Error("Invalid user level");
 
+  if (!user.privileges?.includes("a")) {
+    const settings = await SettingsModel.findOne({}, "locked").lean();
+    if (settings?.locked !== false) throw new Error("The system is locked... Contact an Administrator");
+  }
+
   if (!comparePassword(password, user.password)) throw new Error("Invalid password");
 
   const { privateKey, publicKey } = await generateKeyPair(JWT_ALG);
 
-  const token = await new SignJWT({})
+  const token = await new SignJWT({
+    _id: user._id,
+    level: level !== "staff" ? level : `${level}-${user.__type ?? ""}`,
+  })
     .setJti(randomBytes(32).toString("hex"))
     .setExpirationTime("7 days")
     .setIssuedAt()
@@ -56,12 +57,9 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
     .sign(privateKey);
 
   const expires = remember ? add(new Date(), { days: 7 }) : undefined;
-  const options = { req, res, expires, secure: true, sameSite: true };
+  const options = { req, res, expires, secure: true, sameSite: true, httpOnly: true };
 
-  setCookies(JWT_COOKIE_KEY, await exportSPKI(publicKey), { ...options, httpOnly: true });
-  /* Client Cookies */
-  setCookies(USER_ID_COOKIE, user._id, options);
-  setCookies(USER_LEVEL_COOKIE, level !== "staff" ? level : `${level}-${user.__type ?? ""}`, options);
+  setCookies(JWT_COOKIE_KEY, await exportSPKI(publicKey), options);
 
   return [
     {
@@ -72,6 +70,9 @@ const handler: API.Handler<API.Auth.POST.Data> = async (req, res) => {
   ];
 };
 
-type User = { _id: Schemas.ObjectId; __type?: string } & Pick<Schemas.User.Virtuals, "password">;
+type User = {
+  _id: Schemas.ObjectId;
+  password: Schemas.User.Virtuals["password"];
+} & Partial<Pick<Schemas.Staff.Record, "__type" | "privileges">>;
 
 export default async (req: NextApiRequest, res: NextApiResponse) => routeWrapper(req, res, handler, ["POST"]);

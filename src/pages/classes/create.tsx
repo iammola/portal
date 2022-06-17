@@ -1,12 +1,13 @@
 import Head from "next/head";
 import { Fragment, useState } from "react";
 
-import { useToast } from "components/Toast";
 import { fetchAPI } from "api/client";
+import { verifyLevel } from "utils/pages";
+import { useToast } from "components/Toast";
 import { LoadingIcon } from "components/Icons";
 import { Input, Users } from "components/Form";
 
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 
 const CreateClass: NextPage = () => {
   const toasts = useToast();
@@ -83,6 +84,11 @@ const CreateClass: NextPage = () => {
       </div>
     </Fragment>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const allowed = await verifyLevel(req, "staff");
+  return allowed ? { props: {} } : { notFound: true };
 };
 
 export default CreateClass;

@@ -5,13 +5,14 @@ import useSWR from "swr";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
-import { useToast } from "components/Toast";
 import { fetchAPI } from "api/client";
+import { verifyLevel } from "utils/pages";
+import { useToast } from "components/Toast";
 import { LoadingIcon } from "components/Icons";
 import { useIsomorphicLayoutEffect } from "hooks";
 import { Checkbox, Input, RadioGroup, Select, Users } from "components/Form";
 
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 
 const DivisionSubject = dynamic(async () => {
   const { DivisionSubjectFields } = await import("components/Pages/Subject");
@@ -230,6 +231,11 @@ const CreateSubject: NextPage = () => {
       </div>
     </Fragment>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const allowed = await verifyLevel(req, "staff");
+  return allowed ? { props: {} } : { notFound: true };
 };
 
 export default CreateSubject;

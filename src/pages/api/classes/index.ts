@@ -1,15 +1,18 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import { connect } from "db";
-import { routeWrapper } from "api/server";
-import { ClassModel, TeacherStaffModel } from "db/models";
+import { USER_ID_COOKIE } from "utils/constants";
+import { routeWrapper, UnauthorizedError } from "api/server";
+import { ClassModel, StaffModel, TeacherStaffModel } from "db/models";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler: API.Handler<API.Class.POST.Data | API.Class.GET.AllData> = async (req) => {
-  await connect();
+  if (req.method === "POST") {
+    const privileged = await StaffModel.hasPrivileges(req.cookies[USER_ID_COOKIE], ["s.cls"]);
+    if (!privileged) throw new UnauthorizedError("You are not privileged to create a class");
 
-  if (req.method === "POST") return POST(req.body as API.Class.POST.Body);
+    return POST(req.body as API.Class.POST.Body);
+  }
   if (req.method === "GET") return GET();
 
   return null;
