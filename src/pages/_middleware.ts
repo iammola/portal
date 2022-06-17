@@ -17,7 +17,7 @@ export const middleware: NextMiddleware = async (req) => {
     const options = { path: "/", secure: true, httpOnly: true, sameSite: true };
 
     response.cookie(USER_LEVEL_COOKIE, String(level), options);
-    return NextResponse.next();
+    return response;
   } catch (error) {
     if (url.pathname !== "/") url.searchParams.set(REDIRECT_QUERY, url.pathname);
     url.pathname = "/login";
