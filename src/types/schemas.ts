@@ -1,12 +1,11 @@
-import type * as bson from "bson";
 import type * as Mongoose from "mongoose";
 import type { Day } from "date-fns";
 import type { ModelNames } from "db/constants";
 
 declare global {
   namespace Schemas {
+    type ObjectId = Mongoose.Types.ObjectId;
     type DocumentId = Record<"_id", ObjectId>;
-    type ObjectId = bson.ObjectId & Mongoose.Schema.Types.ObjectId;
 
     type AQuery<R> = Mongoose.Aggregate<R[]>;
     type SQuery<S, R = S, M = unknown, V = unknown> = Mongoose.Query<
